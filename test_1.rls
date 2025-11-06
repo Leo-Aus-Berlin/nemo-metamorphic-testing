@@ -1,0 +1,10 @@
+@import T :- csv{resource: "data/T.csv", format: (integer, integer)}.
+@import V :- csv{resource: "data/V.csv", format: (integer, integer)}.
+@import W :- csv{resource: "data/W.csv", format: integer}.
+@import Z :- csv{resource: "data/Z.csv", format: integer}.
+@import B :- csv{resource: "data/B.csv", format: integer}.
+R_out(?x, ?y, ?z) :- S(?x, ?y), T(?y, ?z), ~Q(?x, ?y) .
+S(?x, ?y) :- V(?x, ?y), W(?x) .
+Q(?x, ?y) :- W(?x), W(?y), ~Z(?x) .
+A(?x) :- B(?x) .
+@export R_out :- csv{}.
