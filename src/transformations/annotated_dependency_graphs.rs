@@ -279,7 +279,7 @@ impl AnnotatedDependencyGraph {
 
     pub fn write_self_to_file(&self) {
         let basic_dot = Dot::new(&self.graph);
-        std::fs::write("flight_network.dot", format!("{:?}", basic_dot)).unwrap();
+        std::fs::write("adg.dot", format!("{:?}", basic_dot)).unwrap();
     }
     fn init_rel_nodes(&mut self) {
         for tag in self.predicates.clone() {

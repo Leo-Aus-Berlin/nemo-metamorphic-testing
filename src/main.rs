@@ -9,6 +9,7 @@ use nemo::{
 mod transformations;
 
 use transformations::{
+    ADGFetch,
     annotated_dependency_graphs::AnnotatedDependencyGraph, hello_world::TransformationHelloWorld,
     select_random_output_predicate::TransformationSelectRandomOutputPredicate,
 };
@@ -16,7 +17,7 @@ use transformations::{
 use lazy_static::lazy_static;
 use std::sync::Mutex;
  */
-use rand::{Rng, SeedableRng};
+use rand::{SeedableRng};
 /* 
 lazy_static! {
     static ref RNG: rand_chacha::ChaCha8Rng = Mutex::new(rand_chacha::ChaCha8Rng::seed_from_u64(10));
