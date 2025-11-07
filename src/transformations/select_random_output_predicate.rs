@@ -10,8 +10,8 @@ use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 use rand::seq::IteratorRandom;
 
-use crate::transformations::ADGFetch;
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
+use crate::transformations::ADGFetch;
 
 /// Program transformation
 /// Selects the first ouput predicate as the only output predicate
@@ -27,8 +27,8 @@ impl<'a> ADGFetch<'a> for TransformationSelectRandomOutputPredicate<'a> {
     fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     }
-    fn new(adg: &'a mut AnnotatedDependencyGraph, rng : &'a mut rand_chacha::ChaCha8Rng) -> Self {
-        Self { adg , rng}
+    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'a mut rand_chacha::ChaCha8Rng) -> Self {
+        Self { adg, rng }
     }
 }
 
@@ -41,17 +41,24 @@ impl<'a> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a>
         // Collect export & output statements
         let mut export_directives: Vec<&Statement> = Vec::new();
         // Keep all other than original export statements
-        program.statements().for_each(|s| match s {
-            Statement::Export(export) => {
-                export_directives.push(s);
-                println!("Found export: {}", export.predicate());
-            }
-            Statement::Output(output) => {
-                export_directives.push(s);
-                println!("Found output: {}", output.predicate());
-            }
-            _ => commit.keep(s),
-        });
+        program
+            .statements()
+            .for_each(|s| match s {
+                Statement::Export(export) => {
+                    export_directives.push(s);
+                    println!("Found export: {}", export.predicate());
+                }
+                Statement::Output(output) => {
+                    export_directives.push(s);
+                    println!("Found output: {}", output.predicate());
+                }
+                /* Statement::Rule(rule)=>{
+                    println!("Name: {:?}",rule.name());
+                    commit.keep(s);
+                } */
+
+                _ => commit.keep(s),
+            });
 
         // what is the difference between an output and an export?
         let mut output_names = String::from("Output names (0): ");

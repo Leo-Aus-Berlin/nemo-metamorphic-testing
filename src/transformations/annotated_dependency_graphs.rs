@@ -18,34 +18,34 @@ use petgraph::{
 
 #[derive(Clone, Copy)]
 pub enum Ancestry {
-    positive,
-    negative,
-    unknown,
-    none,
+    Positive,
+    Negative,
+    Unknown,
+    None,
 }
 
 impl Debug for Ancestry {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
         match self {
-            Self::positive => f.write_fmt(format_args!("+",)),
-            Self::negative => f.write_fmt(format_args!("-",)),
-            Self::unknown => f.write_fmt(format_args!("?",)),
-            Self::none => f.write_fmt(format_args!("n",)),
+            Self::Positive => f.write_fmt(format_args!("+")),
+            Self::Negative => f.write_fmt(format_args!("-")),
+            Self::Unknown => f.write_fmt(format_args!("?")),
+            Self::None => f.write_fmt(format_args!("n")),
         }
     }
 }
 impl Ancestry {
     pub fn inverse(self) -> Self {
         match self {
-            Ancestry::negative => Ancestry::positive,
-            Ancestry::positive => Ancestry::negative,
-            Ancestry::unknown => Ancestry::unknown,
-            Ancestry::none => Ancestry::none,
+            Ancestry::Negative => Ancestry::Positive,
+            Ancestry::Positive => Ancestry::Negative,
+            Ancestry::Unknown => Ancestry::Unknown,
+            Ancestry::None => Ancestry::None,
         }
     }
     pub fn is_some(self) -> bool {
         match self {
-            Ancestry::none => false,
+            Ancestry::None => false,
             _ => true,
         }
     }
@@ -60,11 +60,11 @@ pub struct ADGRelationalNode {
 impl Debug for ADGRelationalNode {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
         f.write_fmt(format_args!(
-            "({:?},{:?},{:?})",
+            "({}, {}, {})",
             self.tag.name(),
             match self.inverse_stratum {
                 None => String::from("None"),
-                Some(int) => format!("{int}"),
+                Some(int) => int.to_string(),
             },
             match self.ancestry {
                 None => String::from("None"),
@@ -79,40 +79,40 @@ impl ADGRelationalNode {
             None => self.ancestry = Some(new_ancestry),
             Some(old_ancestry) => {
                 match old_ancestry {
-                    &Ancestry::unknown => {
+                    &Ancestry::Unknown => {
                         (); /* no changes!*/
                     }
-                    &Ancestry::none => self.ancestry = Some(new_ancestry),
-                    &Ancestry::positive => match new_ancestry {
-                        Ancestry::unknown => {
+                    &Ancestry::None => self.ancestry = Some(new_ancestry),
+                    &Ancestry::Positive => match new_ancestry {
+                        Ancestry::Unknown => {
                             println!(
                                 "Attempting to assign unknown ancestry. This is a bug I think"
                             );
                             exit(1);
                         }
-                        Ancestry::none => {
+                        Ancestry::None => {
                             println!("Attempting to assign none ancestry. This is a bug I think");
                             exit(1);
                         }
-                        Ancestry::negative => self.ancestry = Some(Ancestry::unknown), /* Both pos and neg */
-                        Ancestry::positive => (), /* Was already positive */
+                        Ancestry::Negative => self.ancestry = Some(Ancestry::Unknown), /* Both pos and neg */
+                        Ancestry::Positive => (), /* Was already positive */
                     },
-                    &Ancestry::negative => {
+                    &Ancestry::Negative => {
                         match new_ancestry {
-                            Ancestry::unknown => {
+                            Ancestry::Unknown => {
                                 println!(
                                     "Attempting to assign unknown ancestry. This is a bug I think"
                                 );
                                 exit(1);
                             }
-                            Ancestry::none => {
+                            Ancestry::None => {
                                 println!(
                                     "Attempting to assign none ancestry. This is a bug I think"
                                 );
                                 exit(1);
                             }
-                            Ancestry::negative => (), /* Was already negative */
-                            Ancestry::positive => self.ancestry = Some(Ancestry::unknown), /* Both pos and neg */
+                            Ancestry::Negative => (), /* Was already negative */
+                            Ancestry::Positive => self.ancestry = Some(Ancestry::Unknown), /* Both pos and neg */
                         }
                     }
                 }
@@ -131,14 +131,14 @@ impl Debug for ADGFactNode {
 }
 
 pub enum Sign {
-    positive,
-    negative,
+    Positive,
+    Negative,
 }
 impl Debug for Sign {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
         match self {
-            Self::positive => f.write_fmt(format_args!("+",)),
-            Self::negative => f.write_fmt(format_args!("-",)),
+            Self::Positive => f.write_fmt(format_args!("+",)),
+            Self::Negative => f.write_fmt(format_args!("-",)),
         }
     }
 }
@@ -151,14 +151,18 @@ pub struct ADGRelationalEdge {
 impl Debug for ADGRelationalEdge {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
         match &self.rule_name {
-            Some(rule_name) => f.write_fmt(format_args!("({:?},{:?})", self.sign, rule_name)),
+            Some(rule_name) => f.write_fmt(format_args!("({}, {:?})", rule_name, self.sign)),
             None => f.write_fmt(format_args!("({:?})", self.sign)),
         }
     }
 }
 
-#[derive(Debug)]
 pub struct ADGFactEdge {}
+impl Debug for ADGFactEdge {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+        f.write_fmt(format_args!("fact edge"))
+    }
+}
 
 pub enum ADGNode {
     ADGRelationalNode(ADGRelationalNode),
@@ -229,10 +233,10 @@ impl AnnotatedDependencyGraph {
                         let start_node = adg.get_rel_node_tag(&pos_atom.predicate());
                         for head_atom in rule.head() {
                             let end_node = adg.get_rel_node_tag(&head_atom.predicate());
-                            println!("rule name:{:?}", rule.name());
+                            //println!("rule name:{:?}", rule.name());
                             adg.add_rel_edge(
                                 rule.name(),
-                                Sign::positive,
+                                Sign::Positive,
                                 start_node,
                                 end_node,
                                 rule.id(),
@@ -246,7 +250,7 @@ impl AnnotatedDependencyGraph {
                             let end_node = adg.get_rel_node_tag(&head_atom.predicate());
                             adg.add_rel_edge(
                                 rule.name(),
-                                Sign::negative,
+                                Sign::Negative,
                                 start_node,
                                 end_node,
                                 rule.id(),
@@ -306,12 +310,17 @@ impl AnnotatedDependencyGraph {
                 // We kinda should know, that the program is stratifiable, as otherwise
                 // Nemo couldn't parse it, right???
                 let output_node = self.get_rel_node_tag(output_predicate);
-                self.set_ancestry_inverse_stratum(output_node, 0, Ancestry::positive);
+                self.set_ancestry_inverse_stratum(output_node, 0, Ancestry::Positive);
             }
         }
     }
 
-    fn set_ancestry_inverse_stratum(&mut self, node: NodeIndex, inverse_stratum: u32, ancestry: Ancestry) {
+    fn set_ancestry_inverse_stratum(
+        &mut self,
+        node: NodeIndex,
+        inverse_stratum: u32,
+        ancestry: Ancestry,
+    ) {
         let mut_node: Option<&mut ADGNode> = self.graph.node_weight_mut(node);
         match mut_node {
             None => {
@@ -357,16 +366,18 @@ impl AnnotatedDependencyGraph {
                                             Some(ADGEdge::ADGFactEdge(_)) => (), // Done
                                             Some(ADGEdge::ADGRelationalEdge(adg_edge)) => {
                                                 match adg_edge.sign {
-                                                    Sign::negative => {
+                                                    Sign::Negative => {
                                                         self.set_ancestry_inverse_stratum(
                                                             n_node,
                                                             inverse_stratum + 1,
                                                             ancestry.inverse(),
                                                         );
                                                     }
-                                                    Sign::positive => {
+                                                    Sign::Positive => {
                                                         self.set_ancestry_inverse_stratum(
-                                                            n_node, inverse_stratum, ancestry,
+                                                            n_node,
+                                                            inverse_stratum,
+                                                            ancestry,
                                                         );
                                                     }
                                                 }
@@ -404,16 +415,18 @@ impl AnnotatedDependencyGraph {
                                                 Some(ADGEdge::ADGFactEdge(_)) => (), // Done
                                                 Some(ADGEdge::ADGRelationalEdge(adg_edge)) => {
                                                     match adg_edge.sign {
-                                                        Sign::negative => {
+                                                        Sign::Negative => {
                                                             self.set_ancestry_inverse_stratum(
                                                                 n_node,
                                                                 inverse_stratum + 1,
                                                                 ancestry.inverse(),
                                                             );
                                                         }
-                                                        Sign::positive => {
+                                                        Sign::Positive => {
                                                             self.set_ancestry_inverse_stratum(
-                                                                n_node, inverse_stratum, ancestry,
+                                                                n_node,
+                                                                inverse_stratum,
+                                                                ancestry,
                                                             );
                                                         }
                                                     }

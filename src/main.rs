@@ -9,35 +9,33 @@ use nemo::{
 mod transformations;
 
 use transformations::{
-    ADGFetch,
     annotated_dependency_graphs::AnnotatedDependencyGraph, hello_world::TransformationHelloWorld,
-    select_random_output_predicate::TransformationSelectRandomOutputPredicate,
+    name_rules::TransformationNameRules,
+    select_random_output_predicate::TransformationSelectRandomOutputPredicate, ADGFetch,
 };
-/* 
+/*
 use lazy_static::lazy_static;
 use std::sync::Mutex;
  */
-use rand::{SeedableRng};
-/* 
+use rand::SeedableRng;
+/*
 lazy_static! {
     static ref RNG: rand_chacha::ChaCha8Rng = Mutex::new(rand_chacha::ChaCha8Rng::seed_from_u64(10));
 }
  */
 fn main() {
     const NUM_TRANSFORMATIONS: i32 = 3;
-    let seed : u64 = 42;
+    let seed: u64 = 42;
     println!("Using seed: {}", seed);
     let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed);
-    
+
     let vec_path : Vec<&str> = vec![
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
         ];
 
     // Open file
-    let path = PathBuf::from(
-        vec_path[0]
-    );
+    let path = PathBuf::from(vec_path[0]);
     // "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls"
     let file: RuleFile = match RuleFile::load(path) {
         Err(_) => panic!("Could not find example file"),
@@ -54,6 +52,22 @@ fn main() {
             // over the different repetitions
             let mut program: ProgramHandle = program;
             let mut report: ProgramReport = report;
+
+            // Name all of the rules!
+            let transformation_name_rules: TransformationNameRules =
+                TransformationNameRules::new();
+            let output_name_rules: Result<ProgramHandle, ValidationReport> =
+                program.transform(transformation_name_rules);
+            // Store validation report
+            let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
+                report.merge_validation_report(&program, output_name_rules);
+            (program, report) = match temp {
+                Ok((p, r)) => (p, r),
+                Err(_) => {
+                    println!("Failed to merge validation report");
+                    exit(1);
+                }
+            };
 
             let mut adg: AnnotatedDependencyGraph =
                 match AnnotatedDependencyGraph::from_program(&program) {

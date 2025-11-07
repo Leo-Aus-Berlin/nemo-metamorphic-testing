@@ -7,6 +7,7 @@ use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGrap
 pub mod annotated_dependency_graphs;
 pub mod hello_world;
 pub mod select_random_output_predicate;
+pub mod name_rules;
 // pub mod testing_transformation;
 
 /// Trait that defines a transformation that returns an ADG
