@@ -1,0 +1,41 @@
+digraph {
+    0 [ label = "(Z, 2, +)" ]
+    1 [ label = "(V, 1, ?)" ]
+    2 [ label = "(S, 0, +)" ]
+    3 [ label = "(T, 0, +)" ]
+    4 [ label = "(Q, 1, -)" ]
+    5 [ label = "(W, 1, ?)" ]
+    6 [ label = "(R_out, 0, +)" ]
+    7 [ label = "(A, None, None)" ]
+    8 [ label = "(B, None, None)" ]
+    9 [ label = "(\"data/T.csv\")" ]
+    10 [ label = "(\"data/V.csv\")" ]
+    11 [ label = "(\"data/W.csv\")" ]
+    12 [ label = "(\"data/Z.csv\")" ]
+    13 [ label = "(\"data/B.csv\")" ]
+    9 -> 3 [ label = "fact edge" ]
+    10 -> 1 [ label = "fact edge" ]
+    11 -> 5 [ label = "fact edge" ]
+    12 -> 0 [ label = "fact edge" ]
+    13 -> 8 [ label = "fact edge" ]
+    2 -> 6 [ label = "rule R_out
+(+), (x,y)" ]
+    3 -> 6 [ label = "rule R_out
+(+), (y,z)" ]
+    4 -> 6 [ label = "rule R_out
+(-), (x,y)" ]
+    1 -> 2 [ label = "rule S
+(+), (x,y)" ]
+    5 -> 2 [ label = "rule S
+(+), (x)" ]
+    5 -> 4 [ label = "rule Q''
+(+), (x)" ]
+    5 -> 4 [ label = "rule Q''
+(+), (y)" ]
+    0 -> 4 [ label = "rule Q''
+(-), (x)" ]
+    1 -> 4 [ label = "rule Q''
+(+), (x,x)" ]
+    8 -> 7 [ label = "rule A
+(+), (x)" ]
+}

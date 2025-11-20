@@ -8,16 +8,27 @@ use nemo::{
 
 mod transformations;
 
+use rand_chacha::ChaCha8Rng;
 use transformations::{
-    annotated_dependency_graphs::AnnotatedDependencyGraph, hello_world::TransformationHelloWorld,
-    name_rules::TransformationNameRules,
-    select_random_output_predicate::TransformationSelectRandomOutputPredicate, ADGFetch,
+    MetamorphicTransformation, annotated_dependency_graphs::AnnotatedDependencyGraph,
+    hello_world::TransformationHelloWorld, name_rules::TransformationNameRules,
+    select_random_output_predicate::TransformationSelectRandomOutputPredicate,
 };
 /*
 use lazy_static::lazy_static;
 use std::sync::Mutex;
  */
 use rand::SeedableRng;
+
+use crate::transformations::{
+    add_relational_node::AddRelationalNode,
+    transformation_manager::{
+        self, IterateMetamorphicTransformations, SomeMetamorphicTransformation,
+        TransformationManager,
+    },
+    transformation_types::TransformationTypes,
+};
+
 /*
 lazy_static! {
     static ref RNG: rand_chacha::ChaCha8Rng = Mutex::new(rand_chacha::ChaCha8Rng::seed_from_u64(10));
@@ -26,13 +37,14 @@ lazy_static! {
 fn main() {
     const NUM_TRANSFORMATIONS: i32 = 3;
     let seed: u64 = 42;
+    let transformation_types: TransformationTypes = TransformationTypes::CON;
     println!("Using seed: {}", seed);
     let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed);
 
-    let vec_path : Vec<&str> = vec![
+    let vec_path: Vec<&str> = vec![
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
-        ];
+    ];
 
     // Open file
     let path = PathBuf::from(vec_path[0]);
@@ -54,8 +66,7 @@ fn main() {
             let mut report: ProgramReport = report;
 
             // Name all of the rules!
-            let transformation_name_rules: TransformationNameRules =
-                TransformationNameRules::new();
+            let transformation_name_rules: TransformationNameRules = TransformationNameRules::new();
             let output_name_rules: Result<ProgramHandle, ValidationReport> =
                 program.transform(transformation_name_rules);
             // Store validation report
@@ -100,11 +111,24 @@ fn main() {
             // Write ADG to file
             adg.write_self_to_file();
 
+            // The available transformations
+            /* let mut transformation_manager =
+                           TransformationManager::new(&mut adg, &mut rng, transformation_types);
+            */
             // Perform NUM_TRANSFORMATIONS transformations
             for repetition in 1..=NUM_TRANSFORMATIONS {
                 println!("Starting transformation number {repetition}");
-                let transformation: TransformationHelloWorld =
-                    TransformationHelloWorld::new(&mut adg, &mut rng);
+                let trans_types: TransformationTypes = transformation_types.clone();
+                let mut transformation = SomeMetamorphicTransformation::Default();
+                for try_transformation in IterateMetamorphicTransformations::new(&mut adg, &mut rng)
+                {
+                    let (can_apply, try_transformation) =
+                        try_transformation.can_apply(trans_types.clone());
+                    if can_apply {
+                        transformation = try_transformation;
+                        break;
+                    }
+                }
 
                 // calculate ith transformation
                 let current_result: Result<ProgramHandle, ValidationReport> =

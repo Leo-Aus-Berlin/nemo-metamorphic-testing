@@ -11,28 +11,28 @@ use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 use rand::seq::IteratorRandom;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
-use crate::transformations::ADGFetch;
+use crate::transformations::MetamorphicTransformation;
 
 /// Program transformation
-/// Selects the first ouput predicate as the only output predicate
-/// if multiple specified, and the "first" predicate if no output predicate
-/// is specified.
+/// Selects a random of the available output/export predicates
+/// as the only output predicate. If none are available,
+/// select a random predicate from the idb predicates.
 // #[derive(Debug, Clone, Copy, Default)]
-pub struct TransformationSelectRandomOutputPredicate<'a> {
+pub struct TransformationSelectRandomOutputPredicate<'a,'b> {
     adg: &'a mut AnnotatedDependencyGraph,
-    rng: &'a mut rand_chacha::ChaCha8Rng,
+    rng: &'b mut rand_chacha::ChaCha8Rng,
 }
 
-impl<'a> ADGFetch<'a> for TransformationSelectRandomOutputPredicate<'a> {
-    fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
+impl<'a,'b> MetamorphicTransformation<'a,'b> for TransformationSelectRandomOutputPredicate<'a,'b> {
+    /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
-    }
-    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'a mut rand_chacha::ChaCha8Rng) -> Self {
+    } */
+    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
         Self { adg, rng }
     }
 }
 
-impl<'a> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a> {
+impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a,'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         println!("Choosing a predicate to export!");
 

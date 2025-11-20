@@ -1,101 +1,72 @@
 use std::process::exit;
 
-use nemo::rule_model::components::{ProgramComponent, ProgramComponentKind};
-use nemo::rule_model::components::import_export::ExportDirective;
-use nemo::rule_model::components::output::Output;
-use nemo::rule_model::components::rule::Rule;
-use nemo::rule_model::components::statement::Statement;
+use nemo::rule_model::components::tag::Tag;
 use nemo::rule_model::error::ValidationReport;
+use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
+use nemo::rule_model::programs::ProgramRead;
 use petgraph::Direction;
 use rand::seq::IteratorRandom;
 
-use crate::transformations::ADGFetch;
 use crate::transformations::annotated_dependency_graphs::{
-    ADGEdge, ADGFactNode, ADGNode, ADGRelationalNode, AnnotatedDependencyGraph,
+    ADGEdge, ADGRelationalNode, AnnotatedDependencyGraph,
 };
+use crate::transformations::{MetamorphicTransformation, util};
 
-/// Program transformation
-/// Selects the first ouput predicate as the only output predicate
-/// if multiple specified, and the "first" predicate if no output predicate
-/// is specified.
+/// Provides an overview of code we can use
 // #[derive(Debug, Clone, Copy, Default)]
-pub struct TransformationSelectRandomOutputPredicate<'a> {
+pub struct OverviewTransformation<'a,'b> {
     adg: &'a mut AnnotatedDependencyGraph,
-    rng: &'a mut rand_chacha::ChaCha8Rng,
+    rng: &'b mut rand_chacha::ChaCha8Rng,
 }
 
-impl<'a> ADGFetch<'a> for TransformationSelectRandomOutputPredicate<'a> {
-    fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
+impl<'a,'b> MetamorphicTransformation<'a,'b> for OverviewTransformation<'a,'b> {
+    /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
-    }
-    fn new(
-        adg: &'a mut AnnotatedDependencyGraph,
-        rng: &'a mut rand_chacha::ChaCha8Rng,
-    ) -> Self {
+    } */
+    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
         Self { adg, rng }
     }
 }
 
-impl<'a> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a> {
+impl<'a,'b> ProgramTransformation for OverviewTransformation<'a,'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
-        let commit = program.fork_full();
-        let rand_pred = program.all_predicates().into_iter().choose(self.rng);
+        let commit: ProgramCommit = program.fork_full();
+        let rand_pred: Option<Tag> = program.all_predicates().into_iter().choose(self.rng);
         match rand_pred {
             None => {
                 println!("No predicates in program");
                 exit(1);
             }
             Some(predicate) => {
-                let predicate_node = self.adg.get_rel_node(&predicate);
+                let predicate_node: &ADGRelationalNode = self.adg.get_rel_node(&predicate);
 
-                if let Some(ancestry) = predicate_node.ancestry {
-                    if let Some(stratum) = predicate_node.stratum {
+                if let Some(_ancestry) = predicate_node.ancestry {
+                    if let Some(_inverse_stratum) = predicate_node.inverse_stratum {
                         for edge in self.adg.get_node_edges(&predicate, Direction::Outgoing) {
                             match edge.weight() {
-                                ADGEdge::ADGFactEdge(fact_edge) => {
+                                ADGEdge::ADGFactEdge(_fact_edge) => {
                                     // smth
                                 }
                                 ADGEdge::ADGRelationalEdge(rel_edge) => {
                                     // smth
-                                    let rule_id = program.component(rel_edge.id);
-                                    match rule_id {
+                                    match rel_edge.rule_name.clone() {
+                                        Some(rule_name) => {
+                                            if let Some(rule) =
+                                                util::fetch_rule_by_name(rule_name, program)
+                                            {
+                                                println!("Found rule {}", rule);
+                                            }
+                                        }
                                         None => {
                                             println!(
-                                                "Relational edge without a rule id found! {:#?}",
+                                                "Relational edge has no rule name! {:#?}",
                                                 rel_edge
                                             );
                                             exit(1);
-                                        }
-                                        Some(rule_id) => {
-                                            let a: Box<dyn ProgramComponent> = rule_id.boxed_clone();
-                                            if let Statement::Rule() = a {
-
-                                            }
-                                            match rule_id.kind() {
-                                                ProgramComponentKind::Rule=> {
-                                                    program.
-                                                }
-                                                _ => {}
-                                            }
-
-                                            // In the example program I tested the rules all don't have a name
-                                            /* if let Some(rule) = program
-                                                .rules()
-                                                .find(|rule| rule.name() == rel_edge.rule_name)
-                                            {
-
-                                            } else {
-                                                println!(
-                                                    "Relational edge without a rule of the same name found! {:#?}",
-                                                    rel_edge
-                                                );
-                                                exit(1);
-                                            } */
                                         }
                                     }
                                 }
@@ -103,7 +74,7 @@ impl<'a> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a>
                         }
                     } else {
                         println!(
-                            "ADG not ready: No stratum provided for node: {:#?}",
+                            "ADG not ready: No inverse_stratum provided for node: {:#?}",
                             predicate_node
                         );
                         exit(1);
@@ -123,5 +94,3 @@ impl<'a> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a>
         commit.submit()
     }
 }
-
-

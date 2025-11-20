@@ -457,7 +457,7 @@ impl AnnotatedDependencyGraph {
         //self.graph.update_edge(a, b, weight)
     }
 
-    fn add_rel_node(&mut self, tag: &Tag) {
+    pub fn add_rel_node(&mut self, tag: &Tag) {
         self.predicate_ids.insert(
             tag.clone(),
             self.graph

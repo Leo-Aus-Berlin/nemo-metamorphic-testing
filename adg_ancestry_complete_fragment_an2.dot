@@ -1,0 +1,16 @@
+digraph {
+    0 [ label = "(Z, 2, +)" ]
+    4 [ label = "(Q, 1, -)" ]
+    5 [ label = "(W, 1, ?)" ]
+    6 [ label = "(R_out, 0, +)" ]
+    5 -> 4 [ label = "rule Q'
+(+), (x)" ]
+    5 -> 4 [ label = "rule Q'
+(+), (y)" ]
+    0 -> 4 [ label = "rule Q'
+(-), (x)" ]
+    4 -> 6 [ label = "rule R_out
+(-), (x,y)" ]
+    6 -> 4 [ label = "rule Q'
+(+), (x,y,z)" ]
+}

@@ -4,30 +4,30 @@ use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use nemo::rule_model::programs::ProgramRead;
 
-use crate::transformations::ADGFetch;
+use crate::transformations::MetamorphicTransformation;
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 
 /// Program transformation
 /// For testing purposes
 // #[derive(Debug, Clone, Copy, Default)]
-pub struct TransformationHelloWorld<'a> {
-    adg: &'a mut AnnotatedDependencyGraph,
-    rng: &'a mut rand_chacha::ChaCha8Rng,
+pub struct TransformationHelloWorld<'a,'b> {
+    _adg: &'a mut AnnotatedDependencyGraph,
+    _rng: &'b mut rand_chacha::ChaCha8Rng,
 }
 
-impl<'a> ADGFetch<'a> for TransformationHelloWorld<'a> {
-    fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
+impl<'a,'b> MetamorphicTransformation<'a,'b> for TransformationHelloWorld<'a,'b> {
+    /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
-    }
-    fn new(
-        adg: &'a mut AnnotatedDependencyGraph,
-        rng: &'a mut rand_chacha::ChaCha8Rng,
-    ) -> Self {
-        Self { adg, rng }
+    } */
+    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
+        Self {
+            _adg: adg,
+            _rng: rng,
+        }
     }
 }
 
-impl<'a> ProgramTransformation for TransformationHelloWorld<'a> {
+impl<'a,'b> ProgramTransformation for TransformationHelloWorld<'a,'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         let mut commit = program.fork();
         /* let a = strategy::RuleSelectionStrategy::new(rules);
