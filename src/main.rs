@@ -8,10 +8,9 @@ use nemo::{
 
 mod transformations;
 
-use rand_chacha::ChaCha8Rng;
 use transformations::{
     MetamorphicTransformation, annotated_dependency_graphs::AnnotatedDependencyGraph,
-    hello_world::TransformationHelloWorld, name_rules::TransformationNameRules,
+     name_rules::TransformationNameRules,
     select_random_output_predicate::TransformationSelectRandomOutputPredicate,
 };
 /*
@@ -21,10 +20,9 @@ use std::sync::Mutex;
 use rand::SeedableRng;
 
 use crate::transformations::{
-    add_relational_node::AddRelationalNode,
     transformation_manager::{
-        self, IterateMetamorphicTransformations, SomeMetamorphicTransformation,
-        TransformationManager,
+         IterateMetamorphicTransformations, SomeMetamorphicTransformation,
+        
     },
     transformation_types::TransformationTypes,
 };
@@ -42,6 +40,7 @@ fn main() {
     let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed);
 
     let vec_path: Vec<&str> = vec![
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
     ];

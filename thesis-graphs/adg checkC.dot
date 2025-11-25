@@ -1,0 +1,67 @@
+digraph {
+    0 [ label = "(canChangeAt, 0, +)" ]
+    1 [ label = "(choseB, 1, ?)" ]
+    2 [ label = "(elevator, 0, +)" ]
+    3 [ label = "(tooLargeGap, 1, -)" ]
+    4 [ label = "(validC, 0, +)" ]
+    5 [ label = "(seeTVTower, None, None)" ]
+    6 [ label = "(mustChangeAt, 1, ?)" ]
+    7 [ label = "(success, 0, +)" ]
+    8 [ label = "(choseU, 1, ?)" ]
+    9 [ label = "(platformHeight, 1, -)" ]
+    10 [ label = "(allowedDiff, 2, +)" ]
+    11 [ label = "(\"data/choseU.csv\")" ]
+    12 [ label = "(\"data/choseB.csv\")" ]
+    13 [ label = "(\"data/elevator.csv\")" ]
+    14 [ label = "(\"data/platformHeight.csv\")" ]
+    15 [ label = "(\"data/allowedDiff.csv\")" ]
+    11 -> 8 [ label = "fact edge" ]
+    12 -> 1 [ label = "fact edge" ]
+    13 -> 2 [ label = "fact edge" ]
+    14 -> 9 [ label = "fact edge" ]
+    15 -> 10 [ label = "fact edge" ]
+    4 -> 4 [ label = "(Cch, +)
+(x,a)" ]
+    4 -> 4 [ label = "(Cch, +)
+(a,y)" ]
+    6 -> 4 [ label = "(Cch, +)
+(a)" ]
+    0 -> 4 [ label = "(Cch, +)
+(a)" ]
+    4 -> 4 [ label = "(Cnch, +)
+(x,a)" ]
+    4 -> 4 [ label = "(Cnch, +)
+(a,y)" ]
+    6 -> 4 [ label = "(Cnch, -)
+(x)" ]
+    1 -> 4 [ label = "(d1, +)
+(x,y)" ]
+    8 -> 4 [ label = "(d1, -)
+(x,y)" ]
+    8 -> 4 [ label = "(d2, +)
+(x,y)" ]
+    1 -> 4 [ label = "(d2, -)
+(x,y)" ]
+    2 -> 0 [ label = "(ch, +)
+(x)" ]
+    3 -> 0 [ label = "(ch, -)
+(x)" ]
+    9 -> 3 [ label = "(gap, +)
+(x,h)" ]
+    10 -> 3 [ label = "(gap, -)
+(h,trainHeight)" ]
+    8 -> 6 [ label = "(mch1, +)
+(a,x)" ]
+    1 -> 6 [ label = "(mch1, +)
+(x,b)" ]
+    1 -> 6 [ label = "(mch2, +)
+(a,x)" ]
+    8 -> 6 [ label = "(mch2, +)
+(x,b)" ]
+    1 -> 5 [ label = "(TV1, +)
+(x,alexanderplatz)" ]
+    1 -> 5 [ label = "(TV2, +)
+(alexanderplatz,x)" ]
+    4 -> 7 [ label = "(succ, +)
+(x)" ]
+}

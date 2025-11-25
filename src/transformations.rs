@@ -23,7 +23,7 @@ pub trait MetamorphicTransformation<'a,'b> {
     fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut ChaCha8Rng) -> Self;
     /// Check if I can apply myself under the current oracle. Also determine
     /// randomly gen. parameters, such as which relation to apply to.
-    fn can_apply(self : Self, intended_transformation_type : TransformationTypes) -> (bool, Self) where Self: Sized{
+    fn can_apply(self : Self, _intended_transformation_type : TransformationTypes) -> (bool, Self) where Self: Sized{
         (true, self)
     }
 }

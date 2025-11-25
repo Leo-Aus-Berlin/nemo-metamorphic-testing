@@ -1,0 +1,23 @@
+digraph {
+    0 [ label = "(canChangeAt, 0, +)" ]
+    2 [ label = "(elevator, 0, +)" ]
+    3 [ label = "(tooLargeGap, 1, -)" ]
+    9 [ label = "(platformHeight, 1, -)" ]
+    10 [ label = "(allowedDiff, 2, +)" ]
+    13 [ label = "(\"data/elevator.csv\")" ]
+    14 [ label = "(\"data/platformHeight.csv\")" ]
+    15 [ label = "(\"data/allowedDiff.csv\")" ]
+    13 -> 2 [ label = "fact edge" ]
+    14 -> 9 [ label = "fact edge" ]
+    15 -> 10 [ label = "fact edge" ]
+    2 -> 0 [ label = "(ch, +)
+(x)" ]
+    3 -> 0 [ label = "(ch, -)
+(x)" ]
+    9 -> 3 [ label = "(gap, +)
+(x,h)" ]
+    10 -> 3 [ label = "(gap, -)
+(h,trainHeight)" ]
+    0 -> 3 [ label = "(gap, +)
+(x)"]
+}
