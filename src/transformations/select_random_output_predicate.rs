@@ -12,6 +12,7 @@ use rand::seq::IteratorRandom;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::MetamorphicTransformation;
+use crate::transformations::transformation_types::TransformationTypes;
 
 /// Program transformation
 /// Selects a random of the available output/export predicates
@@ -23,11 +24,11 @@ pub struct TransformationSelectRandomOutputPredicate<'a,'b> {
     rng: &'b mut rand_chacha::ChaCha8Rng,
 }
 
-impl<'a,'b> MetamorphicTransformation<'a,'b> for TransformationSelectRandomOutputPredicate<'a,'b> {
+impl<'a,'b> TransformationSelectRandomOutputPredicate<'a,'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
-    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
+    pub fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
         Self { adg, rng }
     }
 }

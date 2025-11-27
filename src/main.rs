@@ -146,14 +146,16 @@ fn main() {
                 println!("Starting transformation number {repetition}");
                 let trans_types: TransformationTypes = transformation_types.clone();
                 let mut transformation = SomeMetamorphicTransformation::Default();
-                for try_transformation in IterateMetamorphicTransformations::new(&mut adg, &mut rng)
-                {
-                    let (can_apply, try_transformation) =
-                        try_transformation.can_apply(trans_types.clone());
-                    if can_apply {
-                        transformation = try_transformation;
-                        break;
-                    }
+                let mut iter =
+                    IterateMetamorphicTransformations::new(&mut adg, &mut rng, trans_types);
+                loop {
+                    match iter.next() {
+                        None => continue,
+                        Some(loop_variable) => {
+                            transformation = loop_variable;
+                            break;
+                        }
+                    };
                 }
 
                 // calculate ith transformation
@@ -176,9 +178,12 @@ fn main() {
                     }
                 }
             }
+
             // Done, write to file
+
             // Create output folder
-            let output_folder_name = String::from("./") + name_of_transformation_sequence + "/output";
+            let output_folder_name =
+                String::from("./") + name_of_transformation_sequence + "/output";
             match create_dir_all(output_folder_name.clone()) {
                 Ok(_) => (),
                 Err(_) => {
@@ -186,12 +191,14 @@ fn main() {
                     exit(1);
                 }
             }
+
             // Write ADG to file
             adg.write_self_to_file(
                 Some(output_folder_name.clone()),
                 Some(String::from("output_adg")),
             );
-            // Done, write to file
+
+            // Write transformed program to file
             match write_program_handle_to_file(
                 &program,
                 (output_folder_name.clone() + "/output_program").as_str(),

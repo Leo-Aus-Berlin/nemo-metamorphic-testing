@@ -29,7 +29,7 @@ impl<'a, 'b> TransformationManager<'a, 'b> {
             transformation_types,
         }
     }
-
+/* 
     pub fn get_next_metamorphic_transformation(
         &'a mut self,
     ) -> Option<SomeMetamorphicTransformation<'a, 'a>> {
@@ -43,7 +43,7 @@ impl<'a, 'b> TransformationManager<'a, 'b> {
             }
         }
         Some(next_transform)
-    }
+    } */
 }
 /* impl<'a> Iterator for TransformationManager<'a,'a> {
     type Item = SomeMetamorphicTransformation<'a,'a>;
@@ -64,15 +64,18 @@ impl<'a, 'b> TransformationManager<'a, 'b> {
 pub struct IterateMetamorphicTransformations<'a, 'b> {
     adg: Option<&'a mut AnnotatedDependencyGraph>,
     rng: Option<&'b mut rand_chacha::ChaCha8Rng>,
+    transformation_type: Option<TransformationTypes>,
 }
 impl<'a, 'b> IterateMetamorphicTransformations<'a, 'b> {
     pub fn new(
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
+        transformation_type: TransformationTypes,
     ) -> IterateMetamorphicTransformations<'a, 'b> {
         IterateMetamorphicTransformations {
             adg: Some(adg),
             rng: Some(rng),
+            transformation_type: Some(transformation_type),
         }
     }
 }
@@ -81,7 +84,12 @@ impl<'a, 'b> Iterator for IterateMetamorphicTransformations<'a, 'b> {
     fn next(&mut self) -> Option<Self::Item> {
         let adg = self.adg.take();
         let rng = self.rng.take();
-        Some(SomeMetamorphicTransformation::new_opt(adg, rng))
+        let transformation_type = self.transformation_type.take();
+        SomeMetamorphicTransformation::new_opt(
+            adg,
+            rng,
+            transformation_type,
+        )
     }
 }
 
@@ -93,12 +101,24 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
     fn new_opt(
         adg: Option<&'a mut AnnotatedDependencyGraph>,
         rng: Option<&'b mut rand_chacha::ChaCha8Rng>,
-    ) -> Self {
+        transformation_type: Option<TransformationTypes>,
+    ) -> Option<Self> {
         if let Some(rng) = rng {
             if let Some(adg) = adg {
-                match rng.random_range(0..NUM_TRANSFORMATION_TYPES) {
-                    0 => Self::AddRelationalNode(AddRelationalNode::new(adg, rng)),
-                    _ => Self::Default(),
+                if let Some(transformation_type) = transformation_type {
+                    match rng.random_range(0..NUM_TRANSFORMATION_TYPES) {
+                        0 => Some(Self::AddRelationalNode(AddRelationalNode::new(
+                            adg,
+                            rng,
+                            transformation_type,
+                        )?)),
+                        _ => Some(Self::Default()),
+                    }
+                } else {
+                    println!(
+                        "Found None where Some expected in SomeMetamorphicTransformation new_opt"
+                    );
+                    exit(1);
                 }
             } else {
                 println!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
@@ -110,15 +130,25 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
         }
     }
 }
-
+// ^^ add here
+static NUM_TRANSFORMATION_TYPES: i32 = 1;
+// vv and here
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation<'a, 'b> {
-    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
+    fn new(
+        adg: &'a mut AnnotatedDependencyGraph,
+        rng: &'b mut rand_chacha::ChaCha8Rng,
+        transformation_type: TransformationTypes,
+    ) -> Option<Self> {
         match rng.random_range(0..NUM_TRANSFORMATION_TYPES) {
-            0 => Self::AddRelationalNode(AddRelationalNode::new(adg, rng)),
-            _ => Self::Default(),
+            0 => Some(Self::AddRelationalNode(AddRelationalNode::new(
+                adg,
+                rng,
+                transformation_type,
+            )?)),
+            _ => Some(Self::Default()),
         }
     }
-    fn can_apply(self: Self, intended_transformation_type: TransformationTypes) -> (bool, Self)
+    /* fn can_apply(self: Self, intended_transformation_type: TransformationTypes) -> (bool, Self)
     where
         Self: Sized,
     {
@@ -132,7 +162,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
                 (tf, Self::AddRelationalNode(t))
             }
         }
-    }
+    } */
 }
 impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
@@ -145,5 +175,3 @@ impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
         }
     }
 }
-
-static NUM_TRANSFORMATION_TYPES: i32 = 1;

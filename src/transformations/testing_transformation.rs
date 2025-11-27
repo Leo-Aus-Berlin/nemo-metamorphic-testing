@@ -13,6 +13,7 @@ use rand::seq::IteratorRandom;
 use crate::transformations::annotated_dependency_graphs::{
     ADGEdge, ADGRelationalNode, AnnotatedDependencyGraph,
 };
+use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};
 
 /// Provides an overview of code we can use
@@ -26,8 +27,8 @@ impl<'a,'b> MetamorphicTransformation<'a,'b> for OverviewTransformation<'a,'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
-    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
-        Self { adg, rng }
+    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng, _t : TransformationTypes) -> Option<Self> {
+        Some(Self { adg, rng })
     }
 }
 

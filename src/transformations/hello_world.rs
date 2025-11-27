@@ -6,6 +6,7 @@ use nemo::rule_model::programs::ProgramRead;
 
 use crate::transformations::MetamorphicTransformation;
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
+use crate::transformations::transformation_types::TransformationTypes;
 
 /// Program transformation
 /// For testing purposes
@@ -19,11 +20,11 @@ impl<'a,'b> MetamorphicTransformation<'a,'b> for TransformationHelloWorld<'a,'b>
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
-    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
-        Self {
+    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng, _t : TransformationTypes) -> Option<Self> {
+        Some(Self {
             _adg: adg,
             _rng: rng,
-        }
+        })
     }
 }
 

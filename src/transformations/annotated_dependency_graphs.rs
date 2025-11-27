@@ -1,6 +1,7 @@
 use std::{
     collections::HashMap,
     fmt::{Debug, Formatter},
+    iter::Filter,
     process::exit,
 };
 
@@ -27,6 +28,39 @@ pub enum Ancestry {
     None,
 }
 
+//      Lattice
+//        None
+//  ^^   /    \
+//      +     -
+//  ^^  \     /
+//      Unknown
+impl PartialOrd for Ancestry {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        match (self, other) {
+            (Ancestry::Negative, Ancestry::Negative) => Some(std::cmp::Ordering::Equal),
+            (Ancestry::Positive, Ancestry::Positive) => Some(std::cmp::Ordering::Equal),
+            (Ancestry::None, Ancestry::None) => Some(std::cmp::Ordering::Equal),
+            (Ancestry::Unknown, Ancestry::Unknown) => Some(std::cmp::Ordering::Equal),
+            (Ancestry::None, _) => Some(std::cmp::Ordering::Less),
+            (_, Ancestry::None) => Some(std::cmp::Ordering::Greater),
+            (_, Ancestry::Unknown) => Some(std::cmp::Ordering::Less),
+            (Ancestry::Unknown, _) => Some(std::cmp::Ordering::Greater),
+            (Ancestry::Positive, Ancestry::Negative) => None,
+            (Ancestry::Negative, Ancestry::Positive) => None,
+        }
+    }
+}
+impl PartialEq for Ancestry {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Ancestry::Negative, Ancestry::Negative) => true,
+            (Ancestry::Positive, Ancestry::Positive) => true,
+            (Ancestry::None, Ancestry::None) => true,
+            (Ancestry::Unknown, Ancestry::Unknown) => true,
+            _ => false,
+        }
+    }
+}
 impl Debug for Ancestry {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
         match self {
@@ -206,7 +240,7 @@ pub struct AnnotatedDependencyGraph {
 }
 
 // TODO: Multi-edges wichtig!
-impl AnnotatedDependencyGraph {
+impl<'a> AnnotatedDependencyGraph {
     pub fn from_program(program: &ProgramHandle) -> Option<Self> {
         let predicates = program.all_predicates().into_iter().collect::<Vec<Tag>>();
         let mut adg: AnnotatedDependencyGraph = AnnotatedDependencyGraph {
@@ -285,7 +319,7 @@ impl AnnotatedDependencyGraph {
         Some(adg)
     }
 
-    pub fn write_self_to_file(&self, path : Option<String>, name : Option<String>) {
+    pub fn write_self_to_file(&self, path: Option<String>, name: Option<String>) {
         let basic_dot = Dot::new(&self.graph);
         let mut path = path.unwrap_or(String::from(""));
         path.push_str("/");
@@ -565,6 +599,106 @@ impl AnnotatedDependencyGraph {
         // from the fact's fact node to the fact's relation's
         // relational node
         todo!()
+    }
+
+    // Get those relational nodes with positive or none ancestry
+    pub fn get_leq_positive_ancestry_relational_nodes(
+        &self,
+    ) -> Vec<Tag> {
+        let mut vec: Vec<Tag> = Vec::new();
+        for rel_node in self.graph.node_weights().filter_map(|node| match node {
+            ADGNode::ADGFactNode(_) => None,
+            ADGNode::ADGRelationalNode(rel_node) => {
+                if rel_node.ancestry <= Some(Ancestry::Positive) {
+                    Some(rel_node)
+                } else {
+                    None
+                }
+            }
+        }) {
+            vec.push(rel_node.tag.clone())
+        }
+        vec
+    }
+
+    // Get those relational nodes with positive ancestry
+    pub fn get_positive_ancestry_relational_nodes(
+        &'a self,
+    ) -> Vec<Tag> {
+        let mut vec: Vec<Tag> = Vec::new();
+        for rel_node in self.graph.node_weights().filter_map(|node| match node {
+            ADGNode::ADGFactNode(_) => None,
+            ADGNode::ADGRelationalNode(rel_node) => {
+                if rel_node.ancestry == Some(Ancestry::Positive) {
+                    Some(rel_node)
+                } else {
+                    None
+                }
+            }
+        }) {
+            vec.push(rel_node.tag.clone())
+        }
+        vec
+    }
+
+    // Get those relational nodes with negative or none ancestry
+    pub fn get_leq_negative_ancestry_relational_nodes(
+        &'a self,
+    ) -> Vec<Tag> {
+        let mut vec: Vec<Tag> = Vec::new();
+        for rel_node in self.graph.node_weights().filter_map(|node| match node {
+            ADGNode::ADGFactNode(_) => None,
+            ADGNode::ADGRelationalNode(rel_node) => {
+                if rel_node.ancestry <= Some(Ancestry::Negative) {
+                    Some(rel_node)
+                } else {
+                    None
+                }
+            }
+        }) {
+            vec.push(rel_node.tag.clone())
+        }
+        vec
+    }
+
+    // Get those relational nodes with negative ancestry
+    pub fn get_negative_ancestry_relational_nodes(
+        &'a self,
+    ) -> Vec<Tag> {
+        let mut vec: Vec<Tag> = Vec::new();
+        for rel_node in self.graph.node_weights().filter_map(|node| match node {
+            ADGNode::ADGFactNode(_) => None,
+            ADGNode::ADGRelationalNode(rel_node) => {
+                if rel_node.ancestry == Some(Ancestry::Negative) {
+                    Some(rel_node)
+                } else {
+                    None
+                }
+            }
+        }) {
+            vec.push(rel_node.tag.clone())
+        }
+        vec
+    }
+
+    // Get those relational nodes with none ancestry
+    pub fn get_none_ancestry_relational_nodes(
+        &'a self,
+    ) -> Vec<Tag> {
+        let mut vec: Vec<Tag> = Vec::new();
+        for rel_node in self.graph.node_weights().filter_map(|node| match node {
+            ADGNode::ADGFactNode(_) => None,
+            ADGNode::ADGRelationalNode(rel_node) => {
+                if rel_node.ancestry == Some(Ancestry::None) {
+                    Some(rel_node)
+                } else {
+                    None
+                }
+            }
+        }) {
+            vec.push(rel_node.tag.clone())
+        }
+        vec
     }
 
     fn get_output_rel_node(&self) -> Option<ADGRelationalNode> {
