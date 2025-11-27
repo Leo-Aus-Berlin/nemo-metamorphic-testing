@@ -1,11 +1,17 @@
+use nemo::rule_model::components::atom::Atom;
+use nemo::rule_model::components::fact::Fact;
+use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
+use nemo::rule_model::components::term::Term;
+use nemo::rule_model::components::term::tuple::Tuple;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use nemo::rule_model::programs::ProgramRead;
+use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
+use nemo::term_list;
 use rand::RngCore;
 use rand::seq::{IndexedRandom, IteratorRandom};
 
@@ -36,7 +42,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
         match transformation_type {
             TransformationTypes::EQU => Some(Self {
                 chosen_to_rel_node: adg
-                    .get_leq_positive_ancestry_relational_nodes()
+                    .get_none_ancestry_relational_nodes()
                     .choose(rng)?
                     .clone(),
                 adg: adg,
@@ -44,7 +50,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
             }),
             TransformationTypes::CON => Some(Self {
                 chosen_to_rel_node: adg
-                    .get_leq_positive_ancestry_relational_nodes()
+                    .get_leq_negative_ancestry_relational_nodes()
                     .choose(rng)?
                     .clone(),
                 adg: adg,
@@ -65,32 +71,19 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
 impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
-        let commit: ProgramCommit = program.fork_full();
+        let mut commit: ProgramCommit = program.fork_full();
         let rel_node = self.adg.get_rel_node(&self.chosen_to_rel_node);
-
-
+        let arity = program.arities()[&self.chosen_to_rel_node];
         
-        let mut new_relation_name: String = String::from("R_");
-        let mut found_new_name: bool = false;
-        while !found_new_name {
-            let number: u32 = self.rng.next_u32();
-            let temp_name: String = new_relation_name.clone() + number.to_string().as_str();
-            if program
-                .all_predicates()
-                .iter()
-                .all(|pred| pred.name() != temp_name)
-            {
-                new_relation_name = temp_name;
-                found_new_name = true;
-            }
-        }
-        // No rule yet, will introduce these later
-        // let new_rule: Rule = Rule::new(vec![head.clone()], rule.body().clone());
-
-        // Add a new relational node
-        let tag: Tag = Tag::new(new_relation_name);
-        self.adg.add_rel_node(&tag);
-        println!("Added new relation of name {}", tag);
+        let terms: Vec<Term> = vec![Term::constant("name_1")];
+        let terms_str = terms[0].to_string().clone();
+        //let new_tuple : Tuple = Tuple::new([terms]);
+        //let new_rule: Rule = Rule::new(vec![Atom::new(self.chosen_to_rel_node,[terms])], Vec::new());
+        let fact : Fact = Fact::new(self.chosen_to_rel_node.clone(),terms);
+        commit.add_fact(fact);
+        let fact_node = self.adg.add_fact_node(terms_str.clone());
+        self.adg.add_fact_edge(fact_node, self.adg.get_rel_node_tag(&self.chosen_to_rel_node));
+        println!("Added new fact node {}", terms_str);
 
         commit.submit()
     }

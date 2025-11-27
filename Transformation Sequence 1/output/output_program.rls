@@ -15,3 +15,4 @@ seeTVTower(s) :- choseB(?x, "alexanderplatz") .
 seeTVTower(s) :- choseB("alexanderplatz", ?x) .
 success(s) :- validC("jungfernheide", "kottbusserTor") .
 @export success :- csv{}.
+elevator(name_1)

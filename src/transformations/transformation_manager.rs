@@ -7,8 +7,8 @@ use nemo::rule_model::{
 use rand::Rng;
 
 use crate::transformations::{
-    MetamorphicTransformation, add_relational_node::AddRelationalNode,
-    annotated_dependency_graphs::AnnotatedDependencyGraph,
+    MetamorphicTransformation, add_fact_node_and_edge::AddFactNodeAndEdge,
+    add_relational_node::AddRelationalNode, annotated_dependency_graphs::AnnotatedDependencyGraph,
     transformation_types::TransformationTypes,
 };
 
@@ -29,7 +29,7 @@ impl<'a, 'b> TransformationManager<'a, 'b> {
             transformation_types,
         }
     }
-/* 
+    /*
     pub fn get_next_metamorphic_transformation(
         &'a mut self,
     ) -> Option<SomeMetamorphicTransformation<'a, 'a>> {
@@ -85,16 +85,13 @@ impl<'a, 'b> Iterator for IterateMetamorphicTransformations<'a, 'b> {
         let adg = self.adg.take();
         let rng = self.rng.take();
         let transformation_type = self.transformation_type.take();
-        SomeMetamorphicTransformation::new_opt(
-            adg,
-            rng,
-            transformation_type,
-        )
+        SomeMetamorphicTransformation::new_opt(adg, rng, transformation_type)
     }
 }
 
 pub enum SomeMetamorphicTransformation<'a, 'b> {
     AddRelationalNode(AddRelationalNode<'a, 'b>),
+    AddFactNodeAndEdge(AddFactNodeAndEdge<'a, 'b>),
     Default(),
 }
 impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
@@ -108,6 +105,11 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
                 if let Some(transformation_type) = transformation_type {
                     match rng.random_range(0..NUM_TRANSFORMATION_TYPES) {
                         0 => Some(Self::AddRelationalNode(AddRelationalNode::new(
+                            adg,
+                            rng,
+                            transformation_type,
+                        )?)),
+                        1 => Some(Self::AddFactNodeAndEdge(AddFactNodeAndEdge::new(
                             adg,
                             rng,
                             transformation_type,
@@ -131,7 +133,7 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
     }
 }
 // ^^ add here
-static NUM_TRANSFORMATION_TYPES: i32 = 1;
+static NUM_TRANSFORMATION_TYPES: i32 = 2;
 // vv and here
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation<'a, 'b> {
     fn new(
@@ -141,6 +143,11 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
     ) -> Option<Self> {
         match rng.random_range(0..NUM_TRANSFORMATION_TYPES) {
             0 => Some(Self::AddRelationalNode(AddRelationalNode::new(
+                adg,
+                rng,
+                transformation_type,
+            )?)),
+            1 => Some(Self::AddFactNodeAndEdge(AddFactNodeAndEdge::new(
                 adg,
                 rng,
                 transformation_type,
@@ -172,6 +179,7 @@ impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
                 exit(1);
             }
             Self::AddRelationalNode(t) => t.apply(program),
+            Self::AddFactNodeAndEdge(t) => t.apply(program),
         }
     }
 }

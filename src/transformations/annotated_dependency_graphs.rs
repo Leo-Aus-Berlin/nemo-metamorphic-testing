@@ -552,7 +552,7 @@ impl<'a> AnnotatedDependencyGraph {
         nodeIndex.weight()
     } */
 
-    fn add_rel_edge(
+    pub fn add_rel_edge(
         &mut self,
         rule_name: Option<String>,
         sign: Sign,
@@ -573,12 +573,13 @@ impl<'a> AnnotatedDependencyGraph {
         )
     }
 
-    fn add_fact_node(&mut self, name: String) -> NodeIndex {
+
+    pub fn add_fact_node(&mut self, name: String) -> NodeIndex {
         self.graph
             .add_node(ADGNode::ADGFactNode(ADGFactNode { name: name }))
     }
 
-    fn add_fact_edge(&mut self, fact_node: NodeIndex, rel_node: NodeIndex) {
+    pub fn add_fact_edge(&mut self, fact_node: NodeIndex, rel_node: NodeIndex) {
         self.graph
             .add_edge(fact_node, rel_node, ADGEdge::ADGFactEdge(ADGFactEdge {}));
     }
