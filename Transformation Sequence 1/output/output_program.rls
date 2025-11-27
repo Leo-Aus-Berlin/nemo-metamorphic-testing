@@ -1,0 +1,17 @@
+@import choseU :- csv{resource: "data/choseU.csv", format: (string, string)}.
+@import choseB :- csv{resource: "data/choseB.csv", format: (string, string)}.
+@import elevator :- csv{resource: "data/elevator.csv", format: string}.
+@import platformHeight :- csv{resource: "data/platformHeight.csv", format: (string, integer)}.
+@import allowedDiff :- csv{resource: "data/allowedDiff.csv", format: (integer, integer)}.
+validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) .
+validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), ~mustChangeAt(?y) .
+validC(?x, ?y) :- ~choseU(?x, ?y), choseB(?x, ?y) .
+validC(?x, ?y) :- choseU(?x, ?y), ~choseB(?x, ?y) .
+canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
+tooLargeGap(?y) :- platformHeight(?y, ?h), ~allowedDiff(?h, trainHeight) .
+mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) .
+mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) .
+seeTVTower(s) :- choseB(?x, "alexanderplatz") .
+seeTVTower(s) :- choseB("alexanderplatz", ?x) .
+success(s) :- validC("jungfernheide", "kottbusserTor") .
+@export success :- csv{}.
