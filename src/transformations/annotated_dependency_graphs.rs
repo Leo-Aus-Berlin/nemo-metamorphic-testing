@@ -6,19 +6,24 @@ use std::{
 };
 
 use nemo::rule_model::{
-    components::{self, ComponentIdentity, IterablePrimitives, rule::Rule, statement, tag::Tag},
+    components::{
+        self, rule::Rule, statement, tag::Tag, term::primitive::ground::GroundTerm,
+        ComponentIdentity, IterablePrimitives,
+    },
     pipeline::id::ProgramComponentId,
-    programs::{ProgramRead, handle::ProgramHandle},
-};
-use petgraph::{
-    Directed, Graph,
-    graph::{EdgeIndex, Edges},
-    visit::{EdgeRef, NodeRef},
+    programs::{handle::ProgramHandle, ProgramRead},
 };
 use petgraph::{
     dot::Dot,
     graph::{EdgeReference, NodeIndex},
 };
+use petgraph::{
+    graph::{EdgeIndex, Edges},
+    visit::{EdgeRef, NodeRef},
+    Directed, Graph,
+};
+use rand::RngCore;
+use rand_chacha::ChaCha8Rng;
 
 #[derive(Clone, Copy)]
 pub enum Ancestry {
@@ -237,17 +242,35 @@ pub struct AnnotatedDependencyGraph {
     predicates: Vec<Tag>,
     predicate_ids: HashMap<Tag, NodeIndex>,
     output_predicate: Option<Tag>,
+    ground_terms: Vec<GroundTerm>,
 }
 
 // TODO: Multi-edges wichtig!
 impl<'a> AnnotatedDependencyGraph {
     pub fn from_program(program: &ProgramHandle) -> Option<Self> {
         let predicates = program.all_predicates().into_iter().collect::<Vec<Tag>>();
+
+        // Find ground terms, which might be the same as constant symbols
+        // TODO: check this
+        let mut ground_terms: Vec<GroundTerm> = Vec::new();
+        for fact in program.facts() {
+            for term in fact.terms() {
+                for prim_term in term.primitive_terms() {
+                    match prim_term {
+                        nemo::rule_model::components::term::primitive::Primitive::Ground(g) => {
+                            ground_terms.push(g.clone());
+                        }
+                        nemo::rule_model::components::term::primitive::Primitive::Variable(_) => {}
+                    }
+                }
+            }
+        }
         let mut adg: AnnotatedDependencyGraph = AnnotatedDependencyGraph {
             graph: Graph::default(),
             predicates: predicates.clone(),
             predicate_ids: HashMap::new(),
             output_predicate: None,
+            ground_terms,
         };
         //println!("{:#?}", adg.predicates);
         adg.init_rel_nodes();
@@ -506,7 +529,9 @@ impl<'a> AnnotatedDependencyGraph {
         //self.graph.update_edge(a, b, weight)
     }
 
+    // Add a new relational node with this tag. Register the relational name.
     pub fn add_rel_node(&mut self, tag: &Tag) {
+        self.predicates.push(tag.clone());
         self.predicate_ids.insert(
             tag.clone(),
             self.graph
@@ -516,6 +541,70 @@ impl<'a> AnnotatedDependencyGraph {
                     ancestry: None,
                 })),
         );
+    }
+
+    /// Get the ground terms that appear in the program.
+    pub fn get_ground_terms(&'a self) -> &'a Vec<GroundTerm> {
+        &self.ground_terms
+    }
+
+    /// Get and register a new string constant.
+    pub fn get_and_register_new_string_constant(&'a mut self, rng: &'a mut ChaCha8Rng) -> GroundTerm {
+        let mut new_constant: GroundTerm = GroundTerm::from("failedNewConstantGen");
+        let mut found_new_name: bool = false;
+        while !found_new_name {
+            let number: u32 = rng.next_u32();
+            let temp_name: String = String::from("c_") + number.to_string().as_str();
+            let temp_gt = GroundTerm::from(temp_name);
+            if self
+                .ground_terms
+                .iter()
+                .all(|gt| temp_gt.value() != gt.value())
+            {
+                new_constant = temp_gt;
+                found_new_name = true;
+            }
+        }
+        self.ground_terms.push(new_constant.clone());
+        new_constant
+    }
+
+    /// Get and register a new integer constant.
+    pub fn get_and_register_new_integer_constant(&'a mut self, rng: &'a mut ChaCha8Rng) -> GroundTerm {
+        let mut new_constant: GroundTerm = GroundTerm::from("failedNewConstantGen");
+        let mut found_new_name: bool = false;
+        while !found_new_name {
+            let temp_gt = GroundTerm::from(rng.next_u64());
+            if self
+                .ground_terms
+                .iter()
+                .all(|gt| temp_gt.value() != gt.value())
+            {
+                new_constant = temp_gt;
+                found_new_name = true;
+            }
+        }
+        self.ground_terms.push(new_constant.clone());
+        new_constant
+    }
+
+    /// Get a new relation name. Does not register the relation name in the adg.
+    pub fn get_new_relation_name(&'a mut self, rng: &'a mut ChaCha8Rng) -> String {
+        
+        let mut new_relation_name: String = String::from("R_");
+        let mut found_new_name: bool = false;
+        while !found_new_name {
+            let number: u32 = rng.next_u32();
+            let temp_name: String = new_relation_name.clone() + number.to_string().as_str();
+            if self.predicates
+                .iter()
+                .all(|pred| pred.name() != temp_name)
+            {
+                new_relation_name = temp_name;
+                found_new_name = true;
+            }
+        }
+        new_relation_name
     }
 
     /// Get a predicates `nodeIndex` based on its tag (= name)
@@ -573,7 +662,6 @@ impl<'a> AnnotatedDependencyGraph {
         )
     }
 
-
     pub fn add_fact_node(&mut self, name: String) -> NodeIndex {
         self.graph
             .add_node(ADGNode::ADGFactNode(ADGFactNode { name: name }))
@@ -603,9 +691,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     // Get those relational nodes with positive or none ancestry
-    pub fn get_leq_positive_ancestry_relational_nodes(
-        &self,
-    ) -> Vec<Tag> {
+    pub fn get_leq_positive_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
@@ -623,9 +709,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     // Get those relational nodes with positive ancestry
-    pub fn get_positive_ancestry_relational_nodes(
-        &'a self,
-    ) -> Vec<Tag> {
+    pub fn get_positive_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
@@ -643,9 +727,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     // Get those relational nodes with negative or none ancestry
-    pub fn get_leq_negative_ancestry_relational_nodes(
-        &'a self,
-    ) -> Vec<Tag> {
+    pub fn get_leq_negative_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
@@ -663,9 +745,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     // Get those relational nodes with negative ancestry
-    pub fn get_negative_ancestry_relational_nodes(
-        &'a self,
-    ) -> Vec<Tag> {
+    pub fn get_negative_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
@@ -683,9 +763,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     // Get those relational nodes with none ancestry
-    pub fn get_none_ancestry_relational_nodes(
-        &'a self,
-    ) -> Vec<Tag> {
+    pub fn get_none_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,

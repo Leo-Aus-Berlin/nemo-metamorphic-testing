@@ -2,8 +2,11 @@ use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::fact::Fact;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::Term;
+use nemo::rule_model::components::term::primitive::ground::GroundTerm;
+use nemo::rule_model::components::term::primitive::Primitive;
 use nemo::rule_model::components::term::tuple::Tuple;
+use nemo::rule_model::components::term::Term;
+use nemo::rule_model::components::IterablePrimitives;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
@@ -12,14 +15,14 @@ use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::term_list;
-use rand::RngCore;
 use rand::seq::{IndexedRandom, IteratorRandom};
+use rand::{Rng, RngCore};
 
-use crate::transformations::MetamorphicTransformation;
 use crate::transformations::annotated_dependency_graphs::{
     ADGNode, ADGRelationalNode, AnnotatedDependencyGraph,
 };
 use crate::transformations::transformation_types::TransformationTypes;
+use crate::transformations::MetamorphicTransformation;
 
 /// Add a fact node with a fact edge to some
 /// random exisiting relational node.
@@ -71,18 +74,61 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
 impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
+        // Copy the program
         let mut commit: ProgramCommit = program.fork_full();
-        let rel_node = self.adg.get_rel_node(&self.chosen_to_rel_node);
-        let arity = program.arities()[&self.chosen_to_rel_node];
-        
-        let terms: Vec<Term> = vec![Term::constant("name_1")];
-        let terms_str = terms[0].to_string().clone();
+
+        // Construct a fact tuple (Vec<Term>) of the correct arity
+        println!("{:#?}",program.arities());
+        println!("{:#?}",&self.chosen_to_rel_node);
+        let arity: Option<&usize> = program.arities().get(&self.chosen_to_rel_node);
+        // If the relation is new it does not have an arity yet. Then we
+        // randomly assign it an arity, which hopefully after we add the
+        // fact to the commit the program stores.
+        let arity = arity.unwrap_or(self.rng.random_range(1..6));
+        let mut terms: Vec<Term> = Vec::new();
+        for _index in 0..*arity {
+            match self.rng.random_bool(0.5) {
+                // existing constant
+                true => match self.adg.get_ground_terms().choose(self.rng) {
+                    None => {
+                        // New constant instead
+                        let new_gt = self.adg.get_and_register_new_integer_constant(self.rng);
+                        terms.push(Term::Primitive(Primitive::Ground(new_gt)));
+                    }
+                    Some(gt) => terms.push(Term::Primitive(Primitive::Ground(gt.clone()))),
+                },
+                // new constant
+                false => {
+                    match self.rng.random_bool(0.5) {
+                        // new constant name
+                        true => {
+                            let new_gt = self.adg.get_and_register_new_string_constant(self.rng);
+                            terms.push(Term::Primitive(Primitive::Ground(new_gt)));
+                        }
+                        // new integer
+                        false => {
+                            let new_gt = self.adg.get_and_register_new_integer_constant(self.rng);
+                            terms.push(Term::Primitive(Primitive::Ground(new_gt)));
+                        }
+                    }
+                }
+            }
+        }
+
+        let mut terms_str = String::from("(");
+        for term in terms.clone() {
+            terms_str += &term.to_string();
+        }
+        terms_str += ")";
         //let new_tuple : Tuple = Tuple::new([terms]);
         //let new_rule: Rule = Rule::new(vec![Atom::new(self.chosen_to_rel_node,[terms])], Vec::new());
-        let fact : Fact = Fact::new(self.chosen_to_rel_node.clone(),terms);
+        let fact: Fact = Fact::new(self.chosen_to_rel_node.clone(), terms);
         commit.add_fact(fact);
         let fact_node = self.adg.add_fact_node(terms_str.clone());
-        self.adg.add_fact_edge(fact_node, self.adg.get_rel_node_tag(&self.chosen_to_rel_node));
+        self.adg.add_fact_edge(
+            fact_node,
+            self.adg.get_rel_node_tag(&self.chosen_to_rel_node),
+        );
         println!("Added new fact node {}", terms_str);
 
         commit.submit()

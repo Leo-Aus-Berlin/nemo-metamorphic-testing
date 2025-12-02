@@ -1,0 +1,5 @@
+digraph {
+    0 [ label = "(R, i, anc)" ]
+    1 [ label = "(s1,s2, ... ,sn)" ]
+    1 -> 0 [ label = "fact edge" ]
+}

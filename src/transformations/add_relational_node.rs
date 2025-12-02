@@ -35,20 +35,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalNode<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
         let commit: ProgramCommit = program.fork_full();
-        let mut new_relation_name: String = String::from("R_");
-        let mut found_new_name: bool = false;
-        while !found_new_name {
-            let number: u32 = self.rng.next_u32();
-            let temp_name: String = new_relation_name.clone() + number.to_string().as_str();
-            if program
-                .all_predicates()
-                .iter()
-                .all(|pred| pred.name() != temp_name)
-            {
-                new_relation_name = temp_name;
-                found_new_name = true;
-            }
-        }
+        let new_relation_name: String = self.adg.get_new_relation_name(self.rng);
         // No rule yet, will introduce these later
         // let new_rule: Rule = Rule::new(vec![head.clone()], rule.body().clone());
 
@@ -56,7 +43,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalNode<'a, 'b> {
         let tag: Tag = Tag::new(new_relation_name);
         self.adg.add_rel_node(&tag);
         println!("Added new relation of name {}", tag);
-
+        
         commit.submit()
     }
 }
