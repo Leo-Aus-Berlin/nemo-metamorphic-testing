@@ -116,16 +116,18 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
             }
         }
 
+        // Build name of the fact node
         let mut terms_str = String::from("(");
         let mut first = true;
         for term in terms.clone() {
             if !first {
-                terms_str += ", "
+                terms_str += ", ";
                 first = false;
             }
             terms_str += &term.to_string();
         }
         terms_str += ")";
+
         //let new_tuple : Tuple = Tuple::new([terms]);
         //let new_rule: Rule = Rule::new(vec![Atom::new(self.chosen_to_rel_node,[terms])], Vec::new());
         let fact: Fact = Fact::new(self.chosen_to_rel_node.clone(), terms);
