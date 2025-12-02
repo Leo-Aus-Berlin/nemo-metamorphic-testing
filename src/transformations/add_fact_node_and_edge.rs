@@ -78,15 +78,16 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
         let mut commit: ProgramCommit = program.fork_full();
 
         // Construct a fact tuple (Vec<Term>) of the correct arity
-        println!("{:#?}",program.arities());
-        println!("{:#?}",&self.chosen_to_rel_node);
-        let arity: Option<&usize> = program.arities().get(&self.chosen_to_rel_node);
+        //println!("{:#?}",program.arities());
+        //println!("{:#?}",&self.chosen_to_rel_node);
+        let arities = program.arities();
+        let arity: Option<&usize> = arities.get(&self.chosen_to_rel_node);
         // If the relation is new it does not have an arity yet. Then we
         // randomly assign it an arity, which hopefully after we add the
         // fact to the commit the program stores.
-        let arity = arity.unwrap_or(self.rng.random_range(1..6));
+        let arity : usize = *arity.unwrap_or(&self.rng.random_range(1..6));
         let mut terms: Vec<Term> = Vec::new();
-        for _index in 0..*arity {
+        for _index in 0..arity {
             match self.rng.random_bool(0.5) {
                 // existing constant
                 true => match self.adg.get_ground_terms().choose(self.rng) {
@@ -116,7 +117,12 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
         }
 
         let mut terms_str = String::from("(");
+        let mut first = true;
         for term in terms.clone() {
+            if !first {
+                terms_str += ", "
+                first = false;
+            }
             terms_str += &term.to_string();
         }
         terms_str += ")";
