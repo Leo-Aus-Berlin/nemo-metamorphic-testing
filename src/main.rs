@@ -137,13 +137,16 @@ fn main() {
                 }
             }
 
+            println!("Beginning Metamorphic transformations");
+            println!("Oracle: {transformation_types}    Number: {NUM_TRANSFORMATIONS}");
+
             // The available transformations
             /* let mut transformation_manager =
                            TransformationManager::new(&mut adg, &mut rng, transformation_types);
             */
             // Perform NUM_TRANSFORMATIONS transformations
             for repetition in 1..=NUM_TRANSFORMATIONS {
-                println!("Starting transformation number {repetition}");
+                println!("{repetition} / {NUM_TRANSFORMATIONS}");
                 let trans_types: TransformationTypes = transformation_types.clone();
                 let mut transformation = SomeMetamorphicTransformation::Default();
                 let mut iter =

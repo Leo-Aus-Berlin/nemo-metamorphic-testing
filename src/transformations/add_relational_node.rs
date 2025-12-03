@@ -4,9 +4,6 @@ use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use nemo::rule_model::programs::ProgramRead;
-
-use rand::RngCore;
 
 use crate::transformations::MetamorphicTransformation;
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
@@ -34,15 +31,16 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalNode<'a, 'b> {
 impl<'a, 'b> ProgramTransformation for AddRelationalNode<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
+        println!("  Add Relational Node");
         let commit: ProgramCommit = program.fork_full();
-        let new_relation_name: String = self.adg.get_new_relation_name(self.rng);
+        let new_relation_name: String = self.adg.get_new_relation_name();
         // No rule yet, will introduce these later
         // let new_rule: Rule = Rule::new(vec![head.clone()], rule.body().clone());
 
         // Add a new relational node
         let tag: Tag = Tag::new(new_relation_name);
         self.adg.add_rel_node(&tag);
-        println!("Added new relation of name {}", tag);
+        println!("  Added new relation {}", tag);
         
         commit.submit()
     }

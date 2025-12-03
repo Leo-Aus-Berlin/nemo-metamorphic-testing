@@ -1,7 +1,6 @@
 use std::{
     collections::HashMap,
     fmt::{Debug, Formatter},
-    iter::Filter,
     process::exit,
 };
 
@@ -243,6 +242,9 @@ pub struct AnnotatedDependencyGraph {
     predicate_ids: HashMap<Tag, NodeIndex>,
     output_predicate: Option<Tag>,
     ground_terms: Vec<GroundTerm>,
+    last_str_name: u64,
+    last_iri_name: u64,
+    last_rel_name: u64,
 }
 
 // TODO: Multi-edges wichtig!
@@ -265,12 +267,31 @@ impl<'a> AnnotatedDependencyGraph {
                 }
             }
         }
+        for rule in program.rules() {
+            for atom in rule.body_atoms() {
+                for term in atom.terms() {
+                    for prim_term in term.primitive_terms() {
+                        match prim_term {
+                            nemo::rule_model::components::term::primitive::Primitive::Ground(g) => {
+                                ground_terms.push(g.clone());
+                            }
+                            nemo::rule_model::components::term::primitive::Primitive::Variable(
+                                _,
+                            ) => {}
+                        }
+                    }
+                }
+            }
+        }
         let mut adg: AnnotatedDependencyGraph = AnnotatedDependencyGraph {
             graph: Graph::default(),
             predicates: predicates.clone(),
             predicate_ids: HashMap::new(),
             output_predicate: None,
             ground_terms,
+            last_iri_name: 0,
+            last_str_name: 0,
+            last_rel_name: 0,
         };
         //println!("{:#?}", adg.predicates);
         adg.init_rel_nodes();
@@ -548,13 +569,26 @@ impl<'a> AnnotatedDependencyGraph {
         &self.ground_terms
     }
 
+    /// Get the next string and increase str name by 1
+    fn next_str_name(&'a mut self) -> String {
+        self.last_str_name+=1;
+        String::from("str_") + &self.last_str_name.to_string()
+    }
+
+    /// Get the next constant name and increase it 1
+    fn next_iri_name(&'a mut self) -> String {
+        self.last_iri_name+=1;
+        String::from("c_") + &self.last_iri_name.to_string()
+    }
+
     /// Get and register a new string constant.
-    pub fn get_and_register_new_string_constant(&'a mut self, rng: &'a mut ChaCha8Rng) -> GroundTerm {
+    pub fn get_and_register_new_string_constant(
+        &'a mut self,
+    ) -> GroundTerm {
         let mut new_constant: GroundTerm = GroundTerm::from("failedNewConstantGen");
         let mut found_new_name: bool = false;
         while !found_new_name {
-            let number: u32 = rng.next_u32();
-            let temp_name: String = String::from("c_") + number.to_string().as_str();
+            let temp_name: String = self.next_str_name();
             let temp_gt = GroundTerm::from(temp_name);
             if self
                 .ground_terms
@@ -569,11 +603,37 @@ impl<'a> AnnotatedDependencyGraph {
         new_constant
     }
 
+    /// Get and register a new string constant.
+    pub fn get_and_register_new_iri_constant(
+        &'a mut self,
+    ) -> GroundTerm {
+        let mut new_constant: GroundTerm = GroundTerm::constant("failedNewConstantGen");
+        let mut found_new_name: bool = false;
+        while !found_new_name {
+            let temp_name: String = self.next_iri_name();
+            let temp_gt = GroundTerm::constant(&temp_name);
+            if self
+                .ground_terms
+                .iter()
+                .all(|gt| temp_gt.value() != gt.value())
+            {
+                new_constant = temp_gt;
+                found_new_name = true;
+            }
+        }
+        self.ground_terms.push(new_constant.clone());
+        new_constant
+    }
+
     /// Get and register a new integer constant.
-    pub fn get_and_register_new_integer_constant(&'a mut self, rng: &'a mut ChaCha8Rng) -> GroundTerm {
+    pub fn get_and_register_new_integer_constant(
+        &'a mut self,
+        rng: &'a mut ChaCha8Rng,
+    ) -> GroundTerm {
         let mut new_constant: GroundTerm = GroundTerm::from("failedNewConstantGen");
         let mut found_new_name: bool = false;
         while !found_new_name {
+            // TODO: currently no negative numbers
             let temp_gt = GroundTerm::from(rng.next_u64());
             if self
                 .ground_terms
@@ -588,18 +648,18 @@ impl<'a> AnnotatedDependencyGraph {
         new_constant
     }
 
+    fn next_rel_name(&'a mut self) -> String {
+        self.last_rel_name+=1;
+        String::from("R_") + &self.last_rel_name.to_string()
+    }
+    
     /// Get a new relation name. Does not register the relation name in the adg.
-    pub fn get_new_relation_name(&'a mut self, rng: &'a mut ChaCha8Rng) -> String {
-        
+    pub fn get_new_relation_name(&'a mut self) -> String {
         let mut new_relation_name: String = String::from("R_");
         let mut found_new_name: bool = false;
         while !found_new_name {
-            let number: u32 = rng.next_u32();
-            let temp_name: String = new_relation_name.clone() + number.to_string().as_str();
-            if self.predicates
-                .iter()
-                .all(|pred| pred.name() != temp_name)
-            {
+            let temp_name: String = self.next_rel_name();
+            if self.predicates.iter().all(|pred| pred.name() != temp_name) {
                 new_relation_name = temp_name;
                 found_new_name = true;
             }
