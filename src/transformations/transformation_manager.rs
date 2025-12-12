@@ -11,7 +11,7 @@ use crate::transformations::{
     add_relational_node::AddRelationalNode, annotated_dependency_graphs::AnnotatedDependencyGraph,
     transformation_types::TransformationTypes,
 };
-
+/* 
 pub struct TransformationManager<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,
@@ -60,7 +60,7 @@ impl<'a, 'b> TransformationManager<'a, 'b> {
         Some(next_transform)
     }
 } */
-
+ */
 pub struct IterateMetamorphicTransformations<'a, 'b> {
     adg: Option<&'a mut AnnotatedDependencyGraph>,
     rng: Option<&'b mut rand_chacha::ChaCha8Rng>,

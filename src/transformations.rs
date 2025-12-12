@@ -14,6 +14,7 @@ pub mod select_random_output_predicate;
 pub mod testing_transformation;
 pub mod transformation_manager;
 pub mod transformation_types;
+pub mod add_relational_edge_new_rule;
 mod util;
 // pub mod testing_transformation;
 

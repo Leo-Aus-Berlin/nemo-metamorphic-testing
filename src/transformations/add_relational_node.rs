@@ -11,8 +11,6 @@ use crate::transformations::transformation_types::TransformationTypes;
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
-/// May not terminate if we have u32 size relational names
-/// in the program.
 pub struct AddRelationalNode<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,

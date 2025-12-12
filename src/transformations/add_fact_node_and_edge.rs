@@ -140,7 +140,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
         let fact_node = self.adg.add_fact_node(terms_str.clone());
         self.adg.add_fact_edge(
             fact_node,
-            self.adg.get_rel_node_tag(&self.chosen_to_rel_node),
+            self.adg.get_rel_node_index(&self.chosen_to_rel_node),
         );
         println!("  Added new fact {}({}).", self.chosen_to_rel_node, terms_str);
 
