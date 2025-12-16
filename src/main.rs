@@ -35,7 +35,7 @@ lazy_static! {
 }
  */
 fn main() {
-    const NUM_TRANSFORMATIONS: i32 = 32;
+    const NUM_TRANSFORMATIONS: i32 = 3;
     let seed: u64 = 204978523408952734;
     let transformation_types: TransformationTypes = TransformationTypes::EXP;
     println!("Using seed: {}", seed);

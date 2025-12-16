@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use nemo::rule_model::components::ComponentIdentity;
 use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
@@ -19,7 +20,7 @@ use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 use rand::{Rng, random};
 
 use crate::transformations::MetamorphicTransformation;
-use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
+use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
 
 /// Add a relational node with a new relational name and no
@@ -30,6 +31,7 @@ pub struct AddRelationalEdgeNewRule<'a, 'b> {
     chosen_head_rel: Tag,
     chosen_pos_body_rel: Vec<Tag>,
     chosen_neg_body_rel: Vec<Tag>,
+    transformation_type: TransformationTypes,
 }
 
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 'b> {
@@ -120,6 +122,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 
             chosen_head_rel,
             chosen_pos_body_rel,
             chosen_neg_body_rel,
+            transformation_type,
         })
     }
 }
@@ -200,6 +203,8 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
             .choose_multiple(self.rng, head_arity);
         head_vars.shuffle(self.rng);
 
+        let head: Vec<Atom> = vec![Atom::new(self.chosen_head_rel.clone(), head_vars.clone())];
+
         // How many vars appear in the body?
         let mut count_pos_body_vars = self
             .chosen_pos_body_rel
@@ -233,7 +238,8 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
             body_var_assignments.insert(loc, Some(head_var.clone()));
         } // Now each head variable appears somewhere in the body!
 
-        // Collect possible values for body vars to assign all other places!
+        // Collect possible values for body vars to assign
+        // all other body locations with no var yet!
         let mut body_var_options: Vec<Term> = head_vars.clone();
         // 33% chance of var that doesn't appear in the head, min 1
         for ii in 1..=(usize::min(head_arity / 3, 1)) {
@@ -243,11 +249,117 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
             ))))
         }
         // 10% chance of constant symbol that appears somewhere
+        let constant_symbols: Vec<GroundTerm> = self
+            .adg
+            .get_ground_terms()
+            .iter()
+            .cloned()
+            .choose_multiple(self.rng, usize::min(head_var_options.len() / 10, 1));
+        let mut constant_symbols: Vec<Term> = constant_symbols
+            .iter()
+            .map(|gt| Term::Primitive(Primitive::Ground(gt.clone())))
+            .collect();
+        body_var_options.append(&mut constant_symbols);
 
-        let head: Vec<Atom> = Vec::new();
-        let body: Vec<Literal> = Vec::new();
+        // We shouldn't use this to randomly select because we want to allow for duplicates!
+        // body_var_options.shuffle(self.rng);
 
-        let rule = Rule::new(head, body);
+        // Assign some variable or constant for each body location missing an assignment
+        for (_, maybe_var) in body_var_assignments.iter_mut() {
+            if maybe_var.is_none() {
+                *maybe_var = body_var_options.choose(self.rng).cloned();
+            }
+        }
+        for value in body_var_assignments.values() {
+            assert_ne!(value, &None);
+        }
+
+        let mut body: Vec<Literal> = Vec::new();
+
+        let mut curr_loc = 0;
+        // Build the pos body
+        for rel_id in 0..self.chosen_pos_body_rel.len() {
+            // collect the subterm for this relation of id rel_id
+            let mut subterms: Vec<Term> = Vec::new();
+            for id in curr_loc..curr_loc + arities[&self.chosen_pos_body_rel[rel_id]] {
+                subterms.push(
+                    body_var_assignments[&id]
+                        .clone()
+                        .expect("Missing assignment!"),
+                )
+            }
+            // the next one will have to use different positions
+            curr_loc += arities[&self.chosen_pos_body_rel[rel_id]];
+            // Literal for rel complete
+            let literal = Literal::Positive(Atom::new(
+                self.chosen_pos_body_rel[rel_id].clone(),
+                subterms,
+            ));
+            body.push(literal);
+        }
+
+        // Negative literals, must appear in the body, which is fixed now
+        let mut neg_var_options: Vec<Term> = body_var_assignments
+            .values()
+            .map(|v| v.clone().expect("Var not initialised"))
+            .collect();
+        // 10% chance of constant symbol that appears somewhere
+        let constant_symbols: Vec<GroundTerm> = self
+            .adg
+            .get_ground_terms()
+            .iter()
+            .cloned()
+            .choose_multiple(self.rng, usize::min(head_var_options.len() / 10, 1));
+        let mut constant_symbols: Vec<Term> = constant_symbols
+            .iter()
+            .map(|gt| Term::Primitive(Primitive::Ground(gt.clone())))
+            .collect();
+        neg_var_options.append(&mut constant_symbols);
+
+        for rel in self.chosen_neg_body_rel.iter() {
+            let mut subterms: Vec<Term> = Vec::new();
+            for _ in 0..arities[rel] {
+                subterms.push(
+                    neg_var_options
+                        .choose(self.rng)
+                        .expect("Var not initialised")
+                        .clone(),
+                );
+            }
+            let literal = Literal::Negative(Atom::new(rel.clone(), subterms));
+            body.push(literal)
+        }
+
+        // Construct the rule and name it
+        let mut rule = Rule::new(head, body);
+        let rule_name = self.adg.next_rule_name(self.transformation_type);
+        rule.set_name(rule_name.as_str());
+
+        // Add the relational edges
+        for rel in self.chosen_pos_body_rel {
+            // pos
+            self.adg.add_rel_edge(
+                Some(rule_name.clone()),
+                Sign::Positive,
+                self.adg.get_rel_node_index(&rel),
+                self.adg.get_rel_node_index(&self.chosen_head_rel),
+                rule.id(),
+            );
+        }
+        for rel in self.chosen_neg_body_rel {
+            // neg
+            self.adg.add_rel_edge(
+                Some(rule_name.clone()),
+                Sign::Negative,
+                self.adg.get_rel_node_index(&rel),
+                self.adg.get_rel_node_index(&self.chosen_head_rel),
+                rule.id(),
+            );
+        }
+        // Because we add the relational edges we should just be able to re-compute
+        // the ancestry and inverse stratum from the head node and it correctly computes the changes
+        self.adg.update_ancestry_and_inverse_stratum_from(self.chosen_head_rel);
+
         commit.add_rule(rule);
         commit.submit()
     }

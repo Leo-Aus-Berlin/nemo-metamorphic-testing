@@ -18,12 +18,11 @@ use petgraph::{
     stable_graph::{EdgeIndex, Edges},
     visit::EdgeRef,
 };
-use petgraph::{
-    dot::Dot,
-    graph::NodeIndex,
-};
+use petgraph::{dot::Dot, graph::NodeIndex};
 use rand::RngCore;
 use rand_chacha::ChaCha8Rng;
+
+use crate::transformations::transformation_types;
 
 #[derive(Clone, Copy)]
 pub enum Ancestry {
@@ -254,6 +253,7 @@ pub struct AnnotatedDependencyGraph {
     last_str_name: u32, // NodeIndex is u32 so no point in doing u64
     last_iri_name: u32,
     last_rel_name: u32,
+    last_rule_name: u32,
 }
 
 // TODO: Multi-edges wichtig!
@@ -303,6 +303,7 @@ impl<'a> AnnotatedDependencyGraph {
             last_iri_name: 0,
             last_str_name: 0,
             last_rel_name: 0,
+            last_rule_name: 0,
         };
         //println!("{:#?}", adg.predicates);
         // Relational nodes
@@ -384,8 +385,8 @@ impl<'a> AnnotatedDependencyGraph {
         path.push_str(".dot");
         std::fs::write(path, format!("{:?}", basic_dot)).unwrap();
     }
-    
-    fn init_rel_nodes(&mut self, predicates : HashSet<Tag>) {
+
+    fn init_rel_nodes(&mut self, predicates: HashSet<Tag>) {
         for tag in predicates {
             self.add_rel_node(tag);
         }
@@ -393,12 +394,12 @@ impl<'a> AnnotatedDependencyGraph {
 
     /// Get n vector of the predicates appearing in the ADG
     pub fn get_predicates(&self) -> Vec<Tag> {
-        self.predicate_ids.keys().map(|tag |tag.clone()).collect()
+        self.predicate_ids.keys().map(|tag| tag.clone()).collect()
     }
 
     /// Get an iterator over the predicates appearing in the ADG
     pub fn get_predicates_iter(&self) -> impl Iterator<Item = Tag> {
-        self.predicate_ids.keys().map(|tag |tag.clone())
+        self.predicate_ids.keys().map(|tag| tag.clone())
     }
 
     /* /// Get a mutable iterator over the predicates appearing in the ADG
@@ -420,7 +421,6 @@ impl<'a> AnnotatedDependencyGraph {
     /// I.e. these nodes can be body literals of the corresponding sign for rules
     /// with head_node as their head
     pub fn get_body_literal_candidates(&self, head_node: NodeIndex) -> (Vec<Tag>, Vec<Tag>) {
-        
         // We can ignore inverse strata, as the below conditions are more precise.
         // Inverse strata would help us ignore the below computation for those nodes.
         // Because we chose to make this computation anyway we don't need to look inv. str..
@@ -584,6 +584,26 @@ impl<'a> AnnotatedDependencyGraph {
             }
         }
         println!("Ancestry and Inverse Stratum computation complete.");
+    }
+
+    /// Re-calculate ancestry and inverse stratum of the ADG starting in some node
+    pub fn update_ancestry_and_inverse_stratum_from(&mut self, node: Tag) {
+        let curr_weight_node = self.get_rel_node(&node);
+        let node_index = self.get_rel_node_index(&node);
+        println!(
+            "  Updating Ancestry and Inverse Stratum beginning in relational node {}",
+            curr_weight_node.tag.name()
+        );
+        self.set_ancestry_inverse_stratum(
+            node_index,
+            curr_weight_node
+                .inverse_stratum
+                .expect("Relational Node not initialised"),
+            curr_weight_node
+                .ancestry
+                .expect("Relational node not initialised"),
+        );
+        //println!("Ancestry and Inverse Stratum computation complete.");
     }
 
     fn set_ancestry_inverse_stratum(
@@ -827,6 +847,15 @@ impl<'a> AnnotatedDependencyGraph {
     fn next_rel_name(&'a mut self) -> String {
         self.last_rel_name += 1;
         String::from("R_") + &self.last_rel_name.to_string()
+    }
+
+    // Build the next rule name
+    pub fn next_rule_name(
+        &'a mut self,
+        oracle: transformation_types::TransformationTypes,
+    ) -> String {
+        self.last_rule_name += 1;
+        String::from("r_") + oracle.to_string().as_str() + "_" + &self.last_rule_name.to_string()
     }
 
     /// Get a new relation name. Does not register the relation name in the adg.
