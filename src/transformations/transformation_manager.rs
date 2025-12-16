@@ -7,9 +7,7 @@ use nemo::rule_model::{
 use rand::Rng;
 
 use crate::transformations::{
-    MetamorphicTransformation, add_fact_node_and_edge::AddFactNodeAndEdge,
-    add_relational_node::AddRelationalNode, annotated_dependency_graphs::AnnotatedDependencyGraph,
-    transformation_types::TransformationTypes,
+    MetamorphicTransformation, add_fact_node_and_edge::AddFactNodeAndEdge, add_relational_edge_new_rule::AddRelationalEdgeNewRule, add_relational_node::AddRelationalNode, annotated_dependency_graphs::AnnotatedDependencyGraph, transformation_types::TransformationTypes
 };
 /* 
 pub struct TransformationManager<'a, 'b> {
@@ -90,8 +88,9 @@ impl<'a, 'b> Iterator for IterateMetamorphicTransformations<'a, 'b> {
 }
 
 pub enum SomeMetamorphicTransformation<'a, 'b> {
-    AddRelationalNode(AddRelationalNode<'a, 'b>),
+    AddRelationalNode(AddRelationalNode<'a>),
     AddFactNodeAndEdge(AddFactNodeAndEdge<'a, 'b>),
+    AddRelationalEdgeNewRule(AddRelationalEdgeNewRule<'a,'b>),
     Default(),
 }
 impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
@@ -110,6 +109,11 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
                             transformation_type,
                         )?)),
                         1 => Some(Self::AddFactNodeAndEdge(AddFactNodeAndEdge::new(
+                            adg,
+                            rng,
+                            transformation_type,
+                        )?)),
+                        2 => Some(Self::AddRelationalEdgeNewRule(AddRelationalEdgeNewRule::new(
                             adg,
                             rng,
                             transformation_type,
@@ -133,7 +137,7 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
     }
 }
 // ^^ add here
-static NUM_TRANSFORMATION_TYPES: i32 = 2;
+static NUM_TRANSFORMATION_TYPES: i32 = 3;
 // vv and here
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation<'a, 'b> {
     fn new(
@@ -148,6 +152,11 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
                 transformation_type,
             )?)),
             1 => Some(Self::AddFactNodeAndEdge(AddFactNodeAndEdge::new(
+                adg,
+                rng,
+                transformation_type,
+            )?)),
+            2 => Some(Self::AddRelationalEdgeNewRule(AddRelationalEdgeNewRule::new(
                 adg,
                 rng,
                 transformation_type,
@@ -180,6 +189,7 @@ impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
             }
             Self::AddRelationalNode(t) => t.apply(program),
             Self::AddFactNodeAndEdge(t) => t.apply(program),
+            Self::AddRelationalEdgeNewRule(t) => t.apply(program),
         }
     }
 }

@@ -2,12 +2,11 @@ use std::{
     collections::{HashMap, HashSet, VecDeque},
     fmt::{Debug, Formatter},
     process::exit,
-    result,
 };
 
 use nemo::rule_model::{
     components::{
-        self, ComponentIdentity, IterablePrimitives, rule::Rule, statement, tag::Tag,
+        self, ComponentIdentity, IterablePrimitives, statement, tag::Tag,
         term::primitive::ground::GroundTerm,
     },
     pipeline::id::ProgramComponentId,
@@ -15,15 +14,13 @@ use nemo::rule_model::{
 };
 use petgraph::{
     Directed,
-    graph::Node,
     prelude::StableGraph,
-    stable_graph::{self, EdgeIndex, Edges},
-    visit::{self, EdgeRef, GraphBase, NodeRef, VisitMap},
+    stable_graph::{EdgeIndex, Edges},
+    visit::EdgeRef,
 };
 use petgraph::{
     dot::Dot,
-    graph::{EdgeReference, NodeIndex},
-    visit::IntoEdges,
+    graph::NodeIndex,
 };
 use rand::RngCore;
 use rand_chacha::ChaCha8Rng;
@@ -250,7 +247,7 @@ impl Debug for ADGEdge {
 
 pub struct AnnotatedDependencyGraph {
     graph: StableGraph<ADGNode, ADGEdge, Directed, u32>,
-    predicates: Vec<Tag>,
+    //predicates: Vec<&'a Tag>,
     predicate_ids: HashMap<Tag, NodeIndex>,
     output_predicate: Option<Tag>,
     ground_terms: Vec<GroundTerm>,
@@ -262,10 +259,11 @@ pub struct AnnotatedDependencyGraph {
 // TODO: Multi-edges wichtig!
 impl<'a> AnnotatedDependencyGraph {
     pub fn from_program(program: &ProgramHandle) -> Option<Self> {
-        let predicates = program.all_predicates().into_iter().collect::<Vec<Tag>>();
+        let predicates: HashSet<Tag> = program.all_predicates();
 
         // Find ground terms, which might be the same as constant symbols
         // TODO: check this
+        // ground terms from facts
         let mut ground_terms: Vec<GroundTerm> = Vec::new();
         for fact in program.facts() {
             for term in fact.terms() {
@@ -279,6 +277,7 @@ impl<'a> AnnotatedDependencyGraph {
                 }
             }
         }
+        // ground terms from rules
         for rule in program.rules() {
             for atom in rule.body_atoms() {
                 for term in atom.terms() {
@@ -295,9 +294,9 @@ impl<'a> AnnotatedDependencyGraph {
                 }
             }
         }
+        // base structure
         let mut adg: AnnotatedDependencyGraph = AnnotatedDependencyGraph {
             graph: StableGraph::default(),
-            predicates: predicates.clone(),
             predicate_ids: HashMap::new(),
             output_predicate: None,
             ground_terms,
@@ -306,7 +305,9 @@ impl<'a> AnnotatedDependencyGraph {
             last_rel_name: 0,
         };
         //println!("{:#?}", adg.predicates);
-        adg.init_rel_nodes();
+        // Relational nodes
+        adg.init_rel_nodes(predicates);
+        // Store rules!
         for statement in program.statements() {
             match statement {
                 statement::Statement::Fact(fact) => {
@@ -383,26 +384,27 @@ impl<'a> AnnotatedDependencyGraph {
         path.push_str(".dot");
         std::fs::write(path, format!("{:?}", basic_dot)).unwrap();
     }
-    fn init_rel_nodes(&mut self) {
-        for tag in self.predicates.clone() {
-            self.add_rel_node(&tag);
+    
+    fn init_rel_nodes(&mut self, predicates : HashSet<Tag>) {
+        for tag in predicates {
+            self.add_rel_node(tag);
         }
     }
 
-    /// Get an vector of the predicates appearing in the ADG
-    pub fn get_predicates(&self) -> &Vec<Tag> {
-        &self.predicates
+    /// Get n vector of the predicates appearing in the ADG
+    pub fn get_predicates(&self) -> Vec<Tag> {
+        self.predicate_ids.keys().map(|tag |tag.clone()).collect()
     }
 
     /// Get an iterator over the predicates appearing in the ADG
-    pub fn get_predicates_iter(&self) -> impl Iterator<Item = &Tag> {
-        self.predicates.iter()
+    pub fn get_predicates_iter(&self) -> impl Iterator<Item = Tag> {
+        self.predicate_ids.keys().map(|tag |tag.clone())
     }
 
-    /// Get a mutable iterator over the predicates appearing in the ADG
+    /* /// Get a mutable iterator over the predicates appearing in the ADG
     pub fn get_predicates_iter_mut(&mut self) -> impl Iterator<Item = &mut Tag> {
-        self.predicates.iter_mut()
-    }
+        self.predicate_ids.keys().map(|tag |tag.clone())
+    } */
 
     /// Return a breadth-first visit of the ADG
     pub fn get_bfs(
@@ -417,7 +419,7 @@ impl<'a> AnnotatedDependencyGraph {
     /// 2) a negative relational edge from this relation node to head_node
     /// I.e. these nodes can be body literals of the corresponding sign for rules
     /// with head_node as their head
-    pub fn get_body_literal_candidates(&self, head_node: NodeIndex) -> (Vec<&Tag>, Vec<&Tag>) {
+    pub fn get_body_literal_candidates(&self, head_node: NodeIndex) -> (Vec<Tag>, Vec<Tag>) {
         
         // We can ignore inverse strata, as the below conditions are more precise.
         // Inverse strata would help us ignore the below computation for those nodes.
@@ -425,11 +427,11 @@ impl<'a> AnnotatedDependencyGraph {
 
         // Positive body literal candidates must have no dataflow path
         // with a negative edge from head to body candidate
-        let mut body_rel_pos_opt: HashMap<&Tag, bool> =
-            HashMap::from_iter(self.get_predicates().iter().map(|tag| (tag, true)));
+        let mut body_rel_pos_opt: HashMap<Tag, bool> =
+            HashMap::from_iter(self.get_predicates_iter().map(|tag| (tag.clone(), true)));
         // Negative body literal candidates must have no dataflow path
         // from head to body candidate
-        let mut body_rel_neg_opt: HashMap<&Tag, bool> = body_rel_pos_opt.clone();
+        let mut body_rel_neg_opt: HashMap<Tag, bool> = body_rel_pos_opt.clone();
         // Because any dataflow path is enough to discredit a relational node
         // body_rel_neg_opt is the inverse of the set of visited rel nodes
         // and can be used to prevent running into loops
@@ -438,7 +440,7 @@ impl<'a> AnnotatedDependencyGraph {
         let mut visit_queue: VecDeque<(NodeIndex, bool)> = VecDeque::new();
         // Adding every node once is a good upper estimate. In case of many parallel edges
         // may not be sufficient
-        visit_queue.reserve(self.predicates.len() - 1);
+        visit_queue.reserve(self.predicate_ids.keys().len() - 1);
         visit_queue.push_back((head_node, false));
         while let Some((node, path_has_negative_already)) = visit_queue.pop_front() {
             let rel_node = match &self.graph[node] {
@@ -454,10 +456,10 @@ impl<'a> AnnotatedDependencyGraph {
 
             // We can discredit node as a negative body literal, as a path exists.
             // In case node = head_node also, as cannot draw negative rel edge self loop.
-            body_rel_neg_opt.insert(&rel_node.tag, false);
+            body_rel_neg_opt.insert(rel_node.tag.clone(), false);
             // The same goes for positive if we have a negative literal on the current path
             if path_has_negative_already {
-                body_rel_pos_opt.insert(&rel_node.tag, false);
+                body_rel_pos_opt.insert(rel_node.tag.clone(), false);
             }
 
             // Traverse the graph
@@ -502,10 +504,10 @@ impl<'a> AnnotatedDependencyGraph {
         (
             // true if still an option
             self.get_predicates_iter()
-                .filter(|&tag| body_rel_pos_opt[tag])
+                .filter(|tag| body_rel_pos_opt[tag])
                 .collect(),
             self.get_predicates_iter()
-                .filter(|&tag| body_rel_neg_opt[tag])
+                .filter(|tag| body_rel_neg_opt[tag])
                 .collect(),
         )
     }
@@ -729,13 +731,13 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     // Add a new relational node with this tag. Register the relational name.
-    pub fn add_rel_node(&mut self, tag: &Tag) {
-        self.predicates.push(tag.clone());
+    pub fn add_rel_node(&mut self, tag: Tag) {
+        //self.predicates.push(tag.clone());
         self.predicate_ids.insert(
             tag.clone(),
             self.graph
                 .add_node(ADGNode::ADGRelationalNode(ADGRelationalNode {
-                    tag: tag.clone(),
+                    tag: tag,
                     inverse_stratum: None,
                     ancestry: None,
                 })),
@@ -828,17 +830,18 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     /// Get a new relation name. Does not register the relation name in the adg.
-    pub fn get_new_relation_name(&'a mut self) -> String {
-        let mut new_relation_name: String = String::from("R_");
+    pub fn get_new_relation_name(&'a mut self) -> Tag {
+        let mut new_relation_tag: Tag = Tag::new(String::from("NoNewRelationNameFound"));
         let mut found_new_name: bool = false;
         while !found_new_name {
             let temp_name: String = self.next_rel_name();
-            if self.predicates.iter().all(|pred| pred.name() != temp_name) {
-                new_relation_name = temp_name;
+            let temp_tag = Tag::from(temp_name);
+            if let None = self.predicate_ids.get(&temp_tag) {
+                new_relation_tag = temp_tag;
                 found_new_name = true;
             }
         }
-        new_relation_name
+        new_relation_tag
     }
 
     /// Get a predicates `nodeIndex` based on its tag (= name)
@@ -933,20 +936,6 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     fn get_fact_node(&self, rule: components::rule::Rule) -> Option<ADGFactNode> {
-        todo!()
-    }
-
-    fn build_rel_edges(&self) {
-        // add a rel edge for each relation going from
-        // body relation of rule to head relation of rule relation
-        // TODO: how do I handle multi-heads
-        todo!()
-    }
-
-    fn build_fact_edges(&self) {
-        // add a fact edge for each fact rule going
-        // from the fact's fact node to the fact's relation's
-        // relational node
         todo!()
     }
 

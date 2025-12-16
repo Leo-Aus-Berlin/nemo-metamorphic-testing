@@ -76,7 +76,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
         let arities = program.arities();
         let arity: Option<&usize> = arities.get(&self.chosen_to_rel_node);
         // If the relation is new it does not have an arity yet. Then we
-        // randomly assign it an arity, which hopefully after we add the
+        // randomly assign it an arity, which after we add the
         // fact to the commit the program stores.
         let arity: usize = *arity.unwrap_or(&self.rng.random_range(1..6));
         let mut terms: Vec<Term> = Vec::new();

@@ -1,5 +1,5 @@
 use std::{
-    fs::{File, create_dir, create_dir_all},
+    fs::{File, create_dir_all},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -14,7 +14,7 @@ use nemo::{
 mod transformations;
 
 use transformations::{
-    MetamorphicTransformation, annotated_dependency_graphs::AnnotatedDependencyGraph,
+    annotated_dependency_graphs::AnnotatedDependencyGraph,
     name_rules::TransformationNameRules,
     select_random_output_predicate::TransformationSelectRandomOutputPredicate,
 };
@@ -36,8 +36,8 @@ lazy_static! {
  */
 fn main() {
     const NUM_TRANSFORMATIONS: i32 = 32;
-    let seed: u64 = 42;
-    let transformation_types: TransformationTypes = TransformationTypes::CON;
+    let seed: u64 = 204978523408952734;
+    let transformation_types: TransformationTypes = TransformationTypes::EXP;
     println!("Using seed: {}", seed);
     let name_of_transformation_sequence: &str = "Transformation Sequence 1";
     let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed);
@@ -146,7 +146,7 @@ fn main() {
             */
             // Perform NUM_TRANSFORMATIONS transformations
             for repetition in 1..=NUM_TRANSFORMATIONS {
-                println!("{repetition} / {NUM_TRANSFORMATIONS}");
+                print!("{repetition} / {NUM_TRANSFORMATIONS}");
                 let trans_types: TransformationTypes = transformation_types.clone();
                 let mut transformation = SomeMetamorphicTransformation::Default();
                 let mut iter =
