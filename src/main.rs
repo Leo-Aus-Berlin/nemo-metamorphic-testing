@@ -35,7 +35,7 @@ lazy_static! {
 }
  */
 fn main() {
-    const NUM_TRANSFORMATIONS: i32 = 3;
+    const NUM_TRANSFORMATIONS: i32 = 6;
     let seed: u64 = 204978523408952734;
     let transformation_types: TransformationTypes = TransformationTypes::EXP;
     println!("Using seed: {}", seed);
@@ -146,6 +146,7 @@ fn main() {
             */
             // Perform NUM_TRANSFORMATIONS transformations
             for repetition in 1..=NUM_TRANSFORMATIONS {
+                println!("RNG position: {}",rng.get_word_pos());
                 print!("{repetition} / {NUM_TRANSFORMATIONS}");
                 let trans_types: TransformationTypes = transformation_types.clone();
                 let mut transformation = SomeMetamorphicTransformation::Default();

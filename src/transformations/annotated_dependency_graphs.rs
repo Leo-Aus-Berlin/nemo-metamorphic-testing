@@ -4,6 +4,11 @@ use std::{
     process::exit,
 };
 
+use fasthash::{
+    RandomState,
+    city::{self},
+};
+
 use nemo::rule_model::{
     components::{
         self, ComponentIdentity, IterablePrimitives, statement, tag::Tag,
@@ -247,7 +252,7 @@ impl Debug for ADGEdge {
 pub struct AnnotatedDependencyGraph {
     graph: StableGraph<ADGNode, ADGEdge, Directed, u32>,
     //predicates: Vec<&'a Tag>,
-    predicate_ids: HashMap<Tag, NodeIndex>,
+    predicate_ids: HashMap<Tag, NodeIndex, RandomState<city::Hash64>>,
     output_predicate: Option<Tag>,
     ground_terms: Vec<GroundTerm>,
     last_str_name: u32, // NodeIndex is u32 so no point in doing u64
@@ -295,9 +300,12 @@ impl<'a> AnnotatedDependencyGraph {
             }
         }
         // base structure
+        let s = fasthash::RandomState::<city::Hash64>::new();
+        let hash_map: HashMap<Tag, NodeIndex<u32>, RandomState<city::Hash64>> =
+            HashMap::with_hasher(s);
         let mut adg: AnnotatedDependencyGraph = AnnotatedDependencyGraph {
             graph: StableGraph::default(),
-            predicate_ids: HashMap::new(),
+            predicate_ids: hash_map,
             output_predicate: None,
             ground_terms,
             last_iri_name: 0,
@@ -373,7 +381,9 @@ impl<'a> AnnotatedDependencyGraph {
                 statement::Statement::Parameter(parameter) => {}
             }
         }
-
+        for node in adg.graph.node_weights() {
+            println!("{node:?}");
+        }
         Some(adg)
     }
 
@@ -971,6 +981,8 @@ impl<'a> AnnotatedDependencyGraph {
     // Get those relational nodes with positive or none ancestry
     pub fn get_leq_positive_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
+        println!("LEQ_POS");
+        println!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>());
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
             ADGNode::ADGRelationalNode(rel_node) => {
@@ -983,6 +995,7 @@ impl<'a> AnnotatedDependencyGraph {
         }) {
             vec.push(rel_node.tag.clone())
         }
+        println!("{vec:?}");
         vec
     }
 
@@ -1007,6 +1020,8 @@ impl<'a> AnnotatedDependencyGraph {
     // Get those relational nodes with negative or none ancestry
     pub fn get_leq_negative_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
+        println!("LEQ_NEG");
+        println!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>());
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
             ADGNode::ADGRelationalNode(rel_node) => {
@@ -1019,6 +1034,7 @@ impl<'a> AnnotatedDependencyGraph {
         }) {
             vec.push(rel_node.tag.clone())
         }
+        println!("{vec:?}");
         vec
     }
 
@@ -1043,6 +1059,8 @@ impl<'a> AnnotatedDependencyGraph {
     // Get those relational nodes with none ancestry
     pub fn get_none_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
+        println!("None");
+        println!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>());
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
             ADGNode::ADGRelationalNode(rel_node) => {
@@ -1055,6 +1073,7 @@ impl<'a> AnnotatedDependencyGraph {
         }) {
             vec.push(rel_node.tag.clone())
         }
+        println!("{vec:?}");
         vec
     }
 

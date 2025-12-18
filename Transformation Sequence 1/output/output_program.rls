@@ -15,19 +15,6 @@ seeTVTower(s) :- choseB(?x, "alexanderplatz") .
 seeTVTower(s) :- choseB("alexanderplatz", ?x) .
 success(s) :- validC("jungfernheide", "kottbusserTor") .
 @export success :- csv{}.
-canChangeAt("str_1")
-seeTVTower("jungfernheide")
-validC("jungfernheide", "jungfernheide")
-seeTVTower(c_1)
-R_5("alexanderplatz", 1069058474120764197, trainHeight, 1069058474120764197)
-R_5(c_1, "str_1", c_2, "jungfernheide")
-R_7(13261425337382721932, c_3, "str_2")
-success(c_4)
-R_10(c_3, 15490954274883774286, 11361291490465646103)
-R_6("str_3", c_4)
-canChangeAt(c_5)
-R_3(c_2, "str_4", c_6)
-R_4(c_7, c_2, "str_3")
-validC("str_1", "str_2")
-R_1(c_8, c_5, 11361291490465646103)
-R_1(c_7, c_1, "str_5")
+success("str_1")
+allowedDiff("jungfernheide", "kottbusserTor")
+R_1(c_1, "kottbusserTor", c_2, c_2, c_3)

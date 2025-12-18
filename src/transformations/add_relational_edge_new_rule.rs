@@ -205,6 +205,9 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
 
         let head: Vec<Atom> = vec![Atom::new(self.chosen_head_rel.clone(), head_vars.clone())];
 
+        /* println!("{arities:?}");
+        println!("{:?}",self.chosen_pos_body_rel.iter()); */
+
         // How many vars appear in the body?
         let mut count_pos_body_vars = self
             .chosen_pos_body_rel
@@ -359,7 +362,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         // Because we add the relational edges we should just be able to re-compute
         // the ancestry and inverse stratum from the head node and it correctly computes the changes
         self.adg.update_ancestry_and_inverse_stratum_from(self.chosen_head_rel);
-
+        println!("  Added new rule: {:?}",rule);
         commit.add_rule(rule);
         commit.submit()
     }
