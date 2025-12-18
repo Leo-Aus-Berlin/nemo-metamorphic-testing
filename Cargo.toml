@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-fasthash = "0.4.0"
 fixedbitset = "0.5.7"
+indexmap = "2.12.1"
 lazy_static = "1.5.0"
 nemo = { path = "../nemo/nemo" }
 nemo-cli = { path = "../nemo/nemo-cli" }

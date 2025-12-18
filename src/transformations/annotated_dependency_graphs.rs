@@ -4,11 +4,7 @@ use std::{
     process::exit,
 };
 
-use fasthash::{
-    RandomState,
-    city::{self},
-};
-
+use indexmap::{IndexMap, IndexSet};
 use nemo::rule_model::{
     components::{
         self, ComponentIdentity, IterablePrimitives, statement, tag::Tag,
@@ -252,7 +248,7 @@ impl Debug for ADGEdge {
 pub struct AnnotatedDependencyGraph {
     graph: StableGraph<ADGNode, ADGEdge, Directed, u32>,
     //predicates: Vec<&'a Tag>,
-    predicate_ids: HashMap<Tag, NodeIndex, RandomState<city::Hash64>>,
+    predicate_ids: IndexMap<Tag, NodeIndex>,
     output_predicate: Option<Tag>,
     ground_terms: Vec<GroundTerm>,
     last_str_name: u32, // NodeIndex is u32 so no point in doing u64
@@ -300,12 +296,9 @@ impl<'a> AnnotatedDependencyGraph {
             }
         }
         // base structure
-        let s = fasthash::RandomState::<city::Hash64>::new();
-        let hash_map: HashMap<Tag, NodeIndex<u32>, RandomState<city::Hash64>> =
-            HashMap::with_hasher(s);
         let mut adg: AnnotatedDependencyGraph = AnnotatedDependencyGraph {
             graph: StableGraph::default(),
-            predicate_ids: hash_map,
+            predicate_ids: IndexMap::new(),
             output_predicate: None,
             ground_terms,
             last_iri_name: 0,
@@ -397,6 +390,8 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     fn init_rel_nodes(&mut self, predicates: HashSet<Tag>) {
+        let mut predicates: IndexSet<Tag> = predicates.iter().cloned().collect();
+        predicates.sort_by(|tag1, tag2|tag1.name().cmp(tag2.name()));
         for tag in predicates {
             self.add_rel_node(tag);
         }
@@ -411,11 +406,6 @@ impl<'a> AnnotatedDependencyGraph {
     pub fn get_predicates_iter(&self) -> impl Iterator<Item = Tag> {
         self.predicate_ids.keys().map(|tag| tag.clone())
     }
-
-    /* /// Get a mutable iterator over the predicates appearing in the ADG
-    pub fn get_predicates_iter_mut(&mut self) -> impl Iterator<Item = &mut Tag> {
-        self.predicate_ids.keys().map(|tag |tag.clone())
-    } */
 
     /// Return a breadth-first visit of the ADG
     pub fn get_bfs(

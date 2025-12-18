@@ -15,6 +15,6 @@ seeTVTower(s) :- choseB(?x, "alexanderplatz") .
 seeTVTower(s) :- choseB("alexanderplatz", ?x) .
 success(s) :- validC("jungfernheide", "kottbusserTor") .
 @export success :- csv{}.
-success("str_1")
+canChangeAt("str_1")
 allowedDiff("jungfernheide", "kottbusserTor")
 R_1(c_1, "kottbusserTor", c_2, c_2, c_3)
