@@ -35,7 +35,7 @@ lazy_static! {
 }
  */
 fn main() {
-    const NUM_TRANSFORMATIONS: i32 = 6;
+    const NUM_TRANSFORMATIONS: i32 = 600;
     let seed: u64 = 204978523408952734;
     let transformation_types: TransformationTypes = TransformationTypes::EXP;
     println!("Using seed: {}", seed);
@@ -111,6 +111,17 @@ fn main() {
             // Let the ADG calculate its stratum and ancestry
             adg.calculate_ancestry_and_inverse_stratum();
 
+            // Create log folder
+            let log_name = String::from("./") + "log_metamorphic_transformation";
+            match create_dir_all(log_name.clone()) {
+                Ok(_) => (),
+                Err(_) => {
+                    println!("Failed to create input folder");
+                    exit(1);
+                }
+            }
+
+            
             // Create input folder
             let input_folder_name = String::from("./") + name_of_transformation_sequence + "/input";
             match create_dir_all(input_folder_name.clone()) {
@@ -146,10 +157,12 @@ fn main() {
             */
             // Perform NUM_TRANSFORMATIONS transformations
             for repetition in 1..=NUM_TRANSFORMATIONS {
+                println!("ADG edges are correct?");
+                adg.verify_relational_edges();
                 println!("RNG position: {}",rng.get_word_pos());
-                print!("{repetition} / {NUM_TRANSFORMATIONS}");
+                println!("{repetition} / {NUM_TRANSFORMATIONS}");
                 let trans_types: TransformationTypes = transformation_types.clone();
-                let mut transformation = SomeMetamorphicTransformation::Default();
+                let transformation;
                 let mut iter =
                     IterateMetamorphicTransformations::new(&mut adg, &mut rng, trans_types);
                 loop {

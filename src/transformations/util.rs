@@ -2,6 +2,8 @@ use nemo::rule_model::{
     components::{rule::Rule, statement::Statement},
     programs::{ProgramRead, handle::ProgramHandle},
 };
+use rand::seq::IteratorRandom;
+use rand_chacha::ChaCha8Rng;
 
 pub fn fetch_rule_by_name(rule_name: String, program: &ProgramHandle) -> Option<&Rule> {
     for statement in program.statements() {
@@ -17,4 +19,12 @@ pub fn fetch_rule_by_name(rule_name: String, program: &ProgramHandle) -> Option<
         }
     }
     None
+}
+
+pub fn append_duplicates<T>(vec: &mut Vec<T>, rng: &mut ChaCha8Rng, amount: usize)
+where
+    T: Clone,
+{
+    let mut duplicates = vec.iter().cloned().choose_multiple(rng, amount);
+    vec.append(&mut duplicates);
 }

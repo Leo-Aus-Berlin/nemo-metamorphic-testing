@@ -1,0 +1,7 @@
+digraph {
+    19 [ label = "(R_2, 0, n)" ]
+    51 [ label = "(R_14, 1, n)" ]
+    52 [ label = "(R_15, 0, n)" ]
+    51 -> 52 [ label = "(r_EXP_14, -)" ]
+    51 -> 19 [ label = "(r_EXP_17, +)" ]
+}
