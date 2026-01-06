@@ -1,5 +1,6 @@
 use std::process::exit;
 
+use log::{error, info};
 use nemo::rule_model::components::import_export::ExportDirective;
 use nemo::rule_model::components::output::Output;
 use nemo::rule_model::components::statement::Statement;
@@ -33,7 +34,7 @@ impl<'a,'b> TransformationSelectRandomOutputPredicate<'a,'b> {
 
 impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a,'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
-        println!("Choosing a predicate to export!");
+        info!("Choosing a predicate to export!");
 
         let mut commit = program.fork();
 
@@ -45,14 +46,14 @@ impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<
             .for_each(|s| match s {
                 Statement::Export(export) => {
                     export_directives.push(s);
-                    println!("Found export: {}", export.predicate());
+                    info!("Found export: {}", export.predicate());
                 }
                 Statement::Output(output) => {
                     export_directives.push(s);
-                    println!("Found output: {}", output.predicate());
+                    info!("Found output: {}", output.predicate());
                 }
                 /* Statement::Rule(rule)=>{
-                    println!("Name: {:?}",rule.name());
+                    info!("Name: {:?}",rule.name());
                     commit.keep(s);
                 } */
 
@@ -68,13 +69,13 @@ impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<
             ii += 1;
         }
         output_names = output_names.replace("0", &ii.to_string());
-        println!("{}", output_names);
+        info!("{}", output_names);
 
         if program.outputs().next().is_none() && program.exports().next().is_none() {
             for predicate in program.derived_predicates() {
                 let p_2 = predicate.clone();
                 commit.add_output(Output::new(predicate));
-                println!("Adding output: {}", p_2.name());
+                info!("Adding output: {}", p_2.name());
             }
         }
 
@@ -86,7 +87,7 @@ impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<
             let chosen = der_pred.iter().choose(self.rng);
             match chosen {
                 Some(tag) => {
-                    println!(
+                    info!(
                         "Using the randomly chosen derived predicate of {num_derived_predicates}: {}",
                         tag.name()
                     );
@@ -95,7 +96,7 @@ impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<
                     commit.add_export(export);
                 }
                 None => {
-                    println!("No predicates derived");
+                    error!("No predicates derived");
                     exit(1);
                 }
             }
@@ -109,11 +110,11 @@ impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<
                         Statement::Export(export) => export.predicate(),
                         Statement::Output(output) => output.predicate(),
                         _ => {
-                            println!("Export directive was not an export directive");
+                            error!("Export directive was not an export directive");
                             exit(1);
                         }
                     };
-                    println!(
+                    info!(
                         "Using the randomly chosen export predicate of {num_export_predicates}: {}",
                         predicate_name.name()
                     );
@@ -122,7 +123,7 @@ impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<
                     commit.add_export(export);
                 }
                 None => {
-                    println!("No predicates derived");
+                    error!("No predicates derived");
                     exit(1);
                 }
             }

@@ -1,3 +1,4 @@
+use log::info;
 use nemo::rule_model::components::statement::Statement;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::programs::handle::ProgramHandle;
@@ -40,14 +41,14 @@ impl ProgramTransformation for TransformationNameRules {
                     let mut new_rule = rule.clone();
                     let name = self.next_rule_name();
                     new_rule.set_name(name.as_str());
-                    //println!("Name: {ii}, {:?}",new_rule.name());
+                    //debug!("Name: {ii}, {:?}",new_rule.name());
                     //let new_new_rule = new_rule.clone();
                     //print!("{:?}",new_new_rule.name());
                     commit.add_rule(new_rule);
                 }
                 _ => commit.keep(statement),
             });
-        println!("Renaming of rules complete");
+        info!("Renaming of rules complete");
         commit.submit()
     }
 }

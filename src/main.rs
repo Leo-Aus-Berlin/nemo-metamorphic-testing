@@ -44,7 +44,7 @@ fn main() {
     NUM_TRANSFORMATIONS
         .set(num)
         .expect("Failed to set number of transformations");
-    DEBUG_MODE.set(false).expect("Failed to set debug mode");
+    DEBUG_MODE.set(true).expect("Failed to set debug mode");
     let seed: u64 = 204978523408952734;
     let transformation_types: TransformationTypes = TransformationTypes::EXP;
     NAME_OF_TRANSFORMATION_SEQUENCE.set(String::from("Transformation Sequence 1")).expect("Failed to set transformation sequence name!");
@@ -119,7 +119,9 @@ fn main() {
         .unwrap();
     }
 
-    info!("Using seed: {:#?}", rng.get_seed());
+    info!("Transformation Sequence {}", NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("Name of Transformation Sequence not set"));
+
+    info!("Using seed: {:?}", seed);
 
     let vec_path: Vec<&str> = vec![
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
@@ -207,7 +209,7 @@ fn main() {
                 }
             }
 
-            info!("Beginning Metamorphic transformations");
+            info!("Beginning Transformations");
             info!(
                 "Oracle: {transformation_types}    Number: {}",
                 NUM_TRANSFORMATIONS

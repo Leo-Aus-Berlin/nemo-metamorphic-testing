@@ -1,3 +1,4 @@
+use log::info;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::programs::handle::ProgramHandle;
 
@@ -38,7 +39,7 @@ impl<'a,'b> ProgramTransformation for TransformationHelloWorld<'a,'b> {
             commit.keep(statement);
         }
 
-        println!("Hello World!");
+        info!("Hello World!");
         commit.submit()
     }
 }

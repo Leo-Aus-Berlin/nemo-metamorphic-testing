@@ -1,5 +1,6 @@
 use std::process::exit;
 
+use log::error;
 use nemo::rule_model::{
     error::ValidationReport, pipeline::transformations::ProgramTransformation,
     programs::handle::ProgramHandle,
@@ -103,15 +104,15 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
         transformation_type: Option<TransformationTypes>,
     ) -> Option<Self> {
         let Some(rng) = rng else {
-            println!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
             exit(1);
         };
         let Some(adg) = adg else {
-            println!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
             exit(1);
         };
         let Some(transformation_type) = transformation_type else {
-            println!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
             exit(1);
         };
 
@@ -165,7 +166,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
     {
         match self {
             Self::Default() => {
-                println!("Cannot check default case of SomeMetamorphicTransformation");
+                error!("Cannot check default case of SomeMetamorphicTransformation");
                 exit(1);
             }
             Self::AddRelationalNode(t) => {
@@ -179,7 +180,7 @@ impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         match self {
             Self::Default() => {
-                println!("Cannot apply default case of SomeMetamorphicTransformation");
+                error!("Cannot apply default case of SomeMetamorphicTransformation");
                 exit(1);
             }
             Self::AddRelationalNode(t) => t.apply(program),

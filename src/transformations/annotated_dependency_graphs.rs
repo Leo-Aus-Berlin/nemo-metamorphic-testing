@@ -7,7 +7,7 @@ use std::{
 };
 
 use indexmap::{IndexMap, IndexSet};
-use log::{error, info};
+use log::{debug, error, info};
 use nemo::rule_model::{
     components::{
         self, ComponentIdentity, IterablePrimitives, statement, tag::Tag,
@@ -389,6 +389,7 @@ impl<'a> AnnotatedDependencyGraph {
 
     /// Write the ADG to the file name at path
     pub fn write_self_to_file(&self, path: Option<String>, name: Option<String>) {
+        debug!("Writing ADG to file");
         let basic_dot = Dot::new(&self.graph);
         let mut path = path.unwrap_or(String::from(""));
         path.push_str("/");
@@ -400,6 +401,7 @@ impl<'a> AnnotatedDependencyGraph {
     /// Write self to file, except we cut all nodes that don't have both incoming and outgoing edges
     /// (recursive closure of this condition)
     pub fn write_reduced_self_to_file(&self, path: Option<String>, name: Option<String>) {
+        debug!("Writing reduced ADG to file");
         let mut copy_of_graph = self.graph.clone();
         for _ in 0..self.graph.node_count() {
             copy_of_graph = copy_of_graph.filter_map(
@@ -565,47 +567,6 @@ impl<'a> AnnotatedDependencyGraph {
         )
     }
 
-    // Nicht sinnvoll
-    /* pub fn exists_st_dataflow_path(&self, from: NodeIndex, to: NodeIndex) -> bool {
-        let mut bfs = petgraph::visit::Bfs::new(&self.graph, from);
-        let from_stratum = match self.get_rel_node_weight_by_index(from).inverse_stratum {
-            None => {
-                error!("ADG not initialised in dataflow path");
-                exit(1)
-            }
-            Some(i) => i,
-        };
-        let to_stratum = match self.get_rel_node_weight_by_index(to).inverse_stratum {
-            None => {
-                error!("ADG not initialised in dataflow path");
-                exit(1)
-            }
-            Some(i) => i,
-        };
-        if from_stratum > to_stratum
-        /* Expected case */
-        {
-            // Because we are a tree we do not need to worry about hitting a loop
-            while let Some(nx) = bfs.next(&self.graph) {
-                if (nx == to) {
-                    // Found it
-                    //TODO: Nicht stratum traversing sondern negative
-                    //CONNECTEDNESSMATRIX????
-                }
-            }
-            false
-        } else if from_stratum == to_stratum {
-            // Any path must be stratum conserving, otherwise illegal ADG
-            return false;
-        } else {
-            // There cannot be a path that goes up a stratum!
-            error!(
-                "Nonsensical stratum traversing dataflow path check: {:#?} {:#?}",
-                from, to
-            );
-            return false;
-        }
-    } */
 
     /// Get a mutable reference to the internal graph
     pub fn graph_mut(&mut self) -> &mut StableGraph<ADGNode, ADGEdge, Directed, u32> {
@@ -639,7 +600,7 @@ impl<'a> AnnotatedDependencyGraph {
         info!("Ancestry and Inverse Stratum computation complete.");
         for node in self.graph.node_weights() {
             if let ADGNode::ADGRelationalNode(node) = node {
-                println!("  {node:?}");
+                debug!("  {node:?}");
             }
         }
     }
@@ -649,7 +610,7 @@ impl<'a> AnnotatedDependencyGraph {
         let curr_weight_node = self.get_rel_node(&node);
         let node_index = self.get_rel_node_index(&node);
         if util::in_debug_mode() {
-            println!(
+            debug!(
                 "  Updating Ancestry and Inverse Stratum beginning in relational node {}",
                 curr_weight_node.tag.name()
             );
@@ -682,7 +643,7 @@ impl<'a> AnnotatedDependencyGraph {
             true,
         );
         if util::in_debug_mode() {
-            println!("  Ancestry and Inverse Stratum update complete.");
+            debug!("  Ancestry and Inverse Stratum update complete.");
         }
     }
 
@@ -694,7 +655,7 @@ impl<'a> AnnotatedDependencyGraph {
         force_update: bool, // When we update parts of the ADG we partially write redundant information
                             // for the head node, but need to force an update to the ancestors (i.e. body rel.)
     ) {
-        //println!("Call A_I_S for node {}", node.index());
+        //debug!("Call A_I_S for node {}", node.index());
         //print!(".");
         let adg_node: &mut ADGNode = self
             .graph
@@ -703,7 +664,7 @@ impl<'a> AnnotatedDependencyGraph {
 
         let adg_node = match adg_node {
             ADGNode::ADGFactNode(_) => {
-                println!(
+                error!(
                     "Attempted to set ancestry and inverse_stratum for a fact node: {}",
                     node.index()
                 );
@@ -713,14 +674,14 @@ impl<'a> AnnotatedDependencyGraph {
         };
 
         if util::in_debug_mode() {
-            println!(
+            debug!(
                 "Call AIS: ({:?},{:?},{:?},{:?})",
                 adg_node.tag.name(),
                 ancestry,
                 inverse_stratum,
                 force_update
             );
-            println!(
+            debug!(
                 "Prev val: ({:?},{:?},{:?})",
                 adg_node.tag.name(),
                 adg_node.ancestry,
@@ -742,10 +703,10 @@ impl<'a> AnnotatedDependencyGraph {
             force_update; // we are forcing an update
 
         if util::in_debug_mode() && require_update {
-            println!("Checking require update: ");
-            println!("  1 {}", Some(new_ancestry) != old_ancestry);
-            println!("  2 {}", adg_node.inverse_stratum < Some(inverse_stratum));
-            println!("  3 {}", force_update);
+            debug!("Checking require update: ");
+            debug!("  1 {}", Some(new_ancestry) != old_ancestry);
+            debug!("  2 {}", adg_node.inverse_stratum < Some(inverse_stratum));
+            debug!("  3 {}", force_update);
         }
 
         // We need to update inverse stratum in this case exactly
@@ -764,7 +725,7 @@ impl<'a> AnnotatedDependencyGraph {
         // Perform recursive call only if I need to
         if require_update {
             let mut plan_recursive_call: Vec<(NodeIndex, u32, Ancestry)> = Vec::new();
-            /* println!(
+            /* debug!(
                 "{:#?}",
                 self.graph_mut()
                     .edges_directed(node, petgraph::Direction::Incoming)
@@ -798,7 +759,7 @@ impl<'a> AnnotatedDependencyGraph {
                     },
                 }
             }
-            //println!("Recursive call for neighbours: {:?}", plan_recursive_call);
+            //debug!("Recursive call for neighbours: {:?}", plan_recursive_call);
             for (n, is, a) in plan_recursive_call {
                 self.set_ancestry_inverse_stratum(n, is, a, false);
             }
@@ -808,6 +769,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     fn print_graph_restricted_to_direction(&self, node: NodeIndex, dir: petgraph::Direction) {
+        debug!("Writing ADG restricted to {:?} from {}",dir,self.get_rel_node_weight_by_index(node).tag.name());
         let mut connected_nodes: Vec<NodeIndex> = vec![node];
         let mut queue: VecDeque<NodeIndex> = VecDeque::new();
         queue.push_back(node);
@@ -992,12 +954,12 @@ impl<'a> AnnotatedDependencyGraph {
     pub fn get_rel_node(&self, tag: &Tag) -> &ADGRelationalNode {
         match self.graph.node_weight(self.predicate_ids[tag]) {
             None => {
-                println!("Could not find node {}", tag);
+                error!("Could not find node {}", tag);
                 exit(1);
             }
             Some(weight) => match weight {
                 ADGNode::ADGFactNode(_fact) => {
-                    println!("Expected relation node for {} but found fact node", tag);
+                    error!("Expected relation node for {} but found fact node", tag);
                     exit(1);
                 }
                 ADGNode::ADGRelationalNode(rel) => rel,
@@ -1009,12 +971,12 @@ impl<'a> AnnotatedDependencyGraph {
     pub fn get_rel_node_weight_by_index(&self, index: NodeIndex) -> &ADGRelationalNode {
         match self.graph.node_weight(index) {
             None => {
-                println!("Could not find node {:#?}", index);
+                error!("Could not find node {:#?}", index);
                 exit(1);
             }
             Some(weight) => match weight {
                 ADGNode::ADGFactNode(_fact) => {
-                    println!(
+                    error!(
                         "Expected relation node for {:#?} but found fact node",
                         index
                     );
@@ -1076,8 +1038,8 @@ impl<'a> AnnotatedDependencyGraph {
     // Get those relational nodes with positive or none ancestry
     pub fn get_leq_positive_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
-        /* println!("LEQ_POS");
-        println!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>());
+        /* debug!("LEQ_POS");
+        debug!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>());
          */
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
@@ -1091,7 +1053,7 @@ impl<'a> AnnotatedDependencyGraph {
         }) {
             vec.push(rel_node.tag.clone())
         }
-        //println!("{vec:?}");
+        //debug!("{vec:?}");
         vec
     }
 
@@ -1117,8 +1079,8 @@ impl<'a> AnnotatedDependencyGraph {
     pub fn get_leq_negative_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         /*
-        println!("LEQ_NEG");
-        println!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>()); */
+        debug!("LEQ_NEG");
+        debug!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>()); */
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
             ADGNode::ADGRelationalNode(rel_node) => {
@@ -1131,7 +1093,7 @@ impl<'a> AnnotatedDependencyGraph {
         }) {
             vec.push(rel_node.tag.clone())
         }
-        //println!("{vec:?}");
+        //debug!("{vec:?}");
         vec
     }
 
@@ -1156,8 +1118,8 @@ impl<'a> AnnotatedDependencyGraph {
     // Get those relational nodes with none ancestry
     pub fn get_none_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
-        /* println!("None");
-        println!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>()); */
+        /* debug!("None");
+        debug!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>()); */
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
             ADGNode::ADGRelationalNode(rel_node) => {
@@ -1170,7 +1132,7 @@ impl<'a> AnnotatedDependencyGraph {
         }) {
             vec.push(rel_node.tag.clone())
         }
-        //println!("{vec:?}");
+        //debug!("{vec:?}");
         vec
     }
 
@@ -1194,6 +1156,7 @@ impl<'a> AnnotatedDependencyGraph {
     /// Panic if an incorrect edge is found. Write myself to file if in debug mode.
     pub fn verify_relational_edges(&self) {
         if util::in_debug_mode() {
+            debug!("Verifying ADG");
             self.write_self_to_file(
                 Some(
                     String::from("./")

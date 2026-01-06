@@ -1,0 +1,760 @@
+14:29:39 [INFO] Transformation Sequence Transformation Sequence 1
+14:29:39 [INFO] Using seed: 204978523408952734
+14:29:39 [INFO] Renaming of rules complete
+14:29:39 [INFO] Choosing a predicate to export!
+14:29:39 [INFO] Found export: success
+14:29:39 [INFO] Output names (0): 
+14:29:39 [INFO] Using the randomly chosen export predicate of 1: success
+14:29:39 [INFO] Beginning inverse_stratum and ancestry computation starting at node success
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(+),Some(0))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(-),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(0))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(0))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("tooLargeGap",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("tooLargeGap",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",+,2,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",-,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",None,None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(-),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",?,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",?,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",?,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",?,1,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(1))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(0))
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,0,false)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(0))
+14:29:39 [INFO] Ancestry and Inverse Stratum computation complete.
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (allowedDiff, 2, +)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (canChangeAt, 0, +)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (choseB, 1, ?)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (choseU, 1, ?)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (elevator, 0, +)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (mustChangeAt, 1, ?)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (platformHeight, 1, -)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (seeTVTower, None, None)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (success, 0, +)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (tooLargeGap, 1, -)
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (validC, 0, +)
+14:29:39 [INFO] Beginning Transformations
+14:29:39 [INFO] Oracle: EXP    Number: 32
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 0
+14:29:39 [INFO] 1 / 32
+14:29:39 [INFO]   Add Relational Node
+14:29:39 [INFO]   Added new relation R_1
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 1
+14:29:39 [INFO] 2 / 32
+14:29:39 [INFO]   Add Fact Node and Edge
+14:29:39 [INFO]   Added new fact allowedDiff("str_1", "alexanderplatz").
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:39 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 13
+14:29:39 [INFO] 3 / 32
+14:29:39 [INFO]   Add Fact Node and Edge
+14:29:39 [INFO]   Added new fact elevator(c_1).
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 20
+14:29:40 [INFO] 4 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Assigned relation R_1 the artiy 4
+14:29:40 [INFO]   Added new rule: success(?X_1) :- allowedDiff(?X_1, ?X_1), canChangeAt(?X_1), platformHeight(?X_1, ?X_1), R_1(?X_1, ?X_1, ?X_1, ?X_1), success(?X_1), mustChangeAt(?X_1), ~elevator(?X_1), ~R_1(?X_1, ?X_1, ?X_1, ?X_1), ~choseB(?X_1, ?X_1), ~choseU(?X_1, ?X_1) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node success
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",+,0,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",-,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",-,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",None,None)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",-,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",Some(+),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",+,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",+,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",+,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(-),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(-),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",+,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(+),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 112
+14:29:40 [INFO] 5 / 32
+14:29:40 [INFO]   Add Relational Node
+14:29:40 [INFO]   Added new relation R_2
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 113
+14:29:40 [INFO] 6 / 32
+14:29:40 [INFO]   Add Relational Node
+14:29:40 [INFO]   Added new relation R_3
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 114
+14:29:40 [INFO] 7 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Assigned relation R_2 the artiy 5
+14:29:40 [INFO]   Assigned relation R_3 the artiy 1
+14:29:40 [INFO]   Added new rule: R_2(?X_2, ?X_1, ?X_4, ?X_5, ?X_5) :- platformHeight(?X_2, ?X_1), choseU(?X_4, ?X_2), choseU(?X_5, ?X_5), ~success(?X_4), ~validC(?X_5, ?X_5), ~R_3(?X_2), ~canChangeAt(?X_2) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node R_2
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_2",n,0,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_2",None,None)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("tooLargeGap",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("tooLargeGap",Some(-),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",+,3,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(+),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",None,None)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",?,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",?,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",?,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",?,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",Some(?),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(+),Some(3))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 203
+14:29:40 [INFO] 8 / 32
+14:29:40 [INFO]   Add Relational Node
+14:29:40 [INFO]   Added new relation R_4
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 204
+14:29:40 [INFO] 9 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact R_2(11234398708936275293, c_2, c_3, c_1, "alexanderplatz").
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 229
+14:29:40 [INFO] 10 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact validC(c_4, c_4).
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 239
+14:29:40 [INFO] 11 / 32
+14:29:40 [INFO]   Add Relational Node
+14:29:40 [INFO]   Added new relation R_5
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 240
+14:29:40 [INFO] 12 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact R_3(c_5).
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 247
+14:29:40 [INFO] 13 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Added new rule: canChangeAt(?X_1) :- seeTVTower(?X_1), canChangeAt(?X_1), choseB(?X_1, ?X_1), platformHeight(?X_1, ?X_1), R_1(?X_1, ?X_1, ?X_1, ?X_1), seeTVTower(?X_1), ~allowedDiff(?X_1, ?X_1), ~mustChangeAt(?X_1), ~choseU(?X_1, ?X_1) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node canChangeAt
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,1,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(+),Some(3))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("seeTVTower",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("seeTVTower",None,None)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("seeTVTower",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("seeTVTower",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("tooLargeGap",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("tooLargeGap",Some(-),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 358
+14:29:40 [INFO] 14 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact seeTVTower("str_2").
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 367
+14:29:40 [INFO] 15 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Added new rule: success(?X_1) :- choseU(?X_1, ?X_1), platformHeight(?X_1, ?X_1), ~platformHeight(?X_1, ?X_1), ~R_1(?X_1, ?X_1, ?X_1, ?X_1), ~seeTVTower(?X_1) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node success
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",+,1,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("seeTVTower",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("seeTVTower",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",?,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",?,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(?),Some(3))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 477
+14:29:40 [INFO] 16 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Added new rule: R_3(?X_1) :- allowedDiff(?X_1, ?X_1), R_3(?X_1), R_1(?X_1, ?X_1, ?X_1, ?X_1) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node R_3
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",n,1,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",Some(n),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",Some(n),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(?),Some(3))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 588
+14:29:40 [INFO] 17 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact R_2(c_2, c_2, trainHeight, c_1, "str_3").
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 609
+14:29:40 [INFO] 18 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact R_3("alexanderplatz").
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 615
+14:29:40 [INFO] 19 / 32
+14:29:40 [INFO]   Add Relational Node
+14:29:40 [INFO]   Added new relation R_6
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 616
+14:29:40 [INFO] 20 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Assigned relation R_5 the artiy 2
+14:29:40 [INFO]   Assigned relation R_6 the artiy 1
+14:29:40 [INFO]   Assigned relation R_4 the artiy 6
+14:29:40 [INFO]   Added new rule: success(?X_1) :- platformHeight(?X_1, ?X_1), R_3(?X_1), seeTVTower(?X_1), ~R_5(?X_1, ?X_1), ~R_6(?X_1), ~R_4(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node success
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",+,1,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_4",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_4",None,None)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_6",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_6",None,None)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_5",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_5",None,None)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("seeTVTower",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("seeTVTower",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",Some(n),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(?),Some(3))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("seeTVTower",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("seeTVTower",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(?),Some(3))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 737
+14:29:40 [INFO] 21 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Added new rule: canChangeAt(?X_1) :- validC(?X_1, ?X_1), elevator(?X_1), R_1(?X_1, ?X_1, ?X_1, ?X_1), platformHeight(?X_1, ?X_1), ~allowedDiff(?X_1, ?X_1), ~R_6(?X_1) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node canChangeAt
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,1,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_6",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_6",Some(-),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(?),Some(3))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("allowedDiff",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("allowedDiff",Some(?),Some(3))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("seeTVTower",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("seeTVTower",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("seeTVTower",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("seeTVTower",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("tooLargeGap",-,2,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("tooLargeGap",Some(-),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("elevator",+,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("elevator",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 855
+14:29:40 [INFO] 22 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact R_3("str_1").
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 861
+14:29:40 [INFO] 23 / 32
+14:29:40 [INFO]   Add Relational Node
+14:29:40 [INFO]   Added new relation R_7
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 862
+14:29:40 [INFO] 24 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact canChangeAt(trainHeight).
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 868
+14:29:40 [INFO] 25 / 32
+14:29:40 [INFO]   Add Relational Node
+14:29:40 [INFO]   Added new relation R_8
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 869
+14:29:40 [INFO] 26 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact R_3(c_3).
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 875
+14:29:40 [INFO] 27 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact validC(c_6, "str_3").
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 885
+14:29:40 [INFO] 28 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact R_7(7482180271341237142, 9166979368146723845, "str_2", trainHeight, "str_4").
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 916
+14:29:40 [INFO] 29 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Added new rule: R_2(?X_5, ?X_3, ?X_1, ?X_4, ?X_2) :- choseB(?X_5, ?X_3), choseB(?Y_1, ?X_4), choseB(?X_2, ?X_1), ~R_3(?X_4), ~canChangeAt(?Y_1), ~R_6(?X_5) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node R_2
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_2",n,0,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_2",Some(n),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_6",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_6",Some(-),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 1057
+14:29:40 [INFO] 30 / 32
+14:29:40 [INFO]   Add Fact Node and Edge
+14:29:40 [INFO]   Added new fact R_3(c_7).
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 1064
+14:29:40 [INFO] 31 / 32
+14:29:40 [INFO]   Add Relational Node
+14:29:40 [INFO]   Added new relation R_9
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 1065
+14:29:40 [INFO] 32 / 32
+14:29:40 [INFO]   Add Relational edges - New Rule
+14:29:40 [INFO]   Added new rule: R_2(?X_5, ?X_4, ?X_3, ?X_2, ?X_4) :- choseU(?X_5, ?X_4), R_1(?X_5, ?X_2, ?X_4, ?Y_1), mustChangeAt(?X_3) .
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node R_2
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_2",n,0,true)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_2",Some(n),Some(0))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Checking require update: 
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   1 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   2 false
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   3 true
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("mustChangeAt",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("mustChangeAt",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_1",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_1",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_6",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_6",Some(-),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseB",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseB",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("canChangeAt",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("canChangeAt",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("R_3",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("R_3",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("validC",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("validC",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("success",n,1,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("success",Some(+),Some(1))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("choseU",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("choseU",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Call AIS: ("platformHeight",n,0,false)
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Prev val: ("platformHeight",Some(?),Some(2))
+14:29:40 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.

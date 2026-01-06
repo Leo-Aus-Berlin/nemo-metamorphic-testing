@@ -1,5 +1,6 @@
 use std::process::exit;
 
+use log::{error, info};
 use nemo::rule_model::components::tag::Tag;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
@@ -39,7 +40,7 @@ impl<'a,'b> ProgramTransformation for OverviewTransformation<'a,'b> {
         let rand_pred: Option<Tag> = program.all_predicates().into_iter().choose(self.rng);
         match rand_pred {
             None => {
-                println!("No predicates in program");
+                error!("No predicates in program");
                 exit(1);
             }
             Some(predicate) => {
@@ -59,11 +60,11 @@ impl<'a,'b> ProgramTransformation for OverviewTransformation<'a,'b> {
                                             if let Some(rule) =
                                                 util::fetch_rule_by_name(rule_name, program)
                                             {
-                                                println!("Found rule {}", rule);
+                                                info!("Found rule {}", rule);
                                             }
                                         }
                                         None => {
-                                            println!(
+                                            info!(
                                                 "Relational edge has no rule name! {:#?}",
                                                 rel_edge
                                             );
@@ -74,14 +75,14 @@ impl<'a,'b> ProgramTransformation for OverviewTransformation<'a,'b> {
                             }
                         }
                     } else {
-                        println!(
+                        info!(
                             "ADG not ready: No inverse_stratum provided for node: {:#?}",
                             predicate_node
                         );
                         exit(1);
                     }
                 } else {
-                    println!(
+                    info!(
                         "ADG not ready: No ancestry provided for node: {:#?}",
                         predicate_node
                     );
