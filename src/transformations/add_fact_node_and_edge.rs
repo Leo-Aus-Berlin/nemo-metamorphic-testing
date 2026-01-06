@@ -1,3 +1,4 @@
+use log::{info, warn};
 use nemo::rule_model::components::fact::Fact;
 use nemo::rule_model::components::tag::Tag;
 use nemo::rule_model::components::term::primitive::Primitive;
@@ -65,14 +66,14 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
 
 impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
-        println!("  Add Fact Node and Edge");
+        info!("  Add Fact Node and Edge");
         //let commit = program.fork();
         // Copy the program
         let mut commit: ProgramCommit = program.fork_full();
 
         // Construct a fact tuple (Vec<Term>) of the correct arity
-        //println!("{:#?}",program.arities());
-        //println!("{:#?}",&self.chosen_to_rel_node);
+        //info!("{:#?}",program.arities());
+        //info!("{:#?}",&self.chosen_to_rel_node);
         let arities = program.arities();
         let arity: Option<&usize> = arities.get(&self.chosen_to_rel_node);
         // If the relation is new it does not have an arity yet. Then we
@@ -81,7 +82,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
         let arity: usize = *arity.unwrap_or(&self.rng.random_range(1..6));
         let mut terms: Vec<Term> = Vec::new();
         if self.adg.get_ground_terms().len() == 0 {
-            println!("  0 ground terms");
+            warn!("  0 ground terms");
         }
         for _index in 0..arity {
             match self.rng.random_bool(0.5) {
@@ -142,7 +143,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
             fact_node,
             self.adg.get_rel_node_index(&self.chosen_to_rel_node),
         );
-        println!("  Added new fact {}({}).", self.chosen_to_rel_node, terms_str);
+        info!("  Added new fact {}({}).", self.chosen_to_rel_node, terms_str);
 
         commit.submit()
     }

@@ -1,3 +1,4 @@
+use log::info;
 use nemo::rule_model::components::tag::Tag;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
@@ -29,14 +30,14 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalNode<'a> {
 impl<'a, 'b> ProgramTransformation for AddRelationalNode<'a> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
-        println!("  Add Relational Node");
+        info!("  Add Relational Node");
         let commit: ProgramCommit = program.fork_full();
         let new_relation_name: Tag = self.adg.get_new_relation_name();
         // No rule yet, will introduce these later
         // let new_rule: Rule = Rule::new(vec![head.clone()], rule.body().clone());
 
         // Add a new relational node
-        println!("  Added new relation {}", new_relation_name.name());
+        info!("  Added new relation {}", new_relation_name.name());
         self.adg.add_rel_node(new_relation_name);
         
         commit.submit()

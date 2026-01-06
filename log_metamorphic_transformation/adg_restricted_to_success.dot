@@ -1,6 +1,0 @@
-digraph {
-    8 [ label = "(success, 1, +)" ]
-    19 [ label = "(R_2, 0, n)" ]
-    8 -> 8 [ label = "(r_EXP_1, +)" ]
-    8 -> 19 [ label = "(r_EXP_2, -)" ]
-}

@@ -1,10 +1,13 @@
+use crate::{DEBUG_MODE, NAME_OF_TRANSFORMATION_SEQUENCE, transformations::util};
 use std::{
     collections::{HashSet, VecDeque},
     fmt::{Debug, Formatter},
     process::exit,
+    u32,
 };
 
 use indexmap::{IndexMap, IndexSet};
+use log::{error, info};
 use nemo::rule_model::{
     components::{
         self, ComponentIdentity, IterablePrimitives, statement, tag::Tag,
@@ -128,13 +131,10 @@ impl ADGRelationalNode {
                     &Ancestry::None => self.ancestry = Some(new_ancestry),
                     &Ancestry::Positive => match new_ancestry {
                         Ancestry::Unknown => {
-                            println!(
-                                "Attempting to assign unknown ancestry. This is a bug I think"
-                            );
-                            exit(1);
+                            self.ancestry = Some(Ancestry::Unknown);
                         }
                         Ancestry::None => {
-                            /* println!("Attempting to assign none ancestry. This is a bug I think");
+                            /* error!("Attempting to assign none ancestry. This is a bug I think");
                             exit(1); */
                             // No it is not: New relational node has
                             // to have none ancestry assigned with this funciton
@@ -145,13 +145,10 @@ impl ADGRelationalNode {
                     &Ancestry::Negative => {
                         match new_ancestry {
                             Ancestry::Unknown => {
-                                println!(
-                                    "Attempting to assign unknown ancestry. This is a bug I think"
-                                );
-                                exit(1);
+                                self.ancestry = Some(Ancestry::Unknown);
                             }
                             Ancestry::None => {
-                                /* println!(
+                                /* error!(
                                     "Attempting to assign none ancestry. This is a bug I think"
                                 );
                                 exit(1); */
@@ -168,6 +165,7 @@ impl ADGRelationalNode {
     }
 }
 
+#[derive(Clone)]
 pub struct ADGFactNode {
     pub name: String,
 }
@@ -177,6 +175,7 @@ impl Debug for ADGFactNode {
     }
 }
 
+#[derive(Clone)]
 pub enum Sign {
     Positive,
     Negative,
@@ -198,6 +197,7 @@ impl Debug for Sign {
     }
 }
 
+#[derive(Clone)]
 pub struct ADGRelationalEdge {
     pub rule_name: Option<String>,
     pub id: ProgramComponentId,
@@ -212,6 +212,7 @@ impl Debug for ADGRelationalEdge {
     }
 }
 
+#[derive(Clone)]
 pub struct ADGFactEdge {}
 impl Debug for ADGFactEdge {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
@@ -219,6 +220,7 @@ impl Debug for ADGFactEdge {
     }
 }
 
+#[derive(Clone)]
 pub enum ADGNode {
     ADGRelationalNode(ADGRelationalNode),
     ADGFactNode(ADGFactNode),
@@ -234,6 +236,7 @@ impl Debug for ADGNode {
     }
 }
 
+#[derive(Clone)]
 pub enum ADGEdge {
     ADGRelationalEdge(ADGRelationalEdge),
     ADGFactEdge(ADGFactEdge),
@@ -310,14 +313,14 @@ impl<'a> AnnotatedDependencyGraph {
             last_rel_name: 0,
             last_rule_name: 0,
         };
-        //println!("{:#?}", adg.predicates);
+        //debug!("{:#?}", adg.predicates);
         // Relational nodes
         adg.init_rel_nodes(predicates);
         // Store rules!
         for statement in program.statements() {
             match statement {
                 statement::Statement::Fact(fact) => {
-                    //println!("{fact:?}");
+                    //debug!("{fact:?}");
                     let mut fact_str: String = String::new();
                     for term in fact.primitive_terms() {
                         let mut term_str = term.to_string();
@@ -334,7 +337,7 @@ impl<'a> AnnotatedDependencyGraph {
                         let start_node = adg.get_rel_node_index(&pos_atom.predicate());
                         for head_atom in rule.head() {
                             let end_node = adg.get_rel_node_index(&head_atom.predicate());
-                            //println!("rule name:{:?}", rule.name());
+                            //debug!("rule name:{:?}", rule.name());
                             adg.add_rel_edge(
                                 rule.name(),
                                 Sign::Positive,
@@ -360,7 +363,7 @@ impl<'a> AnnotatedDependencyGraph {
                     }
                 }
                 statement::Statement::Import(import) => {
-                    //println!("{import:?}");
+                    //debug!("{import:?}");
                     let mut import_str: String = String::new();
                     //for term in import.primitive_terms() {
                     //import.origin()
@@ -379,13 +382,44 @@ impl<'a> AnnotatedDependencyGraph {
             }
         }
         /* for node in adg.graph.node_weights() {
-            println!("{node:?}");
+            debug!("{node:?}");
         } */
         Some(adg)
     }
 
+    /// Write the ADG to the file name at path
     pub fn write_self_to_file(&self, path: Option<String>, name: Option<String>) {
         let basic_dot = Dot::new(&self.graph);
+        let mut path = path.unwrap_or(String::from(""));
+        path.push_str("/");
+        path.push_str(name.unwrap_or(String::from("adg")).as_str());
+        path.push_str(".dot");
+        std::fs::write(path, format!("{:?}", basic_dot)).unwrap();
+    }
+
+    /// Write self to file, except we cut all nodes that don't have both incoming and outgoing edges
+    /// (recursive closure of this condition)
+    pub fn write_reduced_self_to_file(&self, path: Option<String>, name: Option<String>) {
+        let mut copy_of_graph = self.graph.clone();
+        for _ in 0..self.graph.node_count() {
+            copy_of_graph = copy_of_graph.filter_map(
+                |node, adg_node| {
+                    let outgoing_count = copy_of_graph
+                        .edges_directed(node, petgraph::Outgoing)
+                        .count();
+                    let incoming_count = copy_of_graph
+                        .edges_directed(node, petgraph::Incoming)
+                        .count();
+                    if outgoing_count > 0 && incoming_count > 0 {
+                        Some(adg_node.clone())
+                    } else {
+                        None
+                    }
+                },
+                |_, b| Some(b.clone()),
+            );
+        }
+        let basic_dot = Dot::new(&copy_of_graph);
         let mut path = path.unwrap_or(String::from(""));
         path.push_str("/");
         path.push_str(name.unwrap_or(String::from("adg")).as_str());
@@ -460,6 +494,9 @@ impl<'a> AnnotatedDependencyGraph {
             // I have been visited with knowledge of negative path
             {
                 // I am not a candidate, hence I have been visited
+                if path_has_negative_already {
+                    body_rel_pos_opt.insert(rel_node.tag.clone(), false);
+                }
                 continue;
             }
 
@@ -483,9 +520,11 @@ impl<'a> AnnotatedDependencyGraph {
                 // Next visit for breadth-first path construction
                 let next: (NodeIndex, bool) = (edge.target(), path_has_negative_edge);
                 // Do we ignore next
-                let ignore_next: bool = match self.graph.node_weight(next.0) {
+                let ignore_next = false;
+                // This never works, I should just skip it
+                /* let ignore_next: bool = match self.graph.node_weight(next.0) {
                     None => {
-                        println!("Could not find node {:#?}", next.0);
+                        error!("Could not find node {:#?}", next.0);
                         exit(1);
                     }
                     Some(weight) => match weight {
@@ -493,10 +532,15 @@ impl<'a> AnnotatedDependencyGraph {
                         ADGNode::ADGRelationalNode(rel) =>
                         // if the node is still a candidate we don't ignore it
                         {
-                            !body_rel_neg_opt[&rel.tag]
+                            (!body_rel_neg_opt[&rel.tag] && !path_has_negative_already)
+                            // I have been visited with no knowledge of negative path
+                            // and we still don't know of a negative path that goes here or if
+                            ||
+                            (!body_rel_pos_opt[&rel.tag])
+                            // I have been visited with knowledge of negative path
                         }
                     },
-                };
+                }; */
 
                 // I don't think we need to check that we don't double add a visit to the queue
                 // because the space saved for size of the visit queue is not worth the computational
@@ -526,14 +570,14 @@ impl<'a> AnnotatedDependencyGraph {
         let mut bfs = petgraph::visit::Bfs::new(&self.graph, from);
         let from_stratum = match self.get_rel_node_weight_by_index(from).inverse_stratum {
             None => {
-                println!("ADG not initialised in dataflow path");
+                error!("ADG not initialised in dataflow path");
                 exit(1)
             }
             Some(i) => i,
         };
         let to_stratum = match self.get_rel_node_weight_by_index(to).inverse_stratum {
             None => {
-                println!("ADG not initialised in dataflow path");
+                error!("ADG not initialised in dataflow path");
                 exit(1)
             }
             Some(i) => i,
@@ -555,7 +599,7 @@ impl<'a> AnnotatedDependencyGraph {
             return false;
         } else {
             // There cannot be a path that goes up a stratum!
-            println!(
+            error!(
                 "Nonsensical stratum traversing dataflow path check: {:#?} {:#?}",
                 from, to
             );
@@ -578,11 +622,11 @@ impl<'a> AnnotatedDependencyGraph {
         // Note: We use inverse stratum!
         match &self.output_predicate {
             None => {
-                println!("No output predicate set!");
+                error!("No output predicate set!");
                 exit(1);
             }
             Some(output_predicate) => {
-                println!(
+                info!(
                     "Beginning inverse_stratum and ancestry computation starting at node {}",
                     output_predicate.name()
                 );
@@ -592,7 +636,7 @@ impl<'a> AnnotatedDependencyGraph {
                 self.set_ancestry_inverse_stratum(output_node, 0, Ancestry::Positive, false);
             }
         }
-        println!("Ancestry and Inverse Stratum computation complete.");
+        info!("Ancestry and Inverse Stratum computation complete.");
         for node in self.graph.node_weights() {
             if let ADGNode::ADGRelationalNode(node) = node {
                 println!("  {node:?}");
@@ -604,11 +648,23 @@ impl<'a> AnnotatedDependencyGraph {
     pub fn update_ancestry_and_inverse_stratum_from(&mut self, node: Tag) {
         let curr_weight_node = self.get_rel_node(&node);
         let node_index = self.get_rel_node_index(&node);
-        println!(
-            "  Updating Ancestry and Inverse Stratum beginning in relational node {}",
-            curr_weight_node.tag.name()
-        );
-        self.print_graph_restricted_to_direction(node_index, petgraph::Outgoing);
+        if util::in_debug_mode() {
+            println!(
+                "  Updating Ancestry and Inverse Stratum beginning in relational node {}",
+                curr_weight_node.tag.name()
+            );
+            self.print_graph_restricted_to_direction(node_index, petgraph::Incoming);
+            self.write_reduced_self_to_file(
+                Some(
+                    String::from("./")
+                        + NAME_OF_TRANSFORMATION_SEQUENCE
+                            .get()
+                            .expect("Name of Transformation Sequence not set")
+                        + "/log",
+                ),
+                Some(String::from("pre_update_reduced_adg")),
+            );
+        }
         self.set_ancestry_inverse_stratum(
             node_index,
             curr_weight_node
@@ -625,7 +681,9 @@ impl<'a> AnnotatedDependencyGraph {
                 .unwrap_or(Ancestry::None),
             true,
         );
-        println!("Ancestry and Inverse Stratum computation complete.");
+        if util::in_debug_mode() {
+            println!("  Ancestry and Inverse Stratum update complete.");
+        }
     }
 
     fn set_ancestry_inverse_stratum(
@@ -638,177 +696,132 @@ impl<'a> AnnotatedDependencyGraph {
     ) {
         //println!("Call A_I_S for node {}", node.index());
         //print!(".");
-        let mut_node: Option<&mut ADGNode> = self.graph.node_weight_mut(node);
-        match mut_node {
-            None => {
+        let adg_node: &mut ADGNode = self
+            .graph
+            .node_weight_mut(node)
+            .expect("Attempted to set ancestry and inverse_stratum for non-existant node");
+
+        let adg_node = match adg_node {
+            ADGNode::ADGFactNode(_) => {
                 println!(
-                    "Attempted to set ancestry and inverse_stratum for non-existant node: {}",
+                    "Attempted to set ancestry and inverse_stratum for a fact node: {}",
                     node.index()
                 );
                 exit(1);
             }
-            Some(adg_node) => match adg_node {
-                ADGNode::ADGFactNode(_) => {
-                    println!(
-                        "Attempted to set ancestry and inverse_stratum for a fact node: {}",
-                        node.index()
-                    );
-                    exit(1);
-                }
-                ADGNode::ADGRelationalNode(adg_node) => {
-                    println!(
-                        "Call AIS: ({:?},{:?},{:?},{:?})",
-                        adg_node.tag.name(),
-                        ancestry,
-                        inverse_stratum,
-                        force_update
-                    );
-                    println!(
-                        "Prev val: ({:?},{:?},{:?})",
-                        adg_node.tag.name(),
-                        adg_node.ancestry,
-                        adg_node.inverse_stratum
-                    );
-                    adg_node.merge(ancestry);
-                    match adg_node.inverse_stratum {
-                        None => {
-                            adg_node.inverse_stratum = Some(inverse_stratum);
-                            let mut plan_recursive_call: Vec<(NodeIndex, u32, Ancestry)> =
-                                Vec::new();
-                            /* println!(
-                                "{:#?}",
-                                self.graph_mut()
-                                    .edges_directed(node, petgraph::Direction::Incoming)
-                                    .collect::<Vec<_>>()
-                            ); */
-                            for edge in self
-                                .graph_mut()
-                                .edges_directed(node, petgraph::Direction::Incoming)
-                            {
-                                // let to_node: NodeIndex = edge.target();
-                                //let edge: &ADGEdge = edge.weight();
-                                let edge_weight: &ADGEdge = edge.weight();
-                                //let adg_edge = self.graph.edge_weight_mut(edge);
-                                match edge_weight {
-                                    ADGEdge::ADGFactEdge(_) => (), // Done
-                                    ADGEdge::ADGRelationalEdge(relational_edge) => {
-                                        match relational_edge.sign {
-                                            Sign::Negative => {
-                                                plan_recursive_call.push((
-                                                    edge.source(),
-                                                    inverse_stratum + 1,
-                                                    ancestry.inverse(),
-                                                ));
-                                            }
-                                            Sign::Positive => {
-                                                plan_recursive_call.push((
-                                                    edge.source(),
-                                                    inverse_stratum,
-                                                    ancestry,
-                                                ));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            //println!("Recursive call for neighbours: {:?}", plan_recursive_call);
-                            for (n, is, a) in plan_recursive_call {
-                                self.set_ancestry_inverse_stratum(n, is, a, false);
-                            }
-                        }
-                        Some(old_inverse_stratum) => {
-                            if old_inverse_stratum < inverse_stratum || force_update {
-                                // Some new relation tells us that we need to
-                                // set the inverse_stratum one higher!
-                                adg_node.inverse_stratum = Some(inverse_stratum);
-                                let mut plan_recursive_call: Vec<(NodeIndex, u32, Ancestry)> =
-                                    Vec::new();
-                                /* println!(
-                                    "{:#?}",
-                                    self.graph_mut()
-                                        .edges_directed(node, petgraph::Direction::Incoming)
-                                        .collect::<Vec<_>>()
-                                ); */
-                                for edge in self
-                                    .graph_mut()
-                                    .edges_directed(node, petgraph::Direction::Incoming)
-                                {
-                                    // let to_node: NodeIndex = edge.target();
-                                    //let edge: &ADGEdge = edge.weight();
-                                    let edge_weight: &ADGEdge = edge.weight();
-                                    //let adg_edge = self.graph.edge_weight_mut(edge);
-                                    match edge_weight {
-                                        ADGEdge::ADGFactEdge(_) => (), // Done
-                                        ADGEdge::ADGRelationalEdge(relational_edge) => {
-                                            match relational_edge.sign {
-                                                Sign::Negative => {
-                                                    plan_recursive_call.push((
-                                                        edge.source(),
-                                                        inverse_stratum + 1,
-                                                        ancestry.inverse(),
-                                                    ));
-                                                }
-                                                Sign::Positive => {
-                                                    plan_recursive_call.push((
-                                                        edge.source(),
-                                                        inverse_stratum,
-                                                        ancestry,
-                                                    ));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                print!("Recursive call for neighbours: [");
-                                for (n, is, a) in plan_recursive_call.iter() {
-                                    print!(
-                                        "({:?},{:?},{:?}), ",
-                                        self.get_rel_node_weight_by_index(n.clone()).tag.name(),
-                                        is,
-                                        a
-                                    );
-                                }
-                                println!("]");
-                                for (n, is, a) in plan_recursive_call {
-                                    self.set_ancestry_inverse_stratum(n, is, a, false);
-                                }
-                                // do backwards neighbours again!
-                            } else if old_inverse_stratum == inverse_stratum {
-                                // This node already has a inverse_stratum, and thus
-                                // we can assume its neighbours already have
-                                // the correct inverse_stratum
-                                //println!("Done 1");
-                            } else
-                            /* old inverse_stratum > inverse_stratum */
-                            {
-                                // This node already has a inverse_stratum, and thus
-                                // we can assume its neighbours already have
-                                // the correct inverse_stratum
-                                //println!("Done 2");
-                            }
-                        }
-                    }
-                }
-            },
+            ADGNode::ADGRelationalNode(adg_node) => adg_node,
+        };
+
+        if util::in_debug_mode() {
+            println!(
+                "Call AIS: ({:?},{:?},{:?},{:?})",
+                adg_node.tag.name(),
+                ancestry,
+                inverse_stratum,
+                force_update
+            );
+            println!(
+                "Prev val: ({:?},{:?},{:?})",
+                adg_node.tag.name(),
+                adg_node.ancestry,
+                adg_node.inverse_stratum
+            );
         }
+
+        let old_ancestry = adg_node.ancestry;
+
+        // Update this nodes ancestry
+        adg_node.merge(ancestry);
+        let new_ancestry = adg_node
+            .ancestry
+            .expect("Ancestry I just wrote is Option::None somehow");
+
+        // We need to update starting in this node if
+        let require_update = Some(new_ancestry) != old_ancestry || // ancestry has changed or
+            adg_node.inverse_stratum < Some(inverse_stratum) || // we are assigning a larger stratum or
+            force_update; // we are forcing an update
+
+        if util::in_debug_mode() && require_update {
+            println!("Checking require update: ");
+            println!("  1 {}", Some(new_ancestry) != old_ancestry);
+            println!("  2 {}", adg_node.inverse_stratum < Some(inverse_stratum));
+            println!("  3 {}", force_update);
+        }
+
+        // We need to update inverse stratum in this case exactly
+        if adg_node.inverse_stratum < Some(inverse_stratum) {
+            adg_node.inverse_stratum = Some(inverse_stratum);
+        }
+        // For later use. We need to respect the older stratum if that is larger
+        let correct_inverse_stratum = adg_node
+            .inverse_stratum
+            .expect("Inverse Stratum I just wrote is Option::None somehow");
+
+        /* if correct_inverse_stratum > self.graph.node_count().try_into().unwrap_or(u32::MAX) {
+            panic!("I think I am in a loop!")
+        } */
+
+        // Perform recursive call only if I need to
+        if require_update {
+            let mut plan_recursive_call: Vec<(NodeIndex, u32, Ancestry)> = Vec::new();
+            /* println!(
+                "{:#?}",
+                self.graph_mut()
+                    .edges_directed(node, petgraph::Direction::Incoming)
+                    .collect::<Vec<_>>()
+            ); */
+            for edge in self
+                .graph_mut()
+                .edges_directed(node, petgraph::Direction::Incoming)
+            {
+                // let to_node: NodeIndex = edge.target();
+                //let edge: &ADGEdge = edge.weight();
+                let edge_weight: &ADGEdge = edge.weight();
+                //let adg_edge = self.graph.edge_weight_mut(edge);
+                match edge_weight {
+                    ADGEdge::ADGFactEdge(_) => (), // Done
+                    ADGEdge::ADGRelationalEdge(relational_edge) => match relational_edge.sign {
+                        Sign::Negative => {
+                            plan_recursive_call.push((
+                                edge.source(),
+                                correct_inverse_stratum + 1,
+                                new_ancestry.inverse(),
+                            ));
+                        }
+                        Sign::Positive => {
+                            plan_recursive_call.push((
+                                edge.source(),
+                                correct_inverse_stratum,
+                                new_ancestry,
+                            ));
+                        }
+                    },
+                }
+            }
+            //println!("Recursive call for neighbours: {:?}", plan_recursive_call);
+            for (n, is, a) in plan_recursive_call {
+                self.set_ancestry_inverse_stratum(n, is, a, false);
+            }
+        }
+
         //self.graph.update_edge(a, b, weight)
     }
 
     fn print_graph_restricted_to_direction(&self, node: NodeIndex, dir: petgraph::Direction) {
-        let mut successors: Vec<NodeIndex> = vec![node];
+        let mut connected_nodes: Vec<NodeIndex> = vec![node];
         let mut queue: VecDeque<NodeIndex> = VecDeque::new();
         queue.push_back(node);
         while let Some(node) = queue.pop_front() {
             for next in self.graph.neighbors_directed(node, dir) {
-                if !successors.contains(&next) {
-                    successors.push(next);
+                if !connected_nodes.contains(&next) {
+                    connected_nodes.push(next);
                     queue.push_back(next);
                 }
             }
         }
         let filtered_graph = self.graph.filter_map(
             |node, a| {
-                if successors.contains(&node) {
+                if connected_nodes.contains(&node) {
                     Some(a)
                 } else {
                     None
@@ -816,14 +829,20 @@ impl<'a> AnnotatedDependencyGraph {
             },
             |edge, a| {
                 let (source, target) = self.graph.edge_endpoints(edge).expect("??");
-                if successors.contains(&source) || successors.contains(&target) {
+                if connected_nodes.contains(&source) || connected_nodes.contains(&target) {
                     Some(a)
                 } else {
                     None
                 }
             },
         );
-        let path = Some(String::from("./") + "log_metamorphic_transformation");
+        let path = Some(
+            String::from("./")
+                + NAME_OF_TRANSFORMATION_SEQUENCE
+                    .get()
+                    .expect("Name of Transformation Sequence not set")
+                + "/log",
+        );
         let name = Some(
             String::from("adg_restricted_to_") + self.get_rel_node_weight_by_index(node).tag.name(),
         );
@@ -1172,12 +1191,30 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     /// Verify ancestry and inverse stratum relations
-    /// Panic if an incorrect edge is found. Write myself to file anyhow.
+    /// Panic if an incorrect edge is found. Write myself to file if in debug mode.
     pub fn verify_relational_edges(&self) {
-        self.write_self_to_file(
-            Some(String::from("./") + "log_metamorphic_transformation"),
-            Some(String::from("pre_verify_adg")),
-        );
+        if util::in_debug_mode() {
+            self.write_self_to_file(
+                Some(
+                    String::from("./")
+                        + NAME_OF_TRANSFORMATION_SEQUENCE
+                            .get()
+                            .expect("Name of Transformation Sequence not set")
+                        + "/log",
+                ),
+                Some(String::from("pre_verify_adg")),
+            );
+            self.write_reduced_self_to_file(
+                Some(
+                    String::from("./")
+                        + NAME_OF_TRANSFORMATION_SEQUENCE
+                            .get()
+                            .expect("Name of Transformation Sequence not set")
+                        + "/log",
+                ),
+                Some(String::from("pre_verify_reduced_adg")),
+            );
+        }
         for node in self.graph.node_indices() {
             match self
                 .graph

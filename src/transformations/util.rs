@@ -5,6 +5,8 @@ use nemo::rule_model::{
 use rand::seq::IteratorRandom;
 use rand_chacha::ChaCha8Rng;
 
+use crate::DEBUG_MODE;
+
 pub fn fetch_rule_by_name(rule_name: String, program: &ProgramHandle) -> Option<&Rule> {
     for statement in program.statements() {
         match statement {
@@ -27,4 +29,11 @@ where
 {
     let mut duplicates = vec.iter().cloned().choose_multiple(rng, amount);
     vec.append(&mut duplicates);
+}
+
+pub fn in_debug_mode() -> bool {
+    DEBUG_MODE
+        .get()
+        .expect("Debug mode not initialised")
+        .clone()
 }

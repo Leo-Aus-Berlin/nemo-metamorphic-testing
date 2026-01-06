@@ -1,5 +1,0 @@
-digraph {
-    63 [ label = "(R_20, 0, n)" ]
-    80 [ label = "(R_30, 0, n)" ]
-    80 -> 63 [ label = "(r_EXP_28, +)" ]
-}

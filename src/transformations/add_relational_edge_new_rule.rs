@@ -1,4 +1,5 @@
 use indexmap::IndexMap;
+use log::info;
 use nemo::rule_model::components::ComponentIdentity;
 use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::literal::Literal;
@@ -18,6 +19,7 @@ use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 use rand::{Rng, random};
 
+use crate::{DEBUG_MODE, NAME_OF_TRANSFORMATION_SEQUENCE};
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};
@@ -59,13 +61,13 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 
         };
         let head_node_index = adg.get_rel_node_index(&chosen_head_rel);
 
-        /* println!(
+        /* debug!(
             "New rule candidates for head relation {}",
             chosen_head_rel.name()
         ); */
         // collect body candidates/options
         let (mut body_pos_opt, mut body_neg_opt) = adg.get_body_literal_candidates(head_node_index);
-        /* println!(
+        /* debug!(
             "  POS
         {:?}",
             body_pos_opt
@@ -73,7 +75,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 
                 .map(|tag| tag.name())
                 .collect::<Vec<&str>>()
         );
-        println!(
+        debug!(
             "  NEG
         {:?}",
             body_neg_opt
@@ -123,15 +125,15 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 
 impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
     fn apply(mut self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
-        println!("  Add Relational edges - New Rule");
+        info!("  Add Relational edges - New Rule");
         let mut commit: ProgramCommit = program.fork_full();
         // No rule yet, will introduce these later
         // let new_rule: Rule = Rule::new(vec![head.clone()], rule.body().clone());
-        /* println!(
+        /* debug!(
             "      Chosen Head Relation: {}",
             self.chosen_head_rel.name()
         );
-        println!(
+        debug!(
             "      Chosen Positive Body Relations:
         {:?}",
             self.chosen_pos_body_rel
@@ -139,7 +141,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
                 .map(|tag| tag.name())
                 .collect::<Vec<&str>>()
         );
-        println!(
+        debug!(
             "      Chosen Negative Body Relations:
         {:?}",
             self.chosen_neg_body_rel
@@ -160,7 +162,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
             None => {
                 let new_value: usize = self.rng.random_range(1..6);
                 arities.insert(self.chosen_head_rel.clone(), new_value.clone());
-                println!(
+                info!(
                     "  Assigned relation {} the artiy {}",
                     self.chosen_head_rel.name(),
                     new_value
@@ -207,8 +209,8 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
 
         let head: Vec<Atom> = vec![Atom::new(self.chosen_head_rel.clone(), head_vars.clone())];
 
-        /* println!("{arities:?}");
-        println!("{:?}",self.chosen_pos_body_rel.iter());
+        /* info!("{arities:?}");
+        info!("{:?}",self.chosen_pos_body_rel.iter());
         */
 
         // How many vars appear in the body?
@@ -217,7 +219,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
                 None => {
                     // If the predicate previously didn't have an arity, we assign it one.
                     let new_value: usize = self.rng.random_range(1..=6);
-                    println!(
+                    info!(
                         "  Assigned relation {} the artiy {}",
                         rel.name(),
                         new_value.clone()
@@ -340,7 +342,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
                 None => {
                     // If the predicate previously didn't have an arity, we assign it one.
                     let new_value: usize = self.rng.random_range(1..=6);
-                    println!(
+                    info!(
                         "  Assigned relation {} the artiy {}",
                         rel.name(),
                         new_value.clone()
@@ -390,11 +392,19 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         }
         // Because we add the relational edges we should just be able to re-compute
         // the ancestry and inverse stratum from the head node and it correctly computes the changes
-        println!("  Added new rule: {}", rule);
-        self.adg.write_self_to_file(
-            Some(String::from("./") + "log_metamorphic_transformation"),
-            Some(String::from("pre_update_adg")),
-        );
+        info!("  Added new rule: {}", rule);
+        if util::in_debug_mode() {
+            self.adg.write_self_to_file(
+                Some(
+                    String::from("./")
+                        + NAME_OF_TRANSFORMATION_SEQUENCE
+                            .get()
+                            .expect("Name of Transformation Sequence not set")
+                        + "/log",
+                ),
+                Some(String::from("pre_update_adg")),
+            );
+        }
         self.adg
             .update_ancestry_and_inverse_stratum_from(self.chosen_head_rel);
 

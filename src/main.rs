@@ -5,6 +5,9 @@ use std::{
     process::exit,
 };
 
+use log::{debug, error, info};
+use simplelog::*;
+
 use nemo::{
     error::report::ProgramReport,
     rule_file::RuleFile,
@@ -14,8 +17,7 @@ use nemo::{
 mod transformations;
 
 use transformations::{
-    annotated_dependency_graphs::AnnotatedDependencyGraph,
-    name_rules::TransformationNameRules,
+    annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
     select_random_output_predicate::TransformationSelectRandomOutputPredicate,
 };
 /*
@@ -24,23 +26,100 @@ use std::sync::Mutex;
  */
 use rand::SeedableRng;
 
+use std::sync::OnceLock;
+
 use crate::transformations::{
-    transformation_manager::{IterateMetamorphicTransformations, SomeMetamorphicTransformation},
+    transformation_manager::IterateMetamorphicTransformations,
     transformation_types::TransformationTypes,
 };
 
-/*
-lazy_static! {
-    static ref RNG: rand_chacha::ChaCha8Rng = Mutex::new(rand_chacha::ChaCha8Rng::seed_from_u64(10));
-}
- */
+static NUM_TRANSFORMATIONS: OnceLock<u32> = OnceLock::new();
+static DEBUG_MODE: OnceLock<bool> = OnceLock::new();
+static NAME_OF_TRANSFORMATION_SEQUENCE: OnceLock<String> = OnceLock::new();
+
 fn main() {
-    const NUM_TRANSFORMATIONS: i32 = 600;
+    // Initialisiation
+    // Use command line args here somewhere
+    let num = 32;
+    NUM_TRANSFORMATIONS
+        .set(num)
+        .expect("Failed to set number of transformations");
+    DEBUG_MODE.set(false).expect("Failed to set debug mode");
     let seed: u64 = 204978523408952734;
     let transformation_types: TransformationTypes = TransformationTypes::EXP;
-    println!("Using seed: {}", seed);
-    let name_of_transformation_sequence: &str = "Transformation Sequence 1";
+    NAME_OF_TRANSFORMATION_SEQUENCE.set(String::from("Transformation Sequence 1")).expect("Failed to set transformation sequence name!");
     let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed);
+    
+    // Create input folder
+    let input_folder_name = String::from("./") + NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("Name of Transformation Sequence not set") + "/input";
+    match create_dir_all(input_folder_name.clone()) {
+        Ok(_) => (),
+        Err(_) => {
+            error!("Failed to create input folder");
+            exit(1);
+        }
+    }
+
+    // Create output folder
+    let output_folder_name = String::from("./") + NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("Name of Transformation Sequence not set") + "/output";
+    match create_dir_all(output_folder_name.clone()) {
+        Ok(_) => (),
+        Err(_) => {
+            error!("Failed to create output folder");
+            exit(1);
+        }
+    }
+
+    // Create log folder
+    let log_name = String::from("./") + NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("Name of Transformation Sequence not set") + "/log";
+    match create_dir_all(log_name.clone()) {
+        Ok(_) => (),
+        Err(_) => {
+            error!("Failed to create log folder");
+            exit(1);
+        }
+    }
+
+    // Set up logger
+    if DEBUG_MODE
+        .get()
+        .expect("Debug mode not initialised")
+        .clone()
+    {
+        // Debug mode
+        CombinedLogger::init(vec![
+            TermLogger::new(
+                LevelFilter::Warn,
+                Config::default(),
+                TerminalMode::Mixed,
+                ColorChoice::Auto,
+            ),
+            WriteLogger::new(
+                LevelFilter::Debug,
+                Config::default(),
+                File::create(log_name + "/log.log").unwrap(),
+            ),
+        ])
+        .unwrap();
+    } else {
+        // Non-Debug mode
+        CombinedLogger::init(vec![
+            TermLogger::new(
+                LevelFilter::Warn,
+                Config::default(),
+                TerminalMode::Mixed,
+                ColorChoice::Auto,
+            ),
+            WriteLogger::new(
+                LevelFilter::Info,
+                Config::default(),
+                File::create(log_name + "/log.log").unwrap(),
+            ),
+        ])
+        .unwrap();
+    }
+
+    info!("Using seed: {:#?}", rng.get_seed());
 
     let vec_path: Vec<&str> = vec![
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
@@ -77,7 +156,7 @@ fn main() {
             (program, report) = match temp {
                 Ok((p, r)) => (p, r),
                 Err(_) => {
-                    println!("Failed to merge validation report");
+                    error!("Failed to merge validation report");
                     exit(1);
                 }
             };
@@ -87,7 +166,7 @@ fn main() {
                 match AnnotatedDependencyGraph::from_program(&program) {
                     Some(adg) => adg,
                     None => {
-                        println!("Failed to build adg");
+                        error!("Failed to build adg");
                         exit(1);
                     }
                 };
@@ -103,7 +182,7 @@ fn main() {
             (program, report) = match temp {
                 Ok((p, r)) => (p, r),
                 Err(_) => {
-                    println!("Failed to merge validation report");
+                    error!("Failed to merge validation report");
                     exit(1);
                 }
             };
@@ -111,26 +190,6 @@ fn main() {
             // Let the ADG calculate its stratum and ancestry
             adg.calculate_ancestry_and_inverse_stratum();
 
-            // Create log folder
-            let log_name = String::from("./") + "log_metamorphic_transformation";
-            match create_dir_all(log_name.clone()) {
-                Ok(_) => (),
-                Err(_) => {
-                    println!("Failed to create input folder");
-                    exit(1);
-                }
-            }
-
-            
-            // Create input folder
-            let input_folder_name = String::from("./") + name_of_transformation_sequence + "/input";
-            match create_dir_all(input_folder_name.clone()) {
-                Ok(_) => (),
-                Err(_) => {
-                    println!("Failed to create input folder");
-                    exit(1);
-                }
-            }
             // Write ADG to file
             adg.write_self_to_file(
                 Some(input_folder_name.clone()),
@@ -143,24 +202,44 @@ fn main() {
             ) {
                 Ok(_) => (),
                 Err(_) => {
-                    println!("Failed to write to file");
+                    error!("Failed to write to file");
                     exit(1);
                 }
             }
 
-            println!("Beginning Metamorphic transformations");
-            println!("Oracle: {transformation_types}    Number: {NUM_TRANSFORMATIONS}");
+            info!("Beginning Metamorphic transformations");
+            info!(
+                "Oracle: {transformation_types}    Number: {}",
+                NUM_TRANSFORMATIONS
+                    .get()
+                    .expect("Num transformations not initialised")
+            );
 
             // The available transformations
             /* let mut transformation_manager =
                            TransformationManager::new(&mut adg, &mut rng, transformation_types);
             */
             // Perform NUM_TRANSFORMATIONS transformations
-            for repetition in 1..=NUM_TRANSFORMATIONS {
-                println!("ADG edges are correct?");
+            for repetition in 1..=NUM_TRANSFORMATIONS
+                .get()
+                .expect("Num transformations not initialised")
+                .clone()
+            {
                 adg.verify_relational_edges();
-                println!("RNG position: {}",rng.get_word_pos());
-                println!("{repetition} / {NUM_TRANSFORMATIONS}");
+                if DEBUG_MODE
+                    .get()
+                    .expect("Debug mode not initialised")
+                    .clone()
+                {
+                    debug!("ADG edge verification succeeded");
+                    debug!("RNG position: {}", rng.get_word_pos());
+                }
+                info!(
+                    "{repetition} / {}",
+                    NUM_TRANSFORMATIONS
+                        .get()
+                        .expect("Num transformations not initialised")
+                );
                 let trans_types: TransformationTypes = transformation_types.clone();
                 let transformation;
                 let mut iter =
@@ -190,24 +269,13 @@ fn main() {
                 (program, report) = match temp {
                     Ok((p, r)) => (p, r),
                     Err(_) => {
-                        println!("Failed to merge validation report");
+                        error!("Failed to merge validation report");
                         exit(1);
                     }
                 }
             }
 
             // Done, write to file
-
-            // Create output folder
-            let output_folder_name =
-                String::from("./") + name_of_transformation_sequence + "/output";
-            match create_dir_all(output_folder_name.clone()) {
-                Ok(_) => (),
-                Err(_) => {
-                    println!("Failed to create output folder");
-                    exit(1);
-                }
-            }
 
             // Write ADG to file
             adg.write_self_to_file(
@@ -222,7 +290,7 @@ fn main() {
             ) {
                 Ok(_) => (),
                 Err(_) => {
-                    println!("Failed to write to file");
+                    error!("Failed to write to file");
                     exit(1);
                 }
             }
