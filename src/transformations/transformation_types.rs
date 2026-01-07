@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 
-#[derive(Clone)]
+#[derive(Clone,Debug)]
 pub enum TransformationTypes {
     EQU,
     EXP,

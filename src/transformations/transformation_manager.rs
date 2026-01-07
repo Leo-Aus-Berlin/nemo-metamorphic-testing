@@ -104,15 +104,15 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
         transformation_type: Option<TransformationTypes>,
     ) -> Option<Self> {
         let Some(rng) = rng else {
-            error!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some rng expected in SomeMetamorphicTransformation new_opt");
             exit(1);
         };
         let Some(adg) = adg else {
-            error!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some adg expected in SomeMetamorphicTransformation new_opt");
             exit(1);
         };
         let Some(transformation_type) = transformation_type else {
-            error!("Found None where Some expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some transformation_type expected in SomeMetamorphicTransformation new_opt");
             exit(1);
         };
 

@@ -33,25 +33,167 @@ use crate::transformations::{
     transformation_types::TransformationTypes,
 };
 
+use clap::{arg, command, value_parser};
+
 static NUM_TRANSFORMATIONS: OnceLock<u32> = OnceLock::new();
 static DEBUG_MODE: OnceLock<bool> = OnceLock::new();
 static NAME_OF_TRANSFORMATION_SEQUENCE: OnceLock<String> = OnceLock::new();
+static TRANSFORMATION_TYPE: OnceLock<TransformationTypes> = OnceLock::new();
+
+/* #[derive(Parser)]
+struct Cli {
+    //number of transformations
+    num: u32,
+    //debug mode
+    debug_mode: bool,
+    //seed
+    seed: u64,
+    //transformation type
+    transformation_types: String,
+} */
 
 fn main() {
     // Initialisiation
-    // Use command line args here somewhere
-    let num = 32;
-    NUM_TRANSFORMATIONS
-        .set(num)
-        .expect("Failed to set number of transformations");
-    DEBUG_MODE.set(true).expect("Failed to set debug mode");
-    let seed: u64 = 204978523408952734;
-    let transformation_types: TransformationTypes = TransformationTypes::EXP;
-    NAME_OF_TRANSFORMATION_SEQUENCE.set(String::from("Transformation Sequence 1")).expect("Failed to set transformation sequence name!");
-    let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(seed);
+
+    // Command line args
+    let matches = command!() // requires `cargo` feature
+        .arg(arg!([name] "Optional name for this transformation sequence"))
+        .arg(
+            arg!(
+                -f --file <FILE> "Sets a custom seed file"
+            )
+            // We don't have syntax yet for optional options, so manually calling `required`
+            .required(false)
+            .value_parser(value_parser!(PathBuf)),
+        )
+        .arg(
+            arg!(
+                -s --seed <NUM> "Optionally set a seed for the rng"
+            )
+            // We don't have syntax yet for optional options, so manually calling `required`
+            .required(false)
+            .value_parser(value_parser!(u64)),
+        )
+        .arg(
+            arg!(
+                -d --debug "Turn debugging information on"
+            )
+            .value_parser(value_parser!(bool))
+            .required(false)
+        )
+        .arg(
+            arg!(
+                -n --num <NUM> "How many transformations to perform"
+            )
+            // We don't have syntax yet for optional options, so manually calling `required`
+            .required(true)
+            .value_parser(value_parser!(u32)),
+        )
+        .arg(
+            arg!(
+                -t --type <TT> "Transformation type: EQU, EXP or CON"
+            )
+            // We don't have syntax yet for optional options, so manually calling `required`
+            .required(true)
+            .value_parser(value_parser!(String)),
+        )
+        /* .subcommand(
+            Command::new("test")
+                .about("does testing things")
+                .arg(arg!(-l --list "lists test values").action(ArgAction::SetTrue)),
+        ) */
+        .get_matches();
+
+    // You can check the value provided by positional arguments, or option arguments
+    if let Some(name) = matches.get_one::<String>("name") {
+        NAME_OF_TRANSFORMATION_SEQUENCE
+            .set(String::from(name))
+            .expect("Failed to set transformation sequence name!");
+    } else {
+        NAME_OF_TRANSFORMATION_SEQUENCE
+            .set(String::from("Transformation Sequence 1"))
+            .expect("Failed to set transformation sequence name!");
+    }
+
+    if let Some(seed_path) = matches.get_one::<PathBuf>("file") {
+        println!("Value for seed_path: {}", seed_path.display());
+    }
+
+    if let Some(num) = matches.get_one::<u32>("num") {
+        NUM_TRANSFORMATIONS
+            .set(num.clone())
+            .expect("Failed to set number of transformations");
+    }
+
+    match matches.get_one::<bool>("debug") {
+        None => {
+            error!("Failed to read if in debug mode or not");
+            exit(1);
+        }
+        Some(debug_mode) => {
+            DEBUG_MODE
+                .set(debug_mode.clone())
+                .expect("Failed to set debug mode");
+        }
+    }
+
+    let mut rng: rand_chacha::ChaCha8Rng = match matches.get_one::<u64>("seed") {
+        None => {
+            debug!("No seed provided");
+            rand_chacha::ChaCha8Rng::from_os_rng()
+        }
+        Some(seed) => rand_chacha::ChaCha8Rng::seed_from_u64(seed.clone()),
+    };
+
+    let transformation_types: TransformationTypes =
+        if let Some(transformation_types) = matches.get_one::<String>("type") {
+            match transformation_types.as_str() {
+                "EXP" => TransformationTypes::EXP,
+                "CON" => TransformationTypes::CON,
+                "EQU" => TransformationTypes::EQU,
+                "exp" => TransformationTypes::EXP,
+                "con" => TransformationTypes::CON,
+                "equ" => TransformationTypes::EQU,
+                _ => {
+                    error!("Failed to parse input transformation type");
+                    exit(1);
+                }
+            }
+        } else {
+            error!("Failed to parse transformation type!");
+            exit(1);
+        };
+
+    TRANSFORMATION_TYPE.set(transformation_types).expect("Failed to set transformation type globally!");
     
+    // Use command line args here somewhere
+    /* let args = Cli::parse();
+    NUM_TRANSFORMATIONS
+        .set(args.num)
+        .expect("Failed to set number of transformations");
+    DEBUG_MODE
+        .set(args.debug_mode)
+        .expect("Failed to set debug mode");
+    let transformation_types: TransformationTypes = match args.transformation_types.as_str() {
+        "EXP" => TransformationTypes::EXP,
+        "CON" => TransformationTypes::CON,
+        "EQU" => TransformationTypes::EQU,
+        _ => {
+            error!("Failed to parse input transformation type");
+            exit(1);
+        }
+    };
+    NAME_OF_TRANSFORMATION_SEQUENCE
+        .set(String::from("Transformation Sequence 1"))
+        .expect("Failed to set transformation sequence name!");
+    let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(args.seed); */
+
     // Create input folder
-    let input_folder_name = String::from("./") + NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("Name of Transformation Sequence not set") + "/input";
+    let input_folder_name = String::from("./")
+        + NAME_OF_TRANSFORMATION_SEQUENCE
+            .get()
+            .expect("Name of Transformation Sequence not set")
+        + "/input";
     match create_dir_all(input_folder_name.clone()) {
         Ok(_) => (),
         Err(_) => {
@@ -61,7 +203,11 @@ fn main() {
     }
 
     // Create output folder
-    let output_folder_name = String::from("./") + NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("Name of Transformation Sequence not set") + "/output";
+    let output_folder_name = String::from("./")
+        + NAME_OF_TRANSFORMATION_SEQUENCE
+            .get()
+            .expect("Name of Transformation Sequence not set")
+        + "/output";
     match create_dir_all(output_folder_name.clone()) {
         Ok(_) => (),
         Err(_) => {
@@ -71,7 +217,11 @@ fn main() {
     }
 
     // Create log folder
-    let log_name = String::from("./") + NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("Name of Transformation Sequence not set") + "/log";
+    let log_name = String::from("./")
+        + NAME_OF_TRANSFORMATION_SEQUENCE
+            .get()
+            .expect("Name of Transformation Sequence not set")
+        + "/log";
     match create_dir_all(log_name.clone()) {
         Ok(_) => (),
         Err(_) => {
@@ -119,9 +269,22 @@ fn main() {
         .unwrap();
     }
 
-    info!("Transformation Sequence {}", NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("Name of Transformation Sequence not set"));
-
-    info!("Using seed: {:?}", seed);
+    info!(
+        "Beginning transformation {}
+    Oracle:     {}      Number of T: {}
+    Debug Mode: {}      Seed:        {:?}
+    Seed File: Currently not supported!",
+        NAME_OF_TRANSFORMATION_SEQUENCE
+            .get()
+            .expect("Name of Transformation Sequence not set"),
+        TRANSFORMATION_TYPE.get().expect("Transformation type not set!"),
+        NUM_TRANSFORMATIONS
+            .get()
+            .expect("Number of transformations not set"),
+        DEBUG_MODE.get().expect("Debug Mode not set"),
+        rng.get_seed(),
+        /* TODO: Seed file */
+    );
 
     let vec_path: Vec<&str> = vec![
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
@@ -211,7 +374,8 @@ fn main() {
 
             info!("Beginning Transformations");
             info!(
-                "Oracle: {transformation_types}    Number: {}",
+                "Oracle: {}    Number: {}",
+                TRANSFORMATION_TYPE.get().expect("Transformation type not set!"),
                 NUM_TRANSFORMATIONS
                     .get()
                     .expect("Num transformations not initialised")
@@ -219,7 +383,7 @@ fn main() {
 
             // The available transformations
             /* let mut transformation_manager =
-                           TransformationManager::new(&mut adg, &mut rng, transformation_types);
+                           TransformationManager::new(&mut adg, &mut rng, TRANSFORMATION_TYPE.get().expect("Transformation type not set!"));
             */
             // Perform NUM_TRANSFORMATIONS transformations
             for repetition in 1..=NUM_TRANSFORMATIONS
@@ -242,7 +406,7 @@ fn main() {
                         .get()
                         .expect("Num transformations not initialised")
                 );
-                let trans_types: TransformationTypes = transformation_types.clone();
+                let trans_types: TransformationTypes = TRANSFORMATION_TYPE.get().expect("Transformation type not set!").clone();
                 let transformation;
                 let mut iter =
                     IterateMetamorphicTransformations::new(&mut adg, &mut rng, trans_types);
