@@ -1,4 +1,4 @@
-use crate::{DEBUG_MODE, NAME_OF_TRANSFORMATION_SEQUENCE, transformations::util};
+use crate::{NAME_OF_TRANSFORMATION_SEQUENCE, transformations::util};
 use std::{
     collections::{HashSet, VecDeque},
     fmt::{Debug, Formatter},
@@ -376,9 +376,9 @@ impl<'a> AnnotatedDependencyGraph {
                     let rel_node: NodeIndex = adg.get_rel_node_index(import.predicate());
                     adg.add_fact_edge(fact_node, rel_node);
                 }
-                statement::Statement::Export(export) => {}
-                statement::Statement::Output(output) => {}
-                statement::Statement::Parameter(parameter) => {}
+                statement::Statement::Export(_export) => {}
+                statement::Statement::Output(_output) => {}
+                statement::Statement::Parameter(_parameter) => {}
             }
         }
         /* for node in adg.graph.node_weights() {
@@ -946,7 +946,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     /// Get an iterator over a nodes edges, outgoing or incoming based on `dir` parameter
-    pub fn get_node_edges(&self, tag: &Tag, dir: petgraph::Direction) -> Edges<ADGEdge, Directed> {
+    pub fn get_node_edges(&'a self, tag: &Tag, dir: petgraph::Direction) -> Edges<'a, ADGEdge, Directed> {
         self.graph.edges_directed(self.get_rel_node_index(tag), dir)
     }
 

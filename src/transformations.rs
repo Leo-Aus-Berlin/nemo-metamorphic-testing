@@ -8,7 +8,6 @@ use crate::transformations::{
 pub mod add_fact_node_and_edge;
 pub mod add_relational_node;
 pub mod annotated_dependency_graphs;
-pub mod hello_world;
 pub mod name_rules;
 pub mod select_random_output_predicate;
 pub mod testing_transformation;

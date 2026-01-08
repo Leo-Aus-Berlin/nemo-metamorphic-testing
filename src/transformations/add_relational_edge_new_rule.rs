@@ -17,9 +17,9 @@ use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
-use rand::{Rng, random};
+use rand::{Rng};
 
-use crate::{DEBUG_MODE, NAME_OF_TRANSFORMATION_SEQUENCE};
+use crate::{ NAME_OF_TRANSFORMATION_SEQUENCE};
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};

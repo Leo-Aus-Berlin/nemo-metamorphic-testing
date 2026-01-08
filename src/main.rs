@@ -68,7 +68,7 @@ fn main() {
         )
         .arg(
             arg!(
-                -s --seed <NUM> "Optionally set a seed for the rng"
+                -s --seed <NUM> "Optionally set a u64 seed for the rng."
             )
             // We don't have syntax yet for optional options, so manually calling `required`
             .required(false)
@@ -79,7 +79,7 @@ fn main() {
                 -d --debug "Turn debugging information on"
             )
             .value_parser(value_parser!(bool))
-            .required(false)
+            .required(false),
         )
         .arg(
             arg!(
@@ -137,13 +137,20 @@ fn main() {
         }
     }
 
-    let mut rng: rand_chacha::ChaCha8Rng = match matches.get_one::<u64>("seed") {
+    let seed = matches.get_one::<u64>("seed");
+    //let seed2: [u8; 32]  = [164, 143, 161, 123, 88, 50, 61, 10, 234, 184, 161, 204, 105, 1, 20, 184, 43, 140, 200, 117, 24, 180, 247, 84, 141, 68, 110, 161, 228, 223, 32, 242];
+    
+    let mut rng: rand_chacha::ChaCha8Rng = match seed {
         None => {
             debug!("No seed provided");
             rand_chacha::ChaCha8Rng::from_os_rng()
         }
         Some(seed) => rand_chacha::ChaCha8Rng::seed_from_u64(seed.clone()),
     };
+    //println!("{:?}",<[u8] as TryInto<u64>>::try_into(seed2[1..32]));
+    //let seed4 : u64 = u64::from_be_bytes(seed2);
+    //let seed3 : u64 = u64::from_le_bytes(seed2[1..32].try_into().unwrap());
+    //assert_eq!(42, seed3);
 
     let transformation_types: TransformationTypes =
         if let Some(transformation_types) = matches.get_one::<String>("type") {
@@ -164,8 +171,10 @@ fn main() {
             exit(1);
         };
 
-    TRANSFORMATION_TYPE.set(transformation_types).expect("Failed to set transformation type globally!");
-    
+    TRANSFORMATION_TYPE
+        .set(transformation_types)
+        .expect("Failed to set transformation type globally!");
+
     // Use command line args here somewhere
     /* let args = Cli::parse();
     NUM_TRANSFORMATIONS
@@ -277,7 +286,9 @@ fn main() {
         NAME_OF_TRANSFORMATION_SEQUENCE
             .get()
             .expect("Name of Transformation Sequence not set"),
-        TRANSFORMATION_TYPE.get().expect("Transformation type not set!"),
+        TRANSFORMATION_TYPE
+            .get()
+            .expect("Transformation type not set!"),
         NUM_TRANSFORMATIONS
             .get()
             .expect("Number of transformations not set"),
@@ -293,7 +304,7 @@ fn main() {
     ];
 
     // Open file
-    let path = PathBuf::from(vec_path[0]);
+    let path = PathBuf::from(vec_path[2]);
     // "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls"
     let file: RuleFile = match RuleFile::load(path) {
         Err(_) => panic!("Could not find example file"),
@@ -375,7 +386,9 @@ fn main() {
             info!("Beginning Transformations");
             info!(
                 "Oracle: {}    Number: {}",
-                TRANSFORMATION_TYPE.get().expect("Transformation type not set!"),
+                TRANSFORMATION_TYPE
+                    .get()
+                    .expect("Transformation type not set!"),
                 NUM_TRANSFORMATIONS
                     .get()
                     .expect("Num transformations not initialised")
@@ -406,11 +419,18 @@ fn main() {
                         .get()
                         .expect("Num transformations not initialised")
                 );
-                let trans_types: TransformationTypes = TRANSFORMATION_TYPE.get().expect("Transformation type not set!").clone();
+                let trans_types: TransformationTypes = TRANSFORMATION_TYPE
+                    .get()
+                    .expect("Transformation type not set!")
+                    .clone();
                 let transformation;
-                let mut iter =
-                    IterateMetamorphicTransformations::new(&mut adg, &mut rng, trans_types);
+
                 loop {
+                    let mut iter = IterateMetamorphicTransformations::new(
+                        &mut adg,
+                        &mut rng,
+                        trans_types.clone(),
+                    );
                     match iter.next() {
                         None => continue,
                         Some(loop_variable) => {
@@ -460,6 +480,14 @@ fn main() {
                     exit(1);
                 }
             }
+            info!(
+                "Finished transformation.
+    Input, output and log can be found in the folder {}",
+                String::from("./")
+                    + NAME_OF_TRANSFORMATION_SEQUENCE
+                        .get()
+                        .expect("Name of Transformation Sequence not set")
+            )
         }
 
         // Parsing failed!

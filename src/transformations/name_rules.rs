@@ -6,8 +6,6 @@ use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
-use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
-
 /// Program transformation
 /// For testing purposes
 // #[derive(Debug, Clone, Copy, Default)]
@@ -36,7 +34,7 @@ impl ProgramTransformation for TransformationNameRules {
         program
             .statements()
             .enumerate()
-            .for_each(|(ii, statement)| match statement {
+            .for_each(|(_, statement)| match statement {
                 Statement::Rule(rule) => {
                     let mut new_rule = rule.clone();
                     let name = self.next_rule_name();

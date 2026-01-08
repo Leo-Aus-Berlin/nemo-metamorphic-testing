@@ -1,40 +1,686 @@
-@import choseU :- csv{resource: "data/choseU.csv", format: (string, string)}.
-@import choseB :- csv{resource: "data/choseB.csv", format: (string, string)}.
-@import elevator :- csv{resource: "data/elevator.csv", format: string}.
-@import platformHeight :- csv{resource: "data/platformHeight.csv", format: (string, integer)}.
-@import allowedDiff :- csv{resource: "data/allowedDiff.csv", format: (integer, integer)}.
-validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) .
-validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), ~mustChangeAt(?y) .
-validC(?x, ?y) :- ~choseU(?x, ?y), choseB(?x, ?y) .
-validC(?x, ?y) :- choseU(?x, ?y), ~choseB(?x, ?y) .
-canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
-tooLargeGap(?y) :- platformHeight(?y, ?h), ~allowedDiff(?h, trainHeight) .
-mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) .
-mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) .
-seeTVTower(s) :- choseB(?x, "alexanderplatz") .
-seeTVTower(s) :- choseB("alexanderplatz", ?x) .
-success(s) :- validC("jungfernheide", "kottbusserTor") .
-@export success :- csv{}.
-allowedDiff("str_1", "alexanderplatz")
-elevator(c_1)
-success(?X_1) :- allowedDiff(?X_1, ?X_1), canChangeAt(?X_1), platformHeight(?X_1, ?X_1), R_1(?X_1, ?X_1, ?X_1, ?X_1), success(?X_1), mustChangeAt(?X_1), ~elevator(?X_1), ~R_1(?X_1, ?X_1, ?X_1, ?X_1), ~choseB(?X_1, ?X_1), ~choseU(?X_1, ?X_1) .
-R_2(?X_2, ?X_1, ?X_4, ?X_5, ?X_5) :- platformHeight(?X_2, ?X_1), choseU(?X_4, ?X_2), choseU(?X_5, ?X_5), ~success(?X_4), ~validC(?X_5, ?X_5), ~R_3(?X_2), ~canChangeAt(?X_2) .
-R_2(11234398708936275293, c_2, c_3, c_1, "alexanderplatz")
-validC(c_4, c_4)
-R_3(c_5)
-canChangeAt(?X_1) :- seeTVTower(?X_1), canChangeAt(?X_1), choseB(?X_1, ?X_1), platformHeight(?X_1, ?X_1), R_1(?X_1, ?X_1, ?X_1, ?X_1), seeTVTower(?X_1), ~allowedDiff(?X_1, ?X_1), ~mustChangeAt(?X_1), ~choseU(?X_1, ?X_1) .
-seeTVTower("str_2")
-success(?X_1) :- choseU(?X_1, ?X_1), platformHeight(?X_1, ?X_1), ~platformHeight(?X_1, ?X_1), ~R_1(?X_1, ?X_1, ?X_1, ?X_1), ~seeTVTower(?X_1) .
-R_3(?X_1) :- allowedDiff(?X_1, ?X_1), R_3(?X_1), R_1(?X_1, ?X_1, ?X_1, ?X_1) .
-R_2(c_2, c_2, trainHeight, c_1, "str_3")
-R_3("alexanderplatz")
-success(?X_1) :- platformHeight(?X_1, ?X_1), R_3(?X_1), seeTVTower(?X_1), ~R_5(?X_1, ?X_1), ~R_6(?X_1), ~R_4(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
-canChangeAt(?X_1) :- validC(?X_1, ?X_1), elevator(?X_1), R_1(?X_1, ?X_1, ?X_1, ?X_1), platformHeight(?X_1, ?X_1), ~allowedDiff(?X_1, ?X_1), ~R_6(?X_1) .
-R_3("str_1")
-canChangeAt(trainHeight)
-R_3(c_3)
-validC(c_6, "str_3")
-R_7(7482180271341237142, 9166979368146723845, "str_2", trainHeight, "str_4")
-R_2(?X_5, ?X_3, ?X_1, ?X_4, ?X_2) :- choseB(?X_5, ?X_3), choseB(?Y_1, ?X_4), choseB(?X_2, ?X_1), ~R_3(?X_4), ~canChangeAt(?Y_1), ~R_6(?X_5) .
-R_3(c_7)
-R_2(?X_5, ?X_4, ?X_3, ?X_2, ?X_4) :- choseU(?X_5, ?X_4), R_1(?X_5, ?X_2, ?X_4, ?Y_1), mustChangeAt(?X_3) .
+TRUE("true"^^<http://www.w3.org/2001/XMLSchema#boolean>).
+PI("3.14159"^^<http://www.w3.org/2001/XMLSchema#double>).
+CIRC_EARTH("40075000"^^<http://www.w3.org/2001/XMLSchema#double>).
+@import endangered :- csv{resource= "data/endangered.csv", format= (string)}.
+@import locations :- csv{resource= "data/locations.csv", format= (double, double, skip, skip, skip, skip, skip, skip, skip, skip, skip, skip, string)}.
+project("Wind Turbine A").
+project_location("Wind Turbine A", "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>, "50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>).
+project_height_m("Wind Turbine A", 60).
+project_species("Wind Turbine A", "Rotmilan").
+project_species("Wind Turbine A", "Feldsperling").
+project("Wind Turbine B").
+project_location("Wind Turbine B", "13.704927907097524"^^<http://www.w3.org/2001/XMLSchema#double>, "50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>).
+project_height_m("Wind Turbine B", 40).
+project_species("Wind Turbine B", "Gartenschläfer").
+project("Wind Turbine C").
+project_location("Wind Turbine C", "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, "50.90297432498729"^^<http://www.w3.org/2001/XMLSchema#double>).
+project_height_m("Wind Turbine C", 60).
+project_species("Wind Turbine C", "Mauersegler").
+coordinates(?longitude, ?latitude) :- locations(?longitude, ?latitude, ?tag), TRUE(CONTAINS(?tag, "addr")) .
+coordinates_m(?Xm, ?Ym) :- coordinates(?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), ?Xm = ?longitude * ?earth * (COS(?latitude / "180"^^<http://www.w3.org/2001/XMLSchema#double> * ?PI)) / "360"^^<http://www.w3.org/2001/XMLSchema#double>, ?Ym = ?latitude * ?earth / "360"^^<http://www.w3.org/2001/XMLSchema#double> .
+project_location_m(?project, ?Xm, ?Ym) :- project_location(?project, ?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), ?Xm = ?longitude * ?earth * (COS(?latitude / "180"^^<http://www.w3.org/2001/XMLSchema#double> * ?PI)) / "360"^^<http://www.w3.org/2001/XMLSchema#double>, ?Ym = ?latitude * ?earth / "360"^^<http://www.w3.org/2001/XMLSchema#double> .
+environmental_impact(?project) :- project_height_m(?project, ?height), ?height >= 50 .
+distance(?project, ?distance) :- project_location_m(?project, ?Xp, ?Yp), coordinates_m(?Xr, ?Yr), ?distance = SQRT((POW(?Xp - ?Xr, "2"^^<http://www.w3.org/2001/XMLSchema#double>)) + (POW(?Yp - ?Yr, "2"^^<http://www.w3.org/2001/XMLSchema#double>))) .
+project_reject(?project) :- distance(?project, ?distance), ?distance < "200"^^<http://www.w3.org/2001/XMLSchema#double> .
+project_reject(?project) :- environmental_impact(?project), project_species(?project, ?species), endangered(?species) .
+project_approved(?project) :- project(?project), ~project_reject(?project) .
+closest_house(?project, #min(?distance)) :- distance(?project, ?distance) .
+@export project_approved :- csv{}.
+closest_house(?X_1, ?X_2) :- project_location_m(?X_1, ?X_2, ?X_2) .
+project_approved(?X_1) :- endangered(?X_1), project_species(?X_1, ?X_1), distance(?X_1, ?X_1), project_approved(?X_1), coordinates(?X_1, ?X_1), project_location(?X_1, ?X_1, ?X_1), ~locations(?X_1, ?X_1, ?X_1), ~project_species(?X_1, ?X_1) .
+R_1(c_1, "Wind Turbine C").
+project(?X_1) :- coordinates(?X_1, ?X_1), ~CIRC_EARTH(?X_1), ~environmental_impact(?X_1), ~coordinates_m(?X_1, ?X_1), ~project_location_m(?X_1, ?X_1, ?X_1) .
+closest_house(16451751531193831956, "Gartenschläfer").
+R_1("true"^^<http://www.w3.org/2001/XMLSchema#boolean>, "Wind Turbine C").
+R_2(?X_1, ?X_2) :- project_species(?X_1, ?X_2), project_location_m(?X_2, ?X_2, ?X_2), project_reject(?X_1), closest_house(?X_2, ?X_2), locations(?X_2, ?X_1, ?X_1), R_3(?X_1, ?X_1, ?X_2), ~CIRC_EARTH(?X_2), ~distance(?X_1, ?X_2), ~TRUE(?X_1), ~project_approved(?X_2) .
+R_1(40, "Wind Turbine A").
+R_1("40075000"^^<http://www.w3.org/2001/XMLSchema#double>, "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_2(c_2, "Gartenschläfer").
+project("Feldsperling").
+R_4(?X_1, ?X_2, ?X_3) :- R_4(?X_1, ?X_2, ?X_3) .
+project(c_3).
+R_6("50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>, c_4, "str_1", "str_2").
+project_approved(?X_1) :- CIRC_EARTH(?X_1), project_location_m(?X_1, ?X_1, ?X_1), project(?X_1), project_reject(?X_1), R_6(?X_1, ?X_1, ?X_1, ?X_1), ~project_height_m(?X_1, ?X_1) .
+project_approved(?X_1) :- endangered(?X_1), R_8(?X_1, ?X_1, ?X_1), coordinates(?X_1, ?X_1) .
+R_8(?X_1, ?X_3, ?X_2) :- R_7(?X_1, ?X_3), project_species(?X_2, ?X_3), R_4(?X_2, ?X_2, ?X_1), ~R_1(?X_2, ?X_2), ~project_species(?X_1, ?X_3) .
+R_5(?X_1) :- R_5(?X_1), R_1(?X_1, ?X_1), project_location_m(?X_1, ?X_1, ?X_1), project(?X_1), R_10(?X_1), ~R_3(?X_1, ?X_1, ?X_1) .
+R_10(?X_1) :- R_10(?X_1), PI(?X_1), TRUE(?X_1), R_11(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_12(?X_1, ?X_1, ?X_1), R_5(?X_1), ~R_6(?X_1, ?X_1, ?X_1, ?X_1), ~project_reject(?X_1), ~TRUE(?X_1), ~project_location_m(?X_1, ?X_1, ?X_1) .
+R_10(c_5).
+R_10(?X_1) :- project_height_m(?X_1, ?X_1), project_species(?X_1, ?X_1), locations(?X_1, ?X_1, ?X_1), R_7(?X_1, ?X_1), R_5(?X_1), coordinates_m(?X_1, ?X_1), ~CIRC_EARTH(?X_1), ~project_reject(?X_1), ~endangered(?X_1) .
+project_approved("str_3").
+R_12("3.14159"^^<http://www.w3.org/2001/XMLSchema#double>, 40, c_6).
+R_4(?X_1, ?X_3, ?X_2) :- R_9(?X_2, ?X_3), project_species(?X_2, ?X_1), project_approved(?X_3), environmental_impact(?X_2), R_3(?X_3, ?Y_1, ?X_3), coordinates_m(?X_2, ?X_1), ~R_10(?X_2), ~PI(?X_1), ~project(?X_3) .
+R_3("Wind Turbine C", "Wind Turbine B", "Gartenschläfer").
+R_2(?X_1, ?X_2) :- project(?X_2), project_species(?X_2, ?X_1), project_location(?X_1, ?X_2, ?X_2), R_14(?X_1, ?X_1), ~closest_house(?X_1, ?X_1), ~R_9(?X_2, ?X_1) .
+R_9(?X_2, ?X_1) :- R_5(?X_2), R_14(?X_2, ?X_1), R_9(?X_2, ?X_2), project_location(?X_1, ?X_1, ?X_1), coordinates(?X_2, ?X_2), R_15(?X_2, ?X_2, ?X_1), ~coordinates(?X_2, ?X_1), ~R_3(?X_1, ?X_2, ?X_2), ~project_location(?X_1, ?X_2, ?X_1), ~R_14(?X_1, ?X_1) .
+R_2(?X_1, ?X_2) :- project_location(?X_2, ?X_2, ?X_2), PI(?X_1), coordinates_m(?X_1, ?X_1), ~project_height_m(?X_2, ?X_2), ~PI(?X_2), ~project(?X_1) .
+R_16(?X_2, ?X_1) :- R_18(?X_1, ?X_1, ?X_1), R_4(?X_2, ?X_2, ?X_1), R_17(?X_2, ?X_2, ?X_2, ?X_1, ?X_1), R_5(?X_2), endangered(?X_1), ~R_7(?X_2, ?X_1), ~TRUE(?X_2) .
+R_18(5104641247747171460, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>, 9545026887803456824).
+R_15("str_4", 9545026887803456824, "3.14159"^^<http://www.w3.org/2001/XMLSchema#double>).
+project_approved(?X_1) :- CIRC_EARTH(?X_1), PI(?X_1), R_8(?X_1, ?X_1, ?X_1), project_location_m(?X_1, ?X_1, ?X_1), coordinates(?X_1, ?X_1), coordinates_m(?X_1, ?X_1), ~locations(?X_1, ?X_1, ?X_1) .
+R_17(?X_4, ?X_2, ?X_5, ?X_3, ?X_1) :- endangered(?X_1), R_14(?X_2, ?X_5), project_location(?X_3, ?X_1, ?X_4) .
+R_17("13.704927907097524"^^<http://www.w3.org/2001/XMLSchema#double>, 12113836947888961138, 3212919808582282684, "Rotmilan", "50.90297432498729"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_19(c_7).
+project_approved(c_8).
+R_9(?X_2, ?X_1) :- CIRC_EARTH(?X_2), PI(?X_2), R_6(?X_1, ?X_1, ?X_2, ?X_2), ~project(?X_2) .
+R_23(?X_2, ?X_1) :- distance(?X_1, ?X_1), R_6(?X_2, ?X_1, ?X_1, ?X_1), R_3(?X_1, ?X_2, ?X_1), ~distance(?X_1, ?X_1), ~project(?X_1), ~closest_house(?X_1, ?X_1) .
+R_17(?X_4, ?X_5, ?X_3, ?X_2, ?X_1) :- coordinates_m(?X_4, ?X_3), R_2(?X_3, ?X_2), R_2(?X_1, ?X_5) .
+R_15(?X_3, ?X_2, ?X_1) :- endangered(?X_3), endangered(?X_2), endangered(?X_1), ~project_location(?X_2, ?X_3, ?X_1), ~R_24(?X_3, ?X_2) .
+R_23(?X_2, ?X_1) :- R_6(?X_2, ?X_2, ?X_2, ?X_1), R_20(?X_1, ?X_1, ?X_2), R_9(?X_2, ?X_2) .
+R_20(c_9, "Mauersegler", c_3).
+project_approved("str_3").
+R_20("Wind Turbine B", "Wind Turbine A", c_10).
+R_21(?X_1, ?X_3, ?X_4, ?X_2) :- R_9(?X_1, ?X_3), R_9(?X_4, ?X_2), ~R_19(?X_1), ~R_11(?X_3, ?X_4, ?X_1, ?X_1, ?X_1, ?X_3), ~endangered(?X_3) .
+R_22(?X_2, ?X_3, ?X_1) :- locations(?X_2, ?Y_1, ?X_1), coordinates_m(?X_2, ?X_2), R_24(?X_1, ?X_2), R_5(?X_3), project_location_m(?X_2, ?X_3, ?X_2) .
+R_15("Wind Turbine B", 13126291218015063561, c_11).
+R_23(?X_1, ?X_2) :- R_19(?X_1), R_16(?X_1, ?X_1), coordinates(?X_2, ?X_1), coordinates_m(?X_1, ?X_1), ~R_14(?X_1, ?X_1), ~R_4(?X_1, ?X_2, ?X_2) .
+R_16(?X_1, ?X_2) :- distance(?X_1, ?X_2), locations(?X_1, ?X_2, ?X_1), project(?X_2), ~project_species(?X_2, ?X_1) .
+R_25(3822722133120792567, c_12, c_13, 9545026887803456824, "str_5").
+R_8(5104641247747171460, "str_6", "str_4").
+R_21(199065617389306212, "Wind Turbine B", "Wind Turbine B", c_4).
+R_2(?X_1, ?X_2) :- R_13(?X_2, ?X_2, ?X_2), coordinates_m(?X_1, ?X_1), R_1(?X_1, ?X_1), environmental_impact(?X_1) .
+R_28(c_14).
+R_2(?X_1, ?X_2) :- R_4(?X_2, ?X_1, ?X_2), R_15(?X_2, ?X_2, ?X_2), project_reject(?X_2), R_12(?X_2, ?X_2, ?X_2), project_height_m(?X_2, ?X_1) .
+R_27(?X_3, ?X_1, ?X_2) :- project_height_m(?X_3, ?X_3), R_15(?X_2, ?X_1, ?X_3), ~project_height_m(?X_3, ?X_3), ~PI(?X_3), ~project_location(?X_1, ?X_3, ?X_1) .
+R_27(?X_2, ?X_1, ?X_3) :- R_13(?X_2, ?X_2, ?X_3), R_4(?X_2, ?X_1, ?Y_1), R_26(?Y_1), ~locations(?X_1, ?X_3, ?X_2), ~R_18(?X_2, ?X_1, ?Y_1), ~TRUE(?X_2) .
+R_8(12521023486122827589, c_15, "str_7").
+R_8(?X_3, ?X_1, ?X_2) :- R_33(?Y_1), R_8(?X_1, ?X_2, ?X_3), distance(?X_3, ?X_3), R_7(?Y_1, ?X_1), R_26(?Y_1), R_31(?X_1), ~R_30(?Y_1, ?X_3), ~coordinates_m(?Y_1, ?Y_1), ~R_18(?X_1, ?Y_1, ?X_1) .
+R_16("50.90297432498729"^^<http://www.w3.org/2001/XMLSchema#double>, 12113836947888961138).
+project_approved(?X_1) :- R_30(?X_1, ?X_1), R_5(?X_1) .
+project_approved(?X_1) :- R_28(?X_1), ~project_reject(?X_1), ~R_15(?X_1, ?X_1, ?X_1), ~R_20(?X_1, ?X_1, ?X_1), ~distance(?X_1, ?X_1) .
+R_28(?X_1) :- project_location(?X_1, ?X_1, ?X_1), R_20(?X_1, ?X_1, ?X_1), R_28(?X_1), R_3(?X_1, ?X_1, ?X_1), R_19(?X_1), R_33(?X_1), ~R_5(?X_1), ~PI(?X_1), ~R_6(?X_1, ?X_1, ?X_1, ?X_1) .
+R_17("str_8", 3212919808582282684, "Wind Turbine C", "str_9", "str_3").
+R_28(?X_1) :- R_13(?X_1, ?X_1, ?X_1), R_20(?X_1, ?X_1, ?X_1), R_7(?X_1, ?X_1), R_22(?X_1, ?X_1, ?X_1) .
+R_34("13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, "str_10", c_9).
+R_29(?X_1, ?X_3, ?X_2, ?X_4) :- project_height_m(?X_1, ?X_3), project_height_m(?X_2, ?X_4), ~project_height_m(?X_3, ?X_3) .
+R_21(?X_1, ?X_4, ?X_3, ?X_2) :- R_28(?X_4), project_height_m(?X_2, ?X_3), R_27(?X_2, ?X_3, ?X_1), R_12(?X_2, ?X_2, ?X_1), R_1(?X_4, ?X_4), ~project(?X_2), ~R_11(?X_3, ?X_2, ?X_4, ?X_4, ?X_4, ?X_1), ~R_20(?X_4, ?X_2, ?X_4) .
+R_16(c_16, c_17).
+R_36("Wind Turbine B", c_18).
+R_34(c_11, "Mauersegler", c_19).
+R_33(c_20).
+R_13(?X_1, ?X_2, ?X_3) :- PI(?X_1), PI(?X_2), PI(?X_3) .
+R_21("str_9", c_21, "3.14159"^^<http://www.w3.org/2001/XMLSchema#double>, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_33(c_22).
+R_19(c_23).
+R_9(?X_2, ?X_1) :- R_25(?X_2, ?X_1, ?X_2, ?X_1, ?X_2), R_35(?X_2, ?X_1, ?X_1), R_30(?X_1, ?X_2), ~R_32(?X_1, ?X_2, ?X_1, ?X_2) .
+R_39(9545026887803456824, c_20, "str_11", c_24, c_22).
+R_42(60, 40, c_25, 8323436350815069230).
+R_29(c_26, "Wind Turbine A", 11211720584626397550, c_12).
+R_17(c_27, "str_8", "Feldsperling", c_28, c_10).
+R_37("str_12", "str_13").
+R_16(c_29, c_2).
+closest_house(?X_2, ?X_1) :- R_31(?X_2), R_31(?X_1) .
+closest_house(c_30, "str_14").
+R_26(?X_1) :- project_species(?X_1, ?X_1), R_34(?X_1, ?X_1, ?X_1), ~R_12(?X_1, ?X_1, ?X_1), ~R_41(?X_1, ?X_1, ?X_1), ~project_location_m(?X_1, ?X_1, ?X_1) .
+R_16(?X_2, ?X_1) :- R_25(?X_2, ?X_1, ?X_2, ?X_2, ?X_2), R_20(?X_2, ?X_1, ?X_1), TRUE(?X_1) .
+R_23("str_15", "Wind Turbine A").
+R_29(?X_1, ?X_2, ?X_3, ?X_4) :- project_reject(?X_2), R_11(?X_2, ?X_3, ?X_4, ?X_1, ?X_4, ?X_2), project(?X_2), R_31(?X_4), ~R_14(?X_4, ?X_4), ~locations(?X_1, ?X_4, ?X_4), ~R_17(?X_4, ?X_2, ?X_2, ?X_1, ?X_1) .
+project_approved(c_31).
+R_21(60, "Wind Turbine A", 40, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_16(16451751531193831956, c_21).
+R_9(c_32, "50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_21(c_33, c_34, "str_16", c_16).
+R_47("addr", "Gartenschläfer", c_28, c_35, c_36).
+R_31(c_29).
+R_51(c_30, c_37, "str_3", "str_17").
+R_25(c_38, 18336635109440308264, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>, c_39, 7228251145546024417).
+R_36(c_1, c_40).
+R_27(?X_1, ?X_2, ?X_3) :- CIRC_EARTH(?X_3), PI(?Y_1), project_approved(?X_1), R_29(?X_2, ?X_2, ?X_1, ?X_3) .
+R_39(?X_5, ?X_4, ?X_1, ?X_4, ?X_2) :- R_34(?Y_1, ?X_4, ?X_1), R_50(?X_4, ?X_4, ?X_5, ?X_2, ?X_5), project_location(?Y_1, ?X_4, ?X_4), R_24(?X_4, ?X_2), environmental_impact(?Y_1), coordinates_m(?X_2, ?Y_1), ~R_23(?X_4, ?X_4), ~R_9(?X_4, ?X_2), ~R_16(?Y_1, ?X_2) .
+R_49(c_41, c_42, 7498370424300872906, "addr").
+R_37("str_18", c_11).
+R_39("str_19", "Wind Turbine A", c_3, "str_20", 14719529433964097134).
+R_46(?X_1) :- R_55(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_29(?X_1, ?X_1, ?X_1, ?X_1), R_49(?X_1, ?X_1, ?X_1, ?X_1), R_10(?X_1), ~coordinates(?X_1, ?X_1) .
+R_56(?X_2, ?X_1) :- R_30(?X_1, ?X_2), R_49(?X_1, ?X_2, ?X_2, ?X_1), R_11(?X_2, ?X_1, ?X_1, ?X_2, ?X_1, ?X_1), ~R_59(?X_2, ?X_1, ?X_1, ?X_2), ~project_approved(?X_1), ~R_52(?X_2, ?X_2) .
+R_53(c_43, c_43, c_33, "Mauersegler", "Gartenschläfer").
+R_36(c_42, "Wind Turbine B").
+R_56(?X_1, ?X_2) :- R_54(?X_1, ?X_2, ?X_1), project_location(?X_2, ?X_2, ?X_1), R_1(?X_1, ?X_2), R_13(?X_2, ?X_2, ?X_1), ~project_location(?X_1, ?X_2, ?X_1) .
+closest_house(?X_1, ?X_2) :- R_43(?X_2, ?X_2, ?X_1), project_location(?X_2, ?X_1, ?X_1), ~R_57(?X_2, ?X_1) .
+R_35("str_21", "str_22", c_44).
+R_27(c_6, "str_9", c_45).
+R_2(?X_2, ?X_1) :- distance(?X_1, ?X_1), R_60(?X_2, ?X_2, ?X_1), TRUE(?X_2), ~R_10(?X_2), ~R_48(?X_2, ?X_2, ?X_2, ?X_1, ?X_1, ?X_2) .
+R_37(?X_1, ?X_2) :- project_height_m(?X_2, ?X_2), R_46(?X_1), ~R_5(?X_1) .
+R_40(1419774183883764272).
+R_36(?X_1, ?X_2) :- distance(?X_1, ?X_2), R_11(?X_1, ?X_1, ?X_1, ?X_1, ?X_2, ?X_1), ~R_38(?X_1), ~R_13(?X_2, ?X_2, ?X_1) .
+R_23(?X_1, ?X_2) :- R_49(?X_1, ?X_1, ?X_2, ?X_1), R_59(?X_1, ?X_2, ?X_1, ?X_1), R_36(?X_1, ?X_1), ~R_14(?X_1, ?X_1), ~R_18(?X_2, ?X_1, ?X_1), ~R_43(?X_1, ?X_1, ?X_1) .
+R_50(?X_3, ?X_4, ?X_2, ?X_5, ?X_4) :- R_44(?Y_1, ?X_5, ?X_2, ?X_5, ?X_4), R_56(?X_3, ?X_4), TRUE(?X_5), project_height_m(?X_4, ?X_3), R_61(?X_3, ?X_4, ?X_4, ?X_2, ?X_2), R_28(?X_4), ~R_14(?X_3, ?X_3), ~R_38(?X_4) .
+R_43(?X_3, ?X_2, ?X_1) :- R_22(?X_1, ?X_1, ?X_1), R_25(?X_1, ?X_3, ?X_3, ?Y_1, ?X_2), R_52(?X_1, ?X_2), ~R_57(?X_1, ?X_3), ~R_40(?X_2), ~R_53(?X_1, ?X_1, ?X_1, ?X_2, ?Y_1), ~R_45(?X_3, ?X_1, ?X_1, ?X_1) .
+R_53(?X_2, ?X_2, ?X_4, ?X_5, ?X_1) :- project_approved(?X_2), distance(?X_2, ?X_2), R_31(?X_5), R_51(?X_1, ?X_2, ?X_5, ?X_4), R_38(?X_5), ~project(?X_2), ~R_50(?X_2, ?X_2, ?X_4, ?X_2, ?X_2) .
+R_37(?X_1, ?X_2) :- R_59(?X_2, ?X_2, ?X_2, ?X_1), ~R_51(?X_2, ?X_2, ?X_1, ?X_2) .
+R_52(c_46, 17914361773654214432).
+R_54(?X_3, ?X_2, ?X_1) :- R_41(?X_3, ?X_2, ?X_1), R_58(?X_2, ?X_2, ?X_2), ~R_61(?X_3, ?X_2, ?X_2, ?X_2, ?X_1), ~R_44(?X_2, ?X_2, ?X_2, ?X_2, ?X_3), ~R_11(?X_1, ?X_2, ?X_2, ?X_2, ?X_2, ?X_2) .
+R_38(?X_1) :- R_54(?X_1, ?X_1, ?X_1), R_56(?X_1, ?X_1), TRUE(?X_1), project_approved(?X_1), R_5(?X_1), project_reject(?X_1), ~R_60(?X_1, ?X_1, ?X_1) .
+R_37("str_23", "50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_40(?X_1) :- R_51(?X_1, ?X_1, ?X_1, ?X_1), project_location_m(?X_1, ?X_1, ?X_1), endangered(?X_1), locations(?X_1, ?X_1, ?X_1) .
+R_13(3445715035078356846, "str_15", "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_57(?X_1, ?X_2) :- project_reject(?X_1), project_reject(?X_2), ~project_species(?X_2, ?X_2), ~coordinates(?X_2, ?X_1) .
+R_59(?X_3, ?X_1, ?X_2, ?X_4) :- R_3(?X_4, ?X_1, ?X_1), R_44(?X_1, ?X_2, ?X_2, ?X_1, ?X_3), TRUE(?X_3), coordinates(?X_1, ?X_1), R_31(?X_2), R_11(?Y_1, ?X_4, ?X_4, ?X_3, ?X_2, ?X_2) .
+R_2(c_47, c_48).
+R_58(c_3, 60, 5975040827691923623).
+R_65(?X_1) :- R_34(?X_1, ?X_1, ?X_1), ~R_14(?X_1, ?X_1) .
+R_28(c_40).
+R_33(?X_1) :- R_28(?X_1), ~coordinates(?X_1, ?X_1) .
+R_51(?X_2, ?X_1, ?X_4, ?X_3) :- R_41(?X_2, ?X_1, ?X_4), R_22(?X_3, ?X_4, ?X_3), ~CIRC_EARTH(?X_4), ~R_48(?X_2, ?X_4, ?X_3, ?X_1, ?X_3, ?X_4), ~R_74(?X_4, ?X_3, ?X_3, ?X_2), ~coordinates_m(?X_4, ?X_4) .
+R_52(?X_1, ?X_2) :- project_reject(?X_1), distance(?X_2, ?X_2), R_47(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_6(?X_1, ?X_2, ?X_1, ?X_1), R_71(?X_1, ?X_1, ?X_1, ?X_1, ?X_2), ~R_65(?X_1), ~R_11(?X_2, ?X_1, ?X_2, ?X_1, ?X_1, ?X_1), ~R_30(?X_1, ?X_1) .
+R_2(15677275747162704347, c_49).
+R_59(?X_1, ?X_3, ?X_4, ?X_2) :- R_40(?X_1), R_20(?X_1, ?X_4, ?X_1), R_25(?X_4, ?X_1, ?X_4, ?X_1, ?X_2), R_35(?X_2, ?X_1, ?X_3), R_51(?Y_1, ?X_2, ?X_2, ?X_3), ~project_height_m(?X_4, ?X_4) .
+R_4(?X_3, ?X_2, ?X_1) :- R_22(?X_3, ?Y_1, ?X_1), R_28(?Y_1), R_18(?X_2, ?Y_1, ?X_2), project_location(?X_1, ?X_3, ?X_1), R_57(?X_1, ?X_3), distance(?X_3, ?X_3), ~TRUE(?X_1), ~R_28(?Y_1) .
+R_36(?X_2, ?X_1) :- R_59(?X_2, ?X_2, ?X_1, ?X_1), project_approved(?X_2), R_10(?X_2), project_location_m(?X_1, ?X_1, ?X_1) .
+R_71(?X_1, ?X_3, ?X_4, ?X_4, ?X_5) :- project_reject(?X_4), R_69(?X_1, ?X_1, ?X_4, ?X_5, ?X_4, ?X_3), R_68(?X_5, ?X_4, ?X_4, ?X_4, ?X_1, ?X_3), ~R_68(?X_4, ?X_5, ?X_4, ?X_5, ?X_3, ?X_1), ~R_77(?X_4, ?X_3, ?X_5, ?X_3, ?X_4), ~R_25(?X_4, ?X_5, ?X_4, ?X_1, ?X_1), ~R_12(?X_4, ?X_1, ?X_3) .
+R_72(5104641247747171460, c_50, "Wind Turbine C", c_51, 5093786322851136121).
+R_55(c_52, c_41, c_53, 6398878508525777752, c_16).
+R_48(c_50, 5937665870185835115, 14030049035286419269, c_54, c_5, c_6).
+R_52(?X_2, ?X_1) :- R_70(?X_1, ?X_1, ?X_1, ?X_2), R_10(?X_2), R_63(?X_1, ?X_2, ?X_1, ?X_1), ~R_9(?X_2, ?X_2), ~R_62(?X_1, ?X_1, ?X_2, ?X_1, ?X_1, ?X_1), ~R_61(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_71(?X_1, ?X_1, ?X_1, ?X_2, ?X_2) .
+R_56(c_14, "str_24").
+R_78(?X_1) :- R_78(?X_1), R_61(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_73(?X_1, ?X_1, ?X_1), R_31(?X_1), R_19(?X_1), ~R_3(?X_1, ?X_1, ?X_1), ~R_15(?X_1, ?X_1, ?X_1) .
+R_64(?X_1, ?X_5, ?X_4, ?X_3, ?X_1) :- endangered(?X_1), R_28(?X_5), R_14(?X_4, ?X_5), R_51(?X_1, ?X_3, ?X_3, ?Y_1), R_15(?X_1, ?X_1, ?X_3), ~project(?X_1) .
+R_64(c_55, "Wind Turbine A", c_34, 5093786322851136121, c_56).
+R_72(c_57, "str_16", "str_25", c_58, 9067802697356495539).
+R_61(3822722133120792567, c_59, c_60, c_61, c_62).
+R_78(?X_1) :- R_58(?X_1, ?X_1, ?X_1), PI(?X_1), R_49(?X_1, ?X_1, ?X_1, ?X_1), R_15(?X_1, ?X_1, ?X_1), R_9(?X_1, ?X_1), R_67(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_85(?X_1, ?X_1, ?X_1, ?X_1), ~R_79(?X_1, ?X_1, ?X_1, ?X_1), ~R_42(?X_1, ?X_1, ?X_1, ?X_1), ~R_41(?X_1, ?X_1, ?X_1) .
+R_61(?X_3, ?X_5, ?X_1, ?X_4, ?X_1) :- R_58(?X_5, ?X_1, ?X_3), R_81(?X_4, ?X_1, ?X_4, ?X_5, ?Y_1, ?X_3), project_height_m(?X_4, ?X_5), R_63(?X_1, ?X_1, ?X_5, ?X_1), R_49(?X_1, ?Y_1, ?X_3, ?X_1), ~locations(?X_3, ?X_1, ?X_5) .
+R_59(?X_4, ?X_3, ?X_2, ?X_1) :- R_3(?X_4, ?X_3, ?X_4), R_64(?X_1, ?X_4, ?X_4, ?X_3, ?X_2), ~R_54(?X_3, ?X_3, ?X_1), ~R_49(?X_3, ?X_1, ?X_4, ?X_1), ~R_69(?X_4, ?X_3, ?X_4, ?X_2, ?X_3, ?X_3) .
+R_76(c_21, c_55).
+R_27(?X_3, ?X_2, ?X_1) :- R_34(?X_2, ?X_2, ?Y_1), project_approved(?X_1), R_68(?X_1, ?Y_1, ?Y_1, ?Y_1, ?X_3, ?X_1), ~R_55(?X_2, ?Y_1, ?Y_1, ?X_1, ?Y_1), ~R_32(?X_2, ?X_3, ?X_2, ?X_1), ~R_46(?X_2) .
+R_58(?X_2, ?X_3, ?X_1) :- R_47(?X_3, ?X_1, ?Y_1, ?X_3, ?X_3), R_72(?X_2, ?X_2, ?X_2, ?X_1, ?X_1) .
+R_69(?X_1, ?X_5, ?X_4, ?X_3, ?X_6, ?X_3) :- R_76(?X_1, ?X_5), R_76(?X_4, ?X_3), R_76(?X_6, ?X_3), ~R_65(?X_1), ~R_72(?X_3, ?X_5, ?X_5, ?X_5, ?X_3), ~TRUE(?X_3), ~R_86(?X_5, ?X_3) .
+project_approved(?X_1) :- R_35(?X_1, ?X_1, ?X_1), R_67(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_70(?X_1, ?X_1, ?X_1, ?X_1), ~R_20(?X_1, ?X_1, ?X_1), ~R_65(?X_1), ~R_78(?X_1), ~R_60(?X_1, ?X_1, ?X_1) .
+R_54("Wind Turbine B", c_33, c_63).
+R_82(c_49, "Wind Turbine B", c_64).
+R_62(3822722133120792567, 14030049035286419269, 17264384982496592910, c_57, "str_26", 14719529433964097134).
+R_55(c_65, 16350261019308018518, "str_27", 573468350688391475, 6591535318473642446).
+R_37(?X_1, ?X_2) :- R_46(?X_1), R_92(?X_2, ?X_2, ?X_1), TRUE(?X_2), R_90(?X_2), R_71(?X_1, ?X_1, ?X_1, ?X_2, ?X_2), ~R_23(?X_2, ?X_2), ~distance(?X_1, ?X_2) .
+R_56("str_28", 8231282501139097961).
+R_66(c_66).
+R_93("3.14159"^^<http://www.w3.org/2001/XMLSchema#double>, "str_29", 13800849091671144757, "str_30", "str_31").
+R_53(?X_5, ?X_2, ?X_3, ?X_4, ?X_2) :- R_72(?X_2, ?X_2, ?X_3, ?X_4, ?X_2), R_7(?X_5, ?X_2), ~project_species(?X_5, ?X_2) .
+R_40(?X_1) :- R_18(?X_1, ?X_1, ?X_1), project_approved(?X_1), R_63(?X_1, ?X_1, ?X_1, ?X_1), R_60(?X_1, ?X_1, ?X_1), R_76(?X_1, ?X_1), R_4(?X_1, ?X_1, ?X_1) .
+R_76("str_14", c_67).
+R_66("str_32").
+R_8(?X_1, ?X_3, ?X_2) :- R_48(?X_1, ?Y_1, ?Y_1, ?X_2, ?X_3, ?X_3), R_19(?X_2) .
+R_38(?X_1) :- R_18(?X_1, ?X_1, ?X_1), R_45(?X_1, ?X_1, ?X_1, ?X_1), coordinates_m(?X_1, ?X_1), R_10(?X_1), ~project_height_m(?X_1, ?X_1) .
+R_36("str_33", c_4).
+R_62(10977277354736621730, c_68, c_69, "Wind Turbine C", c_70, c_71).
+R_70(?X_4, ?X_2, ?X_1, ?X_3) :- CIRC_EARTH(?X_2), R_1(?X_4, ?X_3), R_76(?X_3, ?X_4), R_65(?X_2), coordinates_m(?X_4, ?X_1), R_49(?X_3, ?X_2, ?X_3, ?X_2), ~R_60(?X_3, ?X_2, ?X_3) .
+R_16(?X_1, ?X_2) :- R_54(?X_2, ?X_2, ?X_2), R_17(?X_2, ?X_1, ?X_2, ?X_1, ?X_1), R_43(?X_1, ?X_2, ?X_1), R_34(?X_2, ?X_1, ?X_2), coordinates(?X_2, ?X_1), ~R_27(?X_2, ?X_2, ?X_2), ~R_42(?X_1, ?X_2, ?X_2, ?X_2), ~R_60(?X_2, ?X_2, ?X_2) .
+R_16("str_34", c_72).
+R_54(?X_3, ?X_2, ?X_1) :- locations(?X_3, ?X_2, ?X_1), R_42(?X_2, ?X_1, ?X_2, ?X_3), R_49(?X_2, ?Y_1, ?X_1, ?X_3), R_40(?Y_1), project_reject(?X_1) .
+R_36(?X_2, ?X_1) :- project_location_m(?X_2, ?X_1, ?X_2), R_74(?X_1, ?X_1, ?X_1, ?X_2), R_27(?X_2, ?X_1, ?X_1) .
+R_38(?X_1) :- R_89(?X_1, ?X_1, ?X_1), R_87(?X_1, ?X_1), R_33(?X_1), R_56(?X_1, ?X_1), ~project_species(?X_1, ?X_1), ~project_location(?X_1, ?X_1, ?X_1), ~project(?X_1) .
+R_82(?X_1, ?X_3, ?X_2) :- R_92(?X_2, ?X_3, ?Y_1), R_85(?X_2, ?X_1, ?X_2, ?X_2), R_56(?X_1, ?X_1), environmental_impact(?X_3), R_80(?X_3, ?X_3, ?Y_1, ?Y_1, ?X_2), R_79(?X_1, ?X_3, ?X_1, ?X_2), ~R_58(?X_2, ?X_3, ?X_2), ~R_94(?X_1, ?Y_1, ?Y_1, ?X_3, ?X_3), ~environmental_impact(?X_1) .
+R_93(c_22, 2467372913479023655, "str_35", c_73, 6398878508525777752).
+R_98(?X_1, ?X_2) :- R_90(?X_1), R_29(?X_2, ?X_1, ?X_1, ?X_2), R_21(?X_1, ?X_1, ?X_1, ?X_2), R_25(?X_1, ?X_2, ?X_1, ?X_2, ?X_2) .
+R_95(?X_1) :- R_80(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), PI(?X_1), R_74(?X_1, ?X_1, ?X_1, ?X_1), environmental_impact(?X_1), ~R_69(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_17(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_16(?X_1, ?X_1), ~R_77(?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_29(?X_2, ?X_1, ?X_3, ?X_4) :- R_83(?X_2), R_29(?X_1, ?X_3, ?X_4, ?X_4), project_approved(?X_2), ~R_87(?X_1, ?X_3), ~R_28(?X_4), ~R_85(?X_2, ?X_4, ?X_2, ?X_2), ~R_65(?X_1) .
+R_44(?X_3, ?X_2, ?X_1, ?X_4, ?X_5) :- TRUE(?X_3), R_60(?X_2, ?X_1, ?X_1), R_60(?X_5, ?X_4, ?Y_1), ~R_79(?X_4, ?X_2, ?X_3, ?X_4), ~R_75(?Y_1, ?X_5) .
+R_89(?X_2, ?X_1, ?X_3) :- project_height_m(?X_2, ?X_1), R_88(?X_2, ?X_3, ?X_3, ?X_3, ?X_3, ?X_2), R_22(?X_2, ?X_2, ?X_3), R_19(?X_1), project(?Y_1), ~R_88(?X_2, ?X_2, ?X_2, ?X_3, ?X_2, ?X_3), ~R_24(?X_2, ?X_3), ~R_18(?X_3, ?X_3, ?X_3) .
+R_91(c_9, c_74, 12113836947888961138, "Feldsperling").
+R_95(c_72).
+R_79(?X_4, ?X_3, ?X_1, ?X_2) :- R_31(?X_2), R_79(?X_3, ?X_4, ?X_2, ?X_1), coordinates(?X_2, ?X_4) .
+R_17(c_75, c_13, "str_21", "str_36", "str_37").
+R_100(c_1, c_76).
+R_82("str_17", "str_32", 9545026887803456824).
+R_2(c_77, c_78).
+R_74(?X_4, ?X_1, ?X_3, ?X_2) :- R_19(?Y_1), R_20(?X_3, ?X_3, ?X_1), R_30(?X_1, ?X_4), R_97(?X_1, ?X_1, ?X_3, ?X_1, ?Y_1), R_32(?X_2, ?X_4, ?X_2, ?X_2), R_86(?X_1, ?X_4), ~R_32(?X_4, ?X_1, ?X_2, ?X_3) .
+R_94(9545026887803456824, c_65, 9087503801540917313, "str_38", 195474104853369280).
+R_42(?X_2, ?X_4, ?X_1, ?X_3) :- R_34(?X_2, ?Y_1, ?X_1), R_34(?Y_1, ?X_4, ?X_3), ~locations(?X_2, ?Y_1, ?X_3), ~R_63(?Y_1, ?Y_1, ?Y_1, ?X_4) .
+R_100(9067802697356495539, 8970100518477136950).
+R_92(?X_3, ?X_1, ?X_2) :- R_61(?X_3, ?X_3, ?Y_1, ?X_1, ?Y_1), R_13(?X_3, ?Y_1, ?Y_1), project_location(?X_3, ?Y_1, ?X_3), R_110(?X_1, ?X_2, ?X_2, ?Y_1, ?Y_1, ?X_2), R_92(?X_1, ?X_2, ?Y_1), ~R_85(?Y_1, ?Y_1, ?X_2, ?Y_1) .
+R_97(?X_3, ?X_2, ?X_4, ?X_1, ?X_5) :- R_65(?X_3), R_58(?X_2, ?X_4, ?X_1), R_65(?X_5), ~R_78(?X_2), ~R_69(?X_5, ?X_3, ?X_3, ?X_1, ?X_3, ?X_4), ~R_61(?X_5, ?X_1, ?X_2, ?X_1, ?X_1) .
+R_93("str_39", c_79, 17264384982496592910, 16046045319767710088, 7705301088140006097).
+R_55(c_80, c_68, "Wind Turbine A", c_51, "str_40").
+R_62(?X_4, ?X_6, ?X_1, ?X_5, ?X_5, ?X_3) :- R_7(?X_5, ?Y_1), R_94(?X_5, ?X_5, ?X_1, ?X_3, ?X_5), TRUE(?X_5), coordinates(?X_1, ?X_6), R_61(?X_6, ?X_5, ?X_6, ?X_5, ?X_3), R_12(?X_4, ?Y_1, ?X_5), ~R_22(?Y_1, ?X_1, ?X_5), ~R_34(?Y_1, ?X_5, ?X_5), ~endangered(?X_5), ~R_104(?X_5, ?X_3, ?X_5, ?X_5, ?X_6) .
+R_108(?X_1, ?X_2, ?X_3) :- R_57(?X_1, ?X_2), R_93(?X_2, ?X_3, ?X_1, ?X_3, ?X_2), project(?X_1), ~R_78(?X_2), ~R_16(?X_2, ?X_3) .
+R_62(5478964962611011599, 5481279997543614551, c_14, c_81, c_82, c_83).
+R_23(?X_2, ?X_1) :- R_66(?X_2), R_16(?X_1, ?X_1), R_82(?X_2, ?X_2, ?X_2), distance(?X_1, ?X_1), R_10(?X_2), R_102(?X_1, ?X_2, ?X_2, ?X_1), ~R_29(?X_2, ?X_2, ?X_2, ?X_2), ~R_17(?X_2, ?X_1, ?X_1, ?X_1, ?X_2), ~R_15(?X_2, ?X_2, ?X_2), ~R_74(?X_1, ?X_2, ?X_2, ?X_2) .
+R_46(?X_1) :- R_53(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_1(?X_1, ?X_1), R_44(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_73(?X_1, ?X_1, ?X_1) .
+R_17(?X_2, ?X_5, ?X_1, ?X_3, ?X_5) :- R_18(?X_5, ?X_5, ?X_1), R_18(?X_3, ?X_5, ?X_2) .
+R_4(18336635109440308264, "str_22", "str_30").
+R_71(?X_2, ?X_1, ?X_5, ?X_4, ?X_2) :- R_67(?X_2, ?X_1, ?X_5, ?X_5, ?X_2, ?X_2), R_91(?X_5, ?X_2, ?X_5, ?X_2), R_15(?X_4, ?X_4, ?X_2), R_87(?X_2, ?X_2), ~R_97(?X_2, ?X_1, ?X_5, ?X_2, ?X_2), ~R_59(?X_5, ?X_5, ?X_2, ?X_4), ~R_113(?X_1, ?X_1, ?X_4, ?X_2) .
+R_106(11211720584626397550).
+R_26(c_78).
+R_16("str_32", "str_41").
+R_39(?X_1, ?X_3, ?X_5, ?X_4, ?X_2) :- R_68(?X_1, ?X_4, ?Y_1, ?X_5, ?X_3, ?X_4), project_species(?X_3, ?X_2), R_64(?Y_1, ?Y_1, ?X_4, ?X_5, ?X_2), R_78(?X_4), R_86(?X_1, ?X_5), ~R_10(?X_4), ~R_118(?X_2, ?X_3), ~R_73(?X_5, ?X_4, ?X_1) .
+R_17("str_42", 18187230223587692546, c_10, 17933829848920569163, 60).
+R_86(c_20, c_84).
+R_68(?X_2, ?X_3, ?X_1, ?X_4, ?X_6, ?X_4) :- R_22(?X_3, ?X_3, ?X_1), project_height_m(?X_4, ?X_4), R_109(?X_4, ?X_2), coordinates(?X_3, ?X_6) .
+R_105(?X_1, ?X_2, ?X_3) :- R_106(?X_3), R_123(?X_3, ?Y_1, ?X_1, ?X_2), R_72(?X_3, ?X_3, ?X_3, ?X_2, ?Y_1), closest_house(?X_2, ?Y_1), distance(?X_2, ?X_3), ~R_83(?X_2), ~R_102(?X_3, ?X_3, ?Y_1, ?X_2) .
+R_96(?X_4, ?X_1, ?X_3, ?X_4, ?X_2) :- R_111(?X_4, ?X_4, ?X_3, ?X_4, ?X_2, ?X_1), PI(?X_3), R_87(?X_1, ?X_4), ~CIRC_EARTH(?X_4), ~R_16(?X_4, ?X_4) .
+R_68(?X_2, ?X_5, ?X_6, ?X_6, ?X_4, ?X_1) :- R_66(?X_2), R_66(?X_5), R_66(?X_6), R_66(?X_6), R_66(?X_4), R_66(?X_1), ~R_11(?X_4, ?X_1, ?X_2, ?X_6, ?X_5, ?X_2), ~R_44(?X_4, ?X_6, ?X_6, ?X_6, ?X_4), ~R_54(?X_4, ?X_6, ?X_6) .
+R_16(?X_1, ?X_2) :- CIRC_EARTH(?X_2), R_107(?X_2, ?X_2, ?X_2, ?X_1, ?X_1, ?X_1), R_50(?X_1, ?X_2, ?X_2, ?X_2, ?X_2), R_105(?X_1, ?X_2, ?X_2), R_4(?X_1, ?X_2, ?X_1), ~R_20(?X_1, ?X_2, ?X_1), ~R_121(?X_2), ~R_36(?X_1, ?X_2) .
+R_94(?X_1, ?X_2, ?X_2, ?X_4, ?X_5) :- R_9(?X_1, ?X_2), locations(?X_1, ?X_4, ?X_2), R_113(?X_5, ?X_4, ?X_1, ?X_2), R_20(?Y_1, ?X_4, ?X_4), R_118(?X_2, ?X_5), R_112(?X_2, ?X_1, ?X_2, ?X_2, ?X_1, ?X_4), ~R_67(?X_2, ?X_5, ?X_5, ?X_4, ?X_5, ?X_1), ~R_74(?X_1, ?X_1, ?X_2, ?X_4), ~TRUE(?X_4), ~R_64(?X_1, ?X_1, ?X_2, ?X_4, ?X_4) .
+R_50(c_85, c_2, c_86, c_87, c_16).
+R_82(?X_3, ?X_2, ?X_1) :- R_117(?X_3, ?X_1, ?X_1, ?X_1, ?X_2), R_66(?X_2), ~R_52(?X_3, ?X_1) .
+R_4(?X_2, ?X_1, ?X_3) :- endangered(?X_3), R_117(?X_1, ?X_1, ?X_1, ?X_3, ?X_2), ~R_44(?X_3, ?X_3, ?X_3, ?X_3, ?X_2), ~R_72(?X_2, ?X_3, ?X_1, ?X_1, ?X_1) .
+R_16(?X_2, ?X_1) :- R_3(?X_2, ?X_2, ?X_1), R_48(?X_2, ?X_1, ?X_1, ?X_1, ?X_2, ?X_2), R_126(?X_2, ?X_1, ?X_2), R_73(?X_2, ?X_2, ?X_1), R_123(?X_1, ?X_2, ?X_1, ?X_1), ~R_85(?X_2, ?X_2, ?X_1, ?X_2), ~R_45(?X_2, ?X_1, ?X_2, ?X_2), ~R_47(?X_1, ?X_2, ?X_1, ?X_2, ?X_2) .
+R_62(c_88, c_89, c_37, 5082722222907354456, "Wind Turbine C", 10971650885863931283).
+R_93("50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>, c_63, c_90, c_91, c_45).
+R_115(c_10, c_50, "Wind Turbine B", c_92).
+R_107("str_1", "str_32", "str_35", c_93, "str_42", c_94).
+R_120(?X_1, ?X_2) :- R_121(?X_2), R_56(?X_1, ?X_2), R_87(?X_2, ?X_1), ~R_99(?X_2) .
+R_120(c_95, "str_43").
+R_38(c_96).
+R_27(?X_2, ?X_3, ?X_1) :- R_60(?X_1, ?Y_1, ?X_1), R_73(?X_2, ?X_1, ?Y_1), R_33(?X_3), R_103(?X_1, ?X_1, ?X_2, ?X_2, ?X_3, ?Y_1), ~project(?X_1) .
+R_116(?X_3, ?X_2, ?X_4, ?X_1) :- R_107(?X_3, ?X_1, ?Y_1, ?X_1, ?Y_1, ?X_2), R_81(?X_1, ?X_1, ?X_4, ?X_3, ?X_3, ?X_2), R_27(?X_1, ?X_4, ?X_3), R_16(?Y_1, ?X_2), R_31(?X_4), ~project(?Y_1), ~R_42(?X_2, ?Y_1, ?X_4, ?Y_1), ~R_120(?X_3, ?X_1) .
+R_64(c_97, 60, c_98, "str_44", "str_19").
+R_117(?X_4, ?X_3, ?X_2, ?X_5, ?X_1) :- R_112(?Y_1, ?X_3, ?X_2, ?Y_1, ?X_5, ?X_1), R_75(?X_2, ?X_5), R_88(?X_1, ?X_1, ?X_4, ?X_5, ?X_3, ?X_2) .
+R_71("str_6", "str_45", "Wind Turbine C", "str_46", c_99).
+R_90(?X_1) :- R_114(?X_1), R_65(?X_1), R_97(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_36(?X_1, ?X_1), ~R_36(?X_1, ?X_1), ~R_16(?X_1, ?X_1), ~R_29(?X_1, ?X_1, ?X_1, ?X_1), ~R_115(?X_1, ?X_1, ?X_1, ?X_1) .
+R_108(?X_2, ?X_3, ?X_1) :- R_78(?X_2), R_78(?X_3), R_78(?X_1), ~R_3(?X_1, ?X_2, ?X_2), ~R_33(?X_1) .
+R_80(c_98, "str_47", "str_48", "str_23", c_19).
+R_4(?X_1, ?X_3, ?X_2) :- project_approved(?X_1), PI(?X_1), R_125(?X_2, ?Y_1, ?X_3, ?X_1, ?X_2), R_83(?Y_1), R_123(?X_3, ?Y_1, ?X_2, ?X_3), ~R_12(?X_2, ?X_1, ?X_3), ~R_35(?X_1, ?X_2, ?X_3) .
+R_57(?X_1, ?X_2) :- R_93(?X_1, ?X_2, ?X_2, ?X_1, ?X_2), R_8(?X_1, ?X_1, ?X_2), R_12(?X_1, ?X_2, ?X_2), ~R_20(?X_2, ?X_1, ?X_2) .
+R_101(?X_1, ?X_2) :- R_121(?X_1), R_53(?X_1, ?X_2, ?X_2, ?X_2, ?X_1), ~coordinates(?X_2, ?X_1), ~R_59(?X_2, ?X_2, ?X_1, ?X_1), ~TRUE(?X_1), ~R_79(?X_2, ?X_1, ?X_2, ?X_2) .
+R_38(?X_1) :- R_94(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_41(?X_1, ?X_1, ?X_1), ~project_approved(?X_1), ~R_30(?X_1, ?X_1), ~R_12(?X_1, ?X_1, ?X_1) .
+R_98(c_100, "str_49").
+closest_house(?X_1, ?X_2) :- R_111(?X_2, ?X_2, ?X_1, ?X_1, ?X_1, ?X_1), R_65(?X_1), R_119(?X_2, ?X_2, ?X_2), ~R_26(?X_2), ~R_110(?X_2, ?X_1, ?X_1, ?X_1, ?X_1, ?X_2), ~R_7(?X_1, ?X_1), ~R_11(?X_2, ?X_2, ?X_2, ?X_2, ?X_2, ?X_2) .
+R_74("40075000"^^<http://www.w3.org/2001/XMLSchema#double>, c_101, c_48, 4628086550652842250).
+R_56(13402400437940292451, "str_32").
+R_16(?X_1, ?X_2) :- project_height_m(?X_2, ?X_2), locations(?X_1, ?X_2, ?X_1), ~R_56(?X_1, ?X_2) .
+R_115(?X_4, ?X_2, ?X_1, ?X_3) :- R_117(?Y_1, ?X_2, ?X_1, ?X_3, ?X_4), R_23(?Y_1, ?X_1), R_26(?X_1), R_72(?X_1, ?X_2, ?X_2, ?X_4, ?X_3), ~CIRC_EARTH(?X_1), ~R_46(?X_3) .
+R_114(c_16).
+R_128("str_29", c_102).
+R_55(?X_4, ?X_2, ?X_5, ?X_4, ?X_3) :- CIRC_EARTH(?X_4), R_33(?X_2), R_33(?X_5), R_33(?X_4), R_33(?X_3), ~R_109(?X_2, ?X_5), ~R_51(?X_2, ?X_3, ?X_5, ?X_4), ~R_54(?X_4, ?X_4, ?X_5), ~endangered(?X_4) .
+R_134(?X_1) :- R_77(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_124(?X_1, ?X_1, ?X_1, ?X_1), ~R_75(?X_1, ?X_1), ~R_40(?X_1), ~R_18(?X_1, ?X_1, ?X_1), ~R_1(?X_1, ?X_1) .
+R_36(?X_1, ?X_2) :- R_5(?X_1), environmental_impact(?X_2), R_78(?X_1), R_15(?X_1, ?X_2, ?X_1), R_117(?X_2, ?X_1, ?X_1, ?X_2, ?X_1), ~R_121(?X_1), ~R_127(?X_2, ?X_2, ?X_1, ?X_2), ~R_40(?X_2) .
+R_136("str_30").
+R_71(c_2, c_4, 4628086550652842250, 3946111223336592403, c_24).
+R_52("str_50", 15677275747162704347).
+R_127(?X_2, ?X_1, ?X_3, ?X_4) :- R_88(?X_1, ?X_3, ?X_1, ?X_4, ?X_4, ?X_1), R_100(?X_1, ?X_3), project_reject(?X_2), R_127(?X_3, ?X_1, ?X_4, ?X_1), R_24(?Y_1, ?X_4), R_86(?X_4, ?X_1), ~R_51(?X_1, ?X_1, ?X_3, ?X_1), ~endangered(?X_1) .
+R_26(?X_1) :- R_3(?X_1, ?X_1, ?X_1), R_63(?X_1, ?X_1, ?X_1, ?X_1), R_30(?X_1, ?X_1), R_136(?X_1), R_57(?X_1, ?X_1), R_13(?X_1, ?X_1, ?X_1), ~R_31(?X_1), ~R_1(?X_1, ?X_1) .
+R_40(c_103).
+R_119("Wind Turbine C", "str_15", 7821934965799834983).
+R_109("Rotmilan", "50.90297432498729"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_106(c_104).
+R_130(?X_2, ?X_1) :- R_10(?X_2), R_34(?X_1, ?X_1, ?X_2), R_75(?X_2, ?X_1), R_109(?X_2, ?X_1), R_8(?X_2, ?X_1, ?X_1), ~R_111(?X_1, ?X_1, ?X_2, ?X_1, ?X_2, ?X_1), ~R_80(?X_1, ?X_1, ?X_1, ?X_2, ?X_2), ~R_18(?X_1, ?X_2, ?X_1) .
+R_107("str_51", "50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>, "str_52", c_105, "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>, 13004758955553966817).
+R_124(?X_2, ?X_1, ?X_4, ?X_3) :- R_14(?X_2, ?X_1), R_6(?X_4, ?X_3, ?X_2, ?X_4) .
+project_approved(c_106).
+closest_house(c_107, c_108).
+R_77("Wind Turbine C", c_8, "str_48", c_109, c_4).
+R_21(?X_1, ?X_4, ?X_2, ?X_3) :- R_47(?Y_1, ?X_1, ?X_2, ?X_3, ?X_1), R_63(?X_2, ?X_3, ?X_2, ?X_1), R_14(?Y_1, ?X_3), R_23(?X_1, ?Y_1), R_137(?X_4), R_82(?X_4, ?X_1, ?Y_1), ~R_8(?X_1, ?X_2, ?X_1) .
+R_129("str_51", 5481279997543614551, 12585593291238159724).
+R_37(c_24, c_74).
+R_87("Wind Turbine C", "50.90297432498729"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_55(?X_2, ?X_1, ?X_3, ?X_4, ?X_3) :- distance(?X_2, ?X_1), R_135(?X_1, ?X_1, ?Y_1, ?X_1, ?X_2), R_59(?X_3, ?Y_1, ?X_3, ?X_2), R_4(?X_3, ?X_1, ?X_4), R_24(?X_3, ?X_3) .
+R_96(?X_2, ?X_5, ?X_1, ?X_3, ?X_4) :- R_123(?X_2, ?X_5, ?X_4, ?X_3), R_124(?X_4, ?X_1, ?X_4, ?X_5), ~R_17(?X_1, ?X_4, ?X_4, ?X_1, ?X_5) .
+R_57(c_110, "Wind Turbine A").
+R_52(?X_2, ?X_1) :- R_88(?X_2, ?X_2, ?X_2, ?X_2, ?X_2, ?X_1), R_62(?X_2, ?X_2, ?X_1, ?X_1, ?X_2, ?X_2), R_97(?X_2, ?X_1, ?X_1, ?X_2, ?X_1), R_93(?X_1, ?X_1, ?X_2, ?X_1, ?X_1), R_49(?X_1, ?X_2, ?X_2, ?X_1), ~R_76(?X_1, ?X_2), ~R_123(?X_2, ?X_1, ?X_2, ?X_2), ~R_13(?X_1, ?X_2, ?X_2), ~R_18(?X_2, ?X_1, ?X_2) .
+R_37(c_111, 2191473842962358884).
+project_approved(?X_1) :- R_125(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~project_location(?X_1, ?X_1, ?X_1), ~R_121(?X_1) .
+R_77(c_112, "str_38", c_55, "Wind Turbine C", 15022419380481845561).
+R_79(c_113, "str_53", 5937665870185835115, 8970100518477136950).
+R_4(?X_1, ?X_3, ?X_2) :- R_14(?X_2, ?X_3), R_9(?X_1, ?Y_1), R_103(?X_2, ?X_2, ?X_2, ?X_3, ?X_3, ?X_3), R_20(?X_1, ?X_2, ?X_1), ~CIRC_EARTH(?X_3), ~environmental_impact(?X_1), ~R_92(?X_3, ?X_3, ?X_3), ~R_118(?X_2, ?X_2) .
+R_95(?X_1) :- R_38(?X_1), R_105(?X_1, ?X_1, ?X_1), R_21(?X_1, ?X_1, ?X_1, ?X_1), project_height_m(?X_1, ?X_1), R_47(?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_23(c_114, c_88).
+R_104(c_59, "str_24", "str_54", c_62, 13965272845827667485).
+R_70(c_92, c_95, "50.90297432498729"^^<http://www.w3.org/2001/XMLSchema#double>, "str_55").
+R_102("str_21", c_7, 14719529433964097134, "Wind Turbine A").
+R_139(?X_2, ?X_1) :- distance(?X_2, ?X_1), R_89(?X_1, ?X_2, ?X_1), ~R_37(?X_1, ?X_2) .
+R_142(c_81).
+R_106(?X_1) :- R_45(?X_1, ?X_1, ?X_1, ?X_1), R_89(?X_1, ?X_1, ?X_1), R_15(?X_1, ?X_1, ?X_1), R_91(?X_1, ?X_1, ?X_1, ?X_1), ~R_83(?X_1) .
+R_102(c_13, 10977277354736621730, c_41, 4628086550652842250).
+R_42(?X_2, ?X_3, ?X_4, ?X_1) :- R_9(?X_2, ?X_3), R_9(?X_4, ?X_1), ~R_129(?X_1, ?X_2, ?X_1) .
+R_109(?X_2, ?X_1) :- CIRC_EARTH(?X_2), project_reject(?X_1), R_97(?X_1, ?X_2, ?X_2, ?X_1, ?X_2), R_93(?X_1, ?X_2, ?X_2, ?X_2, ?X_2), ~R_134(?X_1), ~R_128(?X_1, ?X_2) .
+R_21(c_115, c_45, 16046045319767710088, c_116).
+R_105(2435361817342866727, "str_56", c_26).
+R_53("str_57", c_117, c_118, "str_4", c_78).
+R_148(c_53, 2147124740731452612, c_119).
+R_74("str_58", c_22, 8323436350815069230, c_120).
+R_153(?X_1, ?X_2) :- distance(?X_1, ?X_2), R_8(?X_2, ?X_1, ?X_1), R_149(?X_2, ?X_1, ?X_1, ?X_1) .
+R_85(15358360988035847790, 1269308641764121628, 5481279997543614551, c_121).
+R_100(?X_1, ?X_2) :- R_128(?X_1, ?X_2), R_126(?X_1, ?X_2, ?X_2), R_83(?X_2), R_72(?X_1, ?X_2, ?X_2, ?X_2, ?X_2), R_118(?X_2, ?X_2) .
+R_119(?X_2, ?X_1, ?X_3) :- R_97(?X_2, ?X_1, ?X_2, ?X_3, ?X_3), R_13(?Y_1, ?Y_1, ?X_3), ~R_132(?X_1, ?Y_1, ?X_3), ~R_99(?X_2), ~distance(?X_2, ?Y_1) .
+R_74(c_122, c_51, c_123, c_102).
+R_119(?X_3, ?X_1, ?X_2) :- R_92(?X_3, ?X_1, ?X_1), R_33(?X_3), R_153(?X_2, ?X_2), ~R_110(?X_1, ?X_3, ?X_3, ?X_3, ?X_2, ?X_1), ~project_location_m(?X_2, ?X_2, ?X_3) .
+R_156(11639107797889114548, c_124).
+R_39(c_74, "str_59", 9441495245498316998, c_115, 15358360988035847790).
+R_70("str_60", c_125, "str_61", "Gartenschläfer").
+R_66(c_126).
+R_145(1771996715314184239).
+R_52(?X_1, ?X_2) :- R_136(?X_2), R_111(?X_2, ?X_1, ?X_2, ?X_1, ?X_1, ?X_1), R_33(?X_1), ~R_113(?X_1, ?X_1, ?X_1, ?X_2), ~R_62(?X_1, ?X_1, ?X_2, ?X_1, ?X_1, ?X_2), ~R_47(?X_1, ?X_2, ?X_1, ?X_1, ?X_1), ~R_44(?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_37(?X_2, ?X_1) :- R_20(?X_1, ?X_1, ?X_2), R_63(?X_2, ?X_1, ?X_2, ?X_2), ~R_142(?X_1), ~R_95(?X_2), ~R_20(?X_2, ?X_1, ?X_2), ~R_14(?X_2, ?X_1) .
+R_93(?X_1, ?X_4, ?X_5, ?X_2, ?X_3) :- R_113(?X_1, ?X_4, ?X_5, ?Y_1), R_103(?Y_1, ?X_2, ?X_2, ?X_3, ?X_5, ?X_4), R_163(?X_5, ?X_4), R_76(?X_1, ?X_4), R_118(?Y_1, ?X_3), ~R_147(?X_2, ?Y_1, ?Y_1, ?X_4, ?X_1, ?X_4) .
+R_154(c_121, c_127, 10977277354736621730, 3060320797607799678).
+R_97(?X_4, ?X_2, ?X_3, ?X_5, ?X_5) :- project_location_m(?X_4, ?X_2, ?X_3), project_location_m(?X_5, ?X_5, ?X_2) .
+R_56(c_128, c_129).
+R_66(?X_1) :- R_156(?X_1, ?X_1), ~R_48(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_78(?X_1), ~R_164(?X_1, ?X_1, ?X_1) .
+R_133(?X_2, ?X_3, ?X_1, ?X_4) :- CIRC_EARTH(?X_2), PI(?X_3), R_8(?X_1, ?X_1, ?X_4), ~R_75(?X_2, ?X_3), ~R_49(?X_3, ?X_1, ?X_3, ?X_1), ~R_107(?X_4, ?X_1, ?X_1, ?X_3, ?X_2, ?X_2) .
+R_150(?X_1, ?X_3, ?X_4, ?X_2) :- coordinates(?X_4, ?X_1), R_49(?X_4, ?X_1, ?X_4, ?X_1), R_149(?X_2, ?X_1, ?Y_1, ?X_3) .
+R_108(?X_1, ?X_3, ?X_2) :- R_57(?X_1, ?Y_1), R_77(?X_2, ?X_2, ?X_1, ?Y_1, ?X_3), R_28(?X_3), R_21(?X_1, ?X_1, ?X_1, ?Y_1), ~R_81(?X_1, ?Y_1, ?X_2, ?X_1, ?X_1, ?X_2), ~R_44(?X_1, ?Y_1, ?Y_1, ?X_3, ?X_1), ~R_103(?X_2, ?X_1, ?X_2, ?Y_1, ?Y_1, ?X_1) .
+R_145(13446230393393519206).
+R_144(?X_2, ?X_1) :- R_72(?X_2, ?X_2, ?X_1, ?X_1, ?X_2), R_28(?X_1), R_79(?X_1, ?X_2, ?X_2, ?X_1), R_145(?X_2), R_38(?X_1), project_location_m(?X_2, ?X_2, ?X_2), ~R_127(?X_2, ?X_2, ?X_1, ?X_2) .
+R_145(?X_1) :- R_47(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_88(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_10(?X_1), ~environmental_impact(?X_1), ~project_species(?X_1, ?X_1) .
+R_106(?X_1) :- R_17(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_17(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_32(?X_1, ?X_1, ?X_1, ?X_1), ~R_146(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_162(?X_1, ?X_1, ?X_1, ?X_1) .
+R_128(?X_2, ?X_1) :- R_99(?X_1), R_48(?X_1, ?X_1, ?X_1, ?X_2, ?X_2, ?X_1), project_approved(?X_1) .
+R_68("str_29", "str_62", c_89, c_130, "str_63", "Wind Turbine B").
+R_27(?X_1, ?X_2, ?X_3) :- R_65(?X_1), R_65(?X_2), R_65(?X_3), ~R_150(?X_2, ?X_1, ?X_2, ?X_1), ~R_146(?X_1, ?X_1, ?X_3, ?X_2, ?X_2) .
+R_102(c_131, 7498370424300872906, 8407565497421893836, c_126).
+R_42(c_44, c_132, c_9, 5304489428673789314).
+R_125(?X_3, ?X_5, ?X_2, ?X_1, ?X_5) :- R_54(?X_3, ?X_3, ?X_1), R_164(?X_1, ?X_5, ?X_5), R_6(?X_2, ?X_5, ?X_5, ?X_5), ~R_148(?X_1, ?X_5, ?X_5) .
+R_8(17618788048683765250, c_61, 5082722222907354456).
+R_119(?X_3, ?X_1, ?X_2) :- R_12(?X_2, ?X_2, ?X_3), R_158(?X_2, ?X_3, ?Y_1, ?X_1, ?X_2, ?X_1), R_73(?X_2, ?X_3, ?Y_1), R_47(?X_1, ?X_2, ?X_2, ?X_1, ?X_2), ~R_109(?Y_1, ?Y_1) .
+R_149(c_133, "str_64", c_22, "str_65").
+R_109(c_77, 12549875645442209669).
+R_46(?X_1) :- R_144(?X_1, ?X_1), R_40(?X_1), R_125(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_30(?X_1, ?X_1) .
+R_167(?X_1, ?X_2) :- R_17(?X_1, ?X_2, ?X_2, ?X_2, ?X_1), R_146(?X_2, ?X_1, ?X_1, ?X_2, ?X_2), R_62(?X_1, ?X_2, ?X_2, ?X_1, ?X_2, ?X_2), ~R_52(?X_2, ?X_2), ~R_39(?X_1, ?X_1, ?X_2, ?X_1, ?X_2), ~R_53(?X_2, ?X_2, ?X_2, ?X_1, ?X_2) .
+R_139(c_95, 4408240329538507294).
+R_80(?X_2, ?X_4, ?X_2, ?X_1, ?X_5) :- R_168(?X_2, ?X_2, ?X_5, ?Y_1), R_55(?X_5, ?X_2, ?X_2, ?X_5, ?X_2), R_101(?X_1, ?X_4), ~R_106(?Y_1), ~R_154(?X_2, ?X_2, ?X_2, ?X_4), ~R_136(?X_2) .
+R_112(?X_4, ?X_2, ?X_6, ?X_1, ?X_4, ?X_5) :- R_160(?X_4, ?X_6), R_94(?X_1, ?X_1, ?X_4, ?Y_1, ?X_1), R_125(?X_6, ?X_5, ?X_2, ?X_2, ?X_6), ~R_72(?X_1, ?X_4, ?X_6, ?X_2, ?X_5) .
+R_45(c_57, c_123, c_134, 13722367980861666561).
+R_107(c_12, "str_41", "str_21", 14852959425190675929, c_135, c_136).
+R_134("str_21").
+R_127("str_66", "str_67", c_137, c_138).
+R_143(?X_1, ?X_2) :- R_162(?X_2, ?X_2, ?X_2, ?X_2), R_95(?X_1), R_51(?X_1, ?X_1, ?X_1, ?X_1), R_142(?X_1), R_16(?X_2, ?X_2), R_144(?X_2, ?X_2), ~R_101(?X_2, ?X_2), ~R_151(?X_2, ?X_1, ?X_2), ~R_123(?X_2, ?X_1, ?X_2, ?X_1) .
+R_2(?X_2, ?X_1) :- R_170(?X_1, ?X_1, ?X_2), R_20(?X_1, ?X_1, ?X_2), R_132(?X_1, ?X_2, ?X_1), R_67(?X_1, ?X_2, ?X_1, ?X_1, ?X_1, ?X_2), ~R_122(?X_2, ?X_1, ?X_1) .
+R_130(c_139, c_140).
+R_23(?X_1, ?X_2) :- R_166(?X_1), R_160(?X_1, ?X_1), R_32(?X_1, ?X_2, ?X_2, ?X_1), R_147(?X_1, ?X_1, ?X_2, ?X_1, ?X_2, ?X_1), ~R_40(?X_1), ~R_101(?X_1, ?X_1), ~R_171(?X_2, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_68("13.704927907097524"^^<http://www.w3.org/2001/XMLSchema#double>, 2048902801239517585, c_141, 15051073399673491202, c_11, 1771996715314184239).
+R_172(?X_2, ?X_1, ?X_3, ?X_4) :- R_73(?X_2, ?X_4, ?X_3), R_82(?X_3, ?X_4, ?X_4), R_40(?X_3), R_71(?Y_1, ?X_3, ?Y_1, ?X_2, ?Y_1), R_108(?X_4, ?X_2, ?X_1), ~R_46(?X_2) .
+R_130(12521023486122827589, "str_68").
+R_105(c_86, c_96, 6926902404492173928).
+R_111(?X_4, ?X_3, ?X_2, ?X_6, ?X_1, ?X_3) :- R_45(?X_4, ?X_3, ?X_4, ?X_6), R_99(?X_1), project_approved(?X_3), R_104(?X_4, ?X_4, ?X_2, ?X_3, ?X_4), ~project_species(?X_4, ?X_3) .
+R_169(c_119, c_142, c_143, 13722367980861666561).
+R_141("str_69").
+R_83(?X_1) :- R_83(?X_1), R_20(?X_1, ?X_1, ?X_1), R_162(?X_1, ?X_1, ?X_1, ?X_1), R_175(?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_40(?X_1) :- R_84(?X_1, ?X_1, ?X_1), R_88(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_67(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_186(?X_1, ?X_1, ?X_1, ?X_1), R_42(?X_1, ?X_1, ?X_1, ?X_1), R_66(?X_1), ~R_84(?X_1, ?X_1, ?X_1), ~distance(?X_1, ?X_1) .
+R_54(c_144, "Wind Turbine A", c_33).
+R_175(c_145, c_146, 2467372913479023655, c_5, "str_8").
+R_95(?X_1) :- R_26(?X_1), R_187(?X_1, ?X_1, ?X_1, ?X_1), R_56(?X_1, ?X_1), R_47(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_111(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_2(?X_1, ?X_1), ~R_163(?X_1, ?X_1), ~R_9(?X_1, ?X_1) .
+R_89(?X_1, ?X_2, ?X_3) :- R_188(?X_3, ?X_1, ?X_3, ?X_1, ?Y_1), R_180(?X_2, ?X_1, ?X_3, ?Y_1, ?X_2), R_24(?X_2, ?X_1), R_118(?X_1, ?X_1), R_152(?Y_1), R_144(?Y_1, ?X_1), ~R_118(?X_1, ?X_2), ~R_7(?X_1, ?X_2), ~R_13(?X_2, ?X_1, ?X_1) .
+R_106(?X_1) :- R_175(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_89(?X_1, ?X_1, ?X_1), R_84(?X_1, ?X_1, ?X_1), ~R_152(?X_1), ~R_48(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_33(?X_1) .
+R_29(?X_2, ?X_1, ?X_3, ?X_4) :- project_reject(?X_2), project_reject(?X_1), project_reject(?X_3), project_reject(?X_4), ~R_128(?X_4, ?X_3), ~R_157(?X_1), ~R_103(?X_4, ?X_4, ?X_2, ?X_2, ?X_4, ?X_3) .
+R_139(?X_1, ?X_2) :- R_62(?X_2, ?X_2, ?X_2, ?X_2, ?X_1, ?X_2), R_187(?X_1, ?X_1, ?X_1, ?X_2), R_72(?X_2, ?X_2, ?X_2, ?X_1, ?X_1), R_162(?X_2, ?X_1, ?X_2, ?X_2), ~R_80(?X_2, ?X_2, ?X_1, ?X_2, ?X_2), ~R_57(?X_1, ?X_1), ~R_125(?X_2, ?X_2, ?X_2, ?X_1, ?X_2) .
+R_70("str_70", "str_71", c_147, c_148).
+R_26(?X_1) :- R_170(?X_1, ?X_1, ?X_1), R_99(?X_1), R_196(?X_1), R_135(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_69(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_197(?X_1, ?X_1, ?X_1), ~R_67(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_88(?X_5, ?X_4, ?X_5, ?X_1, ?X_6, ?X_2) :- R_79(?X_5, ?X_4, ?X_1, ?X_5), R_165(?X_4), R_192(?X_5, ?X_2, ?X_1, ?X_1), R_186(?X_5, ?X_5, ?X_4, ?X_1), R_146(?X_1, ?X_4, ?X_5, ?X_6, ?X_1), ~R_104(?X_6, ?X_5, ?X_1, ?X_1, ?X_5), ~R_61(?X_1, ?X_5, ?X_5, ?X_6, ?X_5), ~R_107(?X_4, ?X_1, ?X_5, ?X_1, ?X_1, ?X_5) .
+R_111(c_149, c_150, "str_72", c_111, 2435361817342866727, 11639107797889114548).
+R_178(c_151, "str_73", c_152, c_38).
+R_71(?X_1, ?X_4, ?X_5, ?X_2, ?X_2) :- R_87(?X_1, ?X_4), R_87(?X_5, ?X_2), R_87(?X_2, ?X_2), ~R_154(?X_2, ?X_1, ?X_5, ?X_4), ~R_48(?X_2, ?X_2, ?X_2, ?X_4, ?X_2, ?X_2) .
+R_195(?X_1, ?X_2) :- R_166(?X_1), R_166(?X_2), ~R_122(?X_2, ?X_2, ?X_1) .
+R_142(17543993491765547808).
+R_173(?X_5, ?X_5, ?X_1, ?X_4, ?X_3) :- R_12(?X_5, ?X_5, ?X_1), R_12(?X_1, ?X_3, ?X_4), ~R_88(?X_1, ?X_5, ?X_3, ?X_5, ?X_4, ?X_4), ~R_116(?X_3, ?X_4, ?X_3, ?X_4) .
+R_52(?X_2, ?X_1) :- R_20(?X_2, ?X_2, ?X_1), R_86(?X_1, ?X_1), R_94(?X_1, ?X_1, ?X_2, ?X_1, ?X_1), R_72(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_142(?X_1), R_171(?X_2, ?X_1, ?X_1, ?X_2, ?X_1, ?X_2), ~R_142(?X_2), ~R_85(?X_2, ?X_2, ?X_1, ?X_1), ~R_128(?X_2, ?X_1), ~R_138(?X_2, ?X_1, ?X_1, ?X_1, ?X_2) .
+R_16(c_147, "str_74").
+R_188(?X_3, ?X_1, ?X_2, ?X_4, ?X_1) :- R_165(?X_2), R_18(?Y_1, ?X_2, ?X_1), R_144(?X_1, ?Y_1), R_192(?X_1, ?X_3, ?X_4, ?Y_1), R_93(?X_2, ?X_1, ?X_1, ?X_3, ?X_1) .
+R_192(134480470795467138, 10058365152827877430, 5553275717173477792, c_153).
+R_93(?X_4, ?X_3, ?X_2, ?X_5, ?X_1) :- R_192(?X_4, ?X_2, ?X_3, ?X_5), R_149(?X_4, ?X_1, ?X_3, ?X_2) .
+R_185(?X_2, ?X_1) :- R_104(?X_2, ?X_1, ?X_1, ?X_1, ?X_2), ~R_153(?X_2, ?X_2) .
+R_127("str_34", c_47, c_136, 12618193028353648525).
+R_39(?X_5, ?X_2, ?X_3, ?X_1, ?X_4) :- R_173(?X_5, ?X_2, ?X_4, ?X_1, ?X_4), R_29(?X_5, ?X_4, ?X_5, ?X_3), ~R_107(?X_5, ?X_1, ?X_4, ?X_5, ?X_5, ?X_3), ~R_151(?X_5, ?X_4, ?X_2), ~R_183(?X_4, ?X_1), ~R_12(?X_3, ?X_4, ?X_5) .
+R_166(2467372913479023655).
+R_70(?X_3, ?X_2, ?X_1, ?X_4) :- CIRC_EARTH(?Y_1), R_81(?X_4, ?X_4, ?X_1, ?X_3, ?X_4, ?X_4), R_166(?X_3), R_199(?Y_1, ?Y_1, ?X_2, ?X_4, ?Y_1, ?X_2), R_28(?X_1), ~R_177(?X_4), ~R_48(?X_4, ?X_1, ?X_4, ?Y_1, ?X_4, ?X_3), ~R_79(?X_2, ?X_1, ?X_4, ?X_4) .
+R_140(?X_5, ?X_2, ?X_3, ?X_4, ?X_3) :- R_95(?X_4), R_172(?X_3, ?X_4, ?X_2, ?X_3), R_190(?X_2, ?X_4, ?X_3, ?X_5, ?X_2), ~R_15(?X_3, ?X_3, ?X_3), ~R_110(?X_5, ?X_3, ?X_5, ?X_5, ?X_3, ?X_4), ~R_67(?X_2, ?X_2, ?X_3, ?X_4, ?X_4, ?X_4), ~R_35(?X_2, ?X_4, ?X_4) .
+R_75(c_132, c_105).
+R_150("str_26", "str_75", c_154, "str_25").
+R_62(c_122, 17026850839373703403, c_155, "str_76", "str_77", c_47).
+R_27(c_112, c_156, c_111).
+R_124(?X_2, ?X_4, ?X_1, ?X_3) :- R_112(?X_3, ?X_2, ?X_1, ?X_4, ?X_3, ?X_1), R_122(?X_1, ?X_2, ?Y_1), R_209(?X_1, ?X_2), R_47(?X_3, ?X_2, ?Y_1, ?X_2, ?X_1), R_186(?X_2, ?Y_1, ?X_4, ?X_2) .
+R_127(?X_2, ?X_4, ?X_1, ?X_3) :- R_136(?X_2), R_177(?X_4), R_177(?X_1), R_177(?X_3), ~R_97(?X_4, ?X_3, ?X_1, ?X_3, ?X_2) .
+R_117(12462483513353205687, "str_59", "Feldsperling", "str_10", 5975040827691923623).
+R_112(?X_2, ?X_4, ?X_3, ?X_6, ?X_5, ?X_4) :- R_22(?X_2, ?X_4, ?X_3), R_142(?X_6), R_201(?X_2, ?X_5, ?X_5, ?X_2, ?X_3, ?X_3), R_184(?X_4, ?X_6, ?X_2), ~R_104(?X_2, ?X_2, ?X_3, ?X_6, ?X_5) .
+R_179(?X_1, ?X_2) :- coordinates(?X_2, ?X_2), R_151(?X_1, ?X_2, ?X_2), ~R_153(?X_2, ?X_1), ~R_114(?X_2) .
+R_172(c_113, 12763864284312013323, "str_78", c_157).
+R_105(c_56, c_40, "str_79").
+R_139(?X_2, ?X_1) :- R_113(?X_1, ?X_2, ?X_2, ?X_1), ~R_43(?X_2, ?X_2, ?X_2), ~R_75(?X_2, ?X_1), ~R_152(?X_2) .
+R_151(c_158, 16451751531193831956, c_159).
+R_26(?X_1) :- R_66(?X_1), ~R_91(?X_1, ?X_1, ?X_1, ?X_1), ~R_81(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_122(?X_1, ?X_1, ?X_1) .
+R_111(?X_5, ?X_3, ?X_1, ?X_4, ?X_5, ?X_6) :- R_209(?X_3, ?X_4), R_107(?X_1, ?X_5, ?X_5, ?X_6, ?X_3, ?X_5), R_182(?X_1, ?X_3), R_156(?X_4, ?X_3) .
+R_172("str_80", "Mauersegler", c_43, c_95).
+R_55(16350261019308018518, c_91, "str_81", c_17, "str_82").
+R_144(5512679278406374851, "str_66").
+R_105("Wind Turbine A", c_160, "str_83").
+R_8(?X_1, ?X_2, ?X_3) :- R_206(?X_3, ?X_2), R_40(?X_3), project(?X_1) .
+R_17(c_161, c_112, 15051073399673491202, c_91, c_117).
+R_176(?X_3, ?X_2, ?X_1) :- R_202(?X_3, ?X_2, ?X_1, ?X_2, ?X_2, ?X_2), ~R_21(?X_1, ?X_2, ?X_1, ?X_2), ~project_height_m(?X_2, ?X_1), ~R_130(?X_2, ?X_2), ~R_77(?X_2, ?X_1, ?X_1, ?X_2, ?X_2) .
+R_195(c_155, "str_57").
+R_195("str_84", c_15).
+R_95(?X_1) :- R_153(?X_1, ?X_1), R_83(?X_1), R_142(?X_1), R_161(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_66(?X_1), ~R_107(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_53(?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_95(?X_1) :- R_55(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_108(?X_1, ?X_1, ?X_1), TRUE(?X_1), ~R_117(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_199(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_29(?X_1, ?X_1, ?X_1, ?X_1), ~R_147(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_172(?X_2, ?X_1, ?X_3, ?X_4) :- R_70(?X_4, ?X_2, ?X_3, ?X_3), R_47(?X_3, ?X_1, ?Y_1, ?Y_1, ?X_2), R_154(?X_1, ?X_4, ?X_2, ?X_1), R_218(?X_4, ?X_4, ?X_1, ?X_2), R_193(?Y_1, ?X_2, ?X_2, ?X_3, ?X_1), R_2(?X_4, ?X_4), ~R_15(?X_4, ?X_2, ?X_3), ~R_211(?X_1, ?X_4, ?X_4, ?X_4), ~R_38(?X_4), ~R_141(?Y_1) .
+R_156("str_85", "str_86").
+R_100(?X_1, ?X_2) :- R_157(?X_1), R_213(?X_1, ?X_2, ?X_1, ?X_1), R_150(?X_2, ?X_2, ?X_1, ?X_1), ~R_65(?X_2), ~R_55(?X_1, ?X_1, ?X_1, ?X_1, ?X_2) .
+R_166(c_162).
+R_207(?X_1, ?X_2) :- R_146(?X_1, ?X_1, ?X_1, ?X_2, ?X_2), ~R_174(?X_1, ?X_1, ?X_2), ~R_154(?X_2, ?X_1, ?X_1, ?X_2) .
+R_115(?X_3, ?X_1, ?X_4, ?X_2) :- R_136(?X_3), R_40(?X_1), R_175(?Y_1, ?X_2, ?X_4, ?X_2, ?Y_1), ~closest_house(?Y_1, ?Y_1), ~R_151(?X_2, ?X_1, ?X_2), ~R_189(?X_1, ?X_1, ?X_1, ?X_4, ?Y_1) .
+R_56(c_163, 7445223757360190154).
+R_90(c_164).
+R_94(c_12, "str_87", c_68, "str_12", c_150).
+R_215(?X_1) :- R_215(?X_1), R_167(?X_1, ?X_1), R_125(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_124(?X_1, ?X_1, ?X_1, ?X_1), R_113(?X_1, ?X_1, ?X_1, ?X_1), R_219(?X_1, ?X_1, ?X_1, ?X_1), ~R_195(?X_1, ?X_1), ~R_1(?X_1, ?X_1), ~R_142(?X_1), ~R_34(?X_1, ?X_1, ?X_1) .
+R_180(?X_4, ?X_5, ?X_3, ?X_3, ?X_1) :- R_152(?X_4), R_70(?X_5, ?X_3, ?X_3, ?X_1), ~R_192(?X_3, ?X_5, ?X_1, ?X_5), ~R_214(?X_1, ?X_1, ?X_3), ~R_13(?X_3, ?X_5, ?X_5), ~R_58(?X_3, ?X_5, ?X_3) .
+R_82(?X_1, ?X_2, ?X_3) :- project_location_m(?Y_1, ?X_1, ?Y_1), R_49(?X_1, ?X_1, ?X_2, ?X_3), ~R_11(?X_2, ?Y_1, ?X_3, ?Y_1, ?X_2, ?Y_1), ~R_145(?X_1), ~R_187(?X_3, ?X_1, ?Y_1, ?X_1) .
+project_approved(?X_1) :- R_209(?X_1, ?X_1), R_192(?X_1, ?X_1, ?X_1, ?X_1), ~R_15(?X_1, ?X_1, ?X_1), ~R_114(?X_1), ~R_69(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_42(?X_1, ?X_1, ?X_1, ?X_1) .
+R_166(c_165).
+R_222(?X_1, ?X_3, ?X_2) :- R_110(?X_1, ?X_1, ?X_2, ?Y_1, ?X_1, ?Y_1), project(?X_3), R_67(?Y_1, ?Y_1, ?X_3, ?X_3, ?X_2, ?X_2), R_147(?Y_1, ?Y_1, ?X_3, ?Y_1, ?X_2, ?X_3), project_approved(?X_2), ~R_188(?Y_1, ?X_1, ?Y_1, ?X_2, ?Y_1), ~R_137(?Y_1) .
+R_82(c_93, "str_76", c_76).
+R_228(c_18, "str_88").
+R_158(c_166, 14579720313795637629, c_167, c_168, c_169, "str_89").
+R_71(1771996715314184239, "str_90", 1967103937185323757, c_164, c_40).
+R_167(?X_2, ?X_1) :- R_131(?X_2, ?X_2, ?X_1, ?X_1, ?X_2), ~R_58(?X_1, ?X_1, ?X_2), ~R_3(?X_1, ?X_1, ?X_2), ~R_71(?X_2, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_202("str_9", "str_6", 17506743164099630776, "str_61", c_170, "str_55").
+R_145(?X_1) :- R_112(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_89(?X_1, ?X_1, ?X_1), R_79(?X_1, ?X_1, ?X_1, ?X_1), R_187(?X_1, ?X_1, ?X_1, ?X_1), R_78(?X_1), R_66(?X_1), ~R_138(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_135(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_61(?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_212(12585593291238159724, "str_91", c_169).
+R_119(2467372913479023655, "str_76", c_48).
+R_210(c_171, c_55, "str_92", c_113, c_33).
+R_231(?X_2, ?X_3, ?X_1, ?X_4) :- R_13(?X_4, ?X_4, ?X_4), R_9(?X_3, ?X_1), R_230(?X_4, ?X_3, ?X_3, ?X_2), R_30(?X_1, ?X_4) .
+R_144(?X_2, ?X_1) :- R_120(?X_2, ?X_1), R_92(?X_2, ?X_1, ?X_2), R_13(?X_1, ?X_2, ?X_2), R_89(?X_1, ?X_2, ?X_2), R_64(?X_1, ?X_2, ?X_1, ?X_2, ?X_2), R_111(?X_1, ?X_1, ?X_1, ?X_1, ?X_2, ?X_2), ~R_154(?X_2, ?X_1, ?X_2, ?X_2), ~R_87(?X_2, ?X_2), ~R_134(?X_1) .
+R_228("50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>, 13965272845827667485).
+R_57(?X_1, ?X_2) :- R_102(?X_1, ?X_2, ?X_2, ?X_2), R_91(?X_2, ?X_1, ?X_2, ?X_2), R_154(?X_2, ?X_1, ?X_2, ?X_2), R_47(?X_2, ?X_1, ?X_1, ?X_1, ?X_2), R_45(?X_1, ?X_2, ?X_1, ?X_1), ~R_231(?X_2, ?X_1, ?X_1, ?X_1), ~PI(?X_2) .
+R_206(10720205465866825658, "str_6").
+R_53(?X_3, ?X_1, ?X_2, ?X_5, ?X_2) :- locations(?X_3, ?X_1, ?X_2), locations(?X_5, ?X_2, ?X_1), ~R_83(?X_5), ~R_119(?X_2, ?X_1, ?X_1), ~R_239(?X_2, ?X_2, ?X_5, ?X_1), ~R_240(?X_1, ?X_2, ?X_3) .
+R_100(?X_2, ?X_1) :- R_19(?X_1), R_26(?X_1), R_152(?X_2), ~R_142(?X_1) .
+R_124("str_93", 58489059737184812, c_172, c_173).
+closest_house(?X_1, ?X_2) :- R_110(?X_2, ?X_2, ?X_2, ?X_1, ?X_1, ?X_1), project_location_m(?X_2, ?X_1, ?X_2), R_201(?X_1, ?X_2, ?X_1, ?X_2, ?X_2, ?X_2), R_229(?X_2), ~R_194(?X_1, ?X_2, ?X_1), ~R_43(?X_2, ?X_1, ?X_2) .
+R_130("str_94", c_174).
+R_135("str_61", c_175, c_176, "str_95", "str_96").
+R_94(?X_2, ?X_1, ?X_5, ?X_3, ?X_4) :- R_238(?X_2, ?X_1, ?X_5, ?X_3, ?X_4, ?X_4), ~R_103(?X_1, ?X_4, ?X_2, ?X_4, ?X_5, ?X_5), ~R_182(?X_5, ?X_1), ~R_66(?X_4), ~R_9(?X_3, ?X_2) .
+R_117(c_177, c_178, c_28, c_122, c_179).
+R_181("str_97", c_9).
+R_98(c_42, c_102).
+R_133(?X_3, ?X_4, ?X_1, ?X_2) :- CIRC_EARTH(?X_4), R_118(?Y_1, ?X_1), R_8(?X_3, ?X_1, ?Y_1), closest_house(?X_3, ?X_3), R_17(?X_1, ?Y_1, ?Y_1, ?Y_1, ?X_2), R_138(?X_2, ?X_4, ?X_4, ?X_3, ?X_1), ~R_194(?X_1, ?X_1, ?Y_1), ~R_1(?Y_1, ?X_3), ~R_141(?X_2) .
+R_233(?X_1) :- R_128(?X_1, ?X_1), R_95(?X_1), R_213(?X_1, ?X_1, ?X_1, ?X_1) .
+R_214(?X_2, ?X_3, ?X_1) :- R_216(?X_2, ?X_3, ?X_1), ~R_15(?X_3, ?X_2, ?X_1), ~R_109(?X_1, ?X_3) .
+R_71(c_180, 3946111223336592403, "Gartenschläfer", c_181, 4907659051021580510).
+R_160(18179775235129579291, "str_53").
+R_17(?X_3, ?X_2, ?X_3, ?X_1, ?X_4) :- R_107(?X_3, ?X_2, ?X_3, ?X_2, ?X_4, ?X_1), R_230(?X_4, ?X_1, ?X_1, ?Y_1), ~CIRC_EARTH(?X_1), ~R_11(?X_4, ?X_1, ?X_2, ?X_3, ?X_1, ?X_4), ~R_211(?X_2, ?X_2, ?X_1, ?X_1), ~R_125(?X_3, ?X_2, ?X_3, ?X_4, ?X_2) .
+R_53("str_83", c_182, 434775165416082353, "str_76", c_183).
+R_137(c_158).
+R_55(?X_2, ?X_1, ?X_3, ?X_2, ?X_5) :- R_240(?X_2, ?X_2, ?X_3), R_193(?X_2, ?X_1, ?Y_1, ?X_2, ?X_3), R_177(?X_2), R_161(?X_5, ?X_1, ?X_5, ?X_2, ?X_1), R_182(?X_1, ?X_2), ~R_147(?X_2, ?X_2, ?X_1, ?X_2, ?X_3, ?X_1) .
+R_239(5975040827691923623, c_49, "str_98", 15618646094258578179).
+R_183(?X_1, ?X_2) :- R_193(?X_1, ?X_1, ?X_2, ?X_1, ?X_1), R_153(?X_1, ?X_1), ~R_159(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_152(?X_1), ~R_114(?X_1), ~R_249(?X_1, ?X_1, ?X_1, ?X_2, ?X_1, ?X_2) .
+R_77(c_184, "str_97", c_185, c_186, c_187).
+R_133(c_142, 7821934965799834983, "str_99", c_188).
+R_187(c_120, "str_94", "str_100", 5481279997543614551).
+R_180(c_189, "str_70", 4907659051021580510, "str_101", c_190).
+R_102(c_71, c_191, "str_26", c_169).
+R_219(6591535318473642446, c_38, 9441495245498316998, 17933829848920569163).
+R_130(c_49, "str_102").
+R_214(58489059737184812, c_192, c_193).
+R_139(?X_2, ?X_1) :- R_2(?X_2, ?X_1), ~R_87(?X_1, ?X_1), ~R_112(?X_2, ?X_1, ?X_2, ?X_1, ?X_2, ?X_2) .
+R_206(?X_1, ?X_2) :- project_location_m(?X_2, ?X_2, ?X_2), R_141(?X_2), R_227(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_196(?X_2), ~R_61(?X_1, ?X_2, ?X_2, ?X_2, ?X_2) .
+R_62(?X_4, ?X_5, ?X_3, ?X_5, ?X_6, ?X_1) :- R_24(?X_4, ?X_4), R_111(?X_3, ?X_3, ?X_5, ?X_1, ?X_5, ?Y_1), R_84(?Y_1, ?Y_1, ?X_6), R_249(?X_1, ?X_4, ?X_6, ?X_5, ?X_5, ?X_5), ~R_236(?X_5, ?Y_1), ~R_41(?X_4, ?X_1, ?X_1) .
+R_252(c_194, c_195, c_196, 1502294077736263398).
+R_170(?X_3, ?X_2, ?X_1) :- project_approved(?X_3), R_102(?X_2, ?X_3, ?X_2, ?X_1), R_66(?X_1), R_72(?X_1, ?X_1, ?X_1, ?X_3, ?Y_1) .
+R_227(?X_4, ?X_5, ?X_3, ?X_6, ?X_2, ?X_1) :- R_49(?X_4, ?X_3, ?X_3, ?X_5), R_181(?X_1, ?X_1), R_26(?X_4), R_126(?X_6, ?X_4, ?X_6), R_228(?X_1, ?X_3), R_241(?X_2, ?X_5, ?X_3, ?X_2, ?X_4) .
+R_228(c_78, 10926801077629026262).
+R_165(?X_1) :- R_137(?X_1), R_10(?X_1), ~R_238(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_118(?X_1, ?X_1) .
+R_168(?X_1, ?X_2, ?X_3, ?X_4) :- R_146(?X_3, ?X_2, ?Y_1, ?X_4, ?X_1), R_136(?X_3) .
+R_241(?X_1, ?X_2, ?X_3, ?X_5, ?X_5) :- R_251(?X_5, ?X_5), R_171(?X_3, ?X_5, ?X_3, ?X_2, ?X_1, ?X_2), project_species(?X_5, ?X_1), R_132(?X_2, ?Y_1, ?Y_1), R_128(?X_1, ?X_5) .
+R_188(?X_4, ?X_2, ?X_3, ?X_5, ?X_1) :- R_251(?X_2, ?X_2), R_237(?X_3, ?X_5, ?X_1, ?X_2, ?X_3), R_199(?Y_1, ?X_4, ?Y_1, ?X_3, ?X_1, ?X_4), R_221(?X_1, ?Y_1, ?Y_1), ~locations(?Y_1, ?X_3, ?X_1) .
+R_43(?X_2, ?X_1, ?X_3) :- R_89(?X_2, ?X_1, ?X_1), distance(?X_2, ?X_3), R_210(?X_3, ?X_2, ?X_3, ?X_3, ?Y_1), R_247(?Y_1, ?X_3), ~R_203(?X_3, ?X_1, ?X_3, ?Y_1, ?X_3), ~R_174(?X_2, ?X_3, ?X_3), ~R_40(?X_3), ~R_240(?X_3, ?Y_1, ?X_2) .
+R_193("str_103", c_197, c_198, "str_14", c_199).
+R_75(5937665870185835115, c_11).
+R_124(c_200, c_201, 17367167115441810005, c_186).
+R_54(c_202, c_203, "Wind Turbine A").
+R_125("str_100", c_61, c_126, "str_104", c_204).
+R_208(c_205, c_39).
+R_186(?X_4, ?X_1, ?X_3, ?X_2) :- R_76(?X_4, ?X_1), PI(?X_4), R_92(?X_4, ?X_3, ?X_1), R_69(?X_2, ?X_2, ?X_3, ?X_2, ?X_4, ?X_1), R_149(?X_2, ?X_3, ?X_4, ?X_3), R_15(?X_4, ?X_1, ?X_3), ~R_121(?X_1), ~R_184(?X_3, ?X_1, ?X_4) .
+R_154(9441495245498316998, c_18, "str_105", c_112).
+R_195(?X_2, ?X_1) :- R_129(?X_1, ?X_2, ?X_1), R_254(?X_1), R_68(?X_1, ?X_1, ?X_2, ?X_2, ?X_1, ?X_2), R_14(?X_2, ?X_1), R_110(?X_2, ?X_1, ?X_1, ?X_1, ?X_2, ?X_1), R_21(?X_2, ?X_1, ?X_2, ?X_2), ~R_62(?X_1, ?X_1, ?X_1, ?X_2, ?X_2, ?X_2), ~R_113(?X_1, ?X_1, ?X_1, ?X_2), ~R_200(?X_2, ?X_1, ?X_1, ?X_1), ~R_257(?X_2, ?X_2) .
+R_180(14583050262357974713, c_64, c_206, c_207, 13074728745233850605).
+R_75(?X_2, ?X_1) :- R_131(?X_2, ?X_2, ?X_1, ?X_1, ?X_2), R_86(?X_1, ?X_1), R_226(?X_1), ~project_species(?X_1, ?X_1) .
+R_149(c_208, 17999660800181981102, c_135, c_167).
+closest_house(c_209, c_210).
+R_175(?X_5, ?X_4, ?X_3, ?X_3, ?X_2) :- R_74(?X_3, ?Y_1, ?X_3, ?X_3), R_34(?X_4, ?X_3, ?X_3), R_189(?X_3, ?X_4, ?X_2, ?X_5, ?Y_1), R_166(?X_2), ~R_239(?Y_1, ?X_4, ?X_3, ?X_4), ~R_210(?X_3, ?Y_1, ?X_3, ?X_3, ?Y_1) .
+R_21(?X_3, ?X_4, ?X_1, ?X_2) :- R_42(?X_1, ?X_4, ?X_4, ?X_2), R_241(?X_4, ?X_3, ?X_1, ?X_1, ?X_1), project_height_m(?X_2, ?X_2), R_43(?X_3, ?Y_1, ?X_1) .
+R_26(?X_1) :- R_99(?X_1), R_225(?X_1, ?X_1), R_246(?X_1, ?X_1, ?X_1), project(?X_1), ~R_224(?X_1, ?X_1) .
+R_94(7498370424300872906, c_145, 12521023486122827589, c_65, c_44).
+R_46(c_211).
+R_109(?X_1, ?X_2) :- R_40(?X_2), R_150(?X_2, ?X_2, ?X_2, ?X_2), R_158(?X_2, ?X_1, ?X_2, ?X_1, ?X_1, ?X_1), R_83(?X_1), R_152(?X_2) .
+R_87(?X_1, ?X_2) :- R_232(?X_1, ?X_2), R_186(?X_2, ?X_1, ?X_1, ?X_2), R_129(?X_1, ?X_2, ?X_2), R_208(?X_2, ?X_1), ~R_216(?X_2, ?X_1, ?X_2), ~R_186(?X_2, ?X_2, ?X_2, ?X_2), ~R_262(?X_2, ?X_2, ?X_1, ?X_1, ?X_2) .
+R_255(?X_3, ?X_5, ?X_4, ?X_4, ?X_2) :- R_61(?X_3, ?X_5, ?Y_1, ?X_2, ?Y_1), R_20(?X_4, ?X_4, ?X_4), R_40(?X_2), R_43(?X_5, ?X_4, ?X_3), project_height_m(?Y_1, ?X_4), ~R_256(?X_5, ?Y_1, ?X_2) .
+R_127("str_106", "str_25", c_116, "str_107").
+R_128(12549875645442209669, c_212).
+R_45(?X_3, ?X_2, ?X_4, ?X_1) :- R_64(?Y_1, ?X_1, ?X_3, ?X_1, ?X_2), R_259(?X_2, ?X_1, ?Y_1), R_178(?X_4, ?X_4, ?X_2, ?X_2), R_198(?X_1, ?X_4, ?X_3), R_20(?X_4, ?X_4, ?Y_1), ~R_32(?X_1, ?X_1, ?X_2, ?X_4), ~R_64(?X_2, ?X_3, ?X_2, ?X_1, ?Y_1) .
+R_234("str_108", c_213, c_26).
+R_90(c_114).
+R_225(?X_2, ?X_1) :- R_58(?X_1, ?X_1, ?X_1), R_45(?X_1, ?X_2, ?X_2, ?X_2), R_118(?X_1, ?X_1) .
+R_223(c_214, c_42, c_69, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_159(?X_4, ?X_5, ?X_3, ?X_1, ?X_2, ?X_6) :- R_121(?X_4), R_102(?X_5, ?X_3, ?X_1, ?X_2), R_121(?X_6), ~R_151(?X_4, ?X_2, ?X_3), ~coordinates(?X_4, ?X_5), ~project_height_m(?X_2, ?X_3), ~R_193(?X_2, ?X_4, ?X_4, ?X_1, ?X_3) .
+R_88(?X_6, ?X_1, ?X_4, ?X_5, ?X_6, ?X_2) :- R_250(?X_6), R_250(?X_1), R_250(?X_4), R_250(?X_5), R_250(?X_6), R_250(?X_2), ~R_181(?X_2, ?X_2), ~R_45(?X_4, ?X_6, ?X_4, ?X_6), ~R_207(?X_6, ?X_4) .
+R_68(?X_6, ?X_3, ?X_2, ?X_2, ?X_4, ?X_5) :- R_217(?X_6), R_246(?X_3, ?X_4, ?X_2), R_223(?X_4, ?X_3, ?X_2, ?X_2), R_268(?X_4, ?X_2, ?X_5, ?X_4), R_14(?X_3, ?X_2), ~R_231(?X_4, ?X_2, ?X_3, ?X_4), ~PI(?X_2), ~R_135(?X_3, ?X_4, ?X_4, ?X_4, ?X_4), ~R_76(?X_2, ?X_4) .
+R_132(?X_1, ?X_3, ?X_2) :- R_103(?X_1, ?Y_1, ?X_3, ?X_1, ?X_1, ?X_2), R_153(?Y_1, ?X_1), R_62(?X_2, ?Y_1, ?Y_1, ?X_1, ?X_2, ?X_3), R_256(?X_2, ?X_1, ?X_1), R_246(?X_3, ?X_2, ?X_2) .
+R_257("str_20", "str_109").
+R_29(c_133, 6257830431976137327, c_215, c_216).
+R_98(1304402346671145909, c_100).
+R_233(?X_1) :- R_159(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_126(?X_1, ?X_1, ?X_1), R_66(?X_1), R_25(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_177(?X_1), ~R_24(?X_1, ?X_1), ~R_57(?X_1, ?X_1) .
+R_264(c_217).
+R_132(c_142, 4633433423124421253, "str_94").
+R_39(?X_5, ?X_2, ?X_3, ?X_5, ?X_1) :- R_197(?X_5, ?X_3, ?X_3), R_175(?X_5, ?X_1, ?X_2, ?X_5, ?X_1) .
+R_54(9765099024350834401, "str_15", c_193).
+R_4(?X_3, ?X_1, ?X_2) :- R_197(?X_3, ?Y_1, ?X_3), R_123(?X_1, ?X_3, ?Y_1, ?X_2) .
+R_37(?X_1, ?X_2) :- R_252(?X_2, ?X_2, ?X_2, ?X_1), ~R_51(?X_1, ?X_2, ?X_1, ?X_1) .
+R_174(2191473842962358884, "str_110", c_196).
+R_112(?X_4, ?X_3, ?X_4, ?X_2, ?X_6, ?X_1) :- R_149(?X_4, ?X_3, ?X_3, ?X_2), R_149(?X_6, ?X_1, ?X_4, ?X_3), ~R_265(?X_4, ?X_4, ?X_1, ?X_4, ?X_4) .
+R_56(?X_2, ?X_1) :- R_202(?X_2, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_126(?X_2, ?X_2, ?X_2), ~R_20(?X_1, ?X_1, ?X_2), ~R_73(?X_1, ?X_1, ?X_1) .
+R_87(c_218, "str_71").
+R_144(?X_1, ?X_2) :- R_65(?X_1), R_91(?X_2, ?X_1, ?X_2, ?X_2), R_32(?X_2, ?X_1, ?X_1, ?X_2), R_193(?X_2, ?X_1, ?X_2, ?X_2, ?X_2), R_216(?X_2, ?X_1, ?X_1), R_121(?X_2), ~TRUE(?X_1), ~R_122(?X_1, ?X_2, ?X_1) .
+R_144(18336635109440308264, "str_111").
+R_115(1271093149582446029, c_219, c_220, c_221).
+R_105(?X_3, ?X_1, ?X_2) :- R_155(?X_1, ?X_2, ?X_2, ?X_2, ?X_2), R_71(?Y_1, ?X_3, ?X_1, ?X_2, ?Y_1), R_225(?X_2, ?X_2), R_156(?X_3, ?X_3), ~R_47(?X_2, ?X_3, ?X_2, ?Y_1, ?X_3) .
+R_152(c_119).
+R_218("str_112", c_79, 9954487271896390866, c_222).
+R_242(c_2, "str_42").
+R_217(?X_1) :- R_57(?X_1, ?X_1), R_226(?X_1), ~R_187(?X_1, ?X_1, ?X_1, ?X_1), ~R_73(?X_1, ?X_1, ?X_1), ~R_33(?X_1) .
+R_2(?X_2, ?X_1) :- R_161(?X_2, ?X_1, ?X_2, ?X_1, ?X_2), R_179(?X_2, ?X_2), R_33(?X_2), R_278(?X_2, ?X_2, ?X_2, ?X_2), R_72(?X_2, ?X_2, ?X_2, ?X_1, ?X_1), ~R_30(?X_1, ?X_2), ~R_126(?X_2, ?X_2, ?X_2), ~R_85(?X_2, ?X_2, ?X_2, ?X_2) .
+R_111(18179775235129579291, c_223, c_185, c_34, c_182, c_224).
+R_113(?X_1, ?X_3, ?X_4, ?X_2) :- R_271(?X_4), R_175(?X_4, ?X_4, ?X_2, ?X_3, ?X_1), R_245(?X_2, ?Y_1, ?X_4, ?X_1), ~R_67(?X_1, ?X_4, ?X_4, ?X_2, ?Y_1, ?X_2), ~PI(?Y_1), ~R_141(?X_2) .
+R_242("Wind Turbine A", c_225).
+R_127(c_226, 13482462546804185928, 3822722133120792567, c_81).
+R_128(?X_1, ?X_2) :- R_174(?X_1, ?X_1, ?X_2), R_44(?X_2, ?X_1, ?X_1, ?X_1, ?X_1), R_69(?X_2, ?X_1, ?X_1, ?X_1, ?X_1, ?X_2), R_32(?X_2, ?X_2, ?X_2, ?X_1), R_235(?X_2, ?X_2, ?X_2), ~distance(?X_1, ?X_2), ~R_10(?X_1), ~R_177(?X_2) .
+R_186(?X_3, ?X_1, ?X_4, ?X_2) :- R_259(?X_4, ?X_1, ?X_4), R_84(?X_1, ?X_3, ?X_1), R_157(?X_1), R_183(?X_2, ?Y_1), R_277(?X_1, ?X_3), ~R_51(?X_3, ?X_1, ?Y_1, ?X_3), ~R_44(?X_1, ?X_4, ?X_1, ?X_4, ?X_1), ~R_79(?X_1, ?Y_1, ?X_4, ?X_4) .
+R_136(?X_1) :- R_54(?X_1, ?X_1, ?X_1), R_164(?X_1, ?X_1, ?X_1), R_41(?X_1, ?X_1, ?X_1), R_160(?X_1, ?X_1), R_225(?X_1, ?X_1), ~R_247(?X_1, ?X_1), ~PI(?X_1), ~R_126(?X_1, ?X_1, ?X_1) .
+R_100(?X_1, ?X_2) :- R_6(?X_1, ?X_2, ?X_2, ?X_1), R_15(?X_1, ?X_2, ?X_2), R_164(?X_1, ?X_1, ?X_2), R_223(?X_2, ?X_1, ?X_2, ?X_2), R_274(?X_1, ?X_2, ?X_2, ?X_2), ~R_19(?X_2), ~R_117(?X_2, ?X_1, ?X_2, ?X_2, ?X_2) .
+R_62(c_227, c_52, c_228, c_229, 12113836947888961138, 2971339664600702656).
+R_220(?X_1) :- R_268(?X_1, ?X_1, ?X_1, ?X_1), R_255(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_267(?X_1, ?X_1), ~R_195(?X_1, ?X_1), ~R_36(?X_1, ?X_1) .
+R_187(18409351335568554395, c_230, "str_113", "str_106").
+R_46(c_37).
+R_248(?X_1) :- R_216(?X_1, ?X_1, ?X_1), ~R_29(?X_1, ?X_1, ?X_1, ?X_1), ~R_64(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_122(?X_1, ?X_1, ?X_1), ~R_237(?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_195("str_114", 13356567538277290442).
+R_290(?X_1, ?X_2) :- R_136(?X_2), R_265(?X_2, ?X_1, ?X_1, ?X_1, ?X_2), project_location_m(?X_2, ?X_1, ?X_1), R_124(?X_2, ?X_2, ?X_1, ?X_2), ~R_49(?X_2, ?X_1, ?X_1, ?X_2) .
+R_216(7228251145546024417, c_73, 9545026887803456824).
+R_157(?X_1) :- R_58(?X_1, ?X_1, ?X_1), ~R_200(?X_1, ?X_1, ?X_1, ?X_1), ~R_156(?X_1, ?X_1) .
+R_53(c_231, "str_115", "str_116", "true"^^<http://www.w3.org/2001/XMLSchema#boolean>, "str_117").
+R_223("str_118", c_232, "Wind Turbine B", c_211).
+R_166("str_119").
+R_143(2753043175871581486, 17408527875344161788).
+R_246(?X_1, ?X_2, ?X_3) :- R_14(?X_1, ?X_2), R_231(?X_3, ?X_1, ?X_2, ?X_2), R_160(?X_2, ?X_3), R_3(?Y_1, ?Y_1, ?X_3), R_280(?X_2, ?X_3, ?X_1, ?X_1), distance(?X_3, ?X_1), ~R_148(?X_3, ?X_1, ?X_2), ~R_178(?X_1, ?X_3, ?X_1, ?X_3), ~distance(?X_1, ?X_1), ~R_32(?X_1, ?X_2, ?Y_1, ?X_2) .
+R_98(?X_2, ?X_1) :- R_239(?X_1, ?X_1, ?X_1, ?X_1), R_18(?X_1, ?X_2, ?X_1), R_177(?X_2), ~R_155(?X_1, ?X_2, ?X_1, ?X_1, ?X_1) .
+R_192(?X_1, ?X_4, ?X_3, ?X_2) :- R_40(?X_4), R_112(?Y_1, ?X_3, ?X_3, ?Y_1, ?X_2, ?X_4), R_229(?X_4), R_92(?Y_1, ?X_4, ?X_1) .
+R_219(?X_3, ?X_4, ?X_1, ?X_2) :- R_198(?X_3, ?X_4, ?X_2), R_69(?X_2, ?X_1, ?X_2, ?X_2, ?Y_1, ?X_2), R_191(?Y_1), R_268(?X_1, ?X_1, ?X_3, ?Y_1), R_29(?X_4, ?X_1, ?Y_1, ?X_2), R_125(?X_2, ?X_3, ?X_4, ?X_2, ?X_3) .
+R_283(c_87, c_233, c_63, c_234).
+R_100(?X_1, ?X_2) :- R_282(?X_1, ?X_1, ?X_2, ?X_1, ?X_2, ?X_1), R_125(?X_1, ?X_2, ?X_1, ?X_2, ?X_2), endangered(?X_1), ~R_5(?X_1), ~R_9(?X_1, ?X_1), ~R_14(?X_2, ?X_1) .
+R_132(?X_2, ?X_3, ?X_1) :- R_88(?X_2, ?X_3, ?X_2, ?X_1, ?X_3, ?X_3), ~R_164(?X_2, ?X_1, ?X_1), ~R_61(?X_1, ?X_1, ?X_3, ?X_3, ?X_1) .
+R_116("str_120", 12113836947888961138, c_40, "str_97").
+R_169(?X_2, ?X_4, ?X_1, ?X_3) :- R_277(?Y_1, ?Y_1), R_169(?X_1, ?X_1, ?X_3, ?X_1), R_2(?X_4, ?X_1), R_73(?Y_1, ?X_3, ?X_3), R_241(?X_4, ?X_2, ?X_1, ?X_1, ?X_1), R_30(?Y_1, ?X_1) .
+R_183(c_235, c_236).
+R_281(?X_1, ?X_4, ?X_2, ?X_3) :- R_108(?X_1, ?X_4, ?X_2), R_83(?X_3), ~R_237(?X_3, ?X_2, ?X_1, ?X_2, ?X_2), ~R_88(?X_4, ?X_2, ?X_2, ?X_4, ?X_4, ?X_1) .
+R_59(c_237, c_150, "str_121", c_174).
+R_282(?X_6, ?X_1, ?X_5, ?X_4, ?X_2, ?X_3) :- R_7(?X_6, ?X_1), R_278(?X_5, ?X_4, ?X_2, ?X_3), ~R_198(?X_3, ?X_1, ?X_1), ~R_268(?X_2, ?X_3, ?X_6, ?X_4) .
+R_289(?X_1, ?X_2) :- R_81(?X_1, ?X_1, ?X_1, ?X_1, ?X_2, ?X_2), R_295(?X_2, ?X_1, ?X_2, ?X_1, ?X_1), coordinates_m(?X_1, ?X_1), R_146(?X_1, ?X_2, ?X_2, ?X_1, ?X_1), ~R_107(?X_1, ?X_2, ?X_2, ?X_1, ?X_1, ?X_1), ~R_217(?X_2), ~R_5(?X_2) .
+R_255(17026850839373703403, c_10, "str_37", c_100, c_52).
+R_252(18179775235129579291, c_238, 7703491722307034979, 680693226128797936).
+R_26(?X_1) :- R_70(?X_1, ?X_1, ?X_1, ?X_1), R_117(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_197(?X_1, ?X_1, ?X_1), coordinates(?X_1, ?X_1), R_196(?X_1), ~R_258(?X_1, ?X_1), ~R_63(?X_1, ?X_1, ?X_1, ?X_1), ~R_45(?X_1, ?X_1, ?X_1, ?X_1), ~R_72(?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_234(17026850839373703403, c_239, c_18).
+R_89(c_240, 5877931549559154798, c_191).
+R_266(c_241, "str_122", 13004758955553966817, 8726678881293592480).
+R_169(1986483493458181338, 9114086704665364846, c_242, 16102592010300257625).
+R_55(?X_3, ?X_2, ?X_4, ?X_2, ?X_1) :- R_6(?X_3, ?X_1, ?Y_1, ?Y_1), R_47(?X_1, ?X_3, ?X_3, ?X_2, ?X_4), R_252(?X_2, ?X_3, ?X_3, ?X_2), R_152(?X_2), ~R_238(?X_3, ?X_3, ?X_1, ?X_2, ?X_1, ?X_1), ~R_287(?X_4, ?X_2), ~R_162(?X_3, ?X_3, ?Y_1, ?X_2) .
+R_133(c_157, 17543993491765547808, "str_123", 9269578978394407643).
+R_292(?X_1, ?X_2) :- R_125(?X_1, ?X_1, ?X_2, ?X_1, ?X_1), R_203(?X_2, ?X_1, ?X_2, ?X_2, ?X_1), R_195(?X_2, ?X_1) .
+R_264(c_145).
+R_243(c_243, "Gartenschläfer", c_47, c_225, "str_124").
+R_267(c_55, c_115).
+R_248("str_91").
+R_302(?X_3, ?X_2, ?X_1) :- R_226(?X_3), R_30(?X_2, ?X_1) .
+R_163(?X_1, ?X_2) :- R_201(?X_1, ?X_2, ?X_2, ?X_1, ?X_2, ?X_1), R_153(?X_2, ?X_2), R_150(?X_1, ?X_1, ?X_1, ?X_1), R_300(?X_2, ?X_2, ?X_1, ?X_1, ?X_2), ~R_249(?X_2, ?X_2, ?X_1, ?X_1, ?X_1, ?X_2) .
+R_179(?X_2, ?X_1) :- R_224(?X_2, ?X_1), R_2(?X_2, ?X_2), R_18(?X_2, ?X_1, ?X_2), R_132(?X_1, ?X_1, ?X_2), R_273(?X_2, ?X_1, ?X_2, ?X_2, ?X_2, ?X_2), R_294(?X_1, ?X_1, ?X_2, ?X_2), ~R_237(?X_1, ?X_2, ?X_2, ?X_1, ?X_2), ~R_35(?X_1, ?X_1, ?X_2), ~R_197(?X_1, ?X_1, ?X_2), ~R_202(?X_2, ?X_2, ?X_1, ?X_1, ?X_1, ?X_2) .
+R_165(?X_1) :- R_165(?X_1), R_45(?X_1, ?X_1, ?X_1, ?X_1), ~R_5(?X_1), ~R_216(?X_1, ?X_1, ?X_1), ~R_60(?X_1, ?X_1, ?X_1), ~R_280(?X_1, ?X_1, ?X_1, ?X_1) .
+R_278(c_73, "str_125", "str_25", "str_31").
+R_199(?X_1, ?X_4, ?X_5, ?X_2, ?X_6, ?X_1) :- R_11(?X_4, ?X_4, ?X_1, ?X_2, ?X_1, ?X_1), R_25(?X_1, ?X_2, ?X_6, ?X_1, ?X_5), project(?Y_1), ~R_79(?X_5, ?X_4, ?X_2, ?X_1), ~R_1(?Y_1, ?X_5), ~R_259(?X_4, ?X_1, ?Y_1) .
+R_221(?X_1, ?X_2, ?X_3) :- R_240(?X_1, ?X_1, ?X_3), PI(?X_1), R_31(?Y_1), R_274(?Y_1, ?X_2, ?Y_1, ?Y_1), R_210(?X_3, ?X_3, ?X_2, ?X_1, ?Y_1), R_207(?X_1, ?X_3), ~R_181(?Y_1, ?X_3), ~R_81(?X_1, ?Y_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_117("str_126", "str_77", c_244, 9087503801540917313, 8473147800554259980).
+R_165(?X_1) :- R_211(?X_1, ?X_1, ?X_1, ?X_1), R_30(?X_1, ?X_1), R_32(?X_1, ?X_1, ?X_1, ?X_1), R_200(?X_1, ?X_1, ?X_1, ?X_1), R_241(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_131(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_67(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_256(?X_3, ?X_2, ?X_1) :- R_88(?X_1, ?X_3, ?X_1, ?X_2, ?X_3, ?Y_1), R_63(?X_1, ?X_2, ?X_3, ?X_3), R_251(?X_3, ?X_3), R_107(?X_2, ?X_1, ?Y_1, ?Y_1, ?X_1, ?X_2) .
+R_189(?X_5, ?X_2, ?X_1, ?X_3, ?X_4) :- R_184(?X_5, ?X_2, ?X_2), R_47(?X_3, ?X_4, ?Y_1, ?X_3, ?X_4), R_230(?X_1, ?X_2, ?X_5, ?X_5), R_141(?X_2), R_277(?X_2, ?X_1), R_84(?X_5, ?X_1, ?X_1), ~R_293(?X_5, ?X_2, ?X_1, ?X_3, ?X_2, ?X_3) .
+R_155("str_127", 8625556491702224337, "str_89", 7348320570168664824, c_35).
+R_285(?X_2, ?X_3, ?X_5, ?X_1, ?X_2) :- R_125(?X_3, ?X_2, ?X_5, ?X_2, ?X_2), R_71(?X_2, ?X_3, ?X_3, ?X_2, ?X_2), R_183(?X_3, ?X_5), R_304(?X_3), R_227(?X_5, ?X_1, ?X_1, ?X_1, ?X_1, ?X_2), ~R_275(?X_1, ?X_3, ?X_2), ~R_154(?X_1, ?X_3, ?X_1, ?X_2), ~R_207(?X_2, ?X_2) .
+R_123(?X_1, ?X_3, ?X_2, ?X_4) :- R_202(?X_1, ?X_2, ?X_2, ?X_3, ?X_2, ?X_4), R_79(?Y_1, ?X_1, ?X_1, ?X_3), ~R_269(?X_4, ?X_4, ?X_1, ?X_1), ~R_239(?X_1, ?X_1, ?X_1, ?X_3), ~R_97(?X_1, ?X_1, ?X_3, ?X_2, ?Y_1) .
+R_40(?X_1) :- R_41(?X_1, ?X_1, ?X_1), R_249(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_184(?X_1, ?X_1, ?X_1), R_72(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_163(?X_1, ?X_1), ~R_296(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1) .
+R_255(?X_2, ?X_3, ?X_5, ?X_4, ?X_3) :- R_114(?X_2), R_23(?X_3, ?X_5), R_259(?X_4, ?X_2, ?X_3), ~R_218(?X_4, ?X_2, ?X_2, ?X_3), ~R_49(?X_3, ?X_2, ?X_3, ?X_3), ~R_198(?X_3, ?X_3, ?X_4), ~R_222(?X_2, ?X_5, ?X_4) .
+R_46(c_183).
+R_8(c_245, c_196, 18179775235129579291).
+R_228(c_184, "str_86").
+R_134(c_246).
+R_138(?X_2, ?X_5, ?X_1, ?X_3, ?X_4) :- R_62(?X_4, ?X_5, ?X_4, ?X_3, ?X_1, ?X_1), R_304(?X_2), R_113(?X_5, ?X_2, ?X_2, ?X_3), R_151(?Y_1, ?X_4, ?X_1), R_257(?X_1, ?X_4), ~R_192(?X_2, ?X_2, ?X_4, ?X_4), ~R_99(?X_1), ~R_213(?X_1, ?X_4, ?X_5, ?X_1), ~R_201(?X_2, ?X_4, ?X_4, ?X_5, ?X_1, ?X_2) .
+R_270(?X_1) :- R_126(?X_1, ?X_1, ?X_1), R_74(?X_1, ?X_1, ?X_1, ?X_1), R_128(?X_1, ?X_1), R_174(?X_1, ?X_1, ?X_1), ~R_47(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_132(?X_1, ?X_1, ?X_1), ~R_211(?X_1, ?X_1, ?X_1, ?X_1) .
+R_298(?X_2, ?X_1) :- R_102(?X_2, ?X_1, ?X_2, ?X_2), R_160(?X_1, ?X_2), R_29(?X_2, ?X_1, ?X_1, ?X_1), R_172(?X_1, ?X_1, ?X_1, ?X_1), ~R_178(?X_2, ?X_2, ?X_1, ?X_1), ~project_reject(?X_1), ~R_68(?X_1, ?X_1, ?X_2, ?X_1, ?X_2, ?X_1), ~R_53(?X_1, ?X_2, ?X_1, ?X_1, ?X_1) .
+R_204(9114086704665364846).
+R_105(c_214, "str_128", 551781103480633409).
+R_208(?X_1, ?X_2) :- project_reject(?X_2), R_92(?X_2, ?X_1, ?X_2), R_85(?X_2, ?X_2, ?X_1, ?X_1), R_152(?X_1), ~R_25(?X_1, ?X_1, ?X_2, ?X_1, ?X_1) .
+R_53(c_247, c_248, c_132, c_89, c_23).
+R_53(?X_4, ?X_5, ?X_2, ?X_3, ?X_2) :- R_206(?X_4, ?X_5), R_320(?X_2, ?X_5, ?X_2), TRUE(?X_5), R_274(?X_3, ?X_3, ?X_2, ?X_2), ~R_67(?X_3, ?X_2, ?X_5, ?X_5, ?X_4, ?X_3) .
+R_83(?X_1) :- R_273(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_318(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_88(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_113(?X_1, ?X_1, ?X_1, ?X_1), R_241(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_164(?X_1, ?X_1, ?X_1) .
+R_132(c_249, "str_129", "str_62").
+R_276("str_130").
+R_153(5975040827691923623, 15282524454985587313).
+R_233(?X_1) :- R_57(?X_1, ?X_1), R_214(?X_1, ?X_1, ?X_1), R_224(?X_1, ?X_1) .
+R_117(c_250, c_40, "str_46", 10720205465866825658, "str_131").
+R_316(?X_1, ?X_2) :- R_125(?X_1, ?X_1, ?X_1, ?X_2, ?X_1), ~R_115(?X_1, ?X_1, ?X_1, ?X_1), ~R_184(?X_1, ?X_2, ?X_1) .
+R_215(c_131).
+R_240("str_4", c_251, "str_117").
+R_139(?X_1, ?X_2) :- R_275(?X_2, ?X_1, ?X_2), R_253(?X_2), R_230(?X_2, ?X_2, ?X_1, ?X_2), R_37(?X_2, ?X_2), R_27(?X_2, ?X_2, ?X_1), R_93(?X_2, ?X_1, ?X_1, ?X_1, ?X_2), ~PI(?X_1) .
+R_109(c_166, c_252).
+R_268(8583894376790876499, "str_15", c_253, "str_132").
+R_220(?X_1) :- R_14(?X_1, ?X_1), R_215(?X_1), R_276(?X_1), R_131(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_229(?X_1), ~R_304(?X_1) .
+R_281(?X_3, ?X_1, ?X_4, ?X_2) :- R_278(?X_3, ?X_1, ?X_4, ?X_2), R_75(?X_3, ?X_1), ~R_73(?X_3, ?X_1, ?X_2), ~R_34(?X_1, ?X_1, ?X_3), ~R_215(?X_1) .
+R_82(?X_3, ?X_1, ?X_2) :- R_59(?X_1, ?X_1, ?X_1, ?X_1), R_308(?X_3, ?X_3, ?X_1, ?X_1, ?Y_1, ?X_1), R_141(?X_2), R_69(?X_1, ?X_2, ?X_1, ?X_2, ?X_3, ?X_3), ~R_119(?X_3, ?Y_1, ?X_1), ~R_246(?X_1, ?X_1, ?X_1) .
+R_137(c_254).
+R_273(c_255, c_256, c_89, c_133, "Wind Turbine A", 12275219065598961619).
+R_43(?X_3, ?X_2, ?X_1) :- R_81(?X_3, ?X_2, ?X_3, ?X_3, ?X_3, ?X_1), R_68(?Y_1, ?Y_1, ?X_1, ?Y_1, ?Y_1, ?X_2), R_43(?X_3, ?X_3, ?X_2), R_162(?Y_1, ?X_3, ?Y_1, ?X_2), ~R_4(?X_1, ?X_3, ?X_2), ~R_205(?Y_1, ?X_2, ?Y_1), ~R_150(?X_3, ?X_2, ?Y_1, ?Y_1), ~R_142(?Y_1) .
+R_142("str_133").
+R_191(c_175).
+R_219(?X_1, ?X_4, ?X_3, ?X_2) :- R_232(?X_1, ?X_4), R_222(?X_3, ?X_4, ?X_2) .
+R_315(?X_3, ?X_1, ?X_2) :- R_50(?X_3, ?X_2, ?X_2, ?X_2, ?Y_1), R_40(?X_1), R_155(?X_1, ?X_3, ?X_1, ?X_1, ?X_3), R_268(?X_3, ?X_2, ?X_3, ?X_2) .
+R_162(c_184, c_257, c_258, 2191473842962358884).
+closest_house(?X_1, ?X_2) :- R_110(?X_2, ?X_1, ?X_1, ?X_1, ?X_2, ?X_2), R_41(?X_2, ?X_2, ?X_2), R_145(?X_1), ~R_4(?X_2, ?X_2, ?X_1), ~project_approved(?X_2), ~R_134(?X_2), ~R_12(?X_1, ?X_2, ?X_1) .
+R_232(?X_2, ?X_1) :- R_148(?X_2, ?X_2, ?X_1), R_211(?X_2, ?X_1, ?X_2, ?X_1), R_79(?X_1, ?X_1, ?X_2, ?X_2), R_267(?X_1, ?X_1), ~R_304(?X_1), ~R_28(?X_1), ~project_height_m(?X_2, ?X_2) .
+R_328(15618646094258578179, 5553275717173477792, "str_134", c_224).
+R_250(c_130).
+R_286(?X_1, ?X_3, ?X_2) :- R_251(?X_1, ?X_3), R_84(?X_2, ?X_1, ?X_3), ~R_174(?X_3, ?X_2, ?X_3), ~R_331(?X_2), ~R_156(?X_1, ?X_1), ~R_105(?X_1, ?X_1, ?X_2) .
+R_240(c_154, 13800849091671144757, c_119).
+R_316("str_73", c_259).
+R_307(8639618869849599634).
+R_87(11270532640557248993, c_260).
+R_29("str_135", c_29, "str_136", c_261).
+R_191(?X_1) :- R_159(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), R_223(?X_1, ?X_1, ?X_1, ?X_1), R_166(?X_1), R_272(?X_1, ?X_1), R_202(?X_1, ?X_1, ?X_1, ?X_1, ?X_1, ?X_1), coordinates_m(?X_1, ?X_1), ~R_209(?X_1, ?X_1), ~R_194(?X_1, ?X_1, ?X_1), ~R_50(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_133(?X_1, ?X_1, ?X_1, ?X_1) .
+R_268(?X_3, ?X_1, ?X_2, ?X_4) :- R_189(?X_1, ?X_1, ?X_2, ?X_4, ?X_3), ~R_299(?X_2, ?X_1, ?X_3, ?X_1, ?X_4), ~R_216(?X_4, ?X_2, ?X_4), ~R_182(?X_4, ?X_1), ~R_54(?X_1, ?X_3, ?X_1) .
+R_157(?X_1) :- R_149(?X_1, ?X_1, ?X_1, ?X_1), distance(?X_1, ?X_1), ~R_329(?X_1, ?X_1, ?X_1, ?X_1, ?X_1), ~R_333(?X_1, ?X_1, ?X_1) .
+R_71(6356805662574422826, c_262, c_263, c_264, 11561972503196147274).
+R_105(?X_2, ?X_3, ?X_1) :- R_45(?X_2, ?X_3, ?X_1, ?X_2), ~R_170(?X_1, ?X_1, ?X_2), ~R_335(?X_2, ?X_1) .
+R_208("str_137", c_265).
+R_260(?X_1, ?X_4, ?X_3, ?X_2) :- R_71(?X_4, ?X_1, ?Y_1, ?X_2, ?X_2), distance(?X_4, ?X_3), R_337(?X_1, ?Y_1, ?X_1, ?X_4, ?X_1, ?X_3), ~R_216(?X_4, ?X_3, ?X_1), ~R_307(?Y_1), ~R_96(?X_4, ?Y_1, ?X_4, ?X_1, ?Y_1), ~R_250(?X_4) .
+R_276(?X_1) :- R_13(?X_1, ?X_1, ?X_1) .
+R_312(?X_2, ?X_1) :- R_247(?X_2, ?X_1), R_10(?X_1), R_161(?X_2, ?X_2, ?X_1, ?X_2, ?X_1), R_61(?X_2, ?X_2, ?X_1, ?X_1, ?X_1), R_55(?X_1, ?X_2, ?X_2, ?X_1, ?X_1), ~R_220(?X_2) .
+R_132(?X_1, ?X_2, ?X_3) :- R_218(?X_3, ?X_2, ?X_1, ?X_1), R_128(?X_1, ?X_2), R_164(?X_1, ?X_2, ?X_2), R_258(?X_3, ?Y_1), R_244(?X_2, ?X_2, ?X_3) .
+R_140(8323436350815069230, "str_136", c_266, c_120, c_267).

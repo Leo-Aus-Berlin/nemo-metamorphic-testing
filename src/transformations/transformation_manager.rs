@@ -84,6 +84,9 @@ impl<'a, 'b> IterateMetamorphicTransformations<'a, 'b> {
 impl<'a, 'b> Iterator for IterateMetamorphicTransformations<'a, 'b> {
     type Item = SomeMetamorphicTransformation<'a, 'b>;
     fn next(&mut self) -> Option<Self::Item> {
+        debug_assert!(self.adg.is_some());
+        debug_assert!(self.rng.is_some());
+        debug_assert!(self.transformation_type.is_some());
         let adg = self.adg.take();
         let rng = self.rng.take();
         let transformation_type = self.transformation_type.take();
