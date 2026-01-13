@@ -1,4 +1,4 @@
-use crate::{NAME_OF_TRANSFORMATION_SEQUENCE, transformations::util};
+use crate::{transformations::util, NAME_OF_TRANSFORMATION_SEQUENCE};
 use std::{
     collections::{HashSet, VecDeque},
     fmt::{Debug, Formatter},
@@ -7,22 +7,22 @@ use std::{
 };
 
 use indexmap::{IndexMap, IndexSet};
-use log::{debug, error, info};
+use log::{debug, error, info, trace};
 use nemo::rule_model::{
     components::{
-        self, ComponentIdentity, IterablePrimitives, statement, tag::Tag,
-        term::primitive::ground::GroundTerm,
+        self, statement, tag::Tag, term::primitive::ground::GroundTerm, ComponentIdentity,
+        IterablePrimitives,
     },
     pipeline::id::ProgramComponentId,
-    programs::{ProgramRead, handle::ProgramHandle},
+    programs::{handle::ProgramHandle, ProgramRead},
 };
+use petgraph::{dot::Dot, graph::NodeIndex};
 use petgraph::{
-    Directed,
     prelude::StableGraph,
     stable_graph::{EdgeIndex, Edges},
     visit::EdgeRef,
+    Directed,
 };
-use petgraph::{dot::Dot, graph::NodeIndex};
 use rand::RngCore;
 use rand_chacha::ChaCha8Rng;
 
@@ -88,6 +88,7 @@ impl Ancestry {
             Ancestry::None => Ancestry::None,
         }
     }
+     #[allow(dead_code,unused_variables)]
     pub fn is_some(self) -> bool {
         match self {
             Ancestry::None => false,
@@ -265,7 +266,7 @@ pub struct AnnotatedDependencyGraph {
 }
 
 // TODO: Multi-edges wichtig!
-impl<'a> AnnotatedDependencyGraph {
+impl AnnotatedDependencyGraph {
     pub fn from_program(program: &ProgramHandle) -> Option<Self> {
         let predicates: HashSet<Tag> = program.all_predicates();
 
@@ -437,6 +438,7 @@ impl<'a> AnnotatedDependencyGraph {
         }
     }
 
+     #[allow(dead_code,unused_variables)]
     /// Get n vector of the predicates appearing in the ADG
     pub fn get_predicates(&self) -> Vec<Tag> {
         self.predicate_ids.keys().map(|tag| tag.clone()).collect()
@@ -447,6 +449,7 @@ impl<'a> AnnotatedDependencyGraph {
         self.predicate_ids.keys().map(|tag| tag.clone())
     }
 
+     #[allow(dead_code,unused_variables)]
     /// Return a breadth-first visit of the ADG
     pub fn get_bfs(
         &self,
@@ -458,6 +461,7 @@ impl<'a> AnnotatedDependencyGraph {
     /// Get a vector of valid candidate relation names for drawing
     /// 1) a positive relational edge from this relation node to head_node
     /// 2) a negative relational edge from this relation node to head_node
+    ///
     /// I.e. these nodes can be body literals of the corresponding sign for rules
     /// with head_node as their head
     pub fn get_body_literal_candidates(&self, head_node: NodeIndex) -> (Vec<Tag>, Vec<Tag>) {
@@ -567,7 +571,6 @@ impl<'a> AnnotatedDependencyGraph {
         )
     }
 
-
     /// Get a mutable reference to the internal graph
     pub fn graph_mut(&mut self) -> &mut StableGraph<ADGNode, ADGEdge, Directed, u32> {
         &mut self.graph
@@ -674,14 +677,14 @@ impl<'a> AnnotatedDependencyGraph {
         };
 
         if util::in_debug_mode() {
-            debug!(
+            trace!(
                 "Call AIS: ({:?},{:?},{:?},{:?})",
                 adg_node.tag.name(),
                 ancestry,
                 inverse_stratum,
                 force_update
             );
-            debug!(
+            trace!(
                 "Prev val: ({:?},{:?},{:?})",
                 adg_node.tag.name(),
                 adg_node.ancestry,
@@ -703,10 +706,10 @@ impl<'a> AnnotatedDependencyGraph {
             force_update; // we are forcing an update
 
         if util::in_debug_mode() && require_update {
-            debug!("Checking require update: ");
-            debug!("  1 {}", Some(new_ancestry) != old_ancestry);
-            debug!("  2 {}", adg_node.inverse_stratum < Some(inverse_stratum));
-            debug!("  3 {}", force_update);
+            trace!("Checking require update: ");
+            trace!("  1 {}", Some(new_ancestry) != old_ancestry);
+            trace!("  2 {}", adg_node.inverse_stratum < Some(inverse_stratum));
+            trace!("  3 {}", force_update);
         }
 
         // We need to update inverse stratum in this case exactly
@@ -769,7 +772,11 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     fn print_graph_restricted_to_direction(&self, node: NodeIndex, dir: petgraph::Direction) {
-        debug!("Writing ADG restricted to {:?} from {}",dir,self.get_rel_node_weight_by_index(node).tag.name());
+        debug!(
+            "Writing ADG restricted to {:?} from {}",
+            dir,
+            self.get_rel_node_weight_by_index(node).tag.name()
+        );
         let mut connected_nodes: Vec<NodeIndex> = vec![node];
         let mut queue: VecDeque<NodeIndex> = VecDeque::new();
         queue.push_back(node);
@@ -817,7 +824,7 @@ impl<'a> AnnotatedDependencyGraph {
         ()
     }
 
-    // Add a new relational node with this tag. Register the relational name.
+    /// Add a new relational node with this tag. Register the relational name.
     pub fn add_rel_node(&mut self, tag: Tag) {
         //self.predicates.push(tag.clone());
         self.predicate_ids.insert(
@@ -832,24 +839,24 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     /// Get the ground terms that appear in the program.
-    pub fn get_ground_terms(&'a self) -> &'a Vec<GroundTerm> {
+    pub fn get_ground_terms<'a>(&'a self) -> &'a Vec<GroundTerm> {
         &self.ground_terms
     }
 
     /// Get the next string and increase str name by 1
-    fn next_str_name(&'a mut self) -> String {
+    fn next_str_name(&mut self) -> String {
         self.last_str_name += 1;
         String::from("str_") + &self.last_str_name.to_string()
     }
 
     /// Get the next constant name and increase it 1
-    fn next_iri_name(&'a mut self) -> String {
+    fn next_iri_name(&mut self) -> String {
         self.last_iri_name += 1;
         String::from("c_") + &self.last_iri_name.to_string()
     }
 
     /// Get and register a new string constant.
-    pub fn get_and_register_new_string_constant(&'a mut self) -> GroundTerm {
+    pub fn get_and_register_new_string_constant(&mut self) -> GroundTerm {
         let mut new_constant: GroundTerm = GroundTerm::from("failedNewConstantGen");
         let mut found_new_name: bool = false;
         while !found_new_name {
@@ -869,7 +876,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     /// Get and register a new string constant.
-    pub fn get_and_register_new_iri_constant(&'a mut self) -> GroundTerm {
+    pub fn get_and_register_new_iri_constant(&mut self) -> GroundTerm {
         let mut new_constant: GroundTerm = GroundTerm::constant("failedNewConstantGen");
         let mut found_new_name: bool = false;
         while !found_new_name {
@@ -889,10 +896,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     /// Get and register a new integer constant.
-    pub fn get_and_register_new_integer_constant(
-        &'a mut self,
-        rng: &'a mut ChaCha8Rng,
-    ) -> GroundTerm {
+    pub fn get_and_register_new_integer_constant(&mut self, rng: &mut ChaCha8Rng) -> GroundTerm {
         let mut new_constant: GroundTerm = GroundTerm::from("failedNewConstantGen");
         let mut found_new_name: bool = false;
         while !found_new_name {
@@ -911,22 +915,19 @@ impl<'a> AnnotatedDependencyGraph {
         new_constant
     }
 
-    fn next_rel_name(&'a mut self) -> String {
+    fn next_rel_name(&mut self) -> String {
         self.last_rel_name += 1;
         String::from("R_") + &self.last_rel_name.to_string()
     }
 
-    // Build the next rule name
-    pub fn next_rule_name(
-        &'a mut self,
-        oracle: transformation_types::TransformationTypes,
-    ) -> String {
+    /// Build the next rule name
+    pub fn next_rule_name(&mut self, oracle: transformation_types::TransformationTypes) -> String {
         self.last_rule_name += 1;
         String::from("r_") + oracle.to_string().as_str() + "_" + &self.last_rule_name.to_string()
     }
 
     /// Get a new relation name. Does not register the relation name in the adg.
-    pub fn get_new_relation_name(&'a mut self) -> Tag {
+    pub fn get_new_relation_name(&mut self) -> Tag {
         let mut new_relation_tag: Tag = Tag::new(String::from("NoNewRelationNameFound"));
         let mut found_new_name: bool = false;
         while !found_new_name {
@@ -946,7 +947,11 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     /// Get an iterator over a nodes edges, outgoing or incoming based on `dir` parameter
-    pub fn get_node_edges(&'a self, tag: &Tag, dir: petgraph::Direction) -> Edges<'a, ADGEdge, Directed> {
+    pub fn get_node_edges<'a>(
+        &'a self,
+        tag: &Tag,
+        dir: petgraph::Direction,
+    ) -> Edges<'a, ADGEdge, Directed> {
         self.graph.edges_directed(self.get_rel_node_index(tag), dir)
     }
 
@@ -968,7 +973,7 @@ impl<'a> AnnotatedDependencyGraph {
     }
 
     /// Get a relation node weight based on its `NodeIndex`
-    pub fn get_rel_node_weight_by_index(&self, index: NodeIndex) -> &ADGRelationalNode {
+    pub fn get_rel_node_weight_by_index<'a>(&'a self, index: NodeIndex) -> &'a ADGRelationalNode {
         match self.graph.node_weight(index) {
             None => {
                 error!("Could not find node {:#?}", index);
@@ -1025,17 +1030,19 @@ impl<'a> AnnotatedDependencyGraph {
             .add_edge(fact_node, rel_node, ADGEdge::ADGFactEdge(ADGFactEdge {}));
     }
 
+    #[allow(dead_code,unused_variables)]
     pub fn remove_rel_node(&mut self, tag: &Tag) {
         // Important: Need to remove tag/nodeIndex pair from predicateIds !
         // That way we
         todo!();
     }
 
+     #[allow(dead_code,unused_variables)]
     fn get_fact_node(&self, rule: components::rule::Rule) -> Option<ADGFactNode> {
         todo!()
     }
 
-    // Get those relational nodes with positive or none ancestry
+    /// Get those relational nodes with positive or none ancestry
     pub fn get_leq_positive_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         /* debug!("LEQ_POS");
@@ -1057,8 +1064,9 @@ impl<'a> AnnotatedDependencyGraph {
         vec
     }
 
-    // Get those relational nodes with positive ancestry
-    pub fn get_positive_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
+     #[allow(dead_code,unused_variables)]
+    /// Get those relational nodes with positive ancestry
+    pub fn get_positive_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
@@ -1075,8 +1083,8 @@ impl<'a> AnnotatedDependencyGraph {
         vec
     }
 
-    // Get those relational nodes with negative or none ancestry
-    pub fn get_leq_negative_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
+    /// Get those relational nodes with negative or none ancestry
+    pub fn get_leq_negative_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         /*
         debug!("LEQ_NEG");
@@ -1097,8 +1105,9 @@ impl<'a> AnnotatedDependencyGraph {
         vec
     }
 
-    // Get those relational nodes with negative ancestry
-    pub fn get_negative_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
+     #[allow(dead_code,unused_variables)]
+    /// Get those relational nodes with negative ancestry
+    pub fn get_negative_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
@@ -1115,8 +1124,8 @@ impl<'a> AnnotatedDependencyGraph {
         vec
     }
 
-    // Get those relational nodes with none ancestry
-    pub fn get_none_ancestry_relational_nodes(&'a self) -> Vec<Tag> {
+    /// Get those relational nodes with none ancestry
+    pub fn get_none_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         /* debug!("None");
         debug!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>()); */
@@ -1136,18 +1145,65 @@ impl<'a> AnnotatedDependencyGraph {
         vec
     }
 
+    /// Get an index map that stores relational edges going/coming (`dir`) from the relational node for `tag` by their rule name.
+    pub fn get_rel_edges_from_node_by_rule_name<'b>(
+        &'b self,
+        tag: &Tag,
+        dir: petgraph::Direction,
+    ) -> IndexMap<String, Vec<EdgeIndex>> {
+        let dir_edges: Edges<'_, ADGEdge, Directed> = self.get_node_edges(tag, dir);
+        let mut incoming_edges_by_rule_name: IndexMap<String, Vec<EdgeIndex>> = IndexMap::new();
+        for edge in dir_edges {
+            let edge_ref = edge.id();
+            let adg_edge = edge.weight();
+            match adg_edge {
+                super::annotated_dependency_graphs::ADGEdge::ADGFactEdge(_) => {}
+                super::annotated_dependency_graphs::ADGEdge::ADGRelationalEdge(rel_edge) => {
+                    incoming_edges_by_rule_name
+                        .entry(
+                            rel_edge
+                                .rule_name
+                                .clone()
+                                .expect("Rule name not initialised!"),
+                        )
+                        .and_modify(|v| v.push(edge_ref))
+                        .or_insert(vec![edge_ref]);
+                }
+            }
+        }
+        incoming_edges_by_rule_name
+    }
+
+    /// Get the indexes of all relational edges going/coming (`dir`) from the relational node for `tag`.
+    pub fn get_rel_edges_from_node<'b>(
+        &'b self,
+        tag: &Tag,
+        dir: petgraph::Direction,
+    ) -> Vec<EdgeIndex> {
+        self.get_node_edges(tag, dir)
+            .filter_map(|edge| match edge.weight() {
+                ADGEdge::ADGFactEdge(_) => None,
+                ADGEdge::ADGRelationalEdge(_) => Some(edge.id()),
+            })
+            .collect()
+    }
+
+     #[allow(dead_code,unused_variables)]
     fn get_output_rel_node(&self) -> Option<ADGRelationalNode> {
         todo!()
     }
 
+     #[allow(dead_code,unused_variables)]
     fn check_one_rel_node_for_each_rel(&self) -> bool {
         todo!()
     }
 
+     #[allow(dead_code,unused_variables)]
     fn check_one_fact_node_for_each_fact(&self) -> bool {
         todo!()
     }
 
+     #[allow(dead_code,unused_variables)]
     fn check_each_fact_node_has_at_least_one_outgoing_edge(&self) -> bool {
         todo!()
     }

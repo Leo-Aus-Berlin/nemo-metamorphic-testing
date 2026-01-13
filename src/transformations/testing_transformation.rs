@@ -17,6 +17,7 @@ use crate::transformations::annotated_dependency_graphs::{
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};
 
+ #[allow(dead_code,unused_variables)]
 /// Provides an overview of code we can use
 // #[derive(Debug, Clone, Copy, Default)]
 pub struct OverviewTransformation<'a,'b> {

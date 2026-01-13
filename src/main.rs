@@ -1,5 +1,5 @@
 use std::{
-    fs::{File, create_dir_all},
+    fs::{create_dir_all, File},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -111,7 +111,7 @@ fn main() {
             .expect("Failed to set transformation sequence name!");
     } else {
         NAME_OF_TRANSFORMATION_SEQUENCE
-            .set(String::from("Transformation Sequence 1"))
+            .set(String::from("transformation_sequence_1"))
             .expect("Failed to set transformation sequence name!");
     }
 
@@ -139,10 +139,10 @@ fn main() {
 
     let seed = matches.get_one::<u64>("seed");
     //let seed2: [u8; 32]  = [164, 143, 161, 123, 88, 50, 61, 10, 234, 184, 161, 204, 105, 1, 20, 184, 43, 140, 200, 117, 24, 180, 247, 84, 141, 68, 110, 161, 228, 223, 32, 242];
-    
+
     let mut rng: rand_chacha::ChaCha8Rng = match seed {
         None => {
-            debug!("No seed provided");
+            debug!("No seed provided, using OS rng");
             rand_chacha::ChaCha8Rng::from_os_rng()
         }
         Some(seed) => rand_chacha::ChaCha8Rng::seed_from_u64(seed.clone()),
@@ -193,7 +193,7 @@ fn main() {
         }
     };
     NAME_OF_TRANSFORMATION_SEQUENCE
-        .set(String::from("Transformation Sequence 1"))
+        .set(String::from("transformation_sequence_1"))
         .expect("Failed to set transformation sequence name!");
     let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(args.seed); */
 
@@ -281,7 +281,8 @@ fn main() {
     info!(
         "Beginning transformation {}
     Oracle:     {}      Number of T: {}
-    Debug Mode: {}      Seed:        {:?}
+    Debug Mode: {}      u64 Seed:    {}
+    Internal Seed:        {:?}
     Seed File: Currently not supported!",
         NAME_OF_TRANSFORMATION_SEQUENCE
             .get()
@@ -293,6 +294,7 @@ fn main() {
             .get()
             .expect("Number of transformations not set"),
         DEBUG_MODE.get().expect("Debug Mode not set"),
+        match seed {None => String::from("None provided"), Some(s) => s.to_string()},
         rng.get_seed(),
         /* TODO: Seed file */
     );
@@ -315,184 +317,193 @@ fn main() {
     let report = ProgramReport::new(file);
 
     // Report building: Parser
-    match report.merge_program_parser_report(handle) {
-        Ok((program, report)) => {
-            // All these vars need to be made mutable in order to manipulate them
-            // over the different repetitions
-            let mut program: ProgramHandle = program;
-            let mut report: ProgramReport = report;
+    let (mut program, mut report) = match report.merge_program_parser_report(handle) {
+        Ok((program, report)) => (program, report),
+        // Parsing failed!
+        Err(report) => {
+            let _ = report.eprint(false);
+            std::process::exit(1);
+        }
+    };
+    
+    // Name all of the rules!
+    let transformation_name_rules: TransformationNameRules = TransformationNameRules::new();
+    let output_name_rules: Result<ProgramHandle, ValidationReport> =
+        program.transform(transformation_name_rules);
+    // Store validation report
+    let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
+        report.merge_validation_report(&program, output_name_rules);
+    (program, report) = match temp {
+        Ok((p, r)) => (p, r),
+        Err(_) => {
+            error!("Failed to merge validation report");
+            exit(1);
+        }
+    };
 
-            // Name all of the rules!
-            let transformation_name_rules: TransformationNameRules = TransformationNameRules::new();
-            let output_name_rules: Result<ProgramHandle, ValidationReport> =
-                program.transform(transformation_name_rules);
-            // Store validation report
-            let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
-                report.merge_validation_report(&program, output_name_rules);
-            (program, report) = match temp {
-                Ok((p, r)) => (p, r),
-                Err(_) => {
-                    error!("Failed to merge validation report");
-                    exit(1);
-                }
-            };
+    // Construct the ADG
+    let mut adg: AnnotatedDependencyGraph = match AnnotatedDependencyGraph::from_program(&program) {
+        Some(adg) => adg,
+        None => {
+            error!("Failed to build adg");
+            exit(1);
+        }
+    };
 
-            // Construct the ADG
-            let mut adg: AnnotatedDependencyGraph =
-                match AnnotatedDependencyGraph::from_program(&program) {
-                    Some(adg) => adg,
-                    None => {
-                        error!("Failed to build adg");
-                        exit(1);
-                    }
-                };
+    // Choose output predicate. The transformation also sets the adg's output predicate
+    let transformation_output_chose: TransformationSelectRandomOutputPredicate =
+        TransformationSelectRandomOutputPredicate::new(&mut adg, &mut rng);
+    let output_choose_result: Result<ProgramHandle, ValidationReport> =
+        program.transform(transformation_output_chose);
+    // Store validation report
+    let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
+        report.merge_validation_report(&program, output_choose_result);
+    (program, report) = match temp {
+        Ok((p, r)) => (p, r),
+        Err(_) => {
+            error!("Failed to merge validation report");
+            exit(1);
+        }
+    };
 
-            // Choose output predicate. The transformation also sets the adg's output predicate
-            let transformation_output_chose: TransformationSelectRandomOutputPredicate =
-                TransformationSelectRandomOutputPredicate::new(&mut adg, &mut rng);
-            let output_choose_result: Result<ProgramHandle, ValidationReport> =
-                program.transform(transformation_output_chose);
-            // Store validation report
-            let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
-                report.merge_validation_report(&program, output_choose_result);
-            (program, report) = match temp {
-                Ok((p, r)) => (p, r),
-                Err(_) => {
-                    error!("Failed to merge validation report");
-                    exit(1);
-                }
-            };
+    // Let the ADG calculate its stratum and ancestry
+    adg.calculate_ancestry_and_inverse_stratum();
 
-            // Let the ADG calculate its stratum and ancestry
-            adg.calculate_ancestry_and_inverse_stratum();
+    // Write ADG to file
+    adg.write_self_to_file(
+        Some(input_folder_name.clone()),
+        Some(String::from("input_adg")),
+    );
 
-            // Write ADG to file
-            adg.write_self_to_file(
-                Some(input_folder_name.clone()),
-                Some(String::from("input_adg")),
-            );
-            // Done, write to file
-            match write_program_handle_to_file(
-                &program,
-                (input_folder_name.clone() + "/input_program").as_str(),
-            ) {
-                Ok(_) => (),
-                Err(_) => {
-                    error!("Failed to write to file");
-                    exit(1);
-                }
+    // Done, write to file
+    match write_program_handle_to_file(
+        &program,
+        (input_folder_name.clone() + "/input_program").as_str(),
+    ) {
+        Ok(_) => (),
+        Err(_) => {
+            error!("Failed to write to file");
+            exit(1);
+        }
+    }
+
+    let input_program = program.fork_full();
+    let input_program = match input_program.submit() {
+        Ok(program) => program,
+        Err(report) => {
+            error!("Failed to copy input program");
+            for err in report.errors(){
+                error!("{}",err.note().expect("Failed to fetch error note"));
             }
+            std::process::exit(1);
+        }
+    };
 
-            info!("Beginning Transformations");
-            info!(
-                "Oracle: {}    Number: {}",
-                TRANSFORMATION_TYPE
-                    .get()
-                    .expect("Transformation type not set!"),
-                NUM_TRANSFORMATIONS
-                    .get()
-                    .expect("Num transformations not initialised")
-            );
+    info!("Beginning Transformations");
+    info!(
+        "Oracle: {}    Number: {}",
+        TRANSFORMATION_TYPE
+            .get()
+            .expect("Transformation type not set!"),
+        NUM_TRANSFORMATIONS
+            .get()
+            .expect("Num transformations not initialised")
+    );
 
-            // The available transformations
-            /* let mut transformation_manager =
-                           TransformationManager::new(&mut adg, &mut rng, TRANSFORMATION_TYPE.get().expect("Transformation type not set!"));
-            */
-            // Perform NUM_TRANSFORMATIONS transformations
-            for repetition in 1..=NUM_TRANSFORMATIONS
+    // The available transformations
+    /* let mut transformation_manager =
+                   TransformationManager::new(&mut adg, &mut rng, TRANSFORMATION_TYPE.get().expect("Transformation type not set!"));
+    */
+    // Perform NUM_TRANSFORMATIONS transformations
+    for repetition in 1..=NUM_TRANSFORMATIONS
+        .get()
+        .expect("Num transformations not initialised")
+        .clone()
+    {
+        adg.verify_relational_edges();
+        if DEBUG_MODE
+            .get()
+            .expect("Debug mode not initialised")
+            .clone()
+        {
+            debug!("ADG edge verification succeeded");
+            debug!("RNG position: {}", rng.get_word_pos());
+        }
+        info!(
+            "{repetition} / {}",
+            NUM_TRANSFORMATIONS
                 .get()
                 .expect("Num transformations not initialised")
-                .clone()
-            {
-                adg.verify_relational_edges();
-                if DEBUG_MODE
-                    .get()
-                    .expect("Debug mode not initialised")
-                    .clone()
-                {
-                    debug!("ADG edge verification succeeded");
-                    debug!("RNG position: {}", rng.get_word_pos());
+        );
+        let trans_types: TransformationTypes = TRANSFORMATION_TYPE
+            .get()
+            .expect("Transformation type not set!")
+            .clone();
+        let transformation;
+
+        loop {
+            let mut iter =
+                IterateMetamorphicTransformations::new(&mut adg, &mut rng, trans_types.clone());
+            match iter.next() {
+                None => continue,
+                Some(loop_variable) => {
+                    transformation = loop_variable;
+                    break;
                 }
-                info!(
-                    "{repetition} / {}",
-                    NUM_TRANSFORMATIONS
-                        .get()
-                        .expect("Num transformations not initialised")
-                );
-                let trans_types: TransformationTypes = TRANSFORMATION_TYPE
-                    .get()
-                    .expect("Transformation type not set!")
-                    .clone();
-                let transformation;
-
-                loop {
-                    let mut iter = IterateMetamorphicTransformations::new(
-                        &mut adg,
-                        &mut rng,
-                        trans_types.clone(),
-                    );
-                    match iter.next() {
-                        None => continue,
-                        Some(loop_variable) => {
-                            transformation = loop_variable;
-                            break;
-                        }
-                    };
-                }
-
-                // calculate ith transformation
-                let current_result: Result<ProgramHandle, ValidationReport> =
-                    program.transform(transformation);
-
-                // transformations should instead work on a reference
-                // to the adg and then transform that
-                /* // Store ADG for next iteration
-                adg = transformation.fetch_adg(); */
-
-                // Store validation report
-                let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
-                    report.merge_validation_report(&program, current_result);
-                (program, report) = match temp {
-                    Ok((p, r)) => (p, r),
-                    Err(_) => {
-                        error!("Failed to merge validation report");
-                        exit(1);
-                    }
-                }
-            }
-
-            // Done, write to file
-
-            // Write ADG to file
-            adg.write_self_to_file(
-                Some(output_folder_name.clone()),
-                Some(String::from("output_adg")),
-            );
-
-            // Write transformed program to file
-            match write_program_handle_to_file(
-                &program,
-                (output_folder_name.clone() + "/output_program").as_str(),
-            ) {
-                Ok(_) => (),
-                Err(_) => {
-                    error!("Failed to write to file");
-                    exit(1);
-                }
-            }
-            info!(
-                "Finished transformation.
-    Input, output and log can be found in the folder {}",
-                String::from("./")
-                    + NAME_OF_TRANSFORMATION_SEQUENCE
-                        .get()
-                        .expect("Name of Transformation Sequence not set")
-            )
+            };
         }
 
-        // Parsing failed!
-        Err(report) => error_handling(report),
+        // calculate ith transformation
+        let current_result: Result<ProgramHandle, ValidationReport> =
+            program.transform(transformation);
+
+        // transformations should instead work on a reference
+        // to the adg and then transform that
+        /* // Store ADG for next iteration
+        adg = transformation.fetch_adg(); */
+
+        // Store validation report
+        let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
+            report.merge_validation_report(&program, current_result);
+        (program, report) = match temp {
+            Ok((p, r)) => (p, r),
+            Err(_) => {
+                error!("Failed to merge validation report");
+                exit(1);
+            }
+        }
     }
+
+    // Done, write to file
+
+    // Write ADG to file
+    adg.write_self_to_file(
+        Some(output_folder_name.clone()),
+        Some(String::from("output_adg")),
+    );
+
+    // Write transformed program to file
+    match write_program_handle_to_file(
+        &program,
+        (output_folder_name.clone() + "/output_program").as_str(),
+    ) {
+        Ok(_) => (),
+        Err(_) => {
+            error!("Failed to write to file");
+            exit(1);
+        }
+    }
+    println!(
+        "Finished transformation.
+    Input, output and log can be found in the folder {}",
+        String::from("./")
+            + NAME_OF_TRANSFORMATION_SEQUENCE
+                .get()
+                .expect("Name of Transformation Sequence not set")
+    );
+
+    /* let nemo_engine_input = nemo::api::Engine::initialize(input_program.materialize(), nemo::io::ImportManager::new(resource_providers));
+    nemo::api::reason(engine) */
 }
 
 /// Error Handling

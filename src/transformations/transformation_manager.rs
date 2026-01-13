@@ -8,10 +8,11 @@ use nemo::rule_model::{
 use rand::Rng;
 
 use crate::transformations::{
-    MetamorphicTransformation, add_fact_node_and_edge::AddFactNodeAndEdge,
+    add_fact_node_and_edge::AddFactNodeAndEdge,
+    add_relational_edge_new_literal::AddRelationalEdgeNewLiteral,
     add_relational_edge_new_rule::AddRelationalEdgeNewRule, add_relational_node::AddRelationalNode,
     annotated_dependency_graphs::AnnotatedDependencyGraph,
-    transformation_types::TransformationTypes,
+    transformation_types::TransformationTypes, MetamorphicTransformation,
 };
 /*
 pub struct TransformationManager<'a, 'b> {
@@ -98,6 +99,7 @@ pub enum SomeMetamorphicTransformation<'a, 'b> {
     AddRelationalNode(AddRelationalNode<'a>),
     AddFactNodeAndEdge(AddFactNodeAndEdge<'a, 'b>),
     AddRelationalEdgeNewRule(AddRelationalEdgeNewRule<'a, 'b>),
+    AddRelationalEdgeNewLiteral(AddRelationalEdgeNewLiteral<'a, 'b>),
     Default(),
 }
 impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
@@ -133,12 +135,15 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
             2 => Some(Self::AddRelationalEdgeNewRule(
                 AddRelationalEdgeNewRule::new(adg, rng, transformation_type)?,
             )),
+            3 => Some(Self::AddRelationalEdgeNewLiteral(
+                AddRelationalEdgeNewLiteral::new(adg, rng, transformation_type)?,
+            )),
             _ => Some(Self::Default()),
         }
     }
 }
 // ^^ add here
-static NUM_TRANSFORMATION_TYPES: i32 = 3;
+static NUM_TRANSFORMATION_TYPES: i32 = 4;
 // vv and here
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation<'a, 'b> {
     fn new(
@@ -160,24 +165,12 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
             2 => Some(Self::AddRelationalEdgeNewRule(
                 AddRelationalEdgeNewRule::new(adg, rng, transformation_type)?,
             )),
+            3 => Some(Self::AddRelationalEdgeNewLiteral(
+                AddRelationalEdgeNewLiteral::new(adg, rng, transformation_type)?,
+            )),
             _ => Some(Self::Default()),
         }
     }
-    /* fn can_apply(self: Self, intended_transformation_type: TransformationTypes) -> (bool, Self)
-    where
-        Self: Sized,
-    {
-        match self {
-            Self::Default() => {
-                error!("Cannot check default case of SomeMetamorphicTransformation");
-                exit(1);
-            }
-            Self::AddRelationalNode(t) => {
-                let (tf, t) = t.can_apply(intended_transformation_type);
-                (tf, Self::AddRelationalNode(t))
-            }
-        }
-    } */
 }
 impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
@@ -189,6 +182,7 @@ impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
             Self::AddRelationalNode(t) => t.apply(program),
             Self::AddFactNodeAndEdge(t) => t.apply(program),
             Self::AddRelationalEdgeNewRule(t) => t.apply(program),
+            Self::AddRelationalEdgeNewLiteral(t)=> t.apply(program),
         }
     }
 }

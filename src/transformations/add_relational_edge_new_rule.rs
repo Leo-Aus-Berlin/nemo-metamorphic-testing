@@ -1,15 +1,15 @@
 use indexmap::IndexMap;
 use log::info;
-use nemo::rule_model::components::ComponentIdentity;
 use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::Term;
-use nemo::rule_model::components::term::primitive::Primitive;
 use nemo::rule_model::components::term::primitive::ground::GroundTerm;
-use nemo::rule_model::components::term::primitive::variable::Variable;
 use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
+use nemo::rule_model::components::term::primitive::variable::Variable;
+use nemo::rule_model::components::term::primitive::Primitive;
+use nemo::rule_model::components::term::Term;
+use nemo::rule_model::components::ComponentIdentity;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
@@ -17,12 +17,12 @@ use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
-use rand::{Rng};
+use rand::Rng;
 
-use crate::{ NAME_OF_TRANSFORMATION_SEQUENCE};
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{MetamorphicTransformation, util};
+use crate::transformations::{util, MetamorphicTransformation};
+use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
@@ -85,9 +85,9 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 
         ); */
 
         // Add 33% chance of duplicates, min. 1
-        let amount = usize::min(body_pos_opt.len() / 3, 1);
+        let amount = usize::max(body_pos_opt.len() / 3, 1);
         util::append_duplicates(&mut body_pos_opt, rng, amount);
-        let amount = usize::min(body_neg_opt.len() / 3, 1);
+        let amount = usize::max(body_neg_opt.len() / 3, 1);
         util::append_duplicates(&mut body_neg_opt, rng, amount);
 
         // Random amounts
@@ -184,7 +184,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         }
 
         // 20% chance of duplicates, min 1.
-        let amount = usize::min(head_var_options.len() / 5, 1);
+        let amount = usize::max(head_var_options.len() / 5, 1);
         util::append_duplicates(&mut head_var_options, self.rng, amount);
 
         // 10% chance of constant symbols, min 1, only those that already appear
@@ -193,7 +193,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
             .get_ground_terms()
             .iter()
             .cloned()
-            .choose_multiple(self.rng, usize::min(head_var_options.len() / 10, 1));
+            .choose_multiple(self.rng, usize::max(head_var_options.len() / 10, 1));
         let mut constant_symbols: Vec<Term> = constant_symbols
             .iter()
             .map(|gt| Term::Primitive(Primitive::Ground(gt.clone())))
@@ -262,19 +262,35 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         // all other body locations with no var yet!
         let mut body_var_options: Vec<Term> = head_vars.clone();
         // 33% chance of var that doesn't appear in the head, min 1
-        for ii in 1..=(usize::min(head_arity / 3, 1)) {
-            // Could in theory generate existential variable here
-            body_var_options.push(Term::Primitive(Primitive::Variable(Variable::Universal(
-                UniversalVariable::new((String::from("Y_") + &ii.to_string()).as_str()),
-            ))))
+        let amount = usize::max(head_arity / 3, 1);
+        let mut done_amount = 0;
+        let mut attempted_index = 1;
+        let body_var_options_as_names: Vec<String> = body_var_options
+            .iter()
+            .filter_map(|var| match var {
+                Term::Primitive(Primitive::Variable(var)) => Some(String::from(var.name()?)),
+                _ => None,
+            })
+            .collect();
+        // This will eventually get slow if we generate 100 Y_ vars.
+        while done_amount < amount {
+            let new_variable_name = String::from("Y_") + &attempted_index.to_string();
+            if !body_var_options_as_names.contains(&new_variable_name) {
+                done_amount += 1;
+                body_var_options.push(Term::Primitive(Primitive::Variable(Variable::Universal(
+                    UniversalVariable::new(new_variable_name.as_str()),
+                ))))
+            }
+            attempted_index += 1
         }
+
         // 10% chance of constant symbol that appears somewhere
         let constant_symbols: Vec<GroundTerm> = self
             .adg
             .get_ground_terms()
             .iter()
             .cloned()
-            .choose_multiple(self.rng, usize::min(head_var_options.len() / 10, 1));
+            .choose_multiple(self.rng, usize::max(head_var_options.len() / 10, 1));
         let mut constant_symbols: Vec<Term> = constant_symbols
             .iter()
             .map(|gt| Term::Primitive(Primitive::Ground(gt.clone())))
@@ -329,7 +345,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
             .get_ground_terms()
             .iter()
             .cloned()
-            .choose_multiple(self.rng, usize::min(head_var_options.len() / 10, 1));
+            .choose_multiple(self.rng, usize::max(head_var_options.len() / 10, 1));
         let mut constant_symbols: Vec<Term> = constant_symbols
             .iter()
             .map(|gt| Term::Primitive(Primitive::Ground(gt.clone())))
