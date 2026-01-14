@@ -204,6 +204,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
             }
         }
 
+        // Print our options for vars if in debug mode
         if util::in_debug_mode() {
             let mut option_string = String::from("  Options for literal vector: [");
             for option in options_for_vars.iter() {

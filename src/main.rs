@@ -1,5 +1,5 @@
 use std::{
-    fs::{create_dir_all, File},
+    fs::{File, create_dir_all, remove_dir_all},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -197,11 +197,28 @@ fn main() {
         .expect("Failed to set transformation sequence name!");
     let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(args.seed); */
 
-    // Create input folder
-    let input_folder_name = String::from("./")
+    // Create transformation folder after removing any previous contents
+    let transformation_folder = String::from("./")
         + NAME_OF_TRANSFORMATION_SEQUENCE
             .get()
-            .expect("Name of Transformation Sequence not set")
+            .expect("Name of Transformation Sequence not set");
+    match remove_dir_all(transformation_folder.clone()){
+        Ok(_) => (),
+        Err(_) => {
+            error!("Failed to remove/clear transformation folder");
+            exit(1);
+        }
+    }
+    match create_dir_all(transformation_folder.clone()) {
+        Ok(_) => (),
+        Err(_) => {
+            error!("Failed to create transformation folder");
+            exit(1);
+        }
+    }   
+
+    // Create input folder
+    let input_folder_name = transformation_folder.clone()
         + "/input";
     match create_dir_all(input_folder_name.clone()) {
         Ok(_) => (),
@@ -212,10 +229,7 @@ fn main() {
     }
 
     // Create output folder
-    let output_folder_name = String::from("./")
-        + NAME_OF_TRANSFORMATION_SEQUENCE
-            .get()
-            .expect("Name of Transformation Sequence not set")
+    let output_folder_name = transformation_folder.clone()
         + "/output";
     match create_dir_all(output_folder_name.clone()) {
         Ok(_) => (),
@@ -226,10 +240,7 @@ fn main() {
     }
 
     // Create log folder
-    let log_name = String::from("./")
-        + NAME_OF_TRANSFORMATION_SEQUENCE
-            .get()
-            .expect("Name of Transformation Sequence not set")
+    let log_name = transformation_folder.clone()
         + "/log";
     match create_dir_all(log_name.clone()) {
         Ok(_) => (),
@@ -502,6 +513,7 @@ fn main() {
                 .expect("Name of Transformation Sequence not set")
     );
 
+    // TODO in-program nemo call?
     /* let nemo_engine_input = nemo::api::Engine::initialize(input_program.materialize(), nemo::io::ImportManager::new(resource_providers));
     nemo::api::reason(engine) */
 }
