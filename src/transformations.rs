@@ -15,6 +15,7 @@ pub mod transformation_manager;
 pub mod transformation_types;
 pub mod add_relational_edge_new_rule;
 pub mod add_relational_edge_new_literal;
+pub mod remove_relational_edges_whole_rule;
 mod util;
 // pub mod testing_transformation;
 

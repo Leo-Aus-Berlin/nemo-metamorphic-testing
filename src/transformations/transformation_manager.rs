@@ -12,6 +12,7 @@ use crate::transformations::{
     add_relational_edge_new_literal::AddRelationalEdgeNewLiteral,
     add_relational_edge_new_rule::AddRelationalEdgeNewRule, add_relational_node::AddRelationalNode,
     annotated_dependency_graphs::AnnotatedDependencyGraph,
+    remove_relational_edges_whole_rule::RemoveRelationalEdgesWholeRule,
     transformation_types::TransformationTypes, MetamorphicTransformation,
 };
 /*
@@ -100,6 +101,7 @@ pub enum SomeMetamorphicTransformation<'a, 'b> {
     AddFactNodeAndEdge(AddFactNodeAndEdge<'a, 'b>),
     AddRelationalEdgeNewRule(AddRelationalEdgeNewRule<'a, 'b>),
     AddRelationalEdgeNewLiteral(AddRelationalEdgeNewLiteral<'a, 'b>),
+    RemoveRelationalEdgesWholeRule(RemoveRelationalEdgesWholeRule<'a, 'b>),
     Default(),
 }
 impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
@@ -138,12 +140,15 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
             3 => Some(Self::AddRelationalEdgeNewLiteral(
                 AddRelationalEdgeNewLiteral::new(adg, rng, transformation_type)?,
             )),
+            4 => Some(Self::RemoveRelationalEdgesWholeRule(
+                RemoveRelationalEdgesWholeRule::new(adg, rng, transformation_type)?,
+            )),
             _ => Some(Self::Default()),
         }
     }
 }
 // ^^ add here
-static NUM_TRANSFORMATION_TYPES: i32 = 4;
+static NUM_TRANSFORMATION_TYPES: i32 = 5;
 // vv and here
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation<'a, 'b> {
     fn new(
@@ -168,6 +173,9 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
             3 => Some(Self::AddRelationalEdgeNewLiteral(
                 AddRelationalEdgeNewLiteral::new(adg, rng, transformation_type)?,
             )),
+            4 => Some(Self::RemoveRelationalEdgesWholeRule(
+                RemoveRelationalEdgesWholeRule::new(adg, rng, transformation_type)?,
+            )),
             _ => Some(Self::Default()),
         }
     }
@@ -182,7 +190,8 @@ impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
             Self::AddRelationalNode(t) => t.apply(program),
             Self::AddFactNodeAndEdge(t) => t.apply(program),
             Self::AddRelationalEdgeNewRule(t) => t.apply(program),
-            Self::AddRelationalEdgeNewLiteral(t)=> t.apply(program),
+            Self::AddRelationalEdgeNewLiteral(t) => t.apply(program),
+            Self::RemoveRelationalEdgesWholeRule(t) => t.apply(program),
         }
     }
 }

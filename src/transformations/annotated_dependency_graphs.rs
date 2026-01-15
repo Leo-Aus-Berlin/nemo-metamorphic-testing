@@ -88,7 +88,7 @@ impl Ancestry {
             Ancestry::None => Ancestry::None,
         }
     }
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     pub fn is_some(self) -> bool {
         match self {
             Ancestry::None => false,
@@ -438,7 +438,7 @@ impl AnnotatedDependencyGraph {
         }
     }
 
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     /// Get n vector of the predicates appearing in the ADG
     pub fn get_predicates(&self) -> Vec<Tag> {
         self.predicate_ids.keys().map(|tag| tag.clone()).collect()
@@ -449,7 +449,7 @@ impl AnnotatedDependencyGraph {
         self.predicate_ids.keys().map(|tag| tag.clone())
     }
 
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     /// Return a breadth-first visit of the ADG
     pub fn get_bfs(
         &self,
@@ -601,6 +601,7 @@ impl AnnotatedDependencyGraph {
             }
         }
         info!("Ancestry and Inverse Stratum computation complete.");
+        debug!("    The following relational nodes were computed:");
         for node in self.graph.node_weights() {
             if let ADGNode::ADGRelationalNode(node) = node {
                 debug!("  {node:?}");
@@ -650,6 +651,7 @@ impl AnnotatedDependencyGraph {
         }
     }
 
+    /// private function for calculating ancestry and inverse stratum. This is recursively called.
     fn set_ancestry_inverse_stratum(
         &mut self,
         node: NodeIndex,
@@ -769,6 +771,62 @@ impl AnnotatedDependencyGraph {
         }
 
         //self.graph.update_edge(a, b, weight)
+    }
+
+    /// Reset a `node`'s ancestry and inverse stratum and do the same for
+    /// all of its ancestors. Must be followed by a
+    /// re-computation of those values, as otherwise an invalid ADG state is created!
+    pub fn reset_ancestry_inverse_stratum_for_node_and_ancestors(&mut self, node: NodeIndex) {
+        let adg_node: &mut ADGNode = self
+            .graph
+            .node_weight_mut(node)
+            .expect("Attempted to set ancestry and inverse_stratum for non-existant node");
+
+        let adg_node = match adg_node {
+            ADGNode::ADGFactNode(_) => {
+                error!(
+                    "Attempted to set ancestry and inverse_stratum for a fact node: {}",
+                    node.index()
+                );
+                exit(1);
+            }
+            ADGNode::ADGRelationalNode(adg_node) => adg_node,
+        };
+
+        if util::in_debug_mode() {
+            trace!("Call Reset AIS: ({:?})", adg_node.tag.name(),);
+            trace!(
+                "Prev val: ({:?},{:?},{:?})",
+                adg_node.tag.name(),
+                adg_node.ancestry,
+                adg_node.inverse_stratum
+            );
+        }
+
+        let old_ancestry = adg_node.ancestry;
+        let old_stratum = adg_node.inverse_stratum;
+
+        // Reset this nodes ancestry and inverse stratum
+        adg_node.ancestry = None;
+        adg_node.inverse_stratum = None;
+
+        // We need to reset starting in this node if
+        let require_update = old_ancestry != None || old_stratum != None;
+
+        // Perform recursive call only if I need to
+        if require_update {
+            let mut plan_recursive_call: Vec<NodeIndex> = Vec::new();
+            for edge in self
+                .graph_mut()
+                .edges_directed(node, petgraph::Direction::Incoming)
+            {
+                plan_recursive_call.push(edge.source());
+            }
+            //debug!("Recursive call for neighbours: {:?}", plan_recursive_call);
+            for n in plan_recursive_call {
+                self.reset_ancestry_inverse_stratum_for_node_and_ancestors(n);
+            }
+        }
     }
 
     fn print_graph_restricted_to_direction(&self, node: NodeIndex, dir: petgraph::Direction) {
@@ -955,6 +1013,29 @@ impl AnnotatedDependencyGraph {
         self.graph.edges_directed(self.get_rel_node_index(tag), dir)
     }
 
+    // Get a relational edge by its `EdgeIndex`
+    pub fn get_rel_edge_by_index<'a>(&'a self, id : EdgeIndex) -> &'a ADGRelationalEdge{
+        match self.graph.edge_weight(id).expect("Attempted to access non-existant relational edge!") {
+            ADGEdge::ADGFactEdge(_) => {error!("Found fact edge where relational edge was expected!"); exit(1);},
+            ADGEdge::ADGRelationalEdge(r) => r
+        }
+    }
+
+    // Get an `ADGEdge` by its `EdgeIndex`
+    pub fn get_edge_by_index<'a>(&'a self, id : EdgeIndex) -> &'a ADGEdge{
+        &self.graph[id]        
+    }
+
+    // Get an edge's source and target by its `EdgeIndex`
+    pub fn get_edge_source_target_by_index<'a>(&'a self, id : EdgeIndex) -> Option<(NodeIndex, NodeIndex)>{
+        self.graph.edge_endpoints(id)       
+    }
+
+    // Remove an edge by its `EdgeIndex`. Fails if the edge did not exist!
+    pub fn remove_edge(&mut self, id : EdgeIndex) {
+        self.graph.remove_edge(id).expect("Attempted to remove non-existant node!");
+    }
+
     /// Get a relation node based on its `tag` (= name)
     pub fn get_rel_node(&self, tag: &Tag) -> &ADGRelationalNode {
         match self.graph.node_weight(self.predicate_ids[tag]) {
@@ -1030,14 +1111,14 @@ impl AnnotatedDependencyGraph {
             .add_edge(fact_node, rel_node, ADGEdge::ADGFactEdge(ADGFactEdge {}));
     }
 
-    #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     pub fn remove_rel_node(&mut self, tag: &Tag) {
         // Important: Need to remove tag/nodeIndex pair from predicateIds !
         // That way we
         todo!();
     }
 
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     fn get_fact_node(&self, rule: components::rule::Rule) -> Option<ADGFactNode> {
         todo!()
     }
@@ -1064,7 +1145,7 @@ impl AnnotatedDependencyGraph {
         vec
     }
 
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     /// Get those relational nodes with positive ancestry
     pub fn get_positive_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
@@ -1105,7 +1186,7 @@ impl AnnotatedDependencyGraph {
         vec
     }
 
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     /// Get those relational nodes with negative ancestry
     pub fn get_negative_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
@@ -1174,7 +1255,7 @@ impl AnnotatedDependencyGraph {
         incoming_edges_by_rule_name
     }
 
-    /// Get the indexes of all relational edges going/coming (`dir`) from the relational node for `tag`.
+    /// Get the indexes of all relational edges outgoing/incoming (`dir`) from the relational node for `tag`.
     pub fn get_rel_edges_from_node<'b>(
         &'b self,
         tag: &Tag,
@@ -1188,22 +1269,56 @@ impl AnnotatedDependencyGraph {
             .collect()
     }
 
-     #[allow(dead_code,unused_variables)]
+        /// Get the indexes of all relational edges outgoing/incoming (`dir`) from the node with this `NodeIndex`.
+    pub fn get_rel_edges_from_node_index<'b>(
+        &'b self,
+        id: NodeIndex,
+        dir: petgraph::Direction,
+    ) -> Vec<EdgeIndex> {
+        self.graph.edges_directed(id, dir)
+            .filter_map(|edge| match edge.weight() {
+                ADGEdge::ADGFactEdge(_) => None,
+                ADGEdge::ADGRelationalEdge(_) => Some(edge.id()),
+            })
+            .collect()
+    }
+
+    /// Get the neighbours outgoing/incoming (`dir`) from the node for `NodeIndex`.
+    pub fn get_neighbours_node_index<'b>(
+        &'b self,
+        id: NodeIndex,
+        dir: petgraph::Direction,
+    ) -> petgraph::stable_graph::Neighbors<'_, ADGEdge> {
+        self.graph.neighbors_directed(id, dir)
+    }
+
+    // Get the tag for the relational node of this `NodeIndex`. Fails if it's a fact node
+    pub fn get_tag_for_node_index<'b>(
+        &'b self,
+        id: NodeIndex,
+    ) -> &'b Tag {
+        match &self.graph[id] {
+            ADGNode::ADGFactNode(_) => {error!("Attempted to fetch tag of a fact node!"); exit(1);},
+            ADGNode::ADGRelationalNode(r) => {&r.tag}
+        }
+    }
+
+    #[allow(dead_code, unused_variables)]
     fn get_output_rel_node(&self) -> Option<ADGRelationalNode> {
         todo!()
     }
 
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     fn check_one_rel_node_for_each_rel(&self) -> bool {
         todo!()
     }
 
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     fn check_one_fact_node_for_each_fact(&self) -> bool {
         todo!()
     }
 
-     #[allow(dead_code,unused_variables)]
+    #[allow(dead_code, unused_variables)]
     fn check_each_fact_node_has_at_least_one_outgoing_edge(&self) -> bool {
         todo!()
     }
