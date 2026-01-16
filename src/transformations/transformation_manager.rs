@@ -101,7 +101,7 @@ pub enum SomeMetamorphicTransformation<'a, 'b> {
     AddFactNodeAndEdge(AddFactNodeAndEdge<'a, 'b>),
     AddRelationalEdgeNewRule(AddRelationalEdgeNewRule<'a, 'b>),
     AddRelationalEdgeNewLiteral(AddRelationalEdgeNewLiteral<'a, 'b>),
-    RemoveRelationalEdgesWholeRule(RemoveRelationalEdgesWholeRule<'a, 'b>),
+    RemoveRelationalEdgesWholeRule(RemoveRelationalEdgesWholeRule<'a>),
     Default(),
 }
 impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {

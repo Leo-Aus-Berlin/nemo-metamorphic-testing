@@ -317,7 +317,7 @@ fn main() {
     ];
 
     // Open file
-    let path = PathBuf::from(vec_path[2]);
+    let path = PathBuf::from(vec_path[0]);
     // "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls"
     let file: RuleFile = match RuleFile::load(path) {
         Err(_) => panic!("Could not find example file"),

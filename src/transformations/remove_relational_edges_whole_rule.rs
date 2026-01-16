@@ -1,44 +1,29 @@
 use std::process::exit;
 
 use log::{debug, error, info};
-use nemo::rule_model::components::atom::Atom;
-use nemo::rule_model::components::literal::Literal;
-use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::primitive::ground::GroundTerm;
-use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
-use nemo::rule_model::components::term::primitive::variable::Variable;
-use nemo::rule_model::components::term::primitive::Primitive;
-use nemo::rule_model::components::term::Term;
-use nemo::rule_model::components::{ComponentIdentity, IterableVariables};
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
-use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
+use nemo::rule_model::programs::ProgramRead;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use petgraph::graph::{EdgeIndex, NodeIndex};
-use petgraph::visit::NodeRef;
-use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
-use rand::Rng;
+use rand::seq::IteratorRandom;
 
-use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
+use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
-use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
-
+use crate::transformations::MetamorphicTransformation;
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
-pub struct RemoveRelationalEdgesWholeRule<'a, 'b> {
+pub struct RemoveRelationalEdgesWholeRule<'a> {
     adg: &'a mut AnnotatedDependencyGraph,
-    rng: &'b mut rand_chacha::ChaCha8Rng,
-    chosen_head_rel: Tag,
     chosen_rule_name: String,
     chosen_body_literals: Vec<EdgeIndex>,
     //transformation_type: TransformationTypes,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRule<'a, 'b> {
+impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRule<'a> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
@@ -96,8 +81,6 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
         // Done
         Some(Self {
             adg,
-            rng,
-            chosen_head_rel,
             chosen_rule_name,
             chosen_body_literals,
             //transformation_type,
@@ -105,7 +88,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
     }
 }
 
-impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a, 'b> {
+impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         info!("  Remove Relational Edges - Whole Rule");
         let mut commit: ProgramCommit = program.fork();
@@ -162,8 +145,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a, 'b> {
             children.append(
                 &mut self
                     .adg
-                    .get_neighbours_node_index(*lit, petgraph::Outgoing)
-                    .collect(),
+                    .get_rel_neighbours_node_index(*lit, petgraph::Outgoing),
             )
         });
         children.iter().for_each(|child| {

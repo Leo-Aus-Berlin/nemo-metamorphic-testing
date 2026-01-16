@@ -266,6 +266,7 @@ pub struct AnnotatedDependencyGraph {
 }
 
 // TODO: Multi-edges wichtig!
+/// An Annotated Dependency Graph. Provides a multitude of functions
 impl AnnotatedDependencyGraph {
     pub fn from_program(program: &ProgramHandle) -> Option<Self> {
         let predicates: HashSet<Tag> = program.all_predicates();
@@ -609,7 +610,7 @@ impl AnnotatedDependencyGraph {
         }
     }
 
-    /// Re-calculate ancestry and inverse stratum of the ADG starting in some node
+    /// Re-calculate ancestry and inverse stratum of the ADG starting in some node.
     pub fn update_ancestry_and_inverse_stratum_from(&mut self, node: Tag) {
         let curr_weight_node = self.get_rel_node(&node);
         let node_index = self.get_rel_node_index(&node);
@@ -630,6 +631,20 @@ impl AnnotatedDependencyGraph {
                 Some(String::from("pre_update_reduced_adg")),
             );
         }
+        /* let curr_inv_stratum = match curr_weight_node.inverse_stratum {
+            None => {
+                info!("Canceling update because node has no stratum");
+                return;
+            }
+            Some(is) => is,
+        };
+        let curr_ancestry = match curr_weight_node.ancestry {
+            None => {
+                info!("Canceling update because node has no ancestry");
+                return;
+            }
+            Some(anc) => anc,
+        }; */
         self.set_ancestry_inverse_stratum(
             node_index,
             curr_weight_node
@@ -820,7 +835,10 @@ impl AnnotatedDependencyGraph {
                 .graph_mut()
                 .edges_directed(node, petgraph::Direction::Incoming)
             {
-                plan_recursive_call.push(edge.source());
+                match edge.weight() {
+                    ADGEdge::ADGFactEdge(_) => (),
+                    ADGEdge::ADGRelationalEdge(_) => plan_recursive_call.push(edge.source()),
+                }
             }
             //debug!("Recursive call for neighbours: {:?}", plan_recursive_call);
             for n in plan_recursive_call {
@@ -1013,27 +1031,41 @@ impl AnnotatedDependencyGraph {
         self.graph.edges_directed(self.get_rel_node_index(tag), dir)
     }
 
-    // Get a relational edge by its `EdgeIndex`
-    pub fn get_rel_edge_by_index<'a>(&'a self, id : EdgeIndex) -> &'a ADGRelationalEdge{
-        match self.graph.edge_weight(id).expect("Attempted to access non-existant relational edge!") {
-            ADGEdge::ADGFactEdge(_) => {error!("Found fact edge where relational edge was expected!"); exit(1);},
-            ADGEdge::ADGRelationalEdge(r) => r
+    #[allow(dead_code, unused_variables)]
+    /// Get a relational edge by its `EdgeIndex`
+    pub fn get_rel_edge_by_index<'a>(&'a self, id: EdgeIndex) -> &'a ADGRelationalEdge {
+        match self
+            .graph
+            .edge_weight(id)
+            .expect("Attempted to access non-existant relational edge!")
+        {
+            ADGEdge::ADGFactEdge(_) => {
+                error!("Found fact edge where relational edge was expected!");
+                exit(1);
+            }
+            ADGEdge::ADGRelationalEdge(r) => r,
         }
     }
 
-    // Get an `ADGEdge` by its `EdgeIndex`
-    pub fn get_edge_by_index<'a>(&'a self, id : EdgeIndex) -> &'a ADGEdge{
-        &self.graph[id]        
+    #[allow(dead_code, unused_variables)]
+    /// Get an `ADGEdge` by its `EdgeIndex`
+    pub fn get_edge_by_index<'a>(&'a self, id: EdgeIndex) -> &'a ADGEdge {
+        &self.graph[id]
     }
 
-    // Get an edge's source and target by its `EdgeIndex`
-    pub fn get_edge_source_target_by_index<'a>(&'a self, id : EdgeIndex) -> Option<(NodeIndex, NodeIndex)>{
-        self.graph.edge_endpoints(id)       
+    /// Get an edge's source and target by its `EdgeIndex`
+    pub fn get_edge_source_target_by_index<'a>(
+        &'a self,
+        id: EdgeIndex,
+    ) -> Option<(NodeIndex, NodeIndex)> {
+        self.graph.edge_endpoints(id)
     }
 
-    // Remove an edge by its `EdgeIndex`. Fails if the edge did not exist!
-    pub fn remove_edge(&mut self, id : EdgeIndex) {
-        self.graph.remove_edge(id).expect("Attempted to remove non-existant node!");
+    /// Remove an edge by its `EdgeIndex`. Fails if the edge did not exist!
+    pub fn remove_edge(&mut self, id: EdgeIndex) {
+        self.graph
+            .remove_edge(id)
+            .expect("Attempted to remove non-existant node!");
     }
 
     /// Get a relation node based on its `tag` (= name)
@@ -1269,13 +1301,15 @@ impl AnnotatedDependencyGraph {
             .collect()
     }
 
-        /// Get the indexes of all relational edges outgoing/incoming (`dir`) from the node with this `NodeIndex`.
+    #[allow(dead_code, unused_variables)]
+    /// Get the indexes of all relational edges outgoing/incoming (`dir`) from the node with this `NodeIndex`.
     pub fn get_rel_edges_from_node_index<'b>(
         &'b self,
         id: NodeIndex,
         dir: petgraph::Direction,
     ) -> Vec<EdgeIndex> {
-        self.graph.edges_directed(id, dir)
+        self.graph
+            .edges_directed(id, dir)
             .filter_map(|edge| match edge.weight() {
                 ADGEdge::ADGFactEdge(_) => None,
                 ADGEdge::ADGRelationalEdge(_) => Some(edge.id()),
@@ -1283,23 +1317,44 @@ impl AnnotatedDependencyGraph {
             .collect()
     }
 
+    #[allow(dead_code, unused_variables)]
     /// Get the neighbours outgoing/incoming (`dir`) from the node for `NodeIndex`.
     pub fn get_neighbours_node_index<'b>(
         &'b self,
         id: NodeIndex,
         dir: petgraph::Direction,
-    ) -> petgraph::stable_graph::Neighbors<'_, ADGEdge> {
+    ) -> petgraph::stable_graph::Neighbors<'b, ADGEdge> {
         self.graph.neighbors_directed(id, dir)
     }
 
-    // Get the tag for the relational node of this `NodeIndex`. Fails if it's a fact node
-    pub fn get_tag_for_node_index<'b>(
+    /// Get the neighbours outgoing/incoming (`dir`) from the node for `NodeIndex`.
+    pub fn get_rel_neighbours_node_index<'b>(
         &'b self,
         id: NodeIndex,
-    ) -> &'b Tag {
+        dir: petgraph::Direction,
+    ) -> Vec<NodeIndex> {
+        self.graph
+            .neighbors_directed(id, dir)
+            .filter(|n| self.node_is_rel(*n))
+            .collect()
+    }
+
+    /// Is the node `NodeIndex` a relational node?
+    pub fn node_is_rel(&self, id: NodeIndex) -> bool {
+        match self.graph[id] {
+            ADGNode::ADGFactNode(_) => false,
+            ADGNode::ADGRelationalNode(_) => true,
+        }
+    }
+
+    /// Get the tag for the relational node of this `NodeIndex`. Fails if it's a fact node
+    pub fn get_tag_for_node_index<'b>(&'b self, id: NodeIndex) -> &'b Tag {
         match &self.graph[id] {
-            ADGNode::ADGFactNode(_) => {error!("Attempted to fetch tag of a fact node!"); exit(1);},
-            ADGNode::ADGRelationalNode(r) => {&r.tag}
+            ADGNode::ADGFactNode(_) => {
+                error!("Attempted to fetch tag of a fact node!");
+                exit(1);
+            }
+            ADGNode::ADGRelationalNode(r) => &r.tag,
         }
     }
 
