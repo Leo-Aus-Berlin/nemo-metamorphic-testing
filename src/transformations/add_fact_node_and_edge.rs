@@ -24,7 +24,7 @@ pub struct AddFactNodeAndEdge<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,
     chosen_to_rel_node: Tag,
-    transformation_number: u32,
+    _transformation_number: u32,
 }
 
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
@@ -45,7 +45,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
                     .clone(),
                 adg: adg,
                 rng: rng,
-                transformation_number
+                _transformation_number: transformation_number
             }),
             TransformationTypes::CON => Some(Self {
                 chosen_to_rel_node: adg
@@ -54,7 +54,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
                     .clone(),
                 adg: adg,
                 rng: rng,
-                transformation_number
+                _transformation_number: transformation_number
             }),
             TransformationTypes::EXP => Some(Self {
                 chosen_to_rel_node: adg
@@ -63,7 +63,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
                     .clone(),
                 adg: adg,
                 rng: rng,
-                transformation_number,
+                _transformation_number: transformation_number,
             }),
         }
     }

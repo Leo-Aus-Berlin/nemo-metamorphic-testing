@@ -14,7 +14,7 @@ use crate::transformations::MetamorphicTransformation;
 /// edges to exisiting nodes.
 pub struct AddRelationalNode<'a> {
     adg: &'a mut AnnotatedDependencyGraph,
-    transformation_number: u32,
+    _transformation_number: u32,
 }
 
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalNode<'a> {
@@ -29,7 +29,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalNode<'a> {
     ) -> Option<Self> {
         Some(Self {
             adg,
-            transformation_number,
+            _transformation_number: transformation_number,
         })
     }
 }

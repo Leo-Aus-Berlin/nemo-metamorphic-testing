@@ -30,7 +30,7 @@ impl<'a,'b> MetamorphicTransformation<'a,'b> for OverviewTransformation<'a,'b> {
         self.adg
     } */
     fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng, _t : TransformationTypes, 
-                transformation_number : u32) -> Option<Self> {
+                _transformation_number : u32) -> Option<Self> {
         Some(Self { adg, rng })
     }
 }

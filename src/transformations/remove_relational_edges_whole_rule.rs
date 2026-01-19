@@ -10,7 +10,6 @@ use nemo::rule_model::programs::ProgramRead;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use petgraph::graph::{EdgeIndex, NodeIndex};
-use petgraph::Direction::Incoming;
 use rand::seq::IteratorRandom;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
