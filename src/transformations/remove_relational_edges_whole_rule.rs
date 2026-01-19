@@ -9,8 +9,8 @@ use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::programs::ProgramRead;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use petgraph::Direction::Incoming;
 use petgraph::graph::{EdgeIndex, NodeIndex};
+use petgraph::Direction::Incoming;
 use rand::seq::IteratorRandom;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
@@ -22,7 +22,7 @@ pub struct RemoveRelationalEdgesWholeRule<'a> {
     adg: &'a mut AnnotatedDependencyGraph,
     chosen_rule_name: String,
     chosen_body_literals: Vec<EdgeIndex>,
-    //transformation_type: TransformationTypes,
+    transformation_number: u32, //transformation_type: TransformationTypes,
 }
 
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRule<'a> {
@@ -33,6 +33,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
         transformation_type: TransformationTypes,
+        transformation_number: u32,
     ) -> Option<Self> {
         // Chose a head relation, inverse to new_rule
         let chosen_head_rel: Tag = match transformation_type {
@@ -85,6 +86,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
             adg,
             chosen_rule_name,
             chosen_body_literals,
+            transformation_number,
             //transformation_type,
         })
     }
@@ -136,11 +138,13 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
             .iter()
             .for_each(|e| self.adg.remove_edge(*e));
         // 2) Reset anc and st for the affected literals
-        let mut reset_literals : IndexSet<NodeIndex> = IndexSet::new();
+        let mut reset_literals: IndexSet<NodeIndex> = IndexSet::new();
         affected_body_literals.iter().for_each(|lit| {
             reset_literals.append(
-            &mut self.adg
-                .reset_ancestry_inverse_stratum_for_node_and_ancestors(*lit))
+                &mut self
+                    .adg
+                    .reset_ancestry_inverse_stratum_for_node_and_ancestors(*lit),
+            )
         });
         // 3) Re-Calculate anc and st by calling calculate update from the children
         //  a.k.a. the neighbours of the affected body literals
@@ -156,6 +160,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
         children.iter().for_each(|child| {
             self.adg.update_ancestry_and_inverse_stratum_from(
                 self.adg.get_tag_for_node_index(*child).clone(),
+                self.transformation_number,
             )
         });
 

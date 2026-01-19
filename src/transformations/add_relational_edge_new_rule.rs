@@ -33,6 +33,7 @@ pub struct AddRelationalEdgeNewRule<'a, 'b> {
     chosen_pos_body_rel: Vec<Tag>,
     chosen_neg_body_rel: Vec<Tag>,
     transformation_type: TransformationTypes,
+    transformation_number: u32,
 }
 
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 'b> {
@@ -43,6 +44,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
         transformation_type: TransformationTypes,
+        transformation_number: u32,
     ) -> Option<Self> {
         // Chose a head relation
         let chosen_head_rel: Tag = match transformation_type {
@@ -118,6 +120,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 
             chosen_pos_body_rel,
             chosen_neg_body_rel,
             transformation_type,
+            transformation_number,
         })
     }
 }
@@ -421,8 +424,10 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
                 Some(String::from("pre_update_adg")),
             );
         }
-        self.adg
-            .update_ancestry_and_inverse_stratum_from(self.chosen_head_rel);
+        self.adg.update_ancestry_and_inverse_stratum_from(
+            self.chosen_head_rel,
+            self.transformation_number,
+        );
 
         commit.add_rule(rule);
         commit.submit()

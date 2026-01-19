@@ -454,7 +454,7 @@ fn main() {
 
         loop {
             let mut iter =
-                IterateMetamorphicTransformations::new(&mut adg, &mut rng, trans_types.clone());
+                IterateMetamorphicTransformations::new(&mut adg, &mut rng, trans_types.clone(), repetition);
             match iter.next() {
                 None => continue,
                 Some(loop_variable) => {

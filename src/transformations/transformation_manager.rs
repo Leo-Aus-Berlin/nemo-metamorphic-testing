@@ -69,17 +69,20 @@ pub struct IterateMetamorphicTransformations<'a, 'b> {
     adg: Option<&'a mut AnnotatedDependencyGraph>,
     rng: Option<&'b mut rand_chacha::ChaCha8Rng>,
     transformation_type: Option<TransformationTypes>,
+    transformation_number: u32,
 }
 impl<'a, 'b> IterateMetamorphicTransformations<'a, 'b> {
     pub fn new(
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
         transformation_type: TransformationTypes,
+        transformation_number: u32,
     ) -> IterateMetamorphicTransformations<'a, 'b> {
         IterateMetamorphicTransformations {
             adg: Some(adg),
             rng: Some(rng),
             transformation_type: Some(transformation_type),
+            transformation_number,
         }
     }
 }
@@ -92,7 +95,7 @@ impl<'a, 'b> Iterator for IterateMetamorphicTransformations<'a, 'b> {
         let adg = self.adg.take();
         let rng = self.rng.take();
         let transformation_type = self.transformation_type.take();
-        SomeMetamorphicTransformation::new_opt(adg, rng, transformation_type)
+        SomeMetamorphicTransformation::new_opt(adg, rng, transformation_type, self.transformation_number)
     }
 }
 
@@ -109,6 +112,7 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
         adg: Option<&'a mut AnnotatedDependencyGraph>,
         rng: Option<&'b mut rand_chacha::ChaCha8Rng>,
         transformation_type: Option<TransformationTypes>,
+        transformation_number: u32,
     ) -> Option<Self> {
         let Some(rng) = rng else {
             error!("Found None where Some rng expected in SomeMetamorphicTransformation new_opt");
@@ -128,20 +132,25 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
                 adg,
                 rng,
                 transformation_type,
+                transformation_number,
             )?)),
             1 => Some(Self::AddFactNodeAndEdge(AddFactNodeAndEdge::new(
                 adg,
                 rng,
                 transformation_type,
+                transformation_number,
             )?)),
             2 => Some(Self::AddRelationalEdgeNewRule(
-                AddRelationalEdgeNewRule::new(adg, rng, transformation_type)?,
+                AddRelationalEdgeNewRule::new(adg, rng, transformation_type,
+                transformation_number,)?,
             )),
             3 => Some(Self::AddRelationalEdgeNewLiteral(
-                AddRelationalEdgeNewLiteral::new(adg, rng, transformation_type)?,
+                AddRelationalEdgeNewLiteral::new(adg, rng, transformation_type,
+                transformation_number,)?,
             )),
             4 => Some(Self::RemoveRelationalEdgesWholeRule(
-                RemoveRelationalEdgesWholeRule::new(adg, rng, transformation_type)?,
+                RemoveRelationalEdgesWholeRule::new(adg, rng, transformation_type,
+                transformation_number,)?,
             )),
             _ => Some(Self::Default()),
         }
@@ -155,26 +164,32 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
         transformation_type: TransformationTypes,
+        transformation_number: u32,
     ) -> Option<Self> {
         match rng.random_range(0..NUM_TRANSFORMATION_TYPES) {
             0 => Some(Self::AddRelationalNode(AddRelationalNode::new(
                 adg,
                 rng,
                 transformation_type,
+                transformation_number,
             )?)),
             1 => Some(Self::AddFactNodeAndEdge(AddFactNodeAndEdge::new(
                 adg,
                 rng,
                 transformation_type,
+                transformation_number,
             )?)),
             2 => Some(Self::AddRelationalEdgeNewRule(
-                AddRelationalEdgeNewRule::new(adg, rng, transformation_type)?,
+                AddRelationalEdgeNewRule::new(adg, rng, transformation_type,
+                transformation_number,)?,
             )),
             3 => Some(Self::AddRelationalEdgeNewLiteral(
-                AddRelationalEdgeNewLiteral::new(adg, rng, transformation_type)?,
+                AddRelationalEdgeNewLiteral::new(adg, rng, transformation_type,
+                transformation_number,)?,
             )),
             4 => Some(Self::RemoveRelationalEdgesWholeRule(
-                RemoveRelationalEdgesWholeRule::new(adg, rng, transformation_type)?,
+                RemoveRelationalEdgesWholeRule::new(adg, rng, transformation_type,
+                transformation_number,)?,
             )),
             _ => Some(Self::Default()),
         }

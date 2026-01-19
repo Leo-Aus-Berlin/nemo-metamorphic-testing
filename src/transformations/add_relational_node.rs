@@ -6,25 +6,32 @@ use nemo::rule_model::programs::handle::ProgramHandle;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 
-use crate::transformations::MetamorphicTransformation;
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
+use crate::transformations::MetamorphicTransformation;
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
 pub struct AddRelationalNode<'a> {
     adg: &'a mut AnnotatedDependencyGraph,
-    
+    transformation_number: u32,
 }
 
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalNode<'a> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
-    fn new(adg: &'a mut AnnotatedDependencyGraph, _rng: &'b mut rand_chacha::ChaCha8Rng, _transformation_type : TransformationTypes) -> Option<Self> {
-        Some(Self { adg })
+    fn new(
+        adg: &'a mut AnnotatedDependencyGraph,
+        _rng: &'b mut rand_chacha::ChaCha8Rng,
+        _transformation_type: TransformationTypes,
+        transformation_number: u32,
+    ) -> Option<Self> {
+        Some(Self {
+            adg,
+            transformation_number,
+        })
     }
-    
 }
 
 impl<'a, 'b> ProgramTransformation for AddRelationalNode<'a> {
@@ -39,7 +46,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalNode<'a> {
         // Add a new relational node
         info!("  Added new relation {}", new_relation_name.name());
         self.adg.add_rel_node(new_relation_name);
-        
+
         commit.submit()
     }
 }

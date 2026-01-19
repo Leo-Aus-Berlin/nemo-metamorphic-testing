@@ -35,6 +35,7 @@ pub struct AddRelationalEdgeNewLiteral<'a, 'b> {
     //chosen_body_literals: Vec<EdgeIndex>,
     chose_pos_literal: bool,
     chosen_new_rel: Tag,
+    transformation_number: u32,
     //transformation_type: TransformationTypes,
 }
 
@@ -46,6 +47,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
         transformation_type: TransformationTypes,
+        transformation_number: u32,
     ) -> Option<Self> {
         // Chose a head relation, inverse to new_rule
         let chosen_head_rel: Tag = match transformation_type {
@@ -111,6 +113,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'
             //chosen_body_literals,
             chose_pos_literal,
             chosen_new_rel,
+            transformation_number,
             //transformation_type,
         })
     }
@@ -269,8 +272,10 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
                 Some(String::from("pre_update_adg")),
             );
         }
-        self.adg
-            .update_ancestry_and_inverse_stratum_from(self.chosen_head_rel);
+        self.adg.update_ancestry_and_inverse_stratum_from(
+            self.chosen_head_rel,
+            self.transformation_number,
+        );
 
         // Finalise the commit
         commit.add_rule(new_rule);

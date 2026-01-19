@@ -611,7 +611,7 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Re-calculate ancestry and inverse stratum of the ADG starting in some node.
-    pub fn update_ancestry_and_inverse_stratum_from(&mut self, node: Tag) {
+    pub fn update_ancestry_and_inverse_stratum_from(&mut self, node: Tag, transformation_number : u32) {
         let curr_weight_node = self.get_rel_node(&node);
         let node_index = self.get_rel_node_index(&node);
         if util::in_debug_mode() {
@@ -619,7 +619,7 @@ impl AnnotatedDependencyGraph {
                 "  Updating Ancestry and Inverse Stratum beginning in relational node {}",
                 curr_weight_node.tag.name()
             );
-            self.print_graph_restricted_to_direction(node_index, petgraph::Incoming);
+            self.print_graph_restricted_to_direction(node_index, petgraph::Incoming, transformation_number);
             self.write_reduced_self_to_file(
                 Some(
                     String::from("./")
@@ -853,7 +853,7 @@ impl AnnotatedDependencyGraph {
         reset_nodes
     }
 
-    fn print_graph_restricted_to_direction(&self, node: NodeIndex, dir: petgraph::Direction) {
+    fn print_graph_restricted_to_direction(&self, node: NodeIndex, dir: petgraph::Direction, transformation_number : u32) {
         debug!(
             "Writing ADG restricted to {:?} from {}",
             dir,
@@ -895,7 +895,7 @@ impl AnnotatedDependencyGraph {
                 + "/log",
         );
         let name = Some(
-            String::from("adg_restricted_to_") + self.get_rel_node_weight_by_index(node).tag.name(),
+            String::from(transformation_number.to_string() + "adg_restricted_to_") + self.get_rel_node_weight_by_index(node).tag.name(),
         );
         let basic_dot = Dot::new(&filtered_graph);
         let mut path = path.unwrap_or(String::from(""));

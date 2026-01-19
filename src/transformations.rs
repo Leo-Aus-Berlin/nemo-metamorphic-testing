@@ -6,16 +6,16 @@ use crate::transformations::{
 };
 
 pub mod add_fact_node_and_edge;
+pub mod add_relational_edge_new_literal;
+pub mod add_relational_edge_new_rule;
 pub mod add_relational_node;
 pub mod annotated_dependency_graphs;
 pub mod name_rules;
+pub mod remove_relational_edges_whole_rule;
 pub mod select_random_output_predicate;
 pub mod testing_transformation;
 pub mod transformation_manager;
 pub mod transformation_types;
-pub mod add_relational_edge_new_rule;
-pub mod add_relational_edge_new_literal;
-pub mod remove_relational_edges_whole_rule;
 mod util;
 // pub mod testing_transformation;
 
@@ -31,6 +31,7 @@ pub trait MetamorphicTransformation<'a, 'b> {
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut ChaCha8Rng,
         intended_transformation_type: TransformationTypes,
+        transformation_number: u32,
     ) -> Option<Self>
     where
         Self: Sized;

@@ -24,6 +24,7 @@ pub struct AddFactNodeAndEdge<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,
     chosen_to_rel_node: Tag,
+    transformation_number: u32,
 }
 
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
@@ -34,6 +35,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
         transformation_type: TransformationTypes,
+        transformation_number: u32,
     ) -> Option<Self> {
         match transformation_type {
             TransformationTypes::EQU => Some(Self {
@@ -43,6 +45,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
                     .clone(),
                 adg: adg,
                 rng: rng,
+                transformation_number
             }),
             TransformationTypes::CON => Some(Self {
                 chosen_to_rel_node: adg
@@ -51,6 +54,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
                     .clone(),
                 adg: adg,
                 rng: rng,
+                transformation_number
             }),
             TransformationTypes::EXP => Some(Self {
                 chosen_to_rel_node: adg
@@ -59,6 +63,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
                     .clone(),
                 adg: adg,
                 rng: rng,
+                transformation_number,
             }),
         }
     }
@@ -113,8 +118,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
                             }
                             // string
                             false => {
-                                let new_gt =
-                                    self.adg.get_and_register_new_string_constant();
+                                let new_gt = self.adg.get_and_register_new_string_constant();
                                 terms.push(Term::Primitive(Primitive::Ground(new_gt)));
                             }
                         },
@@ -143,7 +147,10 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
             fact_node,
             self.adg.get_rel_node_index(&self.chosen_to_rel_node),
         );
-        info!("  Added new fact {}({}).", self.chosen_to_rel_node, terms_str);
+        info!(
+            "  Added new fact {}({}).",
+            self.chosen_to_rel_node, terms_str
+        );
 
         commit.submit()
     }
