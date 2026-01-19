@@ -711,7 +711,7 @@ impl AnnotatedDependencyGraph {
 
         let old_ancestry = adg_node.ancestry;
 
-        // Update this nodes ancestry
+        // Update this node's ancestry
         adg_node.merge(ancestry);
         let new_ancestry = adg_node
             .ancestry
@@ -791,7 +791,10 @@ impl AnnotatedDependencyGraph {
     /// Reset a `node`'s ancestry and inverse stratum and do the same for
     /// all of its ancestors. Must be followed by a
     /// re-computation of those values, as otherwise an invalid ADG state is created!
-    pub fn reset_ancestry_inverse_stratum_for_node_and_ancestors(&mut self, node: NodeIndex) {
+    /// Returns an `IndexSet` of nodes (`NodeIndex`) for which we reset those values.
+    pub fn reset_ancestry_inverse_stratum_for_node_and_ancestors(&mut self, node: NodeIndex) -> IndexSet<NodeIndex>{
+        // Track which nodes we reset.
+        let mut reset_nodes: IndexSet<NodeIndex> = IndexSet::new();        
         let adg_node: &mut ADGNode = self
             .graph
             .node_weight_mut(node)
@@ -824,6 +827,7 @@ impl AnnotatedDependencyGraph {
         // Reset this nodes ancestry and inverse stratum
         adg_node.ancestry = None;
         adg_node.inverse_stratum = None;
+        reset_nodes.insert(node);
 
         // We need to reset starting in this node if
         let require_update = old_ancestry != None || old_stratum != None;
@@ -842,9 +846,11 @@ impl AnnotatedDependencyGraph {
             }
             //debug!("Recursive call for neighbours: {:?}", plan_recursive_call);
             for n in plan_recursive_call {
-                self.reset_ancestry_inverse_stratum_for_node_and_ancestors(n);
+                reset_nodes.append(
+                &mut self.reset_ancestry_inverse_stratum_for_node_and_ancestors(n));
             }
         }
+        reset_nodes
     }
 
     fn print_graph_restricted_to_direction(&self, node: NodeIndex, dir: petgraph::Direction) {

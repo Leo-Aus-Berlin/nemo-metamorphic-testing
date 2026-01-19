@@ -1,5 +1,6 @@
 use std::process::exit;
 
+use indexmap::IndexSet;
 use log::{debug, error, info};
 use nemo::rule_model::components::tag::Tag;
 use nemo::rule_model::error::ValidationReport;
@@ -8,6 +9,7 @@ use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::programs::ProgramRead;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
+use petgraph::Direction::Incoming;
 use petgraph::graph::{EdgeIndex, NodeIndex};
 use rand::seq::IteratorRandom;
 
@@ -134,20 +136,23 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
             .iter()
             .for_each(|e| self.adg.remove_edge(*e));
         // 2) Reset anc and st for the affected literals
+        let mut reset_literals : IndexSet<NodeIndex> = IndexSet::new();
         affected_body_literals.iter().for_each(|lit| {
-            self.adg
-                .reset_ancestry_inverse_stratum_for_node_and_ancestors(*lit)
+            reset_literals.append(
+            &mut self.adg
+                .reset_ancestry_inverse_stratum_for_node_and_ancestors(*lit))
         });
         // 3) Re-Calculate anc and st by calling calculate update from the children
         //  a.k.a. the neighbours of the affected body literals
         let mut children: Vec<NodeIndex> = Vec::new();
-        affected_body_literals.iter().for_each(|lit| {
+        reset_literals.iter().for_each(|lit| {
             children.append(
                 &mut self
                     .adg
                     .get_rel_neighbours_node_index(*lit, petgraph::Outgoing),
             )
         });
+        //debug!("Update from children: {}", children.iter().map(f));
         children.iter().for_each(|child| {
             self.adg.update_ancestry_and_inverse_stratum_from(
                 self.adg.get_tag_for_node_index(*child).clone(),
