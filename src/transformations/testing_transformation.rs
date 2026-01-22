@@ -17,25 +17,29 @@ use crate::transformations::annotated_dependency_graphs::{
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};
 
- #[allow(dead_code,unused_variables)]
+#[allow(dead_code, unused_variables)]
 /// Provides an overview of code we can use
 // #[derive(Debug, Clone, Copy, Default)]
-pub struct OverviewTransformation<'a,'b> {
+pub struct OverviewTransformation<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,
 }
 
-impl<'a,'b> MetamorphicTransformation<'a,'b> for OverviewTransformation<'a,'b> {
+impl<'a, 'b> MetamorphicTransformation<'a, 'b> for OverviewTransformation<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
-    fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng, _t : TransformationTypes, 
-                _transformation_number : u32) -> Option<Self> {
+    fn new(
+        adg: &'a mut AnnotatedDependencyGraph,
+        rng: &'b mut rand_chacha::ChaCha8Rng,
+        _t: TransformationTypes,
+        _transformation_number: u32,
+    ) -> Option<Self> {
         Some(Self { adg, rng })
     }
 }
 
-impl<'a,'b> ProgramTransformation for OverviewTransformation<'a,'b> {
+impl<'a, 'b> ProgramTransformation for OverviewTransformation<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
         let commit: ProgramCommit = program.fork_full();
@@ -57,21 +61,11 @@ impl<'a,'b> ProgramTransformation for OverviewTransformation<'a,'b> {
                                 }
                                 ADGEdge::ADGRelationalEdge(rel_edge) => {
                                     // smth
-                                    match rel_edge.rule_name.clone() {
-                                        Some(rule_name) => {
-                                            if let Some(rule) =
-                                                util::fetch_rule_by_name(rule_name, program)
-                                            {
-                                                info!("Found rule {}", rule);
-                                            }
-                                        }
-                                        None => {
-                                            info!(
-                                                "Relational edge has no rule name! {:#?}",
-                                                rel_edge
-                                            );
-                                            exit(1);
-                                        }
+                                    if let Some(rule) = util::fetch_rule_by_name(
+                                        rel_edge.rule_name.clone(),
+                                        program,
+                                    ) {
+                                        info!("Found rule {}", rule);
                                     }
                                 }
                             }

@@ -4,25 +4,24 @@ use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::primitive::ground::GroundTerm;
-use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
-use nemo::rule_model::components::term::primitive::variable::Variable;
-use nemo::rule_model::components::term::primitive::Primitive;
 use nemo::rule_model::components::term::Term;
-use nemo::rule_model::components::ComponentIdentity;
+use nemo::rule_model::components::term::primitive::Primitive;
+use nemo::rule_model::components::term::primitive::ground::GroundTerm;
+use nemo::rule_model::components::term::primitive::variable::Variable;
+use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 use rand::Rng;
+use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 
+use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
-use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
+use crate::transformations::{MetamorphicTransformation, util};
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
@@ -384,30 +383,38 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         }
 
         // Construct the rule and name it
-        let mut rule = Rule::new(head, body);
+        let mut rule = Rule::new(head, body.clone());
         let rule_name = self.adg.next_rule_name(self.transformation_type);
         rule.set_name(rule_name.as_str());
 
         // Add the relational edges
-        for rel in self.chosen_pos_body_rel {
+        for (rel_index, rel) in self.chosen_pos_body_rel.iter().enumerate() {
             // pos
-            self.adg.add_rel_edge(
-                Some(rule_name.clone()),
-                Sign::Positive,
-                self.adg.get_rel_node_index(&rel),
-                self.adg.get_rel_node_index(&self.chosen_head_rel),
-                rule.id(),
-            );
+            let correct_lit = body.get(rel_index).expect("lit not found");
+            for head_atom in rule.head() {
+                self.adg.add_rel_edge(
+                    rule_name.clone(),
+                    Sign::Positive,
+                    self.adg.get_rel_node_index(&rel),
+                    self.adg.get_rel_node_index(&self.chosen_head_rel),
+                    correct_lit.terms().cloned().collect(),
+                    head_atom.terms().cloned().collect(),
+                );
+            }
         }
-        for rel in self.chosen_neg_body_rel {
+        for (rel_index, rel) in self.chosen_neg_body_rel.iter().enumerate() {
             // neg
-            self.adg.add_rel_edge(
-                Some(rule_name.clone()),
-                Sign::Negative,
-                self.adg.get_rel_node_index(&rel),
-                self.adg.get_rel_node_index(&self.chosen_head_rel),
-                rule.id(),
-            );
+            let correct_lit = body.get(rel_index).expect("lit not found");
+            for head_atom in rule.head() {
+                self.adg.add_rel_edge(
+                    rule_name.clone(),
+                    Sign::Negative,
+                    self.adg.get_rel_node_index(&rel),
+                    self.adg.get_rel_node_index(&self.chosen_head_rel),
+                    correct_lit.terms().cloned().collect(),
+                    head_atom.terms().cloned().collect(),
+                );
+            }
         }
         // Because we add the relational edges we should just be able to re-compute
         // the ancestry and inverse stratum from the head node and it correctly computes the changes

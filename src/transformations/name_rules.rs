@@ -33,8 +33,7 @@ impl ProgramTransformation for TransformationNameRules {
 
         program
             .statements()
-            .enumerate()
-            .for_each(|(_, statement)| match statement {
+            .for_each(|statement| match statement {
                 Statement::Rule(rule) => {
                     let mut new_rule = rule.clone();
                     let name = self.next_rule_name();

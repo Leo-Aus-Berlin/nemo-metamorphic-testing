@@ -5,25 +5,25 @@ use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::primitive::ground::GroundTerm;
-use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
-use nemo::rule_model::components::term::primitive::variable::Variable;
-use nemo::rule_model::components::term::primitive::Primitive;
 use nemo::rule_model::components::term::Term;
-use nemo::rule_model::components::{ComponentIdentity, IterableVariables};
+use nemo::rule_model::components::term::primitive::Primitive;
+use nemo::rule_model::components::term::primitive::ground::GroundTerm;
+use nemo::rule_model::components::term::primitive::variable::Variable;
+use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
+use nemo::rule_model::components::{ IterableVariables};
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 use rand::Rng;
+use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 
+use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
-use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
+use crate::transformations::{MetamorphicTransformation, util};
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
@@ -237,19 +237,21 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
         let mut new_rule = Rule::new(old_rule.head().clone(), new_body);
         let old_rule_name = old_rule.name().expect("Old rule was not named");
         new_rule.set_name(&old_rule_name);
-        let id = new_rule.id();
 
         // Update the ADG
-        self.adg.add_rel_edge(
-            Some(old_rule_name.clone()),
-            match self.chose_pos_literal {
-                true => Sign::Positive,
-                false => Sign::Negative,
-            },
-            self.adg.get_rel_node_index(&self.chosen_new_rel),
-            self.adg.get_rel_node_index(&self.chosen_head_rel),
-            id,
-        );
+        for head_atom in new_rule.head() {
+            self.adg.add_rel_edge(
+                old_rule_name.clone(),
+                match self.chose_pos_literal {
+                    true => Sign::Positive,
+                    false => Sign::Negative,
+                },
+                self.adg.get_rel_node_index(&self.chosen_new_rel),
+                self.adg.get_rel_node_index(&self.chosen_head_rel),
+                new_lit.terms().cloned().collect(),
+                head_atom.terms().cloned().collect(),
+            );
+        }
 
         // Because we add the relational edges we should just be able to re-compute
         // the ancestry and inverse stratum from the head node and it correctly computes the changes

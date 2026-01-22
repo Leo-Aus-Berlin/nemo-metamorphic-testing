@@ -12,6 +12,7 @@ pub mod add_relational_node;
 pub mod annotated_dependency_graphs;
 pub mod name_rules;
 pub mod remove_relational_edges_whole_rule;
+pub mod remove_relational_edge_single_literal;
 pub mod select_random_output_predicate;
 pub mod testing_transformation;
 pub mod transformation_manager;

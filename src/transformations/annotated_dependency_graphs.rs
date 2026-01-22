@@ -10,11 +10,9 @@ use indexmap::{IndexMap, IndexSet};
 use log::{debug, error, info, trace};
 use nemo::rule_model::{
     components::{
-        self, statement, tag::Tag, term::primitive::ground::GroundTerm, ComponentIdentity,
-        IterablePrimitives,
+        self, IterablePrimitives, statement, tag::Tag, term::{Term, primitive::{ground::GroundTerm}}
     },
-    pipeline::id::ProgramComponentId,
-    programs::{handle::ProgramHandle, ProgramRead},
+    programs::{ProgramRead, handle::ProgramHandle},
 };
 use petgraph::{dot::Dot, graph::NodeIndex};
 use petgraph::{
@@ -102,6 +100,7 @@ pub struct ADGRelationalNode {
     pub tag: Tag,
     pub inverse_stratum: Option<u32>,
     pub ancestry: Option<Ancestry>,
+    pub head_tuples : IndexMap<String, Vec<Term>>,
 }
 impl Debug for ADGRelationalNode {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
@@ -200,18 +199,15 @@ impl Debug for Sign {
 
 #[derive(Clone)]
 pub struct ADGRelationalEdge {
-    pub rule_name: Option<String>,
-    pub id: ProgramComponentId,
+    pub rule_name: String,
+    pub terms: Vec<Term>,
     pub sign: Sign,
 }
 impl Debug for ADGRelationalEdge {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
-        match &self.rule_name {
-            Some(rule_name) => f.write_fmt(format_args!("({}, {:?})", rule_name, self.sign)),
-            None => f.write_fmt(format_args!("({:?})", self.sign)),
+            f.write_fmt(format_args!("({}, {:?}, {:?})", self.rule_name, self.sign, self.terms))
         }
     }
-}
 
 #[derive(Clone)]
 pub struct ADGFactEdge {}
@@ -265,7 +261,6 @@ pub struct AnnotatedDependencyGraph {
     last_rule_name: u32,
 }
 
-// TODO: Multi-edges wichtig!
 /// An Annotated Dependency Graph. Provides a multitude of functions
 impl AnnotatedDependencyGraph {
     pub fn from_program(program: &ProgramHandle) -> Option<Self> {
@@ -334,32 +329,32 @@ impl AnnotatedDependencyGraph {
                     adg.add_fact_edge(fact_node, rel_node);
                 }
                 statement::Statement::Rule(rule) => {
-                    //todo!("Store variables");
-                    for (_ii, pos_atom) in rule.body_positive().enumerate() {
+                    for (_ii, pos_atom) in rule.body_positive().enumerate() {   
                         let start_node = adg.get_rel_node_index(&pos_atom.predicate());
                         for head_atom in rule.head() {
                             let end_node = adg.get_rel_node_index(&head_atom.predicate());
                             //debug!("rule name:{:?}", rule.name());
                             adg.add_rel_edge(
-                                rule.name(),
+                                rule.name().expect("Rule not named!"),
                                 Sign::Positive,
                                 start_node,
                                 end_node,
-                                rule.id(),
+                                pos_atom.terms().cloned().collect(),
+                                head_atom.terms().cloned().collect(),
                             );
                         }
                     }
-                    //todo!("Store variables");
                     for (_ii, neg_atom) in rule.body_negative().enumerate() {
                         let start_node = adg.get_rel_node_index(&neg_atom.predicate());
                         for head_atom in rule.head() {
                             let end_node = adg.get_rel_node_index(&head_atom.predicate());
                             adg.add_rel_edge(
-                                rule.name(),
+                                rule.name().expect("Rule not named!"),
                                 Sign::Negative,
                                 start_node,
                                 end_node,
-                                rule.id(),
+                                neg_atom.terms().cloned().collect(),
+                                head_atom.terms().cloned().collect(),
                             );
                         }
                     }
@@ -916,6 +911,7 @@ impl AnnotatedDependencyGraph {
                     tag: tag,
                     inverse_stratum: None,
                     ancestry: None,
+                    head_tuples: IndexMap::new(),
                 })),
         );
     }
@@ -1111,6 +1107,31 @@ impl AnnotatedDependencyGraph {
         }
     }
 
+    /// Get a relation node weight mutably based on its `NodeIndex`
+    pub fn get_rel_node_weight_mut_by_index<'a>(&'a mut self, index: NodeIndex) -> &'a mut ADGRelationalNode {
+        match self.graph.node_weight_mut(index) {
+            None => {
+                error!("Could not find node {:#?}", index);
+                exit(1);
+            }
+            Some(weight) => match weight {
+                ADGNode::ADGFactNode(_fact) => {
+                    error!(
+                        "Expected relation node for {:#?} but found fact node",
+                        index
+                    );
+                    exit(1);
+                }
+                ADGNode::ADGRelationalNode(rel) => rel,
+            },
+        }
+    }
+
+    /// Get a literal by the relational edge's edge index
+    pub fn get_lit_terms_by_edge_index<'a,'b>(&'a self, index : EdgeIndex) -> &'a Vec<Term> {
+        &self.get_rel_edge_by_index(index).terms
+    }
+
     /* fn get_rel_node_node_index(
         graph: &mut Graph<ADGNode, ADGEdge, Directed, NodeIndex>,
         nodeIndex: NodeIndex,
@@ -1118,23 +1139,31 @@ impl AnnotatedDependencyGraph {
         nodeIndex.weight()
     } */
 
+    /// Add a relational edge to the ADG
+    /// 
+    /// Given a rule `rho : R(head_terms) :- R_1(b_1), ..., [-]R_i(b_i), ..., R_n(b_n).`
+    /// In order to add the edge representing (-)R_i(b_i)
+    /// you need to call `adg.add_rel_edge(rho, Sign::+/-, rel node for R_i, rel node for R, b_i, head_terms)`
     pub fn add_rel_edge(
         &mut self,
-        rule_name: Option<String>,
+        rule_name: String,
         sign: Sign,
         start_node: NodeIndex,
         end_node: NodeIndex,
-        rule_id: ProgramComponentId,
+        terms: Vec<Term>,
+        head_terms: Vec<Term>,
     ) -> EdgeIndex {
         //let start_node : &ADGNode = Self::get_rel_node_node_index(graph, start_node.into());
         //let end_node : &ADGNode = Self::get_rel_node_node_index(graph, end_node.into());
+        let stored_head_terms = self.get_rel_node_weight_mut_by_index(end_node).head_tuples.entry(rule_name.clone());
+        stored_head_terms.or_insert(head_terms);
         self.graph.add_edge(
             start_node,
             end_node,
             ADGEdge::ADGRelationalEdge(ADGRelationalEdge {
-                rule_name: rule_name,
+                rule_name: rule_name.clone(),
                 sign: sign,
-                id: rule_id,
+                terms,
             }),
         )
     }
@@ -1282,8 +1311,7 @@ impl AnnotatedDependencyGraph {
                         .entry(
                             rel_edge
                                 .rule_name
-                                .clone()
-                                .expect("Rule name not initialised!"),
+                                .clone(),
                         )
                         .and_modify(|v| v.push(edge_ref))
                         .or_insert(vec![edge_ref]);
