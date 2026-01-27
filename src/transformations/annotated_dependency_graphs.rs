@@ -10,9 +10,12 @@ use indexmap::{IndexMap, IndexSet};
 use log::{debug, error, info, trace};
 use nemo::rule_model::{
     components::{
-        self, IterablePrimitives, statement, tag::Tag, term::{Term, primitive::{ground::GroundTerm}}
+        self, statement,
+        tag::Tag,
+        term::{primitive::ground::GroundTerm, Term},
+        IterablePrimitives,
     },
-    programs::{ProgramRead, handle::ProgramHandle},
+    programs::{handle::ProgramHandle, ProgramRead},
 };
 use petgraph::{dot::Dot, graph::NodeIndex};
 use petgraph::{
@@ -100,7 +103,7 @@ pub struct ADGRelationalNode {
     pub tag: Tag,
     pub inverse_stratum: Option<u32>,
     pub ancestry: Option<Ancestry>,
-    pub head_tuples : IndexMap<String, Vec<Term>>,
+    pub head_tuples: IndexMap<String, Vec<Term>>,
 }
 impl Debug for ADGRelationalNode {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
@@ -205,9 +208,14 @@ pub struct ADGRelationalEdge {
 }
 impl Debug for ADGRelationalEdge {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
-            f.write_fmt(format_args!("({}, {:?}, {:?})", self.rule_name, self.sign, self.terms))
-        }
+        f.write_fmt(format_args!(
+            "({}, {:?}, {}))",
+            self.rule_name,
+            self.sign,
+            String::from(self.terms.iter().fold(String::from("("), |t, n| t + n.to_string().as_str() + ", "))
+        ))
     }
+}
 
 #[derive(Clone)]
 pub struct ADGFactEdge {}
@@ -329,7 +337,11 @@ impl AnnotatedDependencyGraph {
                     adg.add_fact_edge(fact_node, rel_node);
                 }
                 statement::Statement::Rule(rule) => {
-                    for (_ii, pos_atom) in rule.body_positive().enumerate() {   
+                    if rule.head().len() > 1 {
+                        error!("Transformations currently don't support multi-heads!");
+                        exit(1);
+                    }
+                    for (_ii, pos_atom) in rule.body_positive().enumerate() {
                         let start_node = adg.get_rel_node_index(&pos_atom.predicate());
                         for head_atom in rule.head() {
                             let end_node = adg.get_rel_node_index(&head_atom.predicate());
@@ -606,7 +618,11 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Re-calculate ancestry and inverse stratum of the ADG starting in some node.
-    pub fn update_ancestry_and_inverse_stratum_from(&mut self, node: Tag, transformation_number : u32) {
+    pub fn update_ancestry_and_inverse_stratum_from(
+        &mut self,
+        node: Tag,
+        transformation_number: u32,
+    ) {
         let curr_weight_node = self.get_rel_node(&node);
         let node_index = self.get_rel_node_index(&node);
         if util::in_debug_mode() {
@@ -614,7 +630,11 @@ impl AnnotatedDependencyGraph {
                 "  Updating Ancestry and Inverse Stratum beginning in relational node {}",
                 curr_weight_node.tag.name()
             );
-            self.print_graph_restricted_to_direction(node_index, petgraph::Incoming, transformation_number);
+            self.print_graph_restricted_to_direction(
+                node_index,
+                petgraph::Incoming,
+                transformation_number,
+            );
             self.write_reduced_self_to_file(
                 Some(
                     String::from("./")
@@ -787,9 +807,12 @@ impl AnnotatedDependencyGraph {
     /// all of its ancestors. Must be followed by a
     /// re-computation of those values, as otherwise an invalid ADG state is created!
     /// Returns an `IndexSet` of nodes (`NodeIndex`) for which we reset those values.
-    pub fn reset_ancestry_inverse_stratum_for_node_and_ancestors(&mut self, node: NodeIndex) -> IndexSet<NodeIndex>{
+    pub fn reset_ancestry_inverse_stratum_for_node_and_ancestors(
+        &mut self,
+        node: NodeIndex,
+    ) -> IndexSet<NodeIndex> {
         // Track which nodes we reset.
-        let mut reset_nodes: IndexSet<NodeIndex> = IndexSet::new();        
+        let mut reset_nodes: IndexSet<NodeIndex> = IndexSet::new();
         let adg_node: &mut ADGNode = self
             .graph
             .node_weight_mut(node)
@@ -841,14 +864,19 @@ impl AnnotatedDependencyGraph {
             }
             //debug!("Recursive call for neighbours: {:?}", plan_recursive_call);
             for n in plan_recursive_call {
-                reset_nodes.append(
-                &mut self.reset_ancestry_inverse_stratum_for_node_and_ancestors(n));
+                reset_nodes
+                    .append(&mut self.reset_ancestry_inverse_stratum_for_node_and_ancestors(n));
             }
         }
         reset_nodes
     }
 
-    fn print_graph_restricted_to_direction(&self, node: NodeIndex, dir: petgraph::Direction, transformation_number : u32) {
+    fn print_graph_restricted_to_direction(
+        &self,
+        node: NodeIndex,
+        dir: petgraph::Direction,
+        transformation_number: u32,
+    ) {
         debug!(
             "Writing ADG restricted to {:?} from {}",
             dir,
@@ -890,7 +918,8 @@ impl AnnotatedDependencyGraph {
                 + "/log",
         );
         let name = Some(
-            String::from(transformation_number.to_string() + "adg_restricted_to_") + self.get_rel_node_weight_by_index(node).tag.name(),
+            String::from(transformation_number.to_string() + "adg_restricted_to_")
+                + self.get_rel_node_weight_by_index(node).tag.name(),
         );
         let basic_dot = Dot::new(&filtered_graph);
         let mut path = path.unwrap_or(String::from(""));
@@ -1108,7 +1137,10 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get a relation node weight mutably based on its `NodeIndex`
-    pub fn get_rel_node_weight_mut_by_index<'a>(&'a mut self, index: NodeIndex) -> &'a mut ADGRelationalNode {
+    pub fn get_rel_node_weight_mut_by_index<'a>(
+        &'a mut self,
+        index: NodeIndex,
+    ) -> &'a mut ADGRelationalNode {
         match self.graph.node_weight_mut(index) {
             None => {
                 error!("Could not find node {:#?}", index);
@@ -1128,7 +1160,7 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get a literal by the relational edge's edge index
-    pub fn get_lit_terms_by_edge_index<'a,'b>(&'a self, index : EdgeIndex) -> &'a Vec<Term> {
+    pub fn get_lit_terms_by_edge_index<'a, 'b>(&'a self, index: EdgeIndex) -> &'a Vec<Term> {
         &self.get_rel_edge_by_index(index).terms
     }
 
@@ -1140,7 +1172,7 @@ impl AnnotatedDependencyGraph {
     } */
 
     /// Add a relational edge to the ADG
-    /// 
+    ///
     /// Given a rule `rho : R(head_terms) :- R_1(b_1), ..., [-]R_i(b_i), ..., R_n(b_n).`
     /// In order to add the edge representing (-)R_i(b_i)
     /// you need to call `adg.add_rel_edge(rho, Sign::+/-, rel node for R_i, rel node for R, b_i, head_terms)`
@@ -1155,7 +1187,10 @@ impl AnnotatedDependencyGraph {
     ) -> EdgeIndex {
         //let start_node : &ADGNode = Self::get_rel_node_node_index(graph, start_node.into());
         //let end_node : &ADGNode = Self::get_rel_node_node_index(graph, end_node.into());
-        let stored_head_terms = self.get_rel_node_weight_mut_by_index(end_node).head_tuples.entry(rule_name.clone());
+        let stored_head_terms = self
+            .get_rel_node_weight_mut_by_index(end_node)
+            .head_tuples
+            .entry(rule_name.clone());
         stored_head_terms.or_insert(head_terms);
         self.graph.add_edge(
             start_node,
@@ -1308,11 +1343,7 @@ impl AnnotatedDependencyGraph {
                 super::annotated_dependency_graphs::ADGEdge::ADGFactEdge(_) => {}
                 super::annotated_dependency_graphs::ADGEdge::ADGRelationalEdge(rel_edge) => {
                     incoming_edges_by_rule_name
-                        .entry(
-                            rel_edge
-                                .rule_name
-                                .clone(),
-                        )
+                        .entry(rel_edge.rule_name.clone())
                         .and_modify(|v| v.push(edge_ref))
                         .or_insert(vec![edge_ref]);
                 }

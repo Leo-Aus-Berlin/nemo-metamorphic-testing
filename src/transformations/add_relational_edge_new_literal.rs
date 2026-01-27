@@ -5,25 +5,25 @@ use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::Term;
-use nemo::rule_model::components::term::primitive::Primitive;
 use nemo::rule_model::components::term::primitive::ground::GroundTerm;
-use nemo::rule_model::components::term::primitive::variable::Variable;
 use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
-use nemo::rule_model::components::{ IterableVariables};
+use nemo::rule_model::components::term::primitive::variable::Variable;
+use nemo::rule_model::components::term::primitive::Primitive;
+use nemo::rule_model::components::term::Term;
+use nemo::rule_model::components::IterableVariables;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use rand::Rng;
 use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
+use rand::Rng;
 
-use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{MetamorphicTransformation, util};
+use crate::transformations::{util, MetamorphicTransformation};
+use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
@@ -95,7 +95,27 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'
         // Find previous body literals
         let incoming_edges_by_rule_name =
             adg.get_rel_edges_from_node_by_rule_name(&chosen_head_rel, petgraph::Incoming);
-        debug!("    Incoming edges by rule name: {incoming_edges_by_rule_name:#?}");
+        if util::in_debug_mode() {
+            let mut debug_edges_str = String::from("[");
+            for rule in incoming_edges_by_rule_name.keys() {
+                debug_edges_str += rule;
+                debug_edges_str += " : [";
+                for edge in incoming_edges_by_rule_name[rule].iter() {
+                    debug_edges_str += adg
+                        .get_rel_node_weight_by_index(
+                            adg.get_edge_source_target_by_index(*edge)
+                                .expect("Somehow edge not available")
+                                .0,
+                        )
+                        .tag
+                        .name();
+                    debug_edges_str += ", ";
+                }
+                debug_edges_str += "]; ";
+            }
+            debug_edges_str += "]";
+            debug!("    Incoming edges by rule name: {}", debug_edges_str);
+        }
         let chosen_rule_name: String = incoming_edges_by_rule_name
             .keys()
             .choose(rng)

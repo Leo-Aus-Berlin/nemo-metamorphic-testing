@@ -14,7 +14,7 @@ use rand::seq::IteratorRandom;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::MetamorphicTransformation;
+use crate::transformations::{util, MetamorphicTransformation};
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
 pub struct RemoveRelationalEdgesWholeRule<'a> {
@@ -71,7 +71,27 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
         // Find previous body literals
         let incoming_edges_by_rule_name =
             adg.get_rel_edges_from_node_by_rule_name(&chosen_head_rel, petgraph::Incoming);
-        debug!("    Incoming edges by rule name: {incoming_edges_by_rule_name:?}");
+        if util::in_debug_mode() {
+            let mut debug_edges_str = String::from("[");
+            for rule in incoming_edges_by_rule_name.keys() {
+                debug_edges_str += rule;
+                debug_edges_str += " : [";
+                for edge in incoming_edges_by_rule_name[rule].iter() {
+                    debug_edges_str += adg
+                        .get_rel_node_weight_by_index(
+                            adg.get_edge_source_target_by_index(*edge)
+                                .expect("Somehow edge not available")
+                                .0,
+                        )
+                        .tag
+                        .name();
+                    debug_edges_str += ", ";
+                }
+                debug_edges_str += "]; ";
+            }
+            debug_edges_str += "]";
+            debug!("    Incoming edges by rule name: {}", debug_edges_str);
+        }
         let chosen_rule_name: String = incoming_edges_by_rule_name
             .keys()
             .choose(rng)

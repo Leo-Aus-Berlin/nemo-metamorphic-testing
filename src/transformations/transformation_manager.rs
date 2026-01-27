@@ -8,12 +8,7 @@ use nemo::rule_model::{
 use rand::Rng;
 
 use crate::transformations::{
-    add_fact_node_and_edge::AddFactNodeAndEdge,
-    add_relational_edge_new_literal::AddRelationalEdgeNewLiteral,
-    add_relational_edge_new_rule::AddRelationalEdgeNewRule, add_relational_node::AddRelationalNode,
-    annotated_dependency_graphs::AnnotatedDependencyGraph,
-    remove_relational_edges_whole_rule::RemoveRelationalEdgesWholeRule,
-    transformation_types::TransformationTypes, MetamorphicTransformation,
+    MetamorphicTransformation, add_fact_node_and_edge::AddFactNodeAndEdge, add_relational_edge_new_literal::AddRelationalEdgeNewLiteral, add_relational_edge_new_rule::AddRelationalEdgeNewRule, add_relational_node::AddRelationalNode, annotated_dependency_graphs::AnnotatedDependencyGraph, remove_relational_edge_single_literal::RemoveRelationalEdgeSingleLiteral, remove_relational_edges_whole_rule::RemoveRelationalEdgesWholeRule, transformation_types::TransformationTypes
 };
 /*
 pub struct TransformationManager<'a, 'b> {
@@ -105,6 +100,7 @@ pub enum SomeMetamorphicTransformation<'a, 'b> {
     AddRelationalEdgeNewRule(AddRelationalEdgeNewRule<'a, 'b>),
     AddRelationalEdgeNewLiteral(AddRelationalEdgeNewLiteral<'a, 'b>),
     RemoveRelationalEdgesWholeRule(RemoveRelationalEdgesWholeRule<'a>),
+    RemoveRelationalEdgesSingleLiteral(RemoveRelationalEdgeSingleLiteral<'a>),
     Default(),
 }
 impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
@@ -152,12 +148,16 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
                 RemoveRelationalEdgesWholeRule::new(adg, rng, transformation_type,
                 transformation_number,)?,
             )),
+            5 => Some(Self::RemoveRelationalEdgesSingleLiteral(
+                RemoveRelationalEdgeSingleLiteral::new(adg, rng, transformation_type,
+                transformation_number,)?,
+            )),
             _ => Some(Self::Default()),
         }
     }
 }
 // ^^ add here
-static NUM_TRANSFORMATION_TYPES: i32 = 5;
+static NUM_TRANSFORMATION_TYPES: i32 = 6;
 // vv and here
 impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation<'a, 'b> {
     fn new(
@@ -191,6 +191,10 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
                 RemoveRelationalEdgesWholeRule::new(adg, rng, transformation_type,
                 transformation_number,)?,
             )),
+            5 => Some(Self::RemoveRelationalEdgesSingleLiteral(
+                RemoveRelationalEdgeSingleLiteral::new(adg, rng, transformation_type,
+                transformation_number,)?,
+            )),
             _ => Some(Self::Default()),
         }
     }
@@ -207,6 +211,7 @@ impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
             Self::AddRelationalEdgeNewRule(t) => t.apply(program),
             Self::AddRelationalEdgeNewLiteral(t) => t.apply(program),
             Self::RemoveRelationalEdgesWholeRule(t) => t.apply(program),
+            Self::RemoveRelationalEdgesSingleLiteral(t) => t.apply(program),
         }
     }
 }
