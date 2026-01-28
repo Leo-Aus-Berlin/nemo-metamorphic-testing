@@ -178,7 +178,7 @@ impl Debug for ADGFactNode {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone,PartialEq, Eq)]
 pub enum Sign {
     Positive,
     Negative,
@@ -641,7 +641,7 @@ impl AnnotatedDependencyGraph {
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
                             .expect("Name of Transformation Sequence not set")
-                        + "/log",
+                        + "/log/debug",
                 ),
                 Some(String::from("pre_update_reduced_adg")),
             );
@@ -915,7 +915,7 @@ impl AnnotatedDependencyGraph {
                 + NAME_OF_TRANSFORMATION_SEQUENCE
                     .get()
                     .expect("Name of Transformation Sequence not set")
-                + "/log",
+                + "/log/debug",
         );
         let name = Some(
             String::from(transformation_number.to_string() + "adg_restricted_to_")
@@ -1470,7 +1470,7 @@ impl AnnotatedDependencyGraph {
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
                             .expect("Name of Transformation Sequence not set")
-                        + "/log",
+                        + "/log/debug",
                 ),
                 Some(String::from("pre_verify_adg")),
             );
@@ -1480,7 +1480,7 @@ impl AnnotatedDependencyGraph {
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
                             .expect("Name of Transformation Sequence not set")
-                        + "/log",
+                        + "/log/debug",
                 ),
                 Some(String::from("pre_verify_reduced_adg")),
             );

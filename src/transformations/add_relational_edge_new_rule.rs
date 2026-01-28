@@ -418,7 +418,8 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         }
         // Because we add the relational edges we should just be able to re-compute
         // the ancestry and inverse stratum from the head node and it correctly computes the changes
-        info!("  Added new rule: {}", rule);
+        info!("  Added new rule of name {}", rule.name().expect("New rule not named!"));
+        info!("  {}", rule);
         if util::in_debug_mode() {
             self.adg.write_self_to_file(
                 Some(

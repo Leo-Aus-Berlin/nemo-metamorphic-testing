@@ -1,6 +1,6 @@
 use indexmap::IndexMap;
 use log::{debug, error, info};
-use nemo::rule_model::components::ComponentBehavior;
+use nemo::rule_model::components::{ComponentBehavior, IterableVariables};
 use std::process::exit;
 
 use nemo::rule_model::components::rule::Rule;
@@ -164,62 +164,65 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
         let mut var_appears_in_how_many_pos_lit: IndexMap<Variable, u32> = IndexMap::new();
 
         // Check for universal head variables
-        for head_var in head_literal_weight.head_tuples[&chosen_rule_name].iter() {
-            match head_var {
-                Primitive(nemo::rule_model::components::term::primitive::Primitive::Variable(
-                    v,
-                )) => {
-                    // We only care about universal variables!
-                    if !v.is_universal() {
-                        continue;
-                    };
-                    var_appears_in_head.insert(v.clone(), true);
-                    // initialise other values if not initialised already
-                    var_appears_in_how_many_pos_lit
-                        .entry(v.clone())
-                        .or_insert(0);
-                    var_appears_in_negative_lit
-                        .entry(v.clone())
-                        .or_insert(false);
-                }
-                _ => (),
-            }
+        let head_vars = head_literal_weight.head_tuples[&chosen_rule_name]
+            .iter()
+            .flat_map(|t| t.variables());
+        for v in head_vars {
+            // We only care about universal variables!
+            if !v.is_universal() {
+                continue;
+            };
+            var_appears_in_head.insert(v.clone(), true);
+            // initialise other values if not initialised already
+            var_appears_in_how_many_pos_lit
+                .entry(v.clone())
+                .or_insert(0);
+            var_appears_in_negative_lit
+                .entry(v.clone())
+                .or_insert(false);
         }
-        // Check for universal body variables
-        for rel_edge in body_literals_weights.iter() {
-            for term in rel_edge.terms.iter() {
-                match term {
-                    nemo::rule_model::components::term::Term::Primitive(
-                        nemo::rule_model::components::term::primitive::Primitive::Variable(v),
-                    ) => {
-                        // We only care about universal variables!
-                        if !v.is_universal() {
-                            continue;
-                        };
-                        match rel_edge.sign {
-                            Sign::Negative => {
-                                // This var appears neg.
-                                var_appears_in_negative_lit.insert(v.clone(), true);
-                            }
-                            Sign::Positive => {
-                                // Count this var.
-                                // Count this var, initialising to 1 if not appeared before
-                                var_appears_in_how_many_pos_lit
-                                    .entry(v.clone())
-                                    .and_modify(|count| *count += 1)
-                                    .or_insert(1);
-                            }
-                        }
-                    }
-                    _ => (),
-                }
-            }
+        // Check for universal positive body variables
+        let mut pos_body_vars: Vec<_> = body_literals_weights
+            .iter()
+            .filter(|&rel_edge| rel_edge.sign == Sign::Positive)
+            .flat_map(|rel_edge| rel_edge.terms.iter().flat_map(|t| t.variables()))
+            .collect();
+        pos_body_vars.sort_by(|&v1, &v2| v1.name().cmp(&v2.name()));
+        pos_body_vars.dedup();
+        for v in pos_body_vars {
+            // We only care about universal variables!
+            if !v.is_universal() {
+                continue;
+            };
+            // Count this var.
+            // Count this var, initialising to 1 if not appeared before
+            var_appears_in_how_many_pos_lit
+                .entry(v.clone())
+                .and_modify(|count| *count += 1)
+                .or_insert(1);
+        }
+        // Check for universal negative body variables
+        let mut neg_body_vars: Vec<_> = body_literals_weights
+            .iter()
+            .filter(|&rel_edge| rel_edge.sign == Sign::Negative)
+            .flat_map(|rel_edge| rel_edge.terms.iter().flat_map(|t| t.variables()))
+            .collect();
+        neg_body_vars.sort_by(|&v1, &v2| v1.name().cmp(&v2.name()));
+        neg_body_vars.dedup();
+        for v in neg_body_vars {
+            // We only care about universal variables!
+            if !v.is_universal() {
+                continue;
+            };
+            // This var appears neg.
+            var_appears_in_negative_lit.insert(v.clone(), true);
         }
 
         // Now remove literals from those we could use if not enough var appearances
         let rem_lit_opt = body_literals.iter().cloned().zip(body_literals_weights);
-        let rem_lit_opt = rem_lit_opt.filter(|(_, option)| {
-            option.terms.iter().all(|t| {
+        debug!("{rem_lit_opt:#?}");
+        let rem_lit_opt = rem_lit_opt.filter(|(_, lit_option)| {
+            lit_option.terms.iter().all(|t| {
                 // all must be true => don't care = true
                 if let nemo::rule_model::components::term::Term::Primitive(
                     nemo::rule_model::components::term::primitive::Primitive::Variable(v),
@@ -227,13 +230,13 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
                 {
                     // Ex. Vars are fine
                     !v.is_universal() ||
-                            // For a literal, all all-quantified variables that appear in a neg lit or head atom
-                            // must appear in at least one other pos lit
-                            // unwrap for vars not prev. noticed, i.e., not appearing in head/neg
-                            if *var_appears_in_negative_lit.get(v).unwrap_or(&false) ||
-                                *var_appears_in_head.get(v).unwrap_or(&false)
-                                {var_appears_in_how_many_pos_lit[v] > 1}
-                            else {true}
+                        // For a literal, all all-quantified variables that appear in a neg lit or head atom
+                        // must appear in at least one other pos lit
+                        // unwrap for vars not prev. noticed, i.e., not appearing in head/neg
+                        if *var_appears_in_negative_lit.get(v).unwrap_or(&false) ||
+                            *var_appears_in_head.get(v).unwrap_or(&false)
+                            {var_appears_in_how_many_pos_lit[v] > 1}
+                        else {true}
                 } else {
                     true
                 } // we don't care about non-variable terms. Might not work with say aggregates
@@ -272,7 +275,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
                         // don't keep it!
                         to_modify_rule = rule.clone();
                         info!("     Found the rule of the name {:?}", rule.name());
-                        debug!("    {}", rule);
+                        debug!("    Old rule:   {}", rule);
                     } else {
                         commit.keep(rule);
                     }

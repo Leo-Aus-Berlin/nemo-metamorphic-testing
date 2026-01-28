@@ -13,7 +13,7 @@ use nemo::{
     rule_file::RuleFile,
     rule_model::{
         error::ValidationReport,
-        programs::{handle::ProgramHandle, ProgramRead},
+        programs::{handle::ProgramHandle},
     },
 };
 
@@ -247,6 +247,22 @@ fn main() {
         Err(_) => {
             error!("Failed to create log folder");
             exit(1);
+        }
+    }
+
+    // Create log/debug folder
+    if DEBUG_MODE
+        .get()
+        .expect("Debug mode not initialised")
+        .clone()
+    {
+        let debug_log_name = transformation_folder.clone() + "/log/debug";
+        match create_dir_all(debug_log_name.clone()) {
+            Ok(_) => (),
+            Err(_) => {
+                error!("Failed to create log debug folder");
+                exit(1);
+            }
         }
     }
 

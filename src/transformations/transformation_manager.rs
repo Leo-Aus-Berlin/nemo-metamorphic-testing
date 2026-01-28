@@ -200,7 +200,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
                 RemoveRelationalEdgeSingleLiteral::new(adg, rng, transformation_type,
                 transformation_number,)?,
             )),
-            5 => Some(Self::ModifyRuleAddEquality(
+            6 => Some(Self::ModifyRuleAddEquality(
                 ModifyRuleAddEquality::new(adg, rng, transformation_type,
                 transformation_number,)?,
             )),

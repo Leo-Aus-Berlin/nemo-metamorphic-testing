@@ -1,15 +1,9 @@
 use std::process::exit;
 
 use log::{debug, error, info};
-use nemo::rule_model::components::atom::Atom;
-use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::primitive::ground::GroundTerm;
-use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
 use nemo::rule_model::components::term::primitive::variable::Variable;
-use nemo::rule_model::components::term::primitive::Primitive;
-use nemo::rule_model::components::term::Term;
 use nemo::rule_model::components::IterableVariables;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
@@ -32,7 +26,7 @@ pub struct ModifyRuleAddEquality<'a, 'b> {
     chosen_head_rel: Tag,
     chosen_rule_name: String,
     chosen_body_literals: Vec<EdgeIndex>,
-    transformation_number: u32,
+    //transformation_number: u32,
     //transformation_type: TransformationTypes,
 }
 
@@ -44,7 +38,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for ModifyRuleAddEquality<'a, 'b>
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
         transformation_type: TransformationTypes,
-        transformation_number: u32,
+        _transformation_number: u32,
     ) -> Option<Self> {
         // Chose a head relation, inverse to new_rule
         let chosen_head_rel: Tag = match transformation_type {
@@ -122,7 +116,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for ModifyRuleAddEquality<'a, 'b>
             chosen_head_rel,
             chosen_rule_name,
             chosen_body_literals,
-            transformation_number,
+            //transformation_number,
             //transformation_type,
         })
     }
