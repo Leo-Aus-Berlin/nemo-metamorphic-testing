@@ -4,26 +4,26 @@
 @import elevator :- csv { resource = "data/elevator.csv", format = (string), }.
 @import platformHeight :- csv { resource = "data/platformHeight.csv", format = (string,int), }.
 @import allowedDiff :- csv { resource = "data/allowedDiff.csv", format = (int,int), }.
-%%% rule Cch
+#[name("Cch")]
 validC(?x,?z):- validC(?x,?y), validC(?y,?z), mustChangeAt(?y),canChangeAt(?y).
-%%% rule Cnch
+#[name("Cnch")]
 validC(?x,?z):- validC(?x,?y), validC(?y,?z), ~mustChangeAt(?y).
-%%% rule d1
+#[name("d1")]
 validC(?x,?y):- ~choseU(?x,?y),choseB(?x,?y).
-%%% rule d2
+#[name("d2")]
 validC(?x,?y):- choseU(?x,?y),~choseB(?x,?y).
-%%% rule ch
+#[name("ch")]
 canChangeAt(?y):- elevator(?y),~tooLargeGap(?y).
-%%% rule gap
+#[name("gap")]
 tooLargeGap(?y):- platformHeight(?y,?h),~allowedDiff(?h,trainHeight).
-%%% rule mch1
+#[name("mch1")]
 mustChangeAt(?y):- choseU(?x,?y),choseB(?y,?z).
-%%% rule mch2
+#[name("mch2")]
 mustChangeAt(?y):- choseB(?x,?y),choseU(?y,?z).
-%%% rule TV1
+#[name("TV1")]
 seeTVTower(s):- choseB(?x,"alexanderplatz").
-%%% rule TV2
+#[name("TV2")]
 seeTVTower(s):- choseB("alexanderplatz",?x).
-%%% rule success
+#[name("success")]
 success(s) :- validC("jungfernheide","kottbusserTor").
 @export success :- csv{}.

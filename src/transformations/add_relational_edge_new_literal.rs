@@ -185,7 +185,9 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
         // Generate variable vector options
         let mut options_for_vars: Vec<Term> = Vec::new();
         for var in old_rule.variables() {
-            options_for_vars.push(Term::Primitive(Primitive::Variable(var.clone())));
+            if var.is_universal() {
+                options_for_vars.push(Term::Primitive(Primitive::Variable(var.clone())));
+            }
         }
         // 20% chance of duplicates, min 1.
         let amount = usize::max(options_for_vars.len() / 5, 1);

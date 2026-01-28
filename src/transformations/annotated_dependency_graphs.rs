@@ -1078,6 +1078,21 @@ impl AnnotatedDependencyGraph {
         }
     }
 
+    /// Mutably get a relational edge by its `EdgeIndex`
+    pub fn get_rel_edge_mut_by_index<'a>(&'a mut self, id: EdgeIndex) -> &'a mut ADGRelationalEdge {
+        match self
+            .graph
+            .edge_weight_mut(id)
+            .expect("Attempted to access non-existant relational edge!")
+        {
+            ADGEdge::ADGFactEdge(_) => {
+                error!("Found fact edge where relational edge was expected!");
+                exit(1);
+            }
+            ADGEdge::ADGRelationalEdge(r) => r,
+        }
+    }
+
     #[allow(dead_code, unused_variables)]
     /// Get an `ADGEdge` by its `EdgeIndex`
     pub fn get_edge_by_index<'a>(&'a self, id: EdgeIndex) -> &'a ADGEdge {
@@ -1160,6 +1175,7 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get a literal by the relational edge's edge index
+    #[allow(dead_code, unused_variables)]
     pub fn get_lit_terms_by_edge_index<'a, 'b>(&'a self, index: EdgeIndex) -> &'a Vec<Term> {
         &self.get_rel_edge_by_index(index).terms
     }

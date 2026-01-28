@@ -1,5 +1,5 @@
 use std::{
-    fs::{File, create_dir_all, remove_dir_all},
+    fs::{create_dir_all, remove_dir_all, File},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -11,7 +11,10 @@ use simplelog::*;
 use nemo::{
     error::report::ProgramReport,
     rule_file::RuleFile,
-    rule_model::{error::ValidationReport, programs::handle::ProgramHandle},
+    rule_model::{
+        error::ValidationReport,
+        programs::{handle::ProgramHandle, ProgramRead},
+    },
 };
 
 mod transformations;
@@ -202,7 +205,7 @@ fn main() {
         + NAME_OF_TRANSFORMATION_SEQUENCE
             .get()
             .expect("Name of Transformation Sequence not set");
-    match remove_dir_all(transformation_folder.clone()){
+    match remove_dir_all(transformation_folder.clone()) {
         Ok(_) => (),
         Err(_) => {
             error!("Failed to remove/clear transformation folder");
@@ -215,11 +218,10 @@ fn main() {
             error!("Failed to create transformation folder");
             exit(1);
         }
-    }   
+    }
 
     // Create input folder
-    let input_folder_name = transformation_folder.clone()
-        + "/input";
+    let input_folder_name = transformation_folder.clone() + "/input";
     match create_dir_all(input_folder_name.clone()) {
         Ok(_) => (),
         Err(_) => {
@@ -229,8 +231,7 @@ fn main() {
     }
 
     // Create output folder
-    let output_folder_name = transformation_folder.clone()
-        + "/output";
+    let output_folder_name = transformation_folder.clone() + "/output";
     match create_dir_all(output_folder_name.clone()) {
         Ok(_) => (),
         Err(_) => {
@@ -240,8 +241,7 @@ fn main() {
     }
 
     // Create log folder
-    let log_name = transformation_folder.clone()
-        + "/log";
+    let log_name = transformation_folder.clone() + "/log";
     match create_dir_all(log_name.clone()) {
         Ok(_) => (),
         Err(_) => {
@@ -267,7 +267,15 @@ fn main() {
             WriteLogger::new(
                 LevelFilter::Debug,
                 Config::default(),
-                File::create(log_name + "/log.log").unwrap(),
+                File::create(
+                    log_name
+                        + "/"
+                        + NAME_OF_TRANSFORMATION_SEQUENCE
+                            .get()
+                            .expect("Name of Transformation Sequence not set")
+                        + ".log",
+                )
+                .unwrap(),
             ),
         ])
         .unwrap();
@@ -283,7 +291,15 @@ fn main() {
             WriteLogger::new(
                 LevelFilter::Info,
                 Config::default(),
-                File::create(log_name + "/log.log").unwrap(),
+                File::create(
+                    log_name
+                        + "/"
+                        + NAME_OF_TRANSFORMATION_SEQUENCE
+                            .get()
+                            .expect("Name of Transformation Sequence not set")
+                        + ".log",
+                )
+                .unwrap(),
             ),
         ])
         .unwrap();
@@ -305,7 +321,10 @@ fn main() {
             .get()
             .expect("Number of transformations not set"),
         DEBUG_MODE.get().expect("Debug Mode not set"),
-        match seed {None => String::from("None provided"), Some(s) => s.to_string()},
+        match seed {
+            None => String::from("None provided"),
+            Some(s) => s.to_string(),
+        },
         rng.get_seed(),
         /* TODO: Seed file */
     );
@@ -336,7 +355,7 @@ fn main() {
             std::process::exit(1);
         }
     };
-    
+
     // Name all of the rules!
     let transformation_name_rules: TransformationNameRules = TransformationNameRules::new();
     let output_name_rules: Result<ProgramHandle, ValidationReport> =
@@ -403,8 +422,8 @@ fn main() {
         Ok(program) => program,
         Err(report) => {
             error!("Failed to copy input program");
-            for err in report.errors(){
-                error!("{}",err.note().expect("Failed to fetch error note"));
+            for err in report.errors() {
+                error!("{}", err.note().expect("Failed to fetch error note"));
             }
             std::process::exit(1);
         }
@@ -453,8 +472,12 @@ fn main() {
         let transformation;
 
         loop {
-            let mut iter =
-                IterateMetamorphicTransformations::new(&mut adg, &mut rng, trans_types.clone(), repetition);
+            let mut iter = IterateMetamorphicTransformations::new(
+                &mut adg,
+                &mut rng,
+                trans_types.clone(),
+                repetition,
+            );
             match iter.next() {
                 None => continue,
                 Some(loop_variable) => {
