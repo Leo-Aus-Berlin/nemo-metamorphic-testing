@@ -42,8 +42,8 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
         transformation_type: TransformationTypes,
         transformation_number: u32,
     ) -> Option<Self> {
-        // Chose a head relation, inverse to new_rule
-        let chosen_head_rel: Tag = match transformation_type {
+        // This time we need to take great care when selecting the head relation
+        let head_rel_options: Vec<Tag> = match transformation_type {
             TransformationTypes::EQU => adg
                 .get_none_ancestry_relational_nodes()
                 .iter()
@@ -52,8 +52,8 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
                         .len()
                         > 0
                 })
-                .choose(rng)?
-                .clone(),
+                .cloned()
+                .collect(),
             TransformationTypes::CON => adg
                 .get_leq_negative_ancestry_relational_nodes()
                 .iter()
@@ -62,8 +62,8 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
                         .len()
                         > 0
                 })
-                .choose(rng)?
-                .clone(),
+                .cloned()
+                .collect(),
             TransformationTypes::EXP => adg
                 .get_leq_positive_ancestry_relational_nodes()
                 .iter()
@@ -72,13 +72,56 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
                         .len()
                         > 0
                 })
-                .choose(rng)?
-                .clone(),
+                .cloned()
+                .collect(),
         };
 
-        // Find previous body literals
-        let incoming_edges_by_rule_name =
-            adg.get_rel_edges_from_node_by_rule_name(&chosen_head_rel, petgraph::Incoming);
+        // First we find all incoming rules for these head relation options
+        let rel_options_with_incoming_rules: IndexMap<Tag, IndexMap<String, Vec<EdgeIndex>>> =
+            IndexMap::from_iter(head_rel_options.iter().map(|tag| {
+                (
+                    tag.clone(),
+                    adg.get_rel_edges_from_node_by_rule_name(tag, petgraph::Incoming),
+                )
+            }));
+        // Then we discard any rules with only one body literal
+        let rel_options_with_multi_body_incoming_rules: IndexMap<
+            Tag,
+            IndexMap<String, Vec<EdgeIndex>>,
+        > = IndexMap::from_iter(rel_options_with_incoming_rules.iter().map(|(pred, rules)| {
+            (
+                pred.clone(),
+                IndexMap::from_iter(rules.into_iter().filter_map(|(rule_name, rel_edges)| {
+                    if rel_edges.len() > 1 {
+                        Some((rule_name.clone(), rel_edges.clone()))
+                    } else {
+                        None
+                    }
+                })),
+            )
+        }));
+        // Now we discard predicates with no (multi-body) rules left
+        let rel_options_with_multi_body_incoming_rules: IndexMap<
+            Tag,
+            IndexMap<String, Vec<EdgeIndex>>,
+        > = IndexMap::from_iter(
+            rel_options_with_multi_body_incoming_rules
+                .iter()
+                .filter_map(|(pred, count)| {
+                    if count.keys().len() > 0 {
+                        Some((pred.clone(), count.clone()))
+                    } else {
+                        None
+                    }
+                }),
+        );
+        // We can now choose one
+        let chosen_head_rel = rel_options_with_multi_body_incoming_rules
+            .keys()
+            .choose(rng)?;
+        let incoming_edges_by_rule_name = rel_options_with_multi_body_incoming_rules
+            .get(chosen_head_rel)
+            .expect("Somehow generated invalid key");
         // Print incoming edges
         if util::in_debug_mode() {
             let mut debug_edges_str = String::from("[");
@@ -265,7 +308,10 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
             .get_rel_node_weight_by_index(*chosen_body_relation)
             .clone();
         let head_rel = self.adg.get_rel_node_weight_by_index(*head_rel).clone();
-        let chosen_literal_weight = self.adg.get_rel_edge_by_index(self.chosen_body_literal).clone();
+        let chosen_literal_weight = self
+            .adg
+            .get_rel_edge_by_index(self.chosen_body_literal)
+            .clone();
 
         // Update the ADG
         // 1) Remove the edge // Multi-heads would be multiple
@@ -319,7 +365,12 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
         let mut new_rule = Rule::new(old_head, new_body.collect());
         debug!("    Modified rule: {new_rule}");
         new_rule.validate().expect("Rule not well formed");
-        new_rule.set_name(to_modify_rule.name().expect("Old rule not named somehow!").as_str());
+        new_rule.set_name(
+            to_modify_rule
+                .name()
+                .expect("Old rule not named somehow!")
+                .as_str(),
+        );
         commit.add_rule(new_rule);
         commit.submit()
     }
