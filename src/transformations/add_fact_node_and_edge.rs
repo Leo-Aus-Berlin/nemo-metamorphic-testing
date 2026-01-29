@@ -71,7 +71,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
 
 impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
-        info!("  Add Fact Node and Edge");
+        info!("  II Add Fact Node and Edge");
         //let commit = program.fork();
         // Copy the program
         let mut commit: ProgramCommit = program.fork_full();

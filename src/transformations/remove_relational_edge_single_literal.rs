@@ -6,7 +6,6 @@ use std::process::exit;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
 use nemo::rule_model::components::term::primitive::variable::Variable;
-use nemo::rule_model::components::term::Term::Primitive;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
@@ -149,6 +148,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
             .choose(rng)
             .expect("Rule somehow still has no name")
             .clone();
+        
         // Multi-heads would have multiple head literals here
         let head_literal_weight: &ADGRelationalNode = adg.get_rel_node(&chosen_head_rel);
         let body_literals: Vec<EdgeIndex> = incoming_edges_by_rule_name[&chosen_rule_name].clone();
@@ -262,7 +262,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
 
 impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
-        info!("  Remove Relational Edge - Single Literal");
+        info!("  VI Remove Relational Edge - Single Literal");
         let mut commit: ProgramCommit = program.fork();
 
         // Find the rule we are modifying and just keep the rest!
@@ -274,8 +274,8 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
                     if rule.name().expect("Rule not named!") == self.chosen_rule_name {
                         // don't keep it!
                         to_modify_rule = rule.clone();
-                        info!("     Found the rule of the name {:?}", rule.name());
-                        debug!("    Old rule:   {}", rule);
+                        info!("  Found the rule of the name {}", rule.name().expect("Rule not named somehow"));
+                        debug!("   Old rule:   {}", rule);
                     } else {
                         commit.keep(rule);
                     }
@@ -320,7 +320,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
         // 1) Remove the edge // Multi-heads would be multiple
         self.adg.remove_edge(self.chosen_body_literal);
         info!(
-            "    Removed relational edge {chosen_body_relation:?}: ({} -> {})",
+            "  Removed relational edge {chosen_body_relation:?}: ({} -> {})",
             chosen_rel_w.tag.name(),
             head_rel.tag.name()
         );

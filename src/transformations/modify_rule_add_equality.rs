@@ -124,7 +124,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for ModifyRuleAddEquality<'a, 'b>
 
 impl<'a, 'b> ProgramTransformation for ModifyRuleAddEquality<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
-        info!("  Modify Rule - Add Equality");
+        info!("  VII Modify Rule - Add Equality");
         let mut commit: ProgramCommit = program.fork();
 
         // Find the rule we are modifying and just keep the rest!
@@ -155,6 +155,9 @@ impl<'a, 'b> ProgramTransformation for ModifyRuleAddEquality<'a, 'b> {
                 vars.push(var.clone());
             }
         }
+        // Remove duplicates
+        vars.sort_by(|v1, v2| v1.name().cmp(&v2.name()));
+        vars.dedup();
 
         // Print our options for vars if in debug mode
         if util::in_debug_mode() {
@@ -169,10 +172,11 @@ impl<'a, 'b> ProgramTransformation for ModifyRuleAddEquality<'a, 'b> {
 
         // Choose the replacement / equality
         let chosen_vars = vars.iter().cloned().choose_multiple(self.rng, 2);
-        if chosen_vars.len()<2 {
-            info!(" Aborting the introduction of an equality - rule has too few variables!");
+        if chosen_vars.len() < 2 {
+            info!("  Aborting the introduction of an equality - rule has too few variables!");
+            debug!("    The rule in question: {old_rule}");
             commit.add_rule(old_rule);
-            return commit.submit()
+            return commit.submit();
         }
         let (replaced_var, replacing_var) = (&chosen_vars[0], &chosen_vars[1]);
 
@@ -212,11 +216,17 @@ impl<'a, 'b> ProgramTransformation for ModifyRuleAddEquality<'a, 'b> {
 
         // Print our change if in debug mode
         if util::in_debug_mode() {
-            info!("  Replaced var {replaced_var} with var {replacing_var}");
+            info!(
+                "  Replaced var {replaced_var} with var {replacing_var} in the rule {}",
+                new_rule.name().expect("Rule not named somehow")
+            );
             debug!("  Old Rule: {}", old_rule);
             debug!("  New Rule: {}", new_rule);
         } else {
-            info!("  Replaced var {replaced_var} with var {replacing_var}");
+            info!(
+                "  Replaced var {replaced_var} with var {replacing_var} in the rule {}",
+                new_rule.name().expect("Rule not named somehow")
+            );
         }
 
         // Finalise the commit

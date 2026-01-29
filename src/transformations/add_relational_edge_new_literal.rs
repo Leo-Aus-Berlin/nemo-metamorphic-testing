@@ -141,7 +141,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'
 
 impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
-        info!("  Add Relational edge - New Literal");
+        info!("  IV Add Relational Edge - New Literal");
         let mut commit: ProgramCommit = program.fork();
 
         // Find the rule we are modifying and just keep the rest!
@@ -279,10 +279,10 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
         // the ancestry and inverse stratum from the head node and it correctly computes the changes
         if util::in_debug_mode() {
             info!("  Generated literal {new_lit} for rule {old_rule_name}");
-            debug!("  Old Rule: {}", old_rule);
-            debug!("  New Rule: {}", new_rule);
+            debug!("   Old Rule: {}", old_rule);
+            debug!("   New Rule: {}", new_rule);
         } else {
-            info!("     Generated literal {new_lit} for rule {old_rule_name}");
+            info!("  Generated literal {new_lit} for rule {old_rule_name}");
         }
         if util::in_debug_mode() {
             self.adg.write_self_to_file(

@@ -113,7 +113,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
 
 impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
-        info!("  Remove Relational Edges - Whole Rule");
+        info!("  V Remove Relational Edges - Whole Rule");
         let mut commit: ProgramCommit = program.fork();
 
         // Ignore the rule we are removing and just keep the rest!
@@ -124,8 +124,8 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
                     if rule.name().expect("Rule not named!") == self.chosen_rule_name {
                         // don't keep it!
                         found_remove_rule = true;
-                        info!("     Removing the Rule of the name {:?}", rule.name());
-                        debug!("    {}", rule);
+                        info!("  Removing the Rule of the name {}", rule.name().expect("Rule not named"));
+                        debug!("   {}", rule);
                     } else {
                         commit.keep(rule);
                     }

@@ -37,7 +37,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalNode<'a> {
 impl<'a, 'b> ProgramTransformation for AddRelationalNode<'a> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
-        info!("  Add Relational Node");
+        info!("  I Add Relational Node");
         let commit: ProgramCommit = program.fork_full();
         let new_relation_name: Tag = self.adg.get_new_relation_name();
         // No rule yet, will introduce these later

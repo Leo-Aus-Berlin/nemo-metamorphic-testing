@@ -127,7 +127,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 
 impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
     fn apply(mut self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         //let commit = program.fork();
-        info!("  Add Relational edges - New Rule");
+        info!("  III Add Relational edges - New Rule");
         let mut commit: ProgramCommit = program.fork_full();
         // No rule yet, will introduce these later
         // let new_rule: Rule = Rule::new(vec![head.clone()], rule.body().clone());
