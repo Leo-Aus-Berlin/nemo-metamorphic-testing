@@ -18,6 +18,7 @@ pub mod testing_transformation;
 pub mod transformation_manager;
 pub mod transformation_types;
 pub mod modify_rule_add_equality;
+pub mod modify_rule_remove_equality;
 mod util;
 // pub mod testing_transformation;
 
