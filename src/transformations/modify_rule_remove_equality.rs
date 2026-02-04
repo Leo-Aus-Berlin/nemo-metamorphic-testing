@@ -2,11 +2,13 @@ use std::process::exit;
 
 use indexmap::IndexMap;
 use log::{debug, error, info};
+use nemo::rule_model::components::IterableVariables;
+use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
 use nemo::rule_model::components::term::Term;
 use nemo::rule_model::components::term::primitive::variable::Variable;
-use nemo::rule_model::components::IterableVariables;
+use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
@@ -14,11 +16,14 @@ use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use petgraph::graph::EdgeIndex;
-use rand::seq::IteratorRandom;
+use rand::Rng;
+use rand::seq::{IteratorRandom, SliceRandom};
 
-use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
+use crate::transformations::annotated_dependency_graphs::{
+    ADGEdge, ADGFactEdge, ADGRelationalEdge, AnnotatedDependencyGraph, Sign,
+};
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
+use crate::transformations::{MetamorphicTransformation, util};
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
@@ -202,17 +207,17 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for ModifyRuleRemoveEquality<'a, 
 }
 
 impl<'a, 'b> ProgramTransformation for ModifyRuleRemoveEquality<'a, 'b> {
-    fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
+    fn apply(mut self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         info!("  VIII Modify Rule - Remove Equality");
         let mut commit: ProgramCommit = program.fork();
 
         // Find the rule we are modifying and just keep the rest!
-        let mut modifying_rule: Rule = Rule::empty();
+        let mut old_rule: Rule = Rule::empty();
         for statement in program.statements() {
             match statement {
                 nemo::rule_model::components::statement::Statement::Rule(rule) => {
                     if rule.name().expect("Rule not named!") == self.chosen_rule_name {
-                        modifying_rule = rule.clone();
+                        old_rule = rule.clone();
                     } else {
                         commit.keep(rule);
                     }
@@ -222,115 +227,252 @@ impl<'a, 'b> ProgramTransformation for ModifyRuleRemoveEquality<'a, 'b> {
                 }
             }
         }
-        if modifying_rule.body().len() == 0 {
+        if old_rule.body().len() == 0 {
             error!("Could not find the rule we are modifying!");
             exit(1);
         }
+        // We will be modifying in place!
+        let mut modified_rule = old_rule.clone();
 
         // Collect appearing variables
-        let mut pos_vars: Vec<&Variable> = Vec::new();
-        modifying_rule.body_positive().for_each(|atom| {
-            atom.terms().for_each(|term| {
-                term.variables().for_each(|variable| {
-                    if variable.is_universal() {
-                        pos_vars.push(variable);
-                    }
-                })
-            })
-        });
-        let mut neg_vars: Vec<&Variable> = Vec::new();
-        modifying_rule.body_negative().for_each(|atom| {
-            atom.terms().for_each(|term| {
-                term.variables().for_each(|variable| {
-                    if variable.is_universal() {
-                        neg_vars.push(variable);
-                    }
-                })
-            })
-        });
+        // Because these are variable references we can change the rule in place
+        // in pos and neg body literals
+        let mut pos_vars: Vec<&mut Variable> = Vec::new();
+        let mut neg_vars: Vec<&mut Variable> = Vec::new();
+        modified_rule
+            .body_mut()
+            .iter_mut()
+            .for_each(|lit| match lit {
+                Literal::Positive(pos_lit) => {
+                    pos_lit.variables_mut().for_each(|variable| {
+                        if variable.is_universal() {
+                            pos_vars.push(variable);
+                        }
+                    });
+                }
+                Literal::Negative(neg_lit) => {
+                    neg_lit.variables_mut().for_each(|variable| {
+                        if variable.is_universal() {
+                            neg_vars.push(variable);
+                        }
+                    });
+                }
+                _ => (),
+            });
 
-        let mut chosen_body_literal_weights = self.chosen_body_literals.iter().map(|edge | (edge, self.adg.get_rel_edge_mut_by_index(*edge)));
-        let (pos_tuples, neg_tuples) : (Vec<_>, Vec<_>) = chosen_body_literal_weights.partition(|(id, rel_edge) | rel_edge.sign == Sign::Positive);
-        let pos_tuples_by_pred : IndexMap<Tag,Vec<Term>> = IndexMap::from_iter(
-            pos_tuples.iter().map(|(id,rel_edge) | (id.index(), rel_edge.terms)) // source
+        // Name the new variable y_new
+        let new_var_name: String;
+        let mut attempted_index = 1;
+        let mut existing_var_names: Vec<&str> = pos_vars
+            .iter()
+            .map(|var| var.name().clone().expect("Var not named?"))
+            .collect();
+        existing_var_names.append(
+            &mut neg_vars
+                .iter()
+                .map(|var| var.name().clone().expect("Var not named?"))
+                .collect(),
         );
-
-        // Remove duplicates
-        vars.sort_by(|v1, v2| v1.name().cmp(&v2.name()));
-        vars.dedup();
-
-        // Print our options for vars if in debug mode
-        if util::in_debug_mode() {
-            let mut option_string = String::from("  Found vars for into equality: [");
-            for option in vars.iter() {
-                option_string.push_str(option.to_string().as_str());
-                option_string.push_str(", ");
+        // This will eventually get slow if we generate 100 Y_new_ vars.
+        loop {
+            let new_var_name_temp =
+                String::from(self.chosen_var.name().expect("Chosen var is not named"))
+                    + "_new_"
+                    + &attempted_index.to_string();
+            if !existing_var_names.contains(&new_var_name_temp.as_str()) {
+                new_var_name = new_var_name_temp;
+                break;
             }
-            option_string.push_str(" ]");
-            debug!("{option_string}");
+            attempted_index += 1;
         }
+        let new_var = Variable::from(UniversalVariable::new(new_var_name.as_str()));
 
-        // Choose the replacement / equality
-        let chosen_vars = vars.iter().cloned().choose_multiple(self.rng, 2);
-        if chosen_vars.len() < 2 {
-            info!("  Aborting the introduction of an equality - rule has too few variables!");
-            debug!("    The rule in question: {modifying_rule}");
-            commit.add_rule(modifying_rule);
-            return commit.submit();
-        }
-        let (replaced_var, replacing_var) = (&chosen_vars[0], &chosen_vars[1]);
-
-        // Create new rule and replace using mut references
-        let mut new_rule = modifying_rule.clone();
-        for var in new_rule.variables_mut() {
-            if var == replaced_var {
-                *var = replacing_var.clone();
-            }
-        }
-
-        // Update the ADG - Rule body literals
-        for rel_edge_index in self.chosen_body_literals {
-            let rel_edge = self.adg.get_rel_edge_mut_by_index(rel_edge_index);
-            for term in rel_edge.terms.iter_mut() {
-                for var in term.variables_mut() {
-                    if var == replaced_var {
-                        *var = replacing_var.clone();
-                    }
-                }
-            }
-        }
-        // Update the ADG - Head literal
-        let head_node_index = self.adg.get_rel_node_index(&self.chosen_head_rel);
-        let head_node_weight = self.adg.get_rel_node_weight_mut_by_index(head_node_index);
-        for term in head_node_weight
-            .head_tuples
-            .get_mut(&modifying_rule.name().expect("Rule not named somehow"))
-            .expect("Rule does not match head")
+        // This ensures randomness when we...
+        pos_vars.shuffle(self.rng);
+        neg_vars.shuffle(self.rng);
+        // replace y occurences with y_new in the rule
+        for (ii, var) in pos_vars
+            .iter_mut()
+            .filter(|v| ***v == self.chosen_var)
+            .enumerate()
         {
-            for var in term.variables_mut() {
-                if var == replaced_var {
-                    *var = replacing_var.clone();
+            // This is the pos case
+            // where we keep at least one y
+            if ii == 0 { // keep y
+            } else if ii == 1 {
+                // and at least one y_new
+                **var = new_var.clone(); // ** -> in place
+            } else {
+                // Otherwise randomly leave y or replace with y_new
+                if self.rng.random_bool(0.5) {
+                    **var = new_var.clone();
                 }
             }
+        }
+        // neg case we can replace any number of y appearances
+        for var in neg_vars.iter_mut().filter(|v| ***v == self.chosen_var) {
+            if self.rng.random_bool(0.5) {
+                **var = new_var.clone();
+            }
+        }
+
+        // in head literals
+        let mut head_vars: Vec<&mut Variable> = Vec::new();
+        modified_rule.head_mut().iter_mut().for_each(|atom| {
+            atom.terms_mut().for_each(|term| {
+                term.variables_mut().for_each(|variable| {
+                    if variable.is_universal() {
+                        head_vars.push(variable);
+                    }
+                })
+            })
+        });
+        // Head same
+        for var in head_vars.iter_mut().filter(|v| ***v == self.chosen_var) {
+            if self.rng.random_bool(0.5) {
+                **var = new_var.clone();
+            }
+        }
+
+        // We modified the rule in place, so we don't need to rewrite it or so
+
+        /* // collect rel_edge weights so we can manipulate them
+        let mut chosen_body_literal_weights: Vec<(EdgeIndex, &mut ADGRelationalEdge)> = self.chosen_body_literals.iter().map(|edge| {
+            ((*edge, self.adg.get_rel_edge_mut_by_index(*edge)))
+        }).collect();
+        let chosen_body_literal_weights = self
+            .chosen_body_literals
+            .iter_mut()
+            .map(|edge| (edge, self.adg.get_rel_edge_mut_by_index(*edge)));
+        let (pos_tuples, neg_tuples): (Vec<_>, Vec<_>) =
+            chosen_body_literal_weights.partition(|(id, rel_edge)| rel_edge.sign == Sign::Positive);
+        // collect them by their tag so we know which is which
+        let mut pos_tuples_by_pred: IndexMap<&Tag, Vec<&mut ADGRelationalEdge>> = IndexMap::new();
+        for (id, rel_edge) in pos_tuples {
+            pos_tuples_by_pred
+                .entry(
+                    &self
+                        .adg
+                        .get_rel_node_weight_by_index(
+                            self.adg
+                                .get_edge_source_target_by_index(*id)
+                                .expect("Edge not found")
+                                .0,
+                        )
+                        .tag,
+                )
+                .and_modify(|others| others.push(&mut rel_edge))
+                .or_insert(Vec::new());
+        }
+        let mut neg_tuples_by_pred: IndexMap<&Tag, Vec<&mut ADGRelationalEdge>> = IndexMap::new();
+        for (id, rel_edge) in neg_tuples {
+            neg_tuples_by_pred
+                .entry(
+                    &self
+                        .adg
+                        .get_rel_node_weight_by_index(
+                            self.adg
+                                .get_edge_source_target_by_index(*id)
+                                .expect("Edge not found")
+                                .0,
+                        )
+                        .tag,
+                )
+                .and_modify(|others| others.push(&mut rel_edge))
+                .or_insert(Vec::new());
+        } */
+
+        // Update the ADG by overwriting the terms
+        // Head atom for this rule
+        self.adg.get_rel_node_mut(&self.chosen_head_rel).head_tuples[&self.chosen_rule_name] =
+            match modified_rule.head().split_first() {
+                Some((head_atom, other)) => {
+                    if other.len() > 0 {
+                        error!("We currently don't support multi-heads!");
+                        exit(1);
+                    }
+                    head_atom.terms().cloned().collect()
+                }
+                None => {
+                    error!("Empty head!");
+                    exit(1);
+                }
+            };
+
+        // count which and how many positive/negative literals of each predicate appear
+        let mut pos_edge_by_tag: IndexMap<Tag, Vec<EdgeIndex>> = IndexMap::new();
+        let mut neg_edge_by_tag: IndexMap<Tag, Vec<EdgeIndex>> = IndexMap::new();
+        for edge in self.chosen_body_literals {
+            let (source, _) = self
+                .adg
+                .get_edge_source_target_by_index(edge)
+                .expect("Edge doesnt exist!");
+            let source_w = self.adg.get_rel_node_weight_by_index(source);
+            let rel_edge = self.adg.get_rel_edge_by_index(edge);
+            match rel_edge.sign {
+                Sign::Negative => {
+                    neg_edge_by_tag
+                        .entry(source_w.tag.clone())
+                        .and_modify(|vec| vec.push(edge))
+                        .or_insert(vec![edge]);
+                }
+                Sign::Positive => {
+                    pos_edge_by_tag
+                        .entry(source_w.tag.clone())
+                        .and_modify(|vec| vec.push(edge))
+                        .or_insert(vec![edge]);
+                }
+            }
+        }
+        debug!("pos edges by tag: {:?}",pos_edge_by_tag);
+        debug!("neg edges by tag: {:?}",neg_edge_by_tag);
+
+        // modify a positive body literal, pop-ing from by predicate sorted
+        for atom in modified_rule.body_positive() {
+            let fitting_edge = pos_edge_by_tag
+                .get_mut(&atom.predicate())
+                .expect("No fitting edge for this predicate")
+                .pop()
+                .expect("Not enough edges!");
+            self.adg.get_rel_edge_mut_by_index(fitting_edge).terms =
+                atom.terms().cloned().collect();
+        }
+        // neg edges
+        for atom in modified_rule.body_negative() {
+            let fitting_edge = neg_edge_by_tag
+                .get_mut(&atom.predicate())
+                .expect("No fitting edge for this predicate")
+                .pop()
+                .expect("Not enough edges!");
+            self.adg.get_rel_edge_mut_by_index(fitting_edge).terms =
+                atom.terms().cloned().collect();
         }
 
         // Print our change if in debug mode
         if util::in_debug_mode() {
             info!(
-                "  Replaced var {replaced_var} with var {replacing_var} in the rule {}",
-                new_rule.name().expect("Rule not named somehow")
+                "  Replaced a random number of var {} with var {} in the rule {}",
+                self.chosen_var
+                    .name()
+                    .expect("Selected var not named somehow?"),
+                new_var_name,
+                modified_rule.name().expect("Rule not named somehow")
             );
-            debug!("  Old Rule: {}", modifying_rule);
-            debug!("  New Rule: {}", new_rule);
+            debug!("  Old Rule: {}", old_rule);
+            debug!("  New Rule: {}", modified_rule);
         } else {
             info!(
-                "  Replaced var {replaced_var} with var {replacing_var} in the rule {}",
-                new_rule.name().expect("Rule not named somehow")
+                "  Replaced a random number of var {} with var {} in the rule {}",
+                self.chosen_var
+                    .name()
+                    .expect("Selected var not named somehow?"),
+                new_var_name,
+                modified_rule.name().expect("Rule not named somehow")
             );
         }
 
         // Finalise the commit
-        commit.add_rule(new_rule);
+        commit.add_rule(modified_rule);
         commit.submit()
     }
 }

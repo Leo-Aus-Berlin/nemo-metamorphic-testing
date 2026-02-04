@@ -1131,6 +1131,23 @@ impl AnnotatedDependencyGraph {
         }
     }
 
+    /// Get a relation node mutably based on its `tag` (= name)
+    pub fn get_rel_node_mut(&mut self, tag: &Tag) -> &mut ADGRelationalNode {
+        match self.graph.node_weight_mut(self.predicate_ids[tag]) {
+            None => {
+                error!("Could not find node {}", tag);
+                exit(1);
+            }
+            Some(weight) => match weight {
+                ADGNode::ADGFactNode(_fact) => {
+                    error!("Expected relation node for {} but found fact node", tag);
+                    exit(1);
+                }
+                ADGNode::ADGRelationalNode(rel) => rel,
+            },
+        }
+    }
+
     /// Get a relation node weight based on its `NodeIndex`
     pub fn get_rel_node_weight_by_index<'a>(&'a self, index: NodeIndex) -> &'a ADGRelationalNode {
         match self.graph.node_weight(index) {
@@ -1208,6 +1225,7 @@ impl AnnotatedDependencyGraph {
             .head_tuples
             .entry(rule_name.clone());
         stored_head_terms.or_insert(head_terms);
+        // multi heads would be hard ^^ here
         self.graph.add_edge(
             start_node,
             end_node,

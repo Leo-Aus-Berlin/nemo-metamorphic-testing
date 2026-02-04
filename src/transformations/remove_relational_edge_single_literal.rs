@@ -18,7 +18,7 @@ use crate::transformations::annotated_dependency_graphs::{
     ADGRelationalEdge, ADGRelationalNode, AnnotatedDependencyGraph, Sign,
 };
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
+use crate::transformations::{MetamorphicTransformation, util};
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
@@ -148,7 +148,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
             .choose(rng)
             .expect("Rule somehow still has no name")
             .clone();
-        
+
         // Multi-heads would have multiple head literals here
         let head_literal_weight: &ADGRelationalNode = adg.get_rel_node(&chosen_head_rel);
         let body_literals: Vec<EdgeIndex> = incoming_edges_by_rule_name[&chosen_rule_name].clone();
@@ -240,7 +240,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
                 } else {
                     true
                 } // we don't care about non-variable terms. Might not work with say aggregates
-                  // TODO for aggregates
+                // TODO for aggregates
             })
         });
 
@@ -274,7 +274,10 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
                     if rule.name().expect("Rule not named!") == self.chosen_rule_name {
                         // don't keep it!
                         to_modify_rule = rule.clone();
-                        info!("  Found the rule of the name {}", rule.name().expect("Rule not named somehow"));
+                        info!(
+                            "  Found the rule of the name {}",
+                            rule.name().expect("Rule not named somehow")
+                        );
                         debug!("   Old rule:   {}", rule);
                     } else {
                         commit.keep(rule);
@@ -355,13 +358,43 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
         });
 
         // Modify the rule now
+
+        info!(
+            "  Attempting to remove the literal {:?}{}({}) from the rule {}",
+            chosen_literal_weight.sign,
+            chosen_rel_w.tag,
+            chosen_literal_weight
+                .terms
+                .iter()
+                .fold(String::new(), |str, t| str.to_string()
+                    + ", "
+                    + &t.to_string())
+                .as_str(),
+            self.chosen_rule_name
+        );
         let (old_head, old_body) = (to_modify_rule.head().clone(), to_modify_rule.body().clone());
         let new_body = (old_body).into_iter().filter(|literal| {
             // filter means true == keep this literal
             let Some(predicate) = literal.predicate() else {
                 return true;
-            }; // not named predicate => is an operation
-               // identify the to remove literal by =predicate and =terms
+            }; // not named predicate => is an operation => skip
+            // identify the to remove literal by =predicate and =terms
+            debug!("predicate {}", predicate);
+            debug!(
+                "predicate != chosen_rel_w.tag 
+                {predicate} != {}
+                {}",
+                chosen_rel_w.tag,
+                predicate != chosen_rel_w.tag
+            );
+            debug!(
+                "literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms 
+                 {:?} != {:?}
+                  {}",
+                literal.terms().cloned().collect::<Vec<_>>(),
+                chosen_literal_weight.terms,
+                literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms
+            );
             predicate != chosen_rel_w.tag
                 || literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms
         });

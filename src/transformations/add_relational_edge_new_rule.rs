@@ -1,5 +1,5 @@
 use indexmap::IndexMap;
-use log::info;
+use log::{debug, info};
 use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
@@ -392,6 +392,18 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
             // pos
             let correct_lit = body.get(rel_index).expect("lit not found");
             for head_atom in rule.head() {
+                debug!(
+                    "  Adding the literal {rel}->{}) : ({},{},{})",
+                    self.chosen_head_rel,
+                    rule_name,
+                    "+",
+                    correct_lit
+                        .terms()
+                        .fold(String::new(), |str, t| str.to_string()
+                            + ", "
+                            + &t.to_string())
+                        .as_str()
+                );
                 self.adg.add_rel_edge(
                     rule_name.clone(),
                     Sign::Positive,
@@ -404,8 +416,20 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         }
         for (rel_index, rel) in self.chosen_neg_body_rel.iter().enumerate() {
             // neg
-            let correct_lit = body.get(rel_index).expect("lit not found");
+            let correct_lit = body.get(rel_index + self.chosen_pos_body_rel.len()).expect("lit not found");
             for head_atom in rule.head() {
+                debug!(
+                    "  Adding the literal {rel}->{}) : ({},{},{})",
+                    self.chosen_head_rel,
+                    rule_name,
+                    "-",
+                    correct_lit
+                        .terms()
+                        .fold(String::new(), |str, t| str.to_string()
+                            + ", "
+                            + &t.to_string())
+                        .as_str()
+                );
                 self.adg.add_rel_edge(
                     rule_name.clone(),
                     Sign::Negative,
@@ -418,7 +442,10 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         }
         // Because we add the relational edges we should just be able to re-compute
         // the ancestry and inverse stratum from the head node and it correctly computes the changes
-        info!("  Added new rule of name {}", rule.name().expect("New rule not named!"));
+        info!(
+            "  Added new rule of name {}",
+            rule.name().expect("New rule not named!")
+        );
         info!("  {}", rule);
         if util::in_debug_mode() {
             self.adg.write_self_to_file(
