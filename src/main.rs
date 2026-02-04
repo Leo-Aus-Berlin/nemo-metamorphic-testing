@@ -1,5 +1,5 @@
 use std::{
-    fs::{create_dir_all, remove_dir_all, File},
+    fs::{File, create_dir_all, remove_dir_all},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -13,7 +13,8 @@ use nemo::{
     rule_file::RuleFile,
     rule_model::{
         error::ValidationReport,
-        programs::{handle::ProgramHandle},
+        pipeline::transformations::{ProgramTransformation, validate::TransformationValidate},
+        programs::{ProgramRead, handle::ProgramHandle},
     },
 };
 
@@ -513,9 +514,17 @@ fn main() {
         adg = transformation.fetch_adg(); */
 
         // Store validation report
-        let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
-            report.merge_validation_report(&program, current_result);
-        (program, report) = match temp {
+        (program, report) = match report.merge_validation_report(&program, current_result) {
+            Ok((p, r)) => (p, r),
+            Err(_) => {
+                error!("Failed to merge validation report");
+                exit(1);
+            }
+        };
+        
+        // Checking for program well-formedness
+        let validation = program.transform(TransformationValidate {});
+        (program, report) = match report.merge_validation_report(&program, validation) {
             Ok((p, r)) => (p, r),
             Err(_) => {
                 error!("Failed to merge validation report");

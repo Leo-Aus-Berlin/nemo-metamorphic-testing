@@ -6,7 +6,6 @@ use nemo::rule_model::components::IterableVariables;
 use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::Term;
 use nemo::rule_model::components::term::primitive::variable::Variable;
 use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
 use nemo::rule_model::error::ValidationReport;
@@ -20,7 +19,7 @@ use rand::Rng;
 use rand::seq::{IteratorRandom, SliceRandom};
 
 use crate::transformations::annotated_dependency_graphs::{
-    ADGEdge, ADGFactEdge, ADGRelationalEdge, AnnotatedDependencyGraph, Sign,
+    AnnotatedDependencyGraph, Sign,
 };
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};
@@ -207,7 +206,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for ModifyRuleRemoveEquality<'a, 
 }
 
 impl<'a, 'b> ProgramTransformation for ModifyRuleRemoveEquality<'a, 'b> {
-    fn apply(mut self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
+    fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         info!("  VIII Modify Rule - Remove Equality");
         let mut commit: ProgramCommit = program.fork();
 
