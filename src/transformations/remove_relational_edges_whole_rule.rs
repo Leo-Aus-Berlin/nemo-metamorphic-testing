@@ -15,8 +15,7 @@ use rand::seq::IteratorRandom;
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{util, MetamorphicTransformation};
-/// Add a relational node with a new relational name and no
-/// edges to exisiting nodes.
+/// Remove an entire rule from the program.
 pub struct RemoveRelationalEdgesWholeRule<'a> {
     adg: &'a mut AnnotatedDependencyGraph,
     chosen_rule_name: String,

@@ -20,8 +20,7 @@ use crate::transformations::annotated_dependency_graphs::{
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};
 
-/// Add a relational node with a new relational name and no
-/// edges to exisiting nodes.
+/// Remove a single body literal from an existing rule, i.e. a single relational edge
 pub struct RemoveRelationalEdgeSingleLiteral<'a> {
     adg: &'a mut AnnotatedDependencyGraph,
     chosen_rule_name: String,

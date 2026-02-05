@@ -1,5 +1,5 @@
 use std::{
-    fs::{File, create_dir_all, remove_dir_all},
+    fs::{create_dir_all, remove_dir_all, File},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -13,8 +13,8 @@ use nemo::{
     rule_file::RuleFile,
     rule_model::{
         error::ValidationReport,
-        pipeline::transformations::{ProgramTransformation, validate::TransformationValidate},
-        programs::{ProgramRead, handle::ProgramHandle},
+        pipeline::transformations::{validate::TransformationValidate, ProgramTransformation},
+        programs::{handle::ProgramHandle, ProgramRead},
     },
 };
 
@@ -56,7 +56,7 @@ struct Cli {
     transformation_types: String,
 } */
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialisiation
 
     // Command line args
@@ -146,7 +146,7 @@ fn main() {
 
     let mut rng: rand_chacha::ChaCha8Rng = match seed {
         None => {
-            debug!("No seed provided, using OS rng");
+            println!("No seed provided, using OS rng");
             rand_chacha::ChaCha8Rng::from_os_rng()
         }
         Some(seed) => rand_chacha::ChaCha8Rng::seed_from_u64(seed.clone()),
@@ -166,12 +166,12 @@ fn main() {
                 "con" => TransformationTypes::CON,
                 "equ" => TransformationTypes::EQU,
                 _ => {
-                    error!("Failed to parse input transformation type");
+                    println!("Failed to parse input transformation type");
                     exit(1);
                 }
             }
         } else {
-            error!("Failed to parse transformation type!");
+            println!("Failed to parse transformation type!");
             exit(1);
         };
 
@@ -179,44 +179,26 @@ fn main() {
         .set(transformation_types)
         .expect("Failed to set transformation type globally!");
 
-    // Use command line args here somewhere
-    /* let args = Cli::parse();
-    NUM_TRANSFORMATIONS
-        .set(args.num)
-        .expect("Failed to set number of transformations");
-    DEBUG_MODE
-        .set(args.debug_mode)
-        .expect("Failed to set debug mode");
-    let transformation_types: TransformationTypes = match args.transformation_types.as_str() {
-        "EXP" => TransformationTypes::EXP,
-        "CON" => TransformationTypes::CON,
-        "EQU" => TransformationTypes::EQU,
-        _ => {
-            error!("Failed to parse input transformation type");
-            exit(1);
-        }
-    };
-    NAME_OF_TRANSFORMATION_SEQUENCE
-        .set(String::from("transformation_sequence_1"))
-        .expect("Failed to set transformation sequence name!");
-    let mut rng: rand_chacha::ChaCha8Rng = rand_chacha::ChaCha8Rng::seed_from_u64(args.seed); */
-
     // Create transformation folder after removing any previous contents
     let transformation_folder = String::from("./")
         + NAME_OF_TRANSFORMATION_SEQUENCE
             .get()
             .expect("Name of Transformation Sequence not set");
+
     match remove_dir_all(transformation_folder.clone()) {
         Ok(_) => (),
-        Err(_) => {
-            error!("Failed to remove/clear transformation folder");
-            exit(1);
-        }
+        Err(e) => match e.kind() {
+            std::io::ErrorKind::NotFound => (),
+            _ => {
+                println!("Failed to remove/clear transformation folder");
+                exit(1);
+            }
+        },
     }
     match create_dir_all(transformation_folder.clone()) {
         Ok(_) => (),
         Err(_) => {
-            error!("Failed to create transformation folder");
+            println!("Failed to create transformation folder");
             exit(1);
         }
     }
@@ -226,7 +208,7 @@ fn main() {
     match create_dir_all(input_folder_name.clone()) {
         Ok(_) => (),
         Err(_) => {
-            error!("Failed to create input folder");
+            println!("Failed to create input folder");
             exit(1);
         }
     }
@@ -236,7 +218,7 @@ fn main() {
     match create_dir_all(output_folder_name.clone()) {
         Ok(_) => (),
         Err(_) => {
-            error!("Failed to create output folder");
+            println!("Failed to create output folder");
             exit(1);
         }
     }
@@ -246,7 +228,7 @@ fn main() {
     match create_dir_all(log_name.clone()) {
         Ok(_) => (),
         Err(_) => {
-            error!("Failed to create log folder");
+            println!("Failed to create log folder");
             exit(1);
         }
     }
@@ -261,7 +243,7 @@ fn main() {
         match create_dir_all(debug_log_name.clone()) {
             Ok(_) => (),
             Err(_) => {
-                error!("Failed to create log debug folder");
+                println!("Failed to create log debug folder");
                 exit(1);
             }
         }
@@ -516,21 +498,29 @@ fn main() {
         // Store validation report
         (program, report) = match report.merge_validation_report(&program, current_result) {
             Ok((p, r)) => (p, r),
-            Err(_) => {
-                error!("Failed to merge validation report");
+            Err(pr) => {
+                error!("Transformation encountered an error!");
+                for err in pr.errors() {
+                    error!("{:?}", err.note());
+                }
                 exit(1);
             }
         };
-        
-        // Checking for program well-formedness
-        let validation = program.transform(TransformationValidate {});
+
+        // I can't get this to print a useful error message
+        /* // Checking for program well-formedness
+        let validation = program.transform(TransformationValidate::default());
         (program, report) = match report.merge_validation_report(&program, validation) {
             Ok((p, r)) => (p, r),
-            Err(_) => {
-                error!("Failed to merge validation report");
+            Err(pr) => {
+                error!("Program Validation encountered an error!");
+                info!("{}",pr.contains_errors());
+                for err in pr.errors() {
+                    error!("{:?}", err.note());
+                }
                 exit(1);
             }
-        }
+        }; */
     }
 
     // Done, write to file
@@ -564,6 +554,8 @@ fn main() {
     // TODO in-program nemo call?
     /* let nemo_engine_input = nemo::api::Engine::initialize(input_program.materialize(), nemo::io::ImportManager::new(resource_providers));
     nemo::api::reason(engine) */
+
+    Ok(())
 }
 
 /// Error Handling

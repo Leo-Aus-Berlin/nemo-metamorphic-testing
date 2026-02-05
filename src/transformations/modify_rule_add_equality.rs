@@ -18,8 +18,8 @@ use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGrap
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{util, MetamorphicTransformation};
 
-/// Add a relational node with a new relational name and no
-/// edges to exisiting nodes.
+/// Modify an existing rule by adding an equality between a pari of its variables
+/// Modifies the corresponding relational edges' terms
 pub struct ModifyRuleAddEquality<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,

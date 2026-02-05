@@ -23,8 +23,7 @@ use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGra
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};
 
-/// Add a relational node with a new relational name and no
-/// edges to exisiting nodes.
+/// Create a new rule, i.e. several related relational edges
 pub struct AddRelationalEdgeNewRule<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,

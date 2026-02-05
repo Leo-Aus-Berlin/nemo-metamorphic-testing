@@ -24,8 +24,8 @@ use crate::transformations::annotated_dependency_graphs::{
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{MetamorphicTransformation, util};
 
-/// Add a relational node with a new relational name and no
-/// edges to exisiting nodes.
+/// Replace some occurences of a variable in a rule with a new variable,
+/// effectively removing an equality restriction
 pub struct ModifyRuleRemoveEquality<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,

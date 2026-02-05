@@ -25,8 +25,7 @@ use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{util, MetamorphicTransformation};
 use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 
-/// Add a relational node with a new relational name and no
-/// edges to exisiting nodes.
+/// Add a relational edge i.e. a literal to an existing rule
 pub struct AddRelationalEdgeNewLiteral<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,
