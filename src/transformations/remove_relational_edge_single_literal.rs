@@ -18,7 +18,7 @@ use crate::transformations::annotated_dependency_graphs::{
     ADGRelationalEdge, ADGRelationalNode, AnnotatedDependencyGraph, Sign,
 };
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{MetamorphicTransformation, util};
+use crate::transformations::{util, MetamorphicTransformation};
 
 /// Remove a single body literal from an existing rule, i.e. a single relational edge
 pub struct RemoveRelationalEdgeSingleLiteral<'a> {
@@ -217,10 +217,32 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
             var_appears_in_negative_lit.insert(v.clone(), true);
         }
 
+        /* info!("pos, head, neg");
+        info!("{var_appears_in_how_many_pos_lit:?}");
+        info!("{var_appears_in_head:?}");
+        info!("{var_appears_in_negative_lit:?}"); */
+
+        // If there is only exactly one positive literal, we cannot remove that from the rule
+        // due to nemo not allowing for rules without positive literals,
+        // even if only constant symbols appear in the rule!
+        let pos_lit_count_in_rule = body_literals_weights
+            .iter()
+            .filter(|rel_edge| rel_edge.sign.is_positive())
+            .count();
+        if pos_lit_count_in_rule == 0 {
+            error!("Somehow allowed for a rule with no pos literals to be considered!");
+            exit(1);
+        }
+
         // Now remove literals from those we could use if not enough var appearances
+        // or if we have exactly one positive literal and that literal is positive
         let rem_lit_opt = body_literals.iter().cloned().zip(body_literals_weights);
         debug!("{rem_lit_opt:#?}");
         let rem_lit_opt = rem_lit_opt.filter(|(_, lit_option)| {
+            // remove this lit only if poscount=1 and this is that pos lit
+            (pos_lit_count_in_rule>1 || lit_option.sign.is_negative()) 
+            &&
+            // ensure range restriction
             lit_option.terms.iter().all(|t| {
                 // all must be true => don't care = true
                 if let nemo::rule_model::components::term::Term::Primitive(
@@ -239,9 +261,12 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
                 } else {
                     true
                 } // we don't care about non-variable terms. Might not work with say aggregates
-                // TODO for aggregates
+                  // TODO for aggregates
             })
         });
+
+        /* info!("Rem lit opt:");
+        info!("{rem_lit_opt:?}"); */
 
         // We can now select our to remove lit. ? causes for if 0 options we return None to caller
         let chosen_rem_lit = rem_lit_opt.choose(rng)?;
@@ -377,8 +402,8 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
             let Some(predicate) = literal.predicate() else {
                 return true;
             }; // not named predicate => is an operation => skip
-            // identify the to remove literal by =predicate and =terms
-            debug!("predicate {}", predicate);
+               // identify the to remove literal by =predicate and =terms
+            /* debug!("predicate {}", predicate);
             debug!(
                 "predicate != chosen_rel_w.tag 
                 {predicate} != {}
@@ -393,7 +418,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
                 literal.terms().cloned().collect::<Vec<_>>(),
                 chosen_literal_weight.terms,
                 literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms
-            );
+            ); */
             predicate != chosen_rel_w.tag
                 || literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms
         });

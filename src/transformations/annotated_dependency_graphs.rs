@@ -184,10 +184,16 @@ pub enum Sign {
     Negative,
 }
 impl Sign {
-    fn is_negative(&self) -> bool {
+    pub fn is_negative(&self) -> bool {
         match self {
             Self::Negative => true,
             Self::Positive => false,
+        }
+    }
+    pub fn is_positive(&self) -> bool {
+        match self {
+            Self::Negative => false,
+            Self::Positive => true,
         }
     }
 }
