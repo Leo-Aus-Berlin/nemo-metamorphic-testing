@@ -5,6 +5,7 @@ use std::{
     process::exit,
 };
 
+use indexmap::IndexMap;
 use log::{debug, error, info};
 use simplelog::*;
 
@@ -13,13 +14,14 @@ use nemo::{
     rule_file::RuleFile,
     rule_model::{
         error::ValidationReport,
-        pipeline::transformations::{validate::TransformationValidate, ProgramTransformation},
+        //pipeline::transformations::{validate::TransformationValidate, ProgramTransformation},
         programs::{handle::ProgramHandle, ProgramRead},
     },
 };
 
 mod transformations;
 
+use crate::transformations::MetamorphicTransformation;
 use transformations::{
     annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
     select_random_output_predicate::TransformationSelectRandomOutputPredicate,
@@ -443,6 +445,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     /* let mut transformation_manager =
                    TransformationManager::new(&mut adg, &mut rng, TRANSFORMATION_TYPE.get().expect("Transformation type not set!"));
     */
+
+    // Count performed tranformations:
+    let mut count_transformations: IndexMap<String, usize> = IndexMap::new();
+
     // Perform NUM_TRANSFORMATIONS transformations
     for repetition in 1..=NUM_TRANSFORMATIONS
         .get()
@@ -486,6 +492,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             };
         }
 
+        // count this transformation
+        count_transformations
+            .entry(transformation.name())
+            .and_modify(|v| *v += 1)
+            .or_insert(1);
+
         // calculate ith transformation
         let current_result: Result<ProgramHandle, ValidationReport> =
             program.transform(transformation);
@@ -524,6 +536,67 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     // Done, write to file
+
+    info!("---------------- ADG Summary: ----------------");
+    info!(
+        "ADG Fact Nodes:                  {}",
+        adg.get_fact_nodes_iter().count()
+    );
+    info!(
+        "ADG Relational Nodes:            {}",
+        adg.get_rel_nodes_iter().count()
+    );
+    info!(
+        "ADG Fact Edges:                  {}",
+        adg.get_fact_edges_iter().count()
+    );
+    info!(
+        "ADG Relational Edges:            {}",
+        adg.get_rel_edges_iter().count()
+    );
+    info!("");
+    info!(
+        "Next rule name would be:         {}",
+        adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
+    );
+    info!(
+        "Next predicate name would be:    {}",
+        adg.get_new_relation_name()
+    );
+    info!(
+        "Next constant name would be:     {}",
+        adg.get_and_register_new_iri_constant()
+    );
+    info!(
+        "Next string would be:            {}",
+        adg.get_and_register_new_string_constant()
+    );
+    info!("");
+    info!(
+        "Output predicate:                {}",
+        adg.get_output_tag().expect("No output tag set!")
+    );
+    info!(
+        "Rule count:                      {}",
+        program.rules().count()
+    );
+    info!(
+        "Average arity:                   {}",
+        program.arities().iter().fold(0, |total, ar| total + ar.1)
+            / program.arities().iter().count()
+    );
+    info!("--------- Performed Transformations: ---------");
+    info!(" #      Type");
+    let mut trans = count_transformations.iter().collect::<Vec<_>>();
+    trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
+    trans.iter().for_each(|(key, v)| {
+        info!(" {}      {}", v, key);
+    });
+
+    info!("----------------------------------------------");
+
+    //info!("Next integer would be:           {}",adg.get_and_register_new_integer_constant(rng));
+    //info!() adg.next_rule_name(oracle)
 
     // Write ADG to file
     adg.write_self_to_file(

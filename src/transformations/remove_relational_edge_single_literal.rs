@@ -34,6 +34,10 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
+    fn name(&self) -> String {
+        String::from("VI    Remove Relational Edge - Single Literal")
+    }
+
     fn new(
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,

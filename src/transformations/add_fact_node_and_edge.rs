@@ -31,6 +31,10 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
+    fn name(&self) -> String {
+        String::from("II    Add Fact Node and Edge")
+    }
+
     fn new(
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
@@ -45,7 +49,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
                     .clone(),
                 adg: adg,
                 rng: rng,
-                _transformation_number: transformation_number
+                _transformation_number: transformation_number,
             }),
             TransformationTypes::CON => Some(Self {
                 chosen_to_rel_node: adg
@@ -54,7 +58,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
                     .clone(),
                 adg: adg,
                 rng: rng,
-                _transformation_number: transformation_number
+                _transformation_number: transformation_number,
             }),
             TransformationTypes::EXP => Some(Self {
                 chosen_to_rel_node: adg

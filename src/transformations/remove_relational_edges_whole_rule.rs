@@ -27,6 +27,10 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
+    fn name(&self) -> String {
+        String::from("V     Remove Relational Edges - Whole Rule")
+    }
+
     fn new(
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,

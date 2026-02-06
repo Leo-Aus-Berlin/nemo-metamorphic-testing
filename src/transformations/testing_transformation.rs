@@ -29,6 +29,10 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for OverviewTransformation<'a, 'b
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
+    fn name(&self) -> String {
+        String::from("Test")
+    }
+
     fn new(
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,

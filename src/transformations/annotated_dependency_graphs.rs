@@ -463,6 +463,43 @@ impl AnnotatedDependencyGraph {
         self.predicate_ids.keys().map(|tag| tag.clone())
     }
 
+    /// Get an iterator over the fact nodes appearing in the ADG
+    pub fn get_fact_nodes_iter(&self) -> impl Iterator<Item = &ADGFactNode> {
+        self.graph.node_weights().filter_map(| node | match node {
+            ADGNode::ADGFactNode(fact_node) => Some(fact_node),
+            ADGNode::ADGRelationalNode(_) => None,
+        })
+    }
+
+    /// Get an iterator over the relational nodes appearing in the ADG
+    pub fn get_rel_nodes_iter(&self) -> impl Iterator<Item = &ADGRelationalNode> {
+        self.graph.node_weights().filter_map(| node | match node {
+            ADGNode::ADGFactNode(_) => None,
+            ADGNode::ADGRelationalNode(rel_node) => Some(rel_node),
+        })
+    }
+
+    /// Get an iterator over the relational edges appearing in the ADG
+    pub fn get_rel_edges_iter(&self) -> impl Iterator<Item = &ADGRelationalEdge> {
+        self.graph.edge_weights().filter_map(| edge | match edge {
+            ADGEdge::ADGFactEdge(_) => None,
+            ADGEdge::ADGRelationalEdge(rel_edge) => Some(rel_edge),
+        })
+    }
+
+    /// Get an iterator over the fact edges appearing in the ADG
+    pub fn get_fact_edges_iter(&self) -> impl Iterator<Item = &ADGFactEdge> {
+        self.graph.edge_weights().filter_map(| edge | match edge {
+            ADGEdge::ADGFactEdge(f_n) => Some(f_n),
+            ADGEdge::ADGRelationalEdge(_) => None,
+        })
+    }
+
+    // Return a reference to the output tag, if one is set already.
+    pub fn get_output_tag(&self) -> Option<Tag> {
+        self.output_predicate.clone()
+    }
+
     #[allow(dead_code, unused_variables)]
     /// Return a breadth-first visit of the ADG
     pub fn get_bfs(

@@ -21,6 +21,10 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalNode<'a> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
+    fn name(&self) -> String {
+        String::from("I     Add Relational Node")
+    }
+
     fn new(
         adg: &'a mut AnnotatedDependencyGraph,
         _rng: &'b mut rand_chacha::ChaCha8Rng,

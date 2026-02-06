@@ -38,4 +38,6 @@ pub trait MetamorphicTransformation<'a, 'b> {
     ) -> Option<Self>
     where
         Self: Sized;
+
+    fn name(&self) -> String;
 }
