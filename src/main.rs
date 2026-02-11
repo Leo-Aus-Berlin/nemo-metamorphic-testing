@@ -6,11 +6,13 @@ use std::{
 };
 
 use indexmap::IndexMap;
+use indicatif::ProgressBar;
 use log::{debug, error, info};
 use simplelog::*;
 
 use nemo::{
     error::report::ProgramReport,
+    io::{resource_providers::ResourceProviders, ImportManager},
     rule_file::RuleFile,
     rule_model::{
         error::ValidationReport,
@@ -57,8 +59,8 @@ struct Cli {
     //transformation type
     transformation_types: String,
 } */
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialisiation
 
     // Command line args
@@ -110,6 +112,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ) */
         .get_matches();
 
+    // Read the command line parameters
     // You can check the value provided by positional arguments, or option arguments
     if let Some(name) = matches.get_one::<String>("name") {
         NAME_OF_TRANSFORMATION_SEQUENCE
@@ -120,17 +123,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .set(String::from("transformation_sequence_1"))
             .expect("Failed to set transformation sequence name!");
     }
-
     if let Some(seed_path) = matches.get_one::<PathBuf>("file") {
         println!("Value for seed_path: {}", seed_path.display());
     }
-
     if let Some(num) = matches.get_one::<u32>("num") {
         NUM_TRANSFORMATIONS
             .set(num.clone())
             .expect("Failed to set number of transformations");
     }
-
     match matches.get_one::<bool>("debug") {
         None => {
             error!("Failed to read if in debug mode or not");
@@ -143,6 +143,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
+    // Initialise RNG using the provided seed (if any)
     let seed = matches.get_one::<u64>("seed");
     //let seed2: [u8; 32]  = [164, 143, 161, 123, 88, 50, 61, 10, 234, 184, 161, 204, 105, 1, 20, 184, 43, 140, 200, 117, 24, 180, 247, 84, 141, 68, 110, 161, 228, 223, 32, 242];
 
@@ -181,6 +182,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .set(transformation_types)
         .expect("Failed to set transformation type globally!");
 
+    // Done with reading command line parameters
+
     // Create transformation folder after removing any previous contents
     let transformation_folder = String::from("./")
         + NAME_OF_TRANSFORMATION_SEQUENCE
@@ -205,28 +208,33 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
+    // TODO: Probably parallelize multiple transformations using Rayon
+    // https://github.com/rayon-rs/rayon/blob/main/FAQ.md
+    // see https://rust-lang.github.io/async-book/part-guide/io.html
+    // section on cpu intensive work
+
     // Create input folder
-    let input_folder_name = transformation_folder.clone() + "/input";
+    let input_folder_name = transformation_folder.clone(); //+ "/input";
     match create_dir_all(input_folder_name.clone()) {
         Ok(_) => (),
         Err(_) => {
-            println!("Failed to create input folder");
+            error!("Failed to create input folder");
             exit(1);
         }
     }
 
     // Create output folder
-    let output_folder_name = transformation_folder.clone() + "/output";
+    let output_folder_name = transformation_folder.clone(); // + "/output";
     match create_dir_all(output_folder_name.clone()) {
         Ok(_) => (),
         Err(_) => {
-            println!("Failed to create output folder");
+            error!("Failed to create output folder");
             exit(1);
         }
     }
 
     // Create log folder
-    let log_name = transformation_folder.clone() + "/log";
+    let log_name = transformation_folder.clone(); // + "/log";
     match create_dir_all(log_name.clone()) {
         Ok(_) => (),
         Err(_) => {
@@ -241,7 +249,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .expect("Debug mode not initialised")
         .clone()
     {
-        let debug_log_name = transformation_folder.clone() + "/log/debug";
+        let debug_log_name = transformation_folder.clone() + "/debug"; // + "/log/debug";
         match create_dir_all(debug_log_name.clone()) {
             Ok(_) => (),
             Err(_) => {
@@ -306,6 +314,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap();
     }
 
+    // We have a progress bar
+    let bar = ProgressBar::new(u64::from(
+        *(NUM_TRANSFORMATIONS
+            .get()
+            .expect("Number of transformations not set")),
+    ));
+
     info!(
         "Beginning transformation {}
     Oracle:     {}      Number of T: {}
@@ -335,9 +350,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
     ];
+    let chosen = 2;
 
     // Open file
-    let path = PathBuf::from(vec_path[0]);
+    let path = PathBuf::from(vec_path[chosen]);
     // "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls"
     let file: RuleFile = match RuleFile::load(path) {
         Err(_) => panic!("Could not find example file"),
@@ -418,6 +434,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
+    // Clone input program for later use
     let input_program = program.fork_full();
     let input_program = match input_program.submit() {
         Ok(program) => program,
@@ -446,8 +463,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                    TransformationManager::new(&mut adg, &mut rng, TRANSFORMATION_TYPE.get().expect("Transformation type not set!"));
     */
 
-    // Count performed tranformations:
+    // Count performed tranformations and
+    // failed transformation initializations
     let mut count_transformations: IndexMap<String, usize> = IndexMap::new();
+    let mut count_failed_transformations: usize = 0;
 
     // Perform NUM_TRANSFORMATIONS transformations
     for repetition in 1..=NUM_TRANSFORMATIONS
@@ -484,7 +503,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 repetition,
             );
             match iter.next() {
-                None => continue,
+                None => {
+                    count_failed_transformations += 1;
+                    continue;
+                }
                 Some(loop_variable) => {
                     transformation = loop_variable;
                     break;
@@ -511,7 +533,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         (program, report) = match report.merge_validation_report(&program, current_result) {
             Ok((p, r)) => (p, r),
             Err(pr) => {
-                error!("Transformation encountered an error!");
+                error!("Transformation encountered one or more errors!");
                 for err in pr.errors() {
                     error!("{:?}", err.note());
                 }
@@ -533,9 +555,48 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 exit(1);
             }
         }; */
-    }
 
-    // Done, write to file
+        bar.inc(1);
+    }
+    bar.finish_and_clear();
+
+    // Collect and move import data
+    let mut res_statements = Vec::new();
+    for imp in program.imports() {
+        imp.spec()
+            .key_value()
+            .filter_map(|(k, v)| {
+                if k.value() == "resource" {
+                    Some(v)
+                } else {
+                    None
+                }
+            })
+            .for_each(|t| {
+                res_statements.push(PathBuf::from(
+                    String::from(vec_path[chosen]) + "/" + &t.to_string(),
+                ))
+            });
+        /* info!("{}", imp.to_string());
+        info!("{:?}",imp.spec().key_value().filter_map(|(k, v)| if k.value() == "resource" {Some(v)} else {None}).collect::<Vec<_>>());
+        info!("{}",imp.spec().key_value().fold(String::from(""), |str, v| str + &String::from(v.0.to_string()) + &String::from(v.1.to_string()))); */
+    }
+    info!(
+        " Ressources required: {}",
+        res_statements.iter().fold(String::from(""), |s, v| s + v
+            .to_str()
+            .expect("PathBuf not stringable"))
+    );
+    for data_req in res_statements {
+        match std::fs::copy(data_req, &transformation_folder) {
+            Err(e) => {
+                error!("Failed to move required edb data");
+                error!("{e}");
+                exit(1);
+            }
+            Ok(_) => (),
+        }
+    }
 
     info!("---------------- ADG Summary: ----------------");
     info!(
@@ -587,6 +648,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
     info!("--------- Performed Transformations: ---------");
     info!(" #      Type");
+    info!(
+        " {}      None - Transformation not applicable",
+        count_failed_transformations
+    );
     let mut trans = count_transformations.iter().collect::<Vec<_>>();
     trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
     trans.iter().for_each(|(key, v)| {
@@ -625,8 +690,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
 
     // TODO in-program nemo call?
-    /* let nemo_engine_input = nemo::api::Engine::initialize(input_program.materialize(), nemo::io::ImportManager::new(resource_providers));
-    nemo::api::reason(engine) */
+    let nemo_engine_input = nemo::api::Engine::initialize(
+        input_program.materialize(),
+        ImportManager::new(ResourceProviders::default()),
+    );
+    let mut pre_exec = match nemo_engine_input.await {
+        Err(r) => {
+            info!("Failed nemo calc.");
+            error!("{r}");
+            exit(1);
+        }
+        Ok(v) => v,
+    };
+    let _output = match pre_exec.execute().await {
+        Err(r) => {
+            info!("Failed nemo exec.");
+            error!("{r}");
+            exit(1);
+        }
+        Ok(v) => v,
+    };
 
     Ok(())
 }

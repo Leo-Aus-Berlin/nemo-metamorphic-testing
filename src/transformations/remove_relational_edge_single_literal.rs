@@ -428,7 +428,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
         });
         let mut new_rule = Rule::new(old_head, new_body.collect());
         debug!("    Modified rule: {new_rule}");
-        new_rule.validate().expect("Rule not well formed");
+        new_rule.validate()?;
         new_rule.set_name(
             to_modify_rule
                 .name()
