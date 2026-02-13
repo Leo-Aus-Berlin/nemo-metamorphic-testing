@@ -2,4 +2,5 @@
 /data
 /results
 /transformation_sequence_1
-/eg_benchmark/mtf*
+/eg_benchmark/**
+!/eg_benchmark/example_script.sh
