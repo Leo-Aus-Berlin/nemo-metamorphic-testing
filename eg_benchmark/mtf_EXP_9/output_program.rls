@@ -1,0 +1,19 @@
+@import choseU :- csv{resource= "data/choseU.csv", format= (string, string)}.
+@import choseB :- csv{resource= "data/choseB.csv", format= (string, string)}.
+@import elevator :- csv{resource= "data/elevator.csv", format= string}.
+@import platformHeight :- csv{resource= "data/platformHeight.csv", format= (string, int)}.
+@import allowedDiff :- csv{resource= "data/allowedDiff.csv", format= (int, int)}.
+validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), ~mustChangeAt(?y) .
+validC(?x, ?y) :- choseU(?x, ?y), ~choseB(?x, ?y) .
+mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) .
+mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) .
+@export success :- csv{}.
+canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
+mustChangeAt("jungfernheide").
+platformHeight("alexanderplatz", "str_1").
+seeTVTower(s) :- choseB("alexanderplatz", ?x), ~choseB("jungfernheide", ?x), ~tooLargeGap(?x) .
+mustChangeAt(1572260662772783257).
+validC(12419201288506408765, 16990563249987750792).
+canChangeAt(?X_1) :- choseU(?X_1, "str_1"), ~elevator("str_1") .
+canChangeAt(?X_1_new_1) :- mustChangeAt(?X_1), canChangeAt(?Y_1), seeTVTower(?X_1_new_1), ~allowedDiff("alexanderplatz", ?X_1_new_1), ~choseB(?Y_1, ?X_1_new_1), ~R_1(?X_1, ?X_1_new_1, ?X_1), ~tooLargeGap(?X_1_new_1) .
+validC(?x, ?z) :- validC(?x, ?y), validC(?y_new_1, ?z), mustChangeAt(?y_new_2), canChangeAt(?y), validC(?y, ?y_new_2), mustChangeAt(?z) .

@@ -8,8 +8,9 @@ use std::{
 
 use indexmap::{IndexMap, IndexSet};
 use indicatif::ProgressBar;
-use log::{debug, error, info};
+use log::{debug, error, info, warn};
 use simplelog::*;
+use color_print::cprintln;
 
 use nemo::{
     error::report::ProgramReport,
@@ -818,31 +819,31 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         TransformationTypes::EQU => match out == out_2 {
             true => {
                 info!("All good, output is equivalent");
-                println!("All good, output is equivalent");
+                cprintln!("<g>All good, output is equivalent</>");
             }
             false => {
-                info!("Outputs not equivalent");
-                println!("Outputs not equivalent");
+                warn!("Outputs not equivalent");
+                cprintln!("<r>Outputs not equivalent</>");
             }
         },
         TransformationTypes::CON => match out_2.is_subset(&out) {
             true => {
                 info!("All good, output has contracted");
-                println!("All good, output has contracted");
+                cprintln!("<g>All good, output has contracted</>");
             }
             false => {
-                info!("Output has not contracted");
-                println!("Output has not contracted");
+                warn!("Output has not contracted");
+                cprintln!("<r>Output has not contracted</>");
             }
         },
         TransformationTypes::EXP => match out.is_subset(&out_2) {
             true => {
                 info!("All good, output is expanding");
-                println!("All good, output is expanding");
+                cprintln!("<g>All good, output is expanding</>");
             }
             false => {
-                info!("Outputs has not expanded");
-                println!("Outputs has not expanded");
+                warn!("Outputs has not expanded");
+                cprintln!("<r>Outputs has not expanded</>");
             }
         },
     }

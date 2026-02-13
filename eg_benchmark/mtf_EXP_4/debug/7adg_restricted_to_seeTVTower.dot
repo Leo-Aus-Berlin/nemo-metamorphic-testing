@@ -1,0 +1,17 @@
+digraph {
+    1 [ label = "(canChangeAt, 1, +)" ]
+    2 [ label = "(choseB, 1, ?)" ]
+    4 [ label = "(elevator, 1, +)" ]
+    7 [ label = "(seeTVTower, 0, n)" ]
+    9 [ label = "(tooLargeGap, 2, -)" ]
+    12 [ label = "(\"data/choseB.csv\")" ]
+    13 [ label = "(\"data/elevator.csv\")" ]
+    12 -> 2 [ label = "fact edge" ]
+    13 -> 4 [ label = "fact edge" ]
+    4 -> 1 [ label = "(r_5, +, (?y, ))" ]
+    9 -> 1 [ label = "(r_5, -, (?y, ))" ]
+    1 -> 7 [ label = "(r_10, -, (?x, ))" ]
+    4 -> 7 [ label = "(r_9, +, (trainHeight, ))" ]
+    2 -> 7 [ label = "(r_9, +, (?x, \"alexanderplatz\", ))" ]
+    2 -> 7 [ label = "(r_10, +, (\"alexanderplatz\", ?x, ))" ]
+}

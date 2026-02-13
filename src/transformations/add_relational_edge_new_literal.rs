@@ -1,29 +1,29 @@
 use std::process::exit;
 
 use log::{debug, error, info};
+use nemo::rule_model::components::IterableVariables;
 use nemo::rule_model::components::atom::Atom;
 use nemo::rule_model::components::literal::Literal;
 use nemo::rule_model::components::rule::Rule;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::primitive::ground::GroundTerm;
-use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
-use nemo::rule_model::components::term::primitive::variable::Variable;
-use nemo::rule_model::components::term::primitive::Primitive;
 use nemo::rule_model::components::term::Term;
-use nemo::rule_model::components::IterableVariables;
+use nemo::rule_model::components::term::primitive::Primitive;
+use nemo::rule_model::components::term::primitive::ground::GroundTerm;
+use nemo::rule_model::components::term::primitive::variable::Variable;
+use nemo::rule_model::components::term::primitive::variable::universal::UniversalVariable;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 use rand::Rng;
+use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 
+use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
-use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
+use crate::transformations::{MetamorphicTransformation, util};
 
 /// Add a relational edge i.e. a literal to an existing rule
 pub struct AddRelationalEdgeNewLiteral<'a, 'b> {
@@ -171,6 +171,11 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
         // Find or set the arity for the chosen connect to relation
         let mut arities = program.arities();
         let new_rel_arity: Option<&usize> = arities.get(&self.chosen_new_rel);
+        info!(
+            "Relation {} has arity {:?}",
+            self.chosen_new_rel.name(),
+            new_rel_arity
+        );
         let new_rel_arity: usize = match new_rel_arity {
             Some(v) => *v,
             None => {
@@ -248,6 +253,14 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
             .iter()
             .cloned()
             .choose_multiple(self.rng, new_rel_arity);
+        // Fill up with constant symbols if arity not satisfied
+        while generated_lit_vars.len() < new_rel_arity {
+            let constant_symbol: GroundTerm =
+                self.adg.get_ground_terms().iter().cloned().choose(self.rng).unwrap_or(GroundTerm::constant("c_first"));
+            let constant_term = Term::Primitive(Primitive::Ground(constant_symbol.clone()));
+            generated_lit_vars.push(constant_term);
+        }
+        assert_eq!(generated_lit_vars.len(), new_rel_arity);
         generated_lit_vars.shuffle(self.rng);
 
         // Generate the literal
@@ -293,8 +306,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
                     String::from("./")
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
-                            .expect("Name of Transformation Sequence not set")
-                        //+ "/log",
+                            .expect("Name of Transformation Sequence not set"), //+ "/log",
                 ),
                 Some(String::from("pre_update_adg")),
             );

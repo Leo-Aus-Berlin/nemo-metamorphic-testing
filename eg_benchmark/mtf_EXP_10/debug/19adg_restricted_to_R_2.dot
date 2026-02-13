@@ -1,0 +1,13 @@
+digraph {
+    0 [ label = "(allowedDiff, 3, n)" ]
+    6 [ label = "(platformHeight, 2, n)" ]
+    14 [ label = "(\"data/platformHeight.csv\")" ]
+    15 [ label = "(\"data/allowedDiff.csv\")" ]
+    18 [ label = "(c_1, c_2)" ]
+    19 [ label = "(R_2, None, None)" ]
+    14 -> 6 [ label = "fact edge" ]
+    15 -> 0 [ label = "fact edge" ]
+    0 -> 19 [ label = "(r_EXP_5, +, (?X_2, ?X_1, ))" ]
+    6 -> 19 [ label = "(r_EXP_5, +, (c_2, ?X_4, ))" ]
+    18 -> 0 [ label = "fact edge" ]
+}

@@ -1,0 +1,172 @@
+13:31:56 [INFO] ----------------------------------------------
+13:31:56 [INFO] Beginning transformation mtf_EXP_11
+    Oracle:     EXP      Number of T: 32
+    Debug Mode: true      u64 Seed:    11
+    Internal Seed:        [201, 251, 76, 232, 235, 249, 114, 28, 179, 214, 93, 242, 156, 116, 135, 24, 89, 239, 255, 124, 18, 27, 25, 188, 232, 124, 90, 57, 227, 224, 17, 162]
+    Seed File: Currently not supported!
+13:31:56 [INFO] ----------------------------------------------
+13:31:56 [INFO] Renaming of rules complete
+13:31:56 [INFO] Choosing a predicate to export!
+13:31:56 [INFO] Found export: success
+13:31:56 [INFO] Output names (0): 
+13:31:56 [INFO] Using the randomly chosen export predicate of 1: success
+13:31:56 [INFO] Beginning inverse_stratum and ancestry computation starting at node success
+13:31:56 [INFO] Ancestry and Inverse Stratum computation complete.
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:     The following relational nodes were computed:
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (allowedDiff, 2, +)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (canChangeAt, 0, +)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (choseB, 1, ?)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (choseU, 1, ?)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (elevator, 0, +)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (mustChangeAt, 1, ?)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (platformHeight, 1, -)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (seeTVTower, None, None)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (success, 0, +)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (tooLargeGap, 1, -)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   (validC, 0, +)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [INFO] ----------------------------------------------
+13:31:56 [INFO] --------- Beginning Transformations ----------
+13:31:56 [INFO] --------  Oracle: EXP    Number: 32
+13:31:56 [INFO] ----------------------------------------------
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 0
+13:31:56 [INFO] 1 / 32
+13:31:56 [INFO]   III Add Relational edges - New Rule
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::add_relational_edge_new_rule:   Adding the literal validC->elevator) : (r_EXP_1,+,, ?Y_1, ?X_1)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::add_relational_edge_new_rule:   Adding the literal canChangeAt->elevator) : (r_EXP_1,+,, ?X_1)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::add_relational_edge_new_rule:   Adding the literal seeTVTower->elevator) : (r_EXP_1,+,, ?Y_1)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::add_relational_edge_new_rule:   Adding the literal seeTVTower->elevator) : (r_EXP_1,-,, ?X_1)
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::add_relational_edge_new_rule:   Adding the literal allowedDiff->elevator) : (r_EXP_1,-,, ?Y_1, ?Y_1)
+13:31:56 [INFO]   Added new rule of name r_EXP_1
+13:31:56 [INFO]   elevator(?X_1) :- validC(?Y_1, ?X_1), canChangeAt(?X_1), seeTVTower(?Y_1), ~seeTVTower(?X_1), ~allowedDiff(?Y_1, ?Y_1) .
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node elevator
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG restricted to Incoming from elevator
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 58
+13:31:56 [INFO] 2 / 32
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::remove_relational_edge_single_literal:     Incoming edges by rule name: [r_5 : [tooLargeGap, elevator, ]; ]
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::remove_relational_edge_single_literal: Zip {
+    a: Cloned {
+        it: Iter(
+            [
+                EdgeIndex(17),
+                EdgeIndex(16),
+            ],
+        ),
+    },
+    b: IntoIter(
+        [
+            (r_5, -, (?y, )),
+            (r_5, +, (?y, )),
+        ],
+    ),
+}
+13:31:56 [INFO]   I Add Relational Node
+13:31:56 [INFO]   Added new relation R_1
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 61
+13:31:56 [INFO] 3 / 32
+13:31:56 [INFO]   II Add Fact Node and Edge
+13:31:56 [INFO]   Assigned relation R_1 the artiy 4
+13:31:56 [INFO]   Added new fact R_1("alexanderplatz", c_1, "str_1", "jungfernheide").
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 80
+13:31:56 [INFO] 4 / 32
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_6 : [allowedDiff, platformHeight, ]; ]
+13:31:56 [INFO]   V Remove Relational Edges - Whole Rule
+13:31:56 [INFO]   Removing the Rule of the name r_6
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::remove_relational_edges_whole_rule:    tooLargeGap(?y) :- platformHeight(?y, ?h), ~allowedDiff(?h, trainHeight) .
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Updating Ancestry and Inverse Stratum beginning in relational node elevator
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG restricted to Incoming from elevator
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs:   Ancestry and Inverse Stratum update complete.
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 81
+13:31:56 [INFO] 5 / 32
+13:31:56 [INFO]   I Add Relational Node
+13:31:56 [INFO]   Added new relation R_2
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 82
+13:31:56 [INFO] 6 / 32
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::modify_rule_remove_equality:     Incoming edges by rule name: [r_EXP_1 : [allowedDiff, seeTVTower, seeTVTower, canChangeAt, validC, ]; ]
+13:31:56 [INFO]   VIII Modify Rule - Remove Equality
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::modify_rule_remove_equality: pos edges by tag: {Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }: [EdgeIndex(29)], Tag { origin: File { start: 523, end: 534 }, tag: "canChangeAt" }: [EdgeIndex(28)], Tag { origin: File { start: 460, end: 466 }, tag: "validC" }: [EdgeIndex(27)]}
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::modify_rule_remove_equality: neg edges by tag: {Tag { origin: File { start: 860, end: 871 }, tag: "allowedDiff" }: [EdgeIndex(31)], Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }: [EdgeIndex(30)]}
+13:31:56 [INFO]   Replaced a random number of var Y_1 with var Y_1_new_1 in the rule r_EXP_1
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::modify_rule_remove_equality:   Old Rule: elevator(?X_1) :- validC(?Y_1, ?X_1), canChangeAt(?X_1), seeTVTower(?Y_1), ~seeTVTower(?X_1), ~allowedDiff(?Y_1, ?Y_1) .
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::modify_rule_remove_equality:   New Rule: elevator(?X_1) :- validC(?Y_1, ?X_1), canChangeAt(?X_1), seeTVTower(?Y_1_new_1), ~seeTVTower(?X_1), ~allowedDiff(?Y_1_new_1, ?Y_1) .
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 91
+13:31:56 [INFO] 7 / 32
+13:31:56 [INFO]   I Add Relational Node
+13:31:56 [INFO]   Added new relation R_3
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 94
+13:31:56 [INFO] 8 / 32
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::remove_relational_edge_single_literal:     Incoming edges by rule name: [r_5 : [tooLargeGap, elevator, ]; ]
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::remove_relational_edge_single_literal: Zip {
+    a: Cloned {
+        it: Iter(
+            [
+                EdgeIndex(17),
+                EdgeIndex(16),
+            ],
+        ),
+    },
+    b: IntoIter(
+        [
+            (r_5, -, (?y, )),
+            (r_5, +, (?y, )),
+        ],
+    ),
+}
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::remove_relational_edge_single_literal:     Incoming edges by rule name: [r_5 : [tooLargeGap, elevator, ]; ]
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::remove_relational_edge_single_literal: Zip {
+    a: Cloned {
+        it: Iter(
+            [
+                EdgeIndex(17),
+                EdgeIndex(16),
+            ],
+        ),
+    },
+    b: IntoIter(
+        [
+            (r_5, -, (?y, )),
+            (r_5, +, (?y, )),
+        ],
+    ),
+}
+13:31:56 [INFO]   II Add Fact Node and Edge
+13:31:56 [INFO]   Added new fact elevator(c_2).
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Verifying ADG
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing ADG to file
+13:31:56 [DEBUG] (1) nemo_metamorphic_testing::transformations::annotated_dependency_graphs: Writing reduced ADG to file
