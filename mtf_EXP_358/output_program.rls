@@ -1,0 +1,29 @@
+@import choseU :- csv{resource= "data/choseU.csv", format= (string, string)}.
+@import choseB :- csv{resource= "data/choseB.csv", format= (string, string)}.
+@import elevator :- csv{resource= "data/elevator.csv", format= string}.
+@import platformHeight :- csv{resource= "data/platformHeight.csv", format= (string, int)}.
+@import allowedDiff :- csv{resource= "data/allowedDiff.csv", format= (int, int)}.
+validC(?x, ?y) :- ~choseU(?x, ?y), choseB(?x, ?y) .
+validC(?x, ?y) :- choseU(?x, ?y), ~choseB(?x, ?y) .
+canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
+mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) .
+mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) .
+@export validC :- csv{}.
+success(s) :- validC("jungfernheide", "kottbusser_tor") .
+seeTVTower(?X_1) :- tooLargeGap(?X_1) .
+validC(?x, ?z) :- validC(?x, ?y_new_1), validC(?y, ?z), ~mustChangeAt(?y) .
+seeTVTower(s) :- choseB(?x, "alexanderplatz") .
+tooLargeGap(?y) :- platformHeight(?y, ?y), ~allowedDiff(?y, trainHeight), ~allowedDiff(?y, ?y) .
+canChangeAt("jungfernheide").
+success("alexanderplatz") :- allowedDiff("alexanderplatz", "alexanderplatz"), ~tooLargeGap("alexanderplatz") .
+canChangeAt("str_1").
+validC(?X_2_new_1, "alexanderplatz") :- success(?X_2), mustChangeAt("alexanderplatz"), canChangeAt(?X_2_new_1), seeTVTower("alexanderplatz"), ~platformHeight("alexanderplatz", "alexanderplatz"), ~choseB(?X_2_new_1, "alexanderplatz"), ~seeTVTower(?X_2) .
+validC(?x, ?z) :- validC(?x, ?y_new_1_new_1), validC(?y_new_1, ?z), mustChangeAt(?y_new_1_new_1_new_1), canChangeAt(?y) .
+canChangeAt("alexanderplatz") :- success("alexanderplatz"), mustChangeAt("alexanderplatz"), ~allowedDiff("alexanderplatz", "alexanderplatz"), ~choseB("alexanderplatz", "alexanderplatz") .
+elevator("jungfernheide").
+success("jungfernheide").
+validC(c_1, c_2).
+R_1(?X_1) :- R_2("str_1", ?Y_1, ?X_1, ?X_1, ?X_1, "str_1"), mustChangeAt("str_1"), seeTVTower(?X_1), ~platformHeight(?X_1, "str_1"), ~canChangeAt(?Y_1), ~R_2("str_1", "str_1", ?X_1, "str_1", ?X_1, ?X_1) .
+canChangeAt(c_3).
+canChangeAt(?X_1) :- choseU(?X_1, ?X_1), ~R_4(?X_1, ?X_1, ?X_1, c_2) .
+validC(?X_2, ?X_1) :- allowedDiff(?X_2, ?X_1), R_3("str_1", "str_1", ?X_1, ?X_1, ?Y_1, ?Y_1), seeTVTower("str_1"), ~elevator(?X_1) .

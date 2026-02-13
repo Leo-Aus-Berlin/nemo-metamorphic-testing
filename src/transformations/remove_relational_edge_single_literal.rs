@@ -401,6 +401,9 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
             self.chosen_rule_name
         );
         let (old_head, old_body) = (to_modify_rule.head().clone(), to_modify_rule.body().clone());
+        
+        // Ensure we only remove one literal, even if multiple of the same occur:
+        let mut have_removed_lit = false;
         let new_body = (old_body).into_iter().filter(|literal| {
             // filter means true == keep this literal
             let Some(predicate) = literal.predicate() else {
@@ -423,14 +426,17 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
                 chosen_literal_weight.terms,
                 literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms
             ); */
+            if have_removed_lit {return true};
             let lit_sign = match literal {
                 nemo::rule_model::components::literal::Literal::Negative(_) => Sign::Negative,
                 nemo::rule_model::components::literal::Literal::Positive(_) => Sign::Positive,
                 nemo::rule_model::components::literal::Literal::Operation(_) => return true,
             };
-            predicate != chosen_rel_w.tag
+            let keep_this = predicate != chosen_rel_w.tag
                 || literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms
-                || lit_sign != chosen_literal_weight.sign
+                || lit_sign != chosen_literal_weight.sign;
+            if !keep_this {have_removed_lit = true};
+            keep_this
         });
         let mut new_rule = Rule::new(old_head, new_body.collect());
         debug!("    Modified rule: {new_rule}");
