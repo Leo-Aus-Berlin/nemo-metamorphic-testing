@@ -1,4 +1,4 @@
-use crate::{transformations::util, NAME_OF_TRANSFORMATION_SEQUENCE};
+use crate::{NAME_OF_TRANSFORMATION_SEQUENCE, transformations::util};
 use std::{
     collections::{HashSet, VecDeque},
     fmt::{Debug, Formatter},
@@ -10,20 +10,19 @@ use indexmap::{IndexMap, IndexSet};
 use log::{debug, error, info, trace};
 use nemo::rule_model::{
     components::{
-        self, statement,
+        self, IterablePrimitives, statement,
         tag::Tag,
-        term::{primitive::ground::GroundTerm, Term},
-        IterablePrimitives,
+        term::{Term, primitive::ground::GroundTerm},
     },
-    programs::{handle::ProgramHandle, ProgramRead},
+    programs::{ProgramRead, handle::ProgramHandle},
 };
-use petgraph::{dot::Dot, graph::NodeIndex};
 use petgraph::{
+    Directed,
     prelude::StableGraph,
     stable_graph::{EdgeIndex, Edges},
     visit::EdgeRef,
-    Directed,
 };
+use petgraph::{dot::Dot, graph::NodeIndex};
 use rand::RngCore;
 use rand_chacha::ChaCha8Rng;
 
@@ -50,12 +49,12 @@ impl PartialOrd for Ancestry {
             (Ancestry::Positive, Ancestry::Positive) => Some(std::cmp::Ordering::Equal),
             (Ancestry::None, Ancestry::None) => Some(std::cmp::Ordering::Equal),
             (Ancestry::Unknown, Ancestry::Unknown) => Some(std::cmp::Ordering::Equal),
+            (Ancestry::Positive, Ancestry::Negative) => None,
+            (Ancestry::Negative, Ancestry::Positive) => None,
             (Ancestry::None, _) => Some(std::cmp::Ordering::Less),
             (_, Ancestry::None) => Some(std::cmp::Ordering::Greater),
             (_, Ancestry::Unknown) => Some(std::cmp::Ordering::Less),
             (Ancestry::Unknown, _) => Some(std::cmp::Ordering::Greater),
-            (Ancestry::Positive, Ancestry::Negative) => None,
-            (Ancestry::Negative, Ancestry::Positive) => None,
         }
     }
 }
@@ -426,7 +425,7 @@ impl AnnotatedDependencyGraph {
     /// Write self to file, except we cut all nodes that don't have both incoming and outgoing edges
     /// (recursive closure of this condition)
     pub fn write_reduced_self_to_file(&self, path: Option<String>, name: Option<String>) {
-        debug!("Writing reduced ADG to file");
+        trace!("Writing reduced ADG to file");
         let mut copy_of_graph = self.graph.clone();
         for _ in 0..self.graph.node_count() {
             copy_of_graph = copy_of_graph.filter_map(
@@ -679,7 +678,7 @@ impl AnnotatedDependencyGraph {
         let curr_weight_node = self.get_rel_node(&node);
         let node_index = self.get_rel_node_index(&node);
         if util::in_debug_mode() {
-            debug!(
+            trace!(
                 "  Updating Ancestry and Inverse Stratum beginning in relational node {}",
                 curr_weight_node.tag.name()
             );
@@ -714,6 +713,19 @@ impl AnnotatedDependencyGraph {
             }
             Some(anc) => anc,
         }; */
+        //.expect("Relational node not initialised")
+        // ^^ None case is fine: New relational node
+        //    Because this is the head None is fine!
+        let curr_ancestry = match curr_weight_node.ancestry {
+            Some(anc) => anc,
+            None => {
+                if Some(curr_weight_node.tag.clone()) == self.output_predicate {
+                    Ancestry::Positive
+                } else {
+                    Ancestry::None
+                }
+            }
+        };
         self.set_ancestry_inverse_stratum(
             node_index,
             curr_weight_node
@@ -722,16 +734,11 @@ impl AnnotatedDependencyGraph {
                 // ^^ None case is fine: New relational node
                 //    Because this is the head 0 is fine!
                 .unwrap_or(0),
-            curr_weight_node
-                .ancestry
-                //.expect("Relational node not initialised")
-                // ^^ None case is fine: New relational node
-                //    Because this is the head None is fine!
-                .unwrap_or(Ancestry::None),
+            curr_ancestry,
             true,
         );
         if util::in_debug_mode() {
-            debug!("  Ancestry and Inverse Stratum update complete.");
+            trace!("  Ancestry and Inverse Stratum update complete.");
         }
     }
 
@@ -1364,6 +1371,7 @@ impl AnnotatedDependencyGraph {
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
             ADGNode::ADGRelationalNode(rel_node) => {
+                debug!("{rel_node:?}");
                 if rel_node.ancestry <= Some(Ancestry::Negative) {
                     Some(rel_node)
                 } else {
@@ -1373,7 +1381,7 @@ impl AnnotatedDependencyGraph {
         }) {
             vec.push(rel_node.tag.clone())
         }
-        //debug!("{vec:?}");
+        debug!("{vec:?}");
         vec
     }
 

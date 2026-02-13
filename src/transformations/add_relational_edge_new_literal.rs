@@ -171,11 +171,11 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
         // Find or set the arity for the chosen connect to relation
         let mut arities = program.arities();
         let new_rel_arity: Option<&usize> = arities.get(&self.chosen_new_rel);
-        info!(
+        /* info!(
             "Relation {} has arity {:?}",
             self.chosen_new_rel.name(),
             new_rel_arity
-        );
+        ); */
         let new_rel_arity: usize = match new_rel_arity {
             Some(v) => *v,
             None => {

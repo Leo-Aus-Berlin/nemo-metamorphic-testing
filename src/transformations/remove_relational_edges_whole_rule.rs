@@ -168,6 +168,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
                     .reset_ancestry_inverse_stratum_for_node_and_ancestors(*lit),
             )
         });
+        debug!("Literals we reset: {:?}",reset_literals.iter().map(| lit | self.adg.get_rel_node_weight_by_index(*lit).tag.name()).collect::<Vec<_>>());
         // 3) Re-Calculate anc and st by calling calculate update from the children
         //  a.k.a. the neighbours of the affected body literals
         let mut children: Vec<NodeIndex> = Vec::new();
