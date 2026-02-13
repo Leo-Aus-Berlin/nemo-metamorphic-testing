@@ -457,7 +457,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
                             .expect("Name of Transformation Sequence not set")
-                        + "/log",
+                        //+ "/log",
                 ),
                 Some(String::from("pre_update_adg")),
             );

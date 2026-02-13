@@ -48,6 +48,8 @@ impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<
                     export_directives.push(s);
                     info!("Found export: {}", export.predicate());
                 }
+                // werden gleich wie export behandelt von nemo, aber nie in eine datei geschrieben
+                // sollen vollständig ausgerechnet werden
                 Statement::Output(output) => {
                     export_directives.push(s);
                     info!("Found output: {}", output.predicate());

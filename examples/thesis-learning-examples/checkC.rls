@@ -25,5 +25,5 @@ seeTVTower(s):- choseB(?x,"alexanderplatz").
 #[name("TV2")]
 seeTVTower(s):- choseB("alexanderplatz",?x).
 #[name("success")]
-success(s) :- validC("jungfernheide","kottbusserTor").
+success(s) :- validC("jungfernheide","kottbusser_tor").
 @export success :- csv{}.

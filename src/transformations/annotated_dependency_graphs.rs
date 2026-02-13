@@ -178,7 +178,7 @@ impl Debug for ADGFactNode {
     }
 }
 
-#[derive(Clone,PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 pub enum Sign {
     Positive,
     Negative,
@@ -218,7 +218,11 @@ impl Debug for ADGRelationalEdge {
             "({}, {:?}, {}))",
             self.rule_name,
             self.sign,
-            String::from(self.terms.iter().fold(String::from("("), |t, n| t + n.to_string().as_str() + ", "))
+            String::from(
+                self.terms
+                    .iter()
+                    .fold(String::from("("), |t, n| t + n.to_string().as_str() + ", ")
+            )
         ))
     }
 }
@@ -410,7 +414,13 @@ impl AnnotatedDependencyGraph {
         path.push_str("/");
         path.push_str(name.unwrap_or(String::from("adg")).as_str());
         path.push_str(".dot");
-        std::fs::write(path, format!("{:?}", basic_dot)).unwrap();
+        match std::fs::write(&path, format!("{:?}", basic_dot)) {
+            Ok(_) => (),
+            Err(e) => {
+                error!("Failed to write ADG to {} ", path);
+                error!("{e}");
+            }
+        }
     }
 
     /// Write self to file, except we cut all nodes that don't have both incoming and outgoing edges
@@ -465,7 +475,7 @@ impl AnnotatedDependencyGraph {
 
     /// Get an iterator over the fact nodes appearing in the ADG
     pub fn get_fact_nodes_iter(&self) -> impl Iterator<Item = &ADGFactNode> {
-        self.graph.node_weights().filter_map(| node | match node {
+        self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(fact_node) => Some(fact_node),
             ADGNode::ADGRelationalNode(_) => None,
         })
@@ -473,7 +483,7 @@ impl AnnotatedDependencyGraph {
 
     /// Get an iterator over the relational nodes appearing in the ADG
     pub fn get_rel_nodes_iter(&self) -> impl Iterator<Item = &ADGRelationalNode> {
-        self.graph.node_weights().filter_map(| node | match node {
+        self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
             ADGNode::ADGRelationalNode(rel_node) => Some(rel_node),
         })
@@ -481,7 +491,7 @@ impl AnnotatedDependencyGraph {
 
     /// Get an iterator over the relational edges appearing in the ADG
     pub fn get_rel_edges_iter(&self) -> impl Iterator<Item = &ADGRelationalEdge> {
-        self.graph.edge_weights().filter_map(| edge | match edge {
+        self.graph.edge_weights().filter_map(|edge| match edge {
             ADGEdge::ADGFactEdge(_) => None,
             ADGEdge::ADGRelationalEdge(rel_edge) => Some(rel_edge),
         })
@@ -489,7 +499,7 @@ impl AnnotatedDependencyGraph {
 
     /// Get an iterator over the fact edges appearing in the ADG
     pub fn get_fact_edges_iter(&self) -> impl Iterator<Item = &ADGFactEdge> {
-        self.graph.edge_weights().filter_map(| edge | match edge {
+        self.graph.edge_weights().filter_map(|edge| match edge {
             ADGEdge::ADGFactEdge(f_n) => Some(f_n),
             ADGEdge::ADGRelationalEdge(_) => None,
         })
@@ -684,7 +694,8 @@ impl AnnotatedDependencyGraph {
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
                             .expect("Name of Transformation Sequence not set")
-                        + "/log/debug",
+                        //+ "/log"
+                        + "/debug",
                 ),
                 Some(String::from("pre_update_reduced_adg")),
             );
@@ -958,7 +969,8 @@ impl AnnotatedDependencyGraph {
                 + NAME_OF_TRANSFORMATION_SEQUENCE
                     .get()
                     .expect("Name of Transformation Sequence not set")
-                + "/log/debug",
+                //+ "/log"
+                        + "/debug",
         );
         let name = Some(
             String::from(transformation_number.to_string() + "adg_restricted_to_")
@@ -1531,7 +1543,8 @@ impl AnnotatedDependencyGraph {
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
                             .expect("Name of Transformation Sequence not set")
-                        + "/log/debug",
+                        //+ "/log"
+                        + "/debug",
                 ),
                 Some(String::from("pre_verify_adg")),
             );
@@ -1541,7 +1554,8 @@ impl AnnotatedDependencyGraph {
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
                             .expect("Name of Transformation Sequence not set")
-                        + "/log/debug",
+                        //+ "/log"
+                        + "/debug",
                 ),
                 Some(String::from("pre_verify_reduced_adg")),
             );

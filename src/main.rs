@@ -1,23 +1,24 @@
 use std::{
-    fs::{create_dir_all, remove_dir_all, File},
+    env::{current_dir, set_current_dir},
+    fs::{File, create_dir_all, remove_dir_all},
     io::Write,
     path::PathBuf,
     process::exit,
 };
 
-use indexmap::IndexMap;
+use indexmap::{IndexMap, IndexSet};
 use indicatif::ProgressBar;
 use log::{debug, error, info};
 use simplelog::*;
 
 use nemo::{
     error::report::ProgramReport,
-    io::{resource_providers::ResourceProviders, ImportManager},
+    execution::execution_parameters::ExecutionParameters,
+    io::{ImportManager, resource_providers::ResourceProviders},
     rule_file::RuleFile,
     rule_model::{
-        error::ValidationReport,
-        //pipeline::transformations::{validate::TransformationValidate, ProgramTransformation},
-        programs::{handle::ProgramHandle, ProgramRead},
+        pipeline::transformations::{ProgramTransformation, default::TransformationDefault},
+        programs::{ProgramRead, handle::ProgramHandle},
     },
 };
 
@@ -320,7 +321,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .get()
             .expect("Number of transformations not set")),
     ));
-
+    info!("----------------------------------------------");
     info!(
         "Beginning transformation {}
     Oracle:     {}      Number of T: {}
@@ -344,13 +345,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         rng.get_seed(),
         /* TODO: Seed file */
     );
+    info!("----------------------------------------------");
 
     let vec_path: Vec<&str> = vec![
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
     ];
-    let chosen = 2;
+    let chosen = 0;
 
     // Open file
     let path = PathBuf::from(vec_path[chosen]);
@@ -364,7 +366,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let report = ProgramReport::new(file);
 
     // Report building: Parser
-    let (mut program, mut report) = match report.merge_program_parser_report(handle) {
+    let (mut program, _) = match report.merge_program_parser_report(handle) {
         Ok((program, report)) => (program, report),
         // Parsing failed!
         Err(report) => {
@@ -372,21 +374,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             std::process::exit(1);
         }
     };
+    // Am Ende noch default transformation
+    // alle fehler ignorieren die zwischendurch auftauchen mit _
+    // dann am ende nach der default transformation reports auswerten
+    // bzw nochmal genau ansehen ob default transformation welche elemente davon möchte ich machen
 
     // Name all of the rules!
-    let transformation_name_rules: TransformationNameRules = TransformationNameRules::new();
-    let output_name_rules: Result<ProgramHandle, ValidationReport> =
-        program.transform(transformation_name_rules);
-    // Store validation report
-    let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
-        report.merge_validation_report(&program, output_name_rules);
-    (program, report) = match temp {
-        Ok((p, r)) => (p, r),
-        Err(_) => {
-            error!("Failed to merge validation report");
-            exit(1);
-        }
-    };
+    program = transform_and_err(&program, TransformationNameRules::new());
 
     // Construct the ADG
     let mut adg: AnnotatedDependencyGraph = match AnnotatedDependencyGraph::from_program(&program) {
@@ -398,20 +392,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     // Choose output predicate. The transformation also sets the adg's output predicate
-    let transformation_output_chose: TransformationSelectRandomOutputPredicate =
-        TransformationSelectRandomOutputPredicate::new(&mut adg, &mut rng);
-    let output_choose_result: Result<ProgramHandle, ValidationReport> =
-        program.transform(transformation_output_chose);
-    // Store validation report
-    let temp: Result<(ProgramHandle, ProgramReport), ProgramReport> =
-        report.merge_validation_report(&program, output_choose_result);
-    (program, report) = match temp {
-        Ok((p, r)) => (p, r),
-        Err(_) => {
-            error!("Failed to merge validation report");
-            exit(1);
-        }
-    };
+    program = transform_and_err(
+        &program,
+        TransformationSelectRandomOutputPredicate::new(&mut adg, &mut rng),
+    );
 
     // Let the ADG calculate its stratum and ancestry
     adg.calculate_ancestry_and_inverse_stratum();
@@ -446,10 +430,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             std::process::exit(1);
         }
     };
+    // Apply default transformation to simulate IRL nemo transformations and
+    // materialize to truly clone
+    let input_program = transform_and_err(
+        &input_program,
+        TransformationDefault::new(&ExecutionParameters::default()),
+    )
+    .materialize();
 
-    info!("Beginning Transformations");
+    info!("----------------------------------------------");
+    info!("--------- Beginning Transformations ----------");
     info!(
-        "Oracle: {}    Number: {}",
+        "--------  Oracle: {}    Number: {}",
         TRANSFORMATION_TYPE
             .get()
             .expect("Transformation type not set!"),
@@ -457,6 +449,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .get()
             .expect("Num transformations not initialised")
     );
+    info!("----------------------------------------------");
 
     // The available transformations
     /* let mut transformation_manager =
@@ -521,25 +514,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .or_insert(1);
 
         // calculate ith transformation
-        let current_result: Result<ProgramHandle, ValidationReport> =
-            program.transform(transformation);
+        program = transform_and_err(&program, transformation);
 
         // transformations should instead work on a reference
         // to the adg and then transform that
         /* // Store ADG for next iteration
         adg = transformation.fetch_adg(); */
-
-        // Store validation report
-        (program, report) = match report.merge_validation_report(&program, current_result) {
-            Ok((p, r)) => (p, r),
-            Err(pr) => {
-                error!("Transformation encountered one or more errors!");
-                for err in pr.errors() {
-                    error!("{:?}", err.note());
-                }
-                exit(1);
-            }
-        };
 
         // I can't get this to print a useful error message
         /* // Checking for program well-formedness
@@ -560,7 +540,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     bar.finish_and_clear();
 
-    // Collect and move import data
+    info!("----------------------------------------------");
+    info!("------------ Transformations Done ------------");
+    info!("----------------------------------------------");
+
+    // Collect import data
     let mut res_statements = Vec::new();
     for imp in program.imports() {
         imp.spec()
@@ -573,22 +557,39 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             })
             .for_each(|t| {
-                res_statements.push(PathBuf::from(
-                    String::from(vec_path[chosen]) + "/" + &t.to_string(),
-                ))
+                let str_term = t.to_string();
+                let str_term = str_term.replace("\"", "");
+                let d = PathBuf::from(str_term);
+                res_statements.push(d)
             });
-        /* info!("{}", imp.to_string());
-        info!("{:?}",imp.spec().key_value().filter_map(|(k, v)| if k.value() == "resource" {Some(v)} else {None}).collect::<Vec<_>>());
-        info!("{}",imp.spec().key_value().fold(String::from(""), |str, v| str + &String::from(v.0.to_string()) + &String::from(v.1.to_string()))); */
     }
     info!(
-        " Ressources required: {}",
-        res_statements.iter().fold(String::from(""), |s, v| s + v
-            .to_str()
-            .expect("PathBuf not stringable"))
+        " Ressources required: 
+        {}",
+        res_statements.iter().fold(String::from(""), |s, v| s
+            + v.to_str().expect("PathBuf not stringable")
+            + "
+        ")
     );
     for data_req in res_statements {
-        match std::fs::copy(data_req, &transformation_folder) {
+        let mut from_dir = PathBuf::from(vec_path[chosen]);
+        from_dir.pop();
+        from_dir = from_dir.join(&data_req);
+        let to_dir = PathBuf::from(&transformation_folder).join(&data_req);
+        //println!("from: {} to: {}", from_dir.display(), to_dir.display());
+        // Create data folder
+        let mut data_folder_name = to_dir.clone();
+        data_folder_name.pop();
+        //println!("data folder: {:?}", data_folder_name);
+        match create_dir_all(data_folder_name) {
+            Ok(_) => (),
+            Err(_) => {
+                error!("Failed to create data folder");
+                exit(1);
+            }
+        }
+        // move (=copy) required data
+        match std::fs::copy(from_dir, to_dir) {
             Err(e) => {
                 error!("Failed to move required edb data");
                 error!("{e}");
@@ -681,36 +682,179 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
     println!(
-        "Finished transformation.
-    Input, output and log can be found in the folder {}",
+        "Finished transformation. Input, output and log can be found in the folder {}",
         String::from("./")
             + NAME_OF_TRANSFORMATION_SEQUENCE
                 .get()
                 .expect("Name of Transformation Sequence not set")
     );
 
-    // TODO in-program nemo call?
+    // We need to switch to the transformation directory in order to correctly
+    // use import statements in the nemo execution. Switch back afterwards
+    let old_dir = match current_dir() {
+        Ok(dir) => dir,
+        Err(e) => {
+            error!("Failed fetching dir!");
+            error!("{e}");
+            exit(1);
+        }
+    };
+    match set_current_dir(transformation_folder) {
+        Ok(()) => (),
+        Err(e) => {
+            error!("Failed to switch dir!");
+            error!("{e}");
+            exit(1);
+        }
+    };
+
+    info!("----------------------------------------------");
+    info!("-- Beginning Nemo Execution - Input Program --");
+    info!("----------------------------------------------");
     let nemo_engine_input = nemo::api::Engine::initialize(
-        input_program.materialize(),
+        input_program,
         ImportManager::new(ResourceProviders::default()),
     );
     let mut pre_exec = match nemo_engine_input.await {
         Err(r) => {
-            info!("Failed nemo calc.");
+            error!("Failed nemo calc.");
             error!("{r}");
             exit(1);
         }
         Ok(v) => v,
     };
-    let _output = match pre_exec.execute().await {
+    match pre_exec.execute().await {
         Err(r) => {
-            info!("Failed nemo exec.");
+            error!("Failed nemo exec.");
             error!("{r}");
             exit(1);
         }
         Ok(v) => v,
     };
+    let output_pred = adg.get_output_tag().expect("adg has no output pred.");
+    let out = match pre_exec.predicate_rows(&output_pred).await {
+        Err(e) => {
+            error!("Failed nemo exec. predicate row fetch");
+            error!("{e}");
+            exit(1);
+        }
+        Ok(res) => res,
+    };
+    let out: IndexSet<_> = match out {
+        Some(value) => value.collect(),
+        None => IndexSet::new(),
+    };
+    info!("----------------------------------------------");
+    info!("--- Finished Nemo Execution - Input Program --");
+    info!("----------------------------------------------");
+    info!(" Output {} ", output_pred.name());
+    for line in out.iter() {
+        info!("     {line:?}");
+    }
 
+    info!("----------------------------------------------");
+    info!("Beginning Nemo Execution - Transformed Program");
+    info!("----------------------------------------------");
+    // Apply default transformation in order to simulate IRL nemo application
+    // If the error message is not useful enough to discover the bug perhaps
+    // comment this out and see if the execution engine has a more useful error
+    // message
+    /* program = transform_and_err(
+        &program,
+        TransformationDefault::new(&ExecutionParameters::default()),
+    ); */
+    let nemo_engine_input_2 = nemo::api::Engine::initialize(
+        program.materialize(),
+        ImportManager::new(ResourceProviders::default()),
+    );
+    let mut pre_exec_2 = match nemo_engine_input_2.await {
+        Err(r) => {
+            error!("Failed nemo calc.");
+            error!("{r}");
+            exit(1);
+        }
+        Ok(v) => v,
+    };
+    match pre_exec_2.execute().await {
+        Err(r) => {
+            error!("Failed nemo exec.");
+            error!("{r}");
+            exit(1);
+        }
+        Ok(v) => v,
+    };
+    let out_2 = match pre_exec_2.predicate_rows(&output_pred).await {
+        Err(e) => {
+            error!("Failed nemo exec. predicate row fetch");
+            error!("{e}");
+            exit(1);
+        }
+        Ok(res) => res,
+    };
+    let out_2: IndexSet<_> = match out_2 {
+        Some(value) => value.collect(),
+        None => IndexSet::new(),
+    };
+    info!("----------------------------------------------");
+    info!(" Finished Nemo Execution - Transformed Program");
+    info!("----------------------------------------------");
+    info!(" Output {} ", output_pred.name());
+    for line in out_2.iter() {
+        info!("     {line:?}");
+    }
+
+    info!("----------------------------------------------");
+    info!(
+        "------------ Asserting Oracle {} ------------",
+        TRANSFORMATION_TYPE
+            .get()
+            .expect("Transformation type not set")
+    );
+    info!("----------------------------------------------");
+    match TRANSFORMATION_TYPE
+        .get()
+        .expect("Transformation type not set")
+    {
+        TransformationTypes::EQU => match out == out_2 {
+            true => {
+                info!("All good, output is equivalent");
+                println!("All good, output is equivalent");
+            }
+            false => {
+                info!("Outputs not equivalent");
+                println!("Outputs not equivalent");
+            }
+        },
+        TransformationTypes::CON => match out_2.is_subset(&out) {
+            true => {
+                info!("All good, output has contracted");
+                println!("All good, output has contracted");
+            }
+            false => {
+                info!("Output has not contracted");
+                println!("Output has not contracted");
+            }
+        },
+        TransformationTypes::EXP => match out.is_subset(&out_2) {
+            true => {
+                info!("All good, output is expanding");
+                println!("All good, output is expanding");
+            }
+            false => {
+                info!("Outputs has not expanded");
+                println!("Outputs has not expanded");
+            }
+        },
+    }
+
+    match set_current_dir(old_dir) {
+        Ok(()) => (),
+        Err(e) => {
+            error!("Failed to switch dir to old directory!");
+            error!("{e}");
+            exit(1);
+        }
+    };
     Ok(())
 }
 
@@ -741,4 +885,23 @@ fn write_program_handle_to_file(program: &ProgramHandle, new_name: &str) -> std:
     }
 
     Ok(())
+}
+
+/// Perform a transformation, catching any errors
+///
+///
+fn transform_and_err<T>(program: &ProgramHandle, transformation: T) -> ProgramHandle
+where
+    T: ProgramTransformation,
+{
+    match program.transform(transformation) {
+        Ok(p) => p,
+        Err(e) => {
+            error!("Transformation is erronous");
+            for err in e.errors(){
+                error!("{}",err.note().unwrap_or(""));
+            }
+            exit(1);
+        }
+    }
 }
