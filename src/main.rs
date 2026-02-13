@@ -759,10 +759,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // If the error message is not useful enough to discover the bug perhaps
     // comment this out and see if the execution engine has a more useful error
     // message
-    /* program = transform_and_err(
+    program = transform_and_err(
         &program,
         TransformationDefault::new(&ExecutionParameters::default()),
-    ); */
+    );
     let nemo_engine_input_2 = nemo::api::Engine::initialize(
         program.materialize(),
         ImportManager::new(ResourceProviders::default()),
