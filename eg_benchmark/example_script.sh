@@ -3,7 +3,7 @@
 for i in {1..10000}
 do
  echo "Transformation EXP:" $i " / 10000"
- ./../target/debug/nemo-metamorphic-testing --num 32 -d --type EXP --seed $i mtf_EXP_$i
+ ./../target/debug/nemo-metamorphic-testing --num 32 --type EXP --seed $i mtf_EXP_$i
 done
 for i in {10000..20000}
 do

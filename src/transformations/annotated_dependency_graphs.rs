@@ -716,15 +716,40 @@ impl AnnotatedDependencyGraph {
         //.expect("Relational node not initialised")
         // ^^ None case is fine: New relational node
         //    Because this is the head None is fine!
+
+        // We need to ensure that the output predicate always has positive ancestry
         let curr_ancestry = match curr_weight_node.ancestry {
-            Some(anc) => anc,
-            None => {
-                if Some(curr_weight_node.tag.clone()) == self.output_predicate {
+            Some(Ancestry::None) => {
+                if self.is_output_pred(&curr_weight_node.tag) {
                     Ancestry::Positive
                 } else {
                     Ancestry::None
                 }
             }
+            Some(Ancestry::Negative) => {
+                if self.is_output_pred(&curr_weight_node.tag) {
+                    error!("Output predicate has negative ancestry somehow");
+                    exit(1);
+                } else {
+                    Ancestry::Negative
+                }
+            }
+            Some(Ancestry::Unknown) => {
+                if self.is_output_pred(&curr_weight_node.tag) {
+                    error!("Output predicate has unknown ancestry somehow");
+                    exit(1);
+                } else {
+                    Ancestry::Unknown
+                }
+            }
+            None => {
+                if self.is_output_pred(&curr_weight_node.tag) {
+                    Ancestry::Positive
+                } else {
+                    Ancestry::None
+                }
+            }
+            Some(anc) => anc,
         };
         self.set_ancestry_inverse_stratum(
             node_index,
@@ -740,6 +765,11 @@ impl AnnotatedDependencyGraph {
         if util::in_debug_mode() {
             trace!("  Ancestry and Inverse Stratum update complete.");
         }
+    }
+
+    /// Is this tag the output predicate of this adg?
+    pub fn is_output_pred(&self, tag: &Tag) -> bool {
+        Some(tag.clone()) == self.output_predicate
     }
 
     /// private function for calculating ancestry and inverse stratum. This is recursively called.
@@ -1364,6 +1394,7 @@ impl AnnotatedDependencyGraph {
 
     /// Get those relational nodes with negative or none ancestry
     pub fn get_leq_negative_ancestry_relational_nodes(&self) -> Vec<Tag> {
+        debug!("LEQ negative ancestry relational nodes:");
         let mut vec: Vec<Tag> = Vec::new();
         /*
         debug!("LEQ_NEG");

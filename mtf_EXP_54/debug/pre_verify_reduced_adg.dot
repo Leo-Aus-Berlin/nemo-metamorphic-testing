@@ -1,0 +1,14 @@
+digraph {
+    1 [ label = "(canChangeAt, 0, +)" ]
+    8 [ label = "(success, 0, +)" ]
+    10 [ label = "(validC, 0, +)" ]
+    10 -> 10 [ label = "(r_1, +, (?x, ?y_new_2_new_1, ))" ]
+    10 -> 10 [ label = "(r_1, +, (?y, ?z, ))" ]
+    1 -> 10 [ label = "(r_1, +, (?y_new_1, ))" ]
+    10 -> 10 [ label = "(r_2, +, (?x, ?y_new_1, ))" ]
+    10 -> 10 [ label = "(r_2, +, (?y, ?z, ))" ]
+    10 -> 8 [ label = "(r_11, +, (\"jungfernheide\", \"kottbusser_tor\", ))" ]
+    8 -> 1 [ label = "(r_EXP_1, +, (\"alexanderplatz\", ))" ]
+    1 -> 1 [ label = "(r_EXP_3, +, (?Y_1, ))" ]
+    1 -> 1 [ label = "(r_EXP_4, +, (?Y_1, ))" ]
+}
