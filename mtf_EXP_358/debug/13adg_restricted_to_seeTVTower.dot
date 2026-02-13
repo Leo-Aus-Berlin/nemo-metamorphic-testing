@@ -1,0 +1,18 @@
+digraph {
+    0 [ label = "(allowedDiff, None, None)" ]
+    2 [ label = "(choseB, 1, ?)" ]
+    6 [ label = "(platformHeight, None, None)" ]
+    7 [ label = "(seeTVTower, 1, ?)" ]
+    9 [ label = "(tooLargeGap, None, None)" ]
+    12 [ label = "(\"data/choseB.csv\")" ]
+    14 [ label = "(\"data/platformHeight.csv\")" ]
+    15 [ label = "(\"data/allowedDiff.csv\")" ]
+    12 -> 2 [ label = "fact edge" ]
+    14 -> 6 [ label = "fact edge" ]
+    15 -> 0 [ label = "fact edge" ]
+    6 -> 9 [ label = "(r_6, +, (?y, ?y, ))" ]
+    0 -> 9 [ label = "(r_6, -, (?y, trainHeight, ))" ]
+    2 -> 7 [ label = "(r_9, +, (?x, \"alexanderplatz\", ))" ]
+    9 -> 7 [ label = "(r_EXP_1, +, (?X_1, ))" ]
+    0 -> 9 [ label = "(r_6, -, (?y, ?y, ))" ]
+}

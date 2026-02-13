@@ -243,8 +243,8 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
         let rem_lit_opt = body_literals.iter().cloned().zip(body_literals_weights);
         debug!("{rem_lit_opt:#?}");
         let rem_lit_opt = rem_lit_opt.filter(|(_, lit_option)| {
-            // remove this lit only if poscount=1 and this is that pos lit
-            (pos_lit_count_in_rule>1 || lit_option.sign.is_negative()) 
+            // keep this lit if not (poscount=1 and this is that pos lit)
+            !(pos_lit_count_in_rule==1 && lit_option.sign.is_positive()) 
             &&
             // ensure range restriction
             lit_option.terms.iter().all(|t| {
@@ -423,8 +423,14 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
                 chosen_literal_weight.terms,
                 literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms
             ); */
+            let lit_sign = match literal {
+                nemo::rule_model::components::literal::Literal::Negative(_) => Sign::Negative,
+                nemo::rule_model::components::literal::Literal::Positive(_) => Sign::Positive,
+                nemo::rule_model::components::literal::Literal::Operation(_) => return true,
+            };
             predicate != chosen_rel_w.tag
                 || literal.terms().cloned().collect::<Vec<_>>() != chosen_literal_weight.terms
+                || lit_sign != chosen_literal_weight.sign
         });
         let mut new_rule = Rule::new(old_head, new_body.collect());
         debug!("    Modified rule: {new_rule}");

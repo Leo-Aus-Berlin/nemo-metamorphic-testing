@@ -1,6 +1,6 @@
 
 #!/bin/bash
-for i in {1..10000}
+for i in {346..10000}
 do
  echo "Transformation EXP:" $i " / 10000"
  ./../target/debug/nemo-metamorphic-testing --num 32 --type EXP --seed $i mtf_EXP_$i

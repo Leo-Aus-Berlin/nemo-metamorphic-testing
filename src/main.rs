@@ -6,11 +6,11 @@ use std::{
     process::exit,
 };
 
+use color_print::cprintln;
 use indexmap::{IndexMap, IndexSet};
 use indicatif::ProgressBar;
 use log::{debug, error, info, warn};
 use simplelog::*;
-use color_print::cprintln;
 
 use nemo::{
     error::report::ProgramReport,
@@ -748,9 +748,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("----------------------------------------------");
     info!("--- Finished Nemo Execution - Input Program --");
     info!("----------------------------------------------");
-    info!(" Output {} ", output_pred.name());
-    for line in out.iter() {
-        info!("     {line:?}");
+    if DEBUG_MODE
+        .get()
+        .expect("Debug mode not initialised")
+        .clone()
+    {
+        info!(" Output {} ", output_pred.name());
+        for line in out.iter() {
+            info!("     {line:?}");
+        }
+    } else {
+        info!("Output size: {}", out.len());
     }
 
     info!("----------------------------------------------");
@@ -799,9 +807,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("----------------------------------------------");
     info!(" Finished Nemo Execution - Transformed Program");
     info!("----------------------------------------------");
-    info!(" Output {} ", output_pred.name());
-    for line in out_2.iter() {
-        info!("     {line:?}");
+
+    if DEBUG_MODE
+        .get()
+        .expect("Debug mode not initialised")
+        .clone()
+    {
+        info!(" Output {} ", output_pred.name());
+        for line in out_2.iter() {
+            info!("     {line:?}");
+        }
+    } else {
+        info!("Output size: {}", out_2.len());
     }
 
     info!("----------------------------------------------");
@@ -899,8 +916,14 @@ where
         Ok(p) => p,
         Err(e) => {
             error!("Transformation is erronous");
-            for err in e.errors(){
-                error!("{}",err.note().unwrap_or(""));
+            cprintln!(
+                "<r>Transformation {} is erronous</>",
+                NAME_OF_TRANSFORMATION_SEQUENCE
+                    .get()
+                    .expect("Transformation sequence not named")
+            );
+            for err in e.errors() {
+                error!("{}", err.note().unwrap_or(""));
             }
             exit(1);
         }
