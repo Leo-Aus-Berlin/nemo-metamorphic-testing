@@ -1,7 +1,0 @@
-digraph {
-    10 [ label = "(validC, 0, n)" ]
-    10 -> 10 [ label = "(r_1, +, (?x, ?y_new_1_new_1, ))" ]
-    10 -> 10 [ label = "(r_1, +, (?y, ?z, ))" ]
-    10 -> 10 [ label = "(r_2, +, (?x, ?y, ))" ]
-    10 -> 10 [ label = "(r_2, +, (?y_new_1, ?z, ))" ]
-}
