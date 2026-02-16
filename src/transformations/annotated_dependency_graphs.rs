@@ -631,7 +631,8 @@ impl AnnotatedDependencyGraph {
         )
     }
 
-    /// Get a mutable reference to the internal graph
+    /// Get a mutable reference to the internal graph.
+    /// This is probably a bad idea...
     pub fn graph_mut(&mut self) -> &mut StableGraph<ADGNode, ADGEdge, Directed, u32> {
         &mut self.graph
     }
@@ -1402,8 +1403,8 @@ impl AnnotatedDependencyGraph {
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(_) => None,
             ADGNode::ADGRelationalNode(rel_node) => {
-                debug!("{rel_node:?}");
                 if rel_node.ancestry <= Some(Ancestry::Negative) {
+                    debug!("{rel_node:?}");
                     Some(rel_node)
                 } else {
                     None
@@ -1412,7 +1413,6 @@ impl AnnotatedDependencyGraph {
         }) {
             vec.push(rel_node.tag.clone())
         }
-        debug!("{vec:?}");
         vec
     }
 

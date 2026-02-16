@@ -1,0 +1,13 @@
+digraph {
+    2 [ label = "(choseB, 2, +)" ]
+    3 [ label = "(choseU, 2, ?)" ]
+    5 [ label = "(mustChangeAt, 2, +)" ]
+    11 [ label = "(\"data/choseU.csv\")" ]
+    12 [ label = "(\"data/choseB.csv\")" ]
+    11 -> 3 [ label = "fact edge" ]
+    12 -> 2 [ label = "fact edge" ]
+    3 -> 5 [ label = "(r_7, +, (?x, ?y, ))" ]
+    2 -> 5 [ label = "(r_7, +, (?y, ?z, ))" ]
+    2 -> 5 [ label = "(r_8, +, (?x, ?y, ))" ]
+    3 -> 5 [ label = "(r_8, +, (?y, ?z, ))" ]
+}

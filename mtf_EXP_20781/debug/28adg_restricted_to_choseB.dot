@@ -1,0 +1,14 @@
+digraph {
+    2 [ label = "(choseB, 3, n)" ]
+    3 [ label = "(choseU, 3, n)" ]
+    7 [ label = "(seeTVTower, 3, n)" ]
+    10 [ label = "(validC, 3, n)" ]
+    11 [ label = "(\"data/choseU.csv\")" ]
+    12 [ label = "(\"data/choseB.csv\")" ]
+    11 -> 3 [ label = "fact edge" ]
+    12 -> 2 [ label = "fact edge" ]
+    10 -> 2 [ label = "(r_CON_4, +, (\"kottbusser_tor\", ?X_1, ?X_2, ?X_2, ))" ]
+    2 -> 2 [ label = "(r_CON_4, +, (?Y_1, ?X_1, ))" ]
+    3 -> 2 [ label = "(r_CON_4, +, (?X_1, ?Y_1, ))" ]
+    7 -> 2 [ label = "(r_CON_4, +, (?X_1, ))" ]
+}

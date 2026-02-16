@@ -1,0 +1,15 @@
+digraph {
+    2 [ label = "(choseB, 3, n)" ]
+    5 [ label = "(mustChangeAt, 2, n)" ]
+    8 [ label = "(success, 1, n)" ]
+    9 [ label = "(tooLargeGap, 1, n)" ]
+    5 -> 8 [ label = "(r_CON_3, +, (?Y_2, ))" ]
+    8 -> 9 [ label = "(r_CON_2, +, (?Y_1, \"alexanderplatz\", \"alexanderplatz\", \"alexanderplatz\", \"alexanderplatz\", \"alexanderplatz\", ))" ]
+    2 -> 5 [ label = "(r_7, +, (?y, ?z, ))" ]
+    8 -> 8 [ label = "(r_CON_3, +, (?X_3, ?X_4, ?Y_1, ?X_2, ?X_3, ?X_4, ))" ]
+    9 -> 8 [ label = "(r_CON_3, +, (?X_2, ))" ]
+    2 -> 8 [ label = "(r_CON_3, -, (?X_2, \"jungfernheide\", ))" ]
+    5 -> 8 [ label = "(r_CON_3, -, (?X_3, ))" ]
+    2 -> 5 [ label = "(r_7, -, (?y, \"alexanderplatz\", ))" ]
+    2 -> 2 [ label = "(r_CON_4, +, (?Y_1, ?X_1, ))" ]
+}

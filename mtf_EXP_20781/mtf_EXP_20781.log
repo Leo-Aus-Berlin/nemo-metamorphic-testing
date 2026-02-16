@@ -1,0 +1,893 @@
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] Beginning transformation mtf_EXP_20781
+    Oracle:     CON      Number of T: 32
+    Debug Mode: true      u64 Seed:    20781
+    Internal Seed:        [240, 156, 4, 177, 250, 46, 114, 241, 40, 163, 44, 223, 239, 10, 109, 181, 58, 78, 81, 177, 66, 11, 206, 144, 198, 120, 168, 115, 90, 50, 46, 215]
+    Seed File: Currently not supported!
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] Renaming of rules complete
+16:06:42 [INFO] Choosing a predicate to export!
+16:06:42 [INFO] Found export: validC
+16:06:42 [INFO] Output names (0): 
+16:06:42 [INFO] Using the randomly chosen export predicate of 1: validC
+16:06:42 [INFO] Beginning inverse_stratum and ancestry computation starting at node validC
+16:06:42 [INFO] Ancestry and Inverse Stratum computation complete.
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:     The following relational nodes were computed:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (allowedDiff, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (canChangeAt, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (choseB, 1, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (choseU, 1, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (elevator, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (mustChangeAt, 1, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (platformHeight, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (seeTVTower, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (success, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (tooLargeGap, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs:   (validC, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] --------- Beginning Transformations ----------
+16:06:42 [INFO] --------  Oracle: CON    Number: 32
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 0
+16:06:42 [INFO] 1 / 32
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_11 : [validC, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_11
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    success(s) :- validC("jungfernheide", "kottbusser_tor") .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["validC", "choseB", "choseU", "mustChangeAt", "canChangeAt", "tooLargeGap", "allowedDiff", "platformHeight", "elevator"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from canChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from canChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 2
+16:06:42 [INFO] 2 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 1, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 1, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 1, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }]
+16:06:42 [DEBUG] (1) remove_relational_edge_single_literal:     Incoming edges by rule name: [r_6 : [allowedDiff, platformHeight, ]; ]
+16:06:42 [DEBUG] (1) remove_relational_edge_single_literal: Zip {
+    a: Cloned {
+        it: Iter(
+            [
+                EdgeIndex(19),
+                EdgeIndex(18),
+            ],
+        ),
+    },
+    b: IntoIter(
+        [
+            (r_6, -, (?h, trainHeight, )),
+            (r_6, +, (?y, ?h, )),
+        ],
+    ),
+}
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_4 : [choseB, choseU, ]; r_3 : [choseU, choseB, ]; r_2 : [mustChangeAt, validC, validC, ]; r_1 : [canChangeAt, mustChangeAt, validC, validC, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_2
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), ~mustChangeAt(?y) .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["mustChangeAt", "choseU", "choseB", "validC", "canChangeAt", "tooLargeGap", "allowedDiff", "platformHeight", "elevator"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from canChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from canChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 6
+16:06:42 [INFO] 3 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 1, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 1, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }]
+16:06:42 [INFO]   III Add Relational edges - New Rule
+16:06:42 [INFO]   Assigned relation success the artiy 6
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal choseU->platformHeight) : (r_CON_1,+,, "kottbusser_tor", ?X_2)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal tooLargeGap->platformHeight) : (r_CON_1,+,, ?X_2)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal success->platformHeight) : (r_CON_1,-,, ?X_2, ?X_2, ?X_2, ?X_2, "kottbusser_tor", trainHeight)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal choseB->platformHeight) : (r_CON_1,-,, ?X_2, trainHeight)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal mustChangeAt->platformHeight) : (r_CON_1,-,, "kottbusser_tor")
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal elevator->platformHeight) : (r_CON_1,-,, ?X_2)
+16:06:42 [INFO]   Added new rule of name r_CON_1
+16:06:42 [INFO]   platformHeight("kottbusser_tor", ?X_2) :- choseU("kottbusser_tor", ?X_2), tooLargeGap(?X_2), ~success(?X_2, ?X_2, ?X_2, ?X_2, "kottbusser_tor", trainHeight), ~choseB(?X_2, trainHeight), ~mustChangeAt("kottbusser_tor"), ~elevator(?X_2) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 65
+16:06:42 [INFO] 4 / 32
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_4 : [choseB, choseU, ]; r_3 : [choseU, choseB, ]; r_1 : [canChangeAt, mustChangeAt, validC, validC, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_4
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    validC(?x, ?y) :- choseU(?x, ?y), ~choseB(?x, ?y) .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["choseB", "choseU"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 68
+16:06:42 [INFO] 5 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 2, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }]
+16:06:42 [INFO]   II Add Fact Node and Edge
+16:06:42 [INFO]   Added new fact platformHeight("jungfernheide", "alexanderplatz").
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 76
+16:06:42 [INFO] 6 / 32
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_10 : [choseB, ]; r_9 : [choseB, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_10
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    seeTVTower(s) :- choseB("alexanderplatz", ?x) .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["choseB"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 79
+16:06:42 [INFO] 7 / 32
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:     Incoming edges by rule name: [r_3 : [choseU, choseB, ]; r_1 : [canChangeAt, mustChangeAt, validC, validC, ]; ]
+16:06:42 [INFO]   IV Add Relational Edge - New Literal
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:   Options for literal vector: [?x, ?z, ?x, ?y, ?y, ?z, ?y, ?y, ?y, trainHeight,  ]
+16:06:42 [INFO]   Generated literal ~platformHeight(?x, ?y) for rule r_1
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    Old Rule: validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) .
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    New Rule: validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y), ~platformHeight(?x, ?y) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 105
+16:06:42 [INFO] 8 / 32
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_8 : [choseU, choseB, ]; r_7 : [choseB, choseU, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_8
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["choseU", "choseB"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 108
+16:06:42 [INFO] 9 / 32
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:     Incoming edges by rule name: [r_1 : [platformHeight, canChangeAt, mustChangeAt, validC, validC, ]; r_3 : [choseU, choseB, ]; ]
+16:06:42 [INFO]   IV Add Relational Edge - New Literal
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:   Options for literal vector: [?x, ?z, ?x, ?y, ?y, ?z, ?y, ?y, ?x, ?y, ?x, ?y, trainHeight,  ]
+16:06:42 [INFO]   Generated literal ~mustChangeAt(?y) for rule r_1
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    Old Rule: validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y), ~platformHeight(?x, ?y) .
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    New Rule: validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y), ~platformHeight(?x, ?y), ~mustChangeAt(?y) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from validC
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 138
+16:06:42 [INFO] 10 / 32
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     Incoming edges by rule name: [r_5 : [tooLargeGap, elevator, ]; ]
+16:06:42 [INFO]   VII Modify Rule - Add Equality
+16:06:42 [DEBUG] (1) modify_rule_add_equality:   Found vars for into equality: [?y,  ]
+16:06:42 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     The rule in question: canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 140
+16:06:42 [INFO] 11 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 2, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 2, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 2, ?)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 2, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, -)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, 0, +)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }]
+16:06:42 [DEBUG] (1) remove_relational_edge_single_literal:     Incoming edges by rule name: [r_6 : [allowedDiff, platformHeight, ]; ]
+16:06:42 [DEBUG] (1) remove_relational_edge_single_literal: Zip {
+    a: Cloned {
+        it: Iter(
+            [
+                EdgeIndex(19),
+                EdgeIndex(18),
+            ],
+        ),
+    },
+    b: IntoIter(
+        [
+            (r_6, -, (?h, trainHeight, )),
+            (r_6, +, (?y, ?h, )),
+        ],
+    ),
+}
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_1 : [mustChangeAt, platformHeight, canChangeAt, mustChangeAt, validC, validC, ]; r_3 : [choseU, choseB, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_3
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    validC(?x, ?y) :- ~choseU(?x, ?y), choseB(?x, ?y) .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["choseU", "choseB"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 145
+16:06:42 [INFO] 12 / 32
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_1 : [mustChangeAt, platformHeight, canChangeAt, mustChangeAt, validC, validC, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_1
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y), ~platformHeight(?x, ?y), ~mustChangeAt(?y) .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["mustChangeAt", "choseB", "choseU", "platformHeight", "elevator", "success", "tooLargeGap", "allowedDiff", "canChangeAt", "validC"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from canChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from canChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 147
+16:06:42 [INFO] 13 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 860, end: 871 }, tag: "allowedDiff" }, Tag { origin: File { start: 523, end: 534 }, tag: "canChangeAt" }, Tag { origin: File { start: 666, end: 672 }, tag: "choseB" }, Tag { origin: File { start: 652, end: 658 }, tag: "choseU" }, Tag { origin: File { start: 773, end: 781 }, tag: "elevator" }, Tag { origin: File { start: 506, end: 518 }, tag: "mustChangeAt" }, Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }, Tag { origin: File { start: 460, end: 466 }, tag: "validC" }]
+16:06:42 [DEBUG] (1) modify_rule_remove_equality:     Incoming edges by rule name: [r_CON_1 : [elevator, mustChangeAt, choseB, success, tooLargeGap, choseU, ]; ]
+16:06:42 [INFO]   VIII Modify Rule - Remove Equality
+16:06:42 [DEBUG] (1) modify_rule_remove_equality: pos edges by tag: {Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }: [EdgeIndex(10)], Tag { origin: File { start: 652, end: 658 }, tag: "choseU" }: [EdgeIndex(9)]}
+16:06:42 [DEBUG] (1) modify_rule_remove_equality: neg edges by tag: {Tag { origin: File { start: 773, end: 781 }, tag: "elevator" }: [EdgeIndex(28)], Tag { origin: File { start: 506, end: 518 }, tag: "mustChangeAt" }: [EdgeIndex(27)], Tag { origin: File { start: 666, end: 672 }, tag: "choseB" }: [EdgeIndex(26)], Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }: [EdgeIndex(11)]}
+16:06:42 [INFO]   Replaced a random number of var X_2 with var X_2_new_1 in the rule r_CON_1
+16:06:42 [DEBUG] (1) modify_rule_remove_equality:   Old Rule: platformHeight("kottbusser_tor", ?X_2) :- choseU("kottbusser_tor", ?X_2), tooLargeGap(?X_2), ~success(?X_2, ?X_2, ?X_2, ?X_2, "kottbusser_tor", trainHeight), ~choseB(?X_2, trainHeight), ~mustChangeAt("kottbusser_tor"), ~elevator(?X_2) .
+16:06:42 [DEBUG] (1) modify_rule_remove_equality:   New Rule: platformHeight("kottbusser_tor", ?X_2_new_1) :- choseU("kottbusser_tor", ?X_2), tooLargeGap(?X_2_new_1), ~success(?X_2_new_1, ?X_2, ?X_2_new_1, ?X_2, "kottbusser_tor", trainHeight), ~choseB(?X_2_new_1, trainHeight), ~mustChangeAt("kottbusser_tor"), ~elevator(?X_2_new_1) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 165
+16:06:42 [INFO] 14 / 32
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     Incoming edges by rule name: [r_5 : [tooLargeGap, elevator, ]; ]
+16:06:42 [INFO]   VII Modify Rule - Add Equality
+16:06:42 [DEBUG] (1) modify_rule_add_equality:   Found vars for into equality: [?y,  ]
+16:06:42 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     The rule in question: canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 167
+16:06:42 [INFO] 15 / 32
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_6 : [allowedDiff, platformHeight, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_6
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    tooLargeGap(?y) :- platformHeight(?y, ?h), ~allowedDiff(?h, trainHeight) .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["allowedDiff", "platformHeight", "elevator", "mustChangeAt", "choseB", "choseU", "success", "tooLargeGap"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from canChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from canChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 169
+16:06:42 [INFO] 16 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 860, end: 871 }, tag: "allowedDiff" }, Tag { origin: File { start: 523, end: 534 }, tag: "canChangeAt" }, Tag { origin: File { start: 666, end: 672 }, tag: "choseB" }, Tag { origin: File { start: 652, end: 658 }, tag: "choseU" }, Tag { origin: File { start: 773, end: 781 }, tag: "elevator" }, Tag { origin: File { start: 506, end: 518 }, tag: "mustChangeAt" }, Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }, Tag { origin: File { start: 460, end: 466 }, tag: "validC" }]
+16:06:42 [INFO]   III Add Relational edges - New Rule
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal success->tooLargeGap) : (r_CON_2,+,, ?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz")
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal elevator->tooLargeGap) : (r_CON_2,+,, ?Y_1)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal seeTVTower->tooLargeGap) : (r_CON_2,-,, ?Y_1)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal choseB->tooLargeGap) : (r_CON_2,-,, "alexanderplatz", "alexanderplatz")
+16:06:42 [INFO]   Added new rule of name r_CON_2
+16:06:42 [INFO]   tooLargeGap("alexanderplatz") :- success(?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz"), elevator(?Y_1), ~seeTVTower(?Y_1), ~choseB("alexanderplatz", "alexanderplatz") .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 234
+16:06:42 [INFO] 17 / 32
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:     Incoming edges by rule name: [r_9 : [choseB, ]; ]
+16:06:42 [INFO]   IV Add Relational Edge - New Literal
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:   Options for literal vector: [?x, ?x, "alexanderplatz",  ]
+16:06:42 [INFO]   Generated literal ~choseU(?x, ?x) for rule r_9
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    Old Rule: seeTVTower(s) :- choseB(?x, "alexanderplatz") .
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    New Rule: seeTVTower(s) :- choseB(?x, "alexanderplatz"), ~choseU(?x, ?x) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 245
+16:06:42 [INFO] 18 / 32
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     Incoming edges by rule name: [r_5 : [tooLargeGap, elevator, ]; ]
+16:06:42 [INFO]   VII Modify Rule - Add Equality
+16:06:42 [DEBUG] (1) modify_rule_add_equality:   Found vars for into equality: [?y,  ]
+16:06:42 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     The rule in question: canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 247
+16:06:42 [INFO] 19 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 860, end: 871 }, tag: "allowedDiff" }, Tag { origin: File { start: 523, end: 534 }, tag: "canChangeAt" }, Tag { origin: File { start: 666, end: 672 }, tag: "choseB" }, Tag { origin: File { start: 652, end: 658 }, tag: "choseU" }, Tag { origin: File { start: 773, end: 781 }, tag: "elevator" }, Tag { origin: File { start: 506, end: 518 }, tag: "mustChangeAt" }, Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }, Tag { origin: File { start: 460, end: 466 }, tag: "validC" }]
+16:06:42 [INFO]   III Add Relational edges - New Rule
+16:06:42 [INFO]   Assigned relation validC the artiy 4
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal validC->success) : (r_CON_3,+,, ?X_2, ?X_6, ?X_6, ?X_2)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal tooLargeGap->success) : (r_CON_3,+,, ?X_2)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal choseU->success) : (r_CON_3,+,, ?X_5, ?X_3)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal elevator->success) : (r_CON_3,+,, "alexanderplatz")
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal mustChangeAt->success) : (r_CON_3,+,, ?Y_2)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal success->success) : (r_CON_3,+,, ?X_6, ?X_4, ?Y_1, ?X_2, ?X_6, ?X_4)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal allowedDiff->success) : (r_CON_3,-,, "jungfernheide", "alexanderplatz")
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal choseB->success) : (r_CON_3,-,, ?X_2, "jungfernheide")
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal choseU->success) : (r_CON_3,-,, "jungfernheide", ?X_2)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal mustChangeAt->success) : (r_CON_3,-,, ?X_6)
+16:06:42 [INFO]   Added new rule of name r_CON_3
+16:06:42 [INFO]   success(?X_4, ?X_6, ?X_6, ?X_3, ?X_2, ?X_5) :- validC(?X_2, ?X_6, ?X_6, ?X_2), tooLargeGap(?X_2), choseU(?X_5, ?X_3), elevator("alexanderplatz"), mustChangeAt(?Y_2), success(?X_6, ?X_4, ?Y_1, ?X_2, ?X_6, ?X_4), ~allowedDiff("jungfernheide", "alexanderplatz"), ~choseB(?X_2, "jungfernheide"), ~choseU("jungfernheide", ?X_2), ~mustChangeAt(?X_6) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from success
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 320
+16:06:42 [INFO] 20 / 32
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     Incoming edges by rule name: [r_9 : [choseU, choseB, ]; ]
+16:06:42 [INFO]   VII Modify Rule - Add Equality
+16:06:42 [DEBUG] (1) modify_rule_add_equality:   Found vars for into equality: [?x,  ]
+16:06:42 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     The rule in question: seeTVTower(s) :- choseB(?x, "alexanderplatz"), ~choseU(?x, ?x) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 322
+16:06:42 [INFO] 21 / 32
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:     Incoming edges by rule name: [r_7 : [choseB, choseU, ]; ]
+16:06:42 [INFO]   IV Add Relational Edge - New Literal
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:   Options for literal vector: [?y, ?x, ?y, ?y, ?z, ?y, "alexanderplatz",  ]
+16:06:42 [INFO]   Generated literal ~choseB(?y, "alexanderplatz") for rule r_7
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    Old Rule: mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) .
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    New Rule: mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z), ~choseB(?y, "alexanderplatz") .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 341
+16:06:42 [INFO] 22 / 32
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     Incoming edges by rule name: [r_CON_2 : [choseB, seeTVTower, elevator, success, ]; ]
+16:06:42 [INFO]   VII Modify Rule - Add Equality
+16:06:42 [DEBUG] (1) modify_rule_add_equality:   Found vars for into equality: [?Y_1,  ]
+16:06:42 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     The rule in question: tooLargeGap("alexanderplatz") :- success(?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz"), elevator(?Y_1), ~seeTVTower(?Y_1), ~choseB("alexanderplatz", "alexanderplatz") .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 343
+16:06:42 [INFO] 23 / 32
+16:06:42 [INFO]   I Add Relational Node
+16:06:42 [INFO]   Added new relation R_1
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 344
+16:06:42 [INFO] 24 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (R_1, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 860, end: 871 }, tag: "allowedDiff" }, Tag { origin: File { start: 523, end: 534 }, tag: "canChangeAt" }, Tag { origin: File { start: 666, end: 672 }, tag: "choseB" }, Tag { origin: File { start: 652, end: 658 }, tag: "choseU" }, Tag { origin: File { start: 773, end: 781 }, tag: "elevator" }, Tag { origin: File { start: 506, end: 518 }, tag: "mustChangeAt" }, Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }, Tag { origin: File { start: 460, end: 466 }, tag: "validC" }, Tag { origin: Created, tag: "R_1" }]
+16:06:42 [DEBUG] (1) remove_relational_edge_single_literal:     Incoming edges by rule name: [r_CON_2 : [choseB, seeTVTower, elevator, success, ]; ]
+16:06:42 [DEBUG] (1) remove_relational_edge_single_literal: Zip {
+    a: Cloned {
+        it: Iter(
+            [
+                EdgeIndex(6),
+                EdgeIndex(5),
+                EdgeIndex(19),
+                EdgeIndex(18),
+            ],
+        ),
+    },
+    b: IntoIter(
+        [
+            (r_CON_2, -, ("alexanderplatz", "alexanderplatz", )),
+            (r_CON_2, -, (?Y_1, )),
+            (r_CON_2, +, (?Y_1, )),
+            (r_CON_2, +, (?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", )),
+        ],
+    ),
+}
+16:06:42 [INFO]   VI Remove Relational Edge - Single Literal
+16:06:42 [INFO]   Found the rule of the name r_CON_2
+16:06:42 [DEBUG] (1) remove_relational_edge_single_literal:    Old rule:   tooLargeGap("alexanderplatz") :- success(?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz"), elevator(?Y_1), ~seeTVTower(?Y_1), ~choseB("alexanderplatz", "alexanderplatz") .
+16:06:42 [INFO]   Removed relational edge NodeIndex(2): (choseB -> tooLargeGap)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from success
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from seeTVTower
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [INFO]   Attempting to remove the literal -choseB(, "alexanderplatz", "alexanderplatz") from the rule r_CON_2
+16:06:42 [DEBUG] (1) remove_relational_edge_single_literal:     Modified rule: tooLargeGap("alexanderplatz") :- success(?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz"), elevator(?Y_1), ~seeTVTower(?Y_1) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 346
+16:06:42 [INFO] 25 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (R_1, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 860, end: 871 }, tag: "allowedDiff" }, Tag { origin: File { start: 523, end: 534 }, tag: "canChangeAt" }, Tag { origin: File { start: 666, end: 672 }, tag: "choseB" }, Tag { origin: File { start: 652, end: 658 }, tag: "choseU" }, Tag { origin: File { start: 773, end: 781 }, tag: "elevator" }, Tag { origin: File { start: 506, end: 518 }, tag: "mustChangeAt" }, Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }, Tag { origin: File { start: 460, end: 466 }, tag: "validC" }, Tag { origin: Created, tag: "R_1" }]
+16:06:42 [INFO]   III Add Relational edges - New Rule
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal validC->choseB) : (r_CON_4,+,, "kottbusser_tor", ?X_1, ?X_2, ?X_2)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal choseB->choseB) : (r_CON_4,+,, ?Y_1, ?X_1)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal choseU->choseB) : (r_CON_4,+,, ?X_1, ?Y_1)
+16:06:42 [DEBUG] (1) add_relational_edge_new_rule:   Adding the literal seeTVTower->choseB) : (r_CON_4,+,, ?X_1)
+16:06:42 [INFO]   Added new rule of name r_CON_4
+16:06:42 [INFO]   choseB(?X_2, ?X_1) :- validC("kottbusser_tor", ?X_1, ?X_2, ?X_2), choseB(?Y_1, ?X_1), choseU(?X_1, ?Y_1), seeTVTower(?X_1) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from choseB
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 400
+16:06:42 [INFO] 26 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 4, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (R_1, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 860, end: 871 }, tag: "allowedDiff" }, Tag { origin: File { start: 523, end: 534 }, tag: "canChangeAt" }, Tag { origin: File { start: 666, end: 672 }, tag: "choseB" }, Tag { origin: File { start: 652, end: 658 }, tag: "choseU" }, Tag { origin: File { start: 773, end: 781 }, tag: "elevator" }, Tag { origin: File { start: 506, end: 518 }, tag: "mustChangeAt" }, Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }, Tag { origin: File { start: 460, end: 466 }, tag: "validC" }, Tag { origin: Created, tag: "R_1" }]
+16:06:42 [INFO]   II Add Fact Node and Edge
+16:06:42 [INFO]   Added new fact allowedDiff("alexanderplatz", "jungfernheide").
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 408
+16:06:42 [INFO] 27 / 32
+16:06:42 [INFO]   I Add Relational Node
+16:06:42 [INFO]   Added new relation R_2
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 409
+16:06:42 [INFO] 28 / 32
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:     Incoming edges by rule name: [r_9 : [choseU, choseB, ]; ]
+16:06:42 [INFO]   V Remove Relational Edges - Whole Rule
+16:06:42 [INFO]   Removing the Rule of the name r_9
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule:    seeTVTower(s) :- choseB(?x, "alexanderplatz"), ~choseU(?x, ?x) .
+16:06:42 [DEBUG] (1) remove_relational_edges_whole_rule: Literals we reset: ["choseU", "choseB", "seeTVTower", "validC"]
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from choseB
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from success
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from success
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from choseB
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from success
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from platformHeight
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from mustChangeAt
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from choseB
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from choseB
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from success
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 411
+16:06:42 [INFO] 29 / 32
+16:06:42 [INFO]   I Add Relational Node
+16:06:42 [INFO]   Added new relation R_3
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 412
+16:06:42 [INFO] 30 / 32
+16:06:42 [DEBUG] (1) modify_rule_add_equality:     Incoming edges by rule name: [r_CON_3 : [mustChangeAt, choseU, choseB, allowedDiff, success, mustChangeAt, elevator, choseU, tooLargeGap, validC, ]; ]
+16:06:42 [INFO]   VII Modify Rule - Add Equality
+16:06:42 [DEBUG] (1) modify_rule_add_equality:   Found vars for into equality: [?X_2, ?X_3, ?X_4, ?X_5, ?X_6, ?Y_1, ?Y_2,  ]
+16:06:42 [INFO]   Replaced var ?X_6 with var ?X_3 in the rule r_CON_3
+16:06:42 [DEBUG] (1) modify_rule_add_equality:   Old Rule: success(?X_4, ?X_6, ?X_6, ?X_3, ?X_2, ?X_5) :- validC(?X_2, ?X_6, ?X_6, ?X_2), tooLargeGap(?X_2), choseU(?X_5, ?X_3), elevator("alexanderplatz"), mustChangeAt(?Y_2), success(?X_6, ?X_4, ?Y_1, ?X_2, ?X_6, ?X_4), ~allowedDiff("jungfernheide", "alexanderplatz"), ~choseB(?X_2, "jungfernheide"), ~choseU("jungfernheide", ?X_2), ~mustChangeAt(?X_6) .
+16:06:42 [DEBUG] (1) modify_rule_add_equality:   New Rule: success(?X_4, ?X_3, ?X_3, ?X_3, ?X_2, ?X_5) :- validC(?X_2, ?X_3, ?X_3, ?X_2), tooLargeGap(?X_2), choseU(?X_5, ?X_3), elevator("alexanderplatz"), mustChangeAt(?Y_2), success(?X_3, ?X_4, ?Y_1, ?X_2, ?X_3, ?X_4), ~allowedDiff("jungfernheide", "alexanderplatz"), ~choseB(?X_2, "jungfernheide"), ~choseU("jungfernheide", ?X_2), ~mustChangeAt(?X_3) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 419
+16:06:42 [INFO] 31 / 32
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: LEQ negative ancestry relational nodes:
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (allowedDiff, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (canChangeAt, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseB, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (choseU, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (elevator, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (mustChangeAt, 2, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (platformHeight, 0, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (seeTVTower, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (success, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (tooLargeGap, 1, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (validC, 3, n)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (R_1, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (R_2, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: (R_3, None, None)
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: [Tag { origin: File { start: 860, end: 871 }, tag: "allowedDiff" }, Tag { origin: File { start: 523, end: 534 }, tag: "canChangeAt" }, Tag { origin: File { start: 666, end: 672 }, tag: "choseB" }, Tag { origin: File { start: 652, end: 658 }, tag: "choseU" }, Tag { origin: File { start: 773, end: 781 }, tag: "elevator" }, Tag { origin: File { start: 506, end: 518 }, tag: "mustChangeAt" }, Tag { origin: File { start: 837, end: 851 }, tag: "platformHeight" }, Tag { origin: File { start: 1032, end: 1042 }, tag: "seeTVTower" }, Tag { origin: File { start: 1156, end: 1163 }, tag: "success" }, Tag { origin: File { start: 787, end: 798 }, tag: "tooLargeGap" }, Tag { origin: File { start: 460, end: 466 }, tag: "validC" }, Tag { origin: Created, tag: "R_1" }, Tag { origin: Created, tag: "R_2" }, Tag { origin: Created, tag: "R_3" }]
+16:06:42 [INFO]   II Add Fact Node and Edge
+16:06:42 [INFO]   Added new fact validC("str_1", "alexanderplatz", "kottbusser_tor", "str_2").
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Verifying ADG
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: ADG edge verification succeeded
+16:06:42 [DEBUG] (1) nemo_metamorphic_testing: RNG position: 439
+16:06:42 [INFO] 32 / 32
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:     Incoming edges by rule name: [r_CON_2 : [seeTVTower, elevator, success, ]; ]
+16:06:42 [INFO]   IV Add Relational Edge - New Literal
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:   Options for literal vector: [?Y_1, ?Y_1, ?Y_1, ?Y_1, trainHeight, ?Z_1,  ]
+16:06:42 [INFO]   Generated literal choseU(?Y_1, ?Y_1) for rule r_CON_2
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    Old Rule: tooLargeGap("alexanderplatz") :- success(?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz"), elevator(?Y_1), ~seeTVTower(?Y_1) .
+16:06:42 [DEBUG] (1) add_relational_edge_new_literal:    New Rule: tooLargeGap("alexanderplatz") :- success(?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz"), elevator(?Y_1), ~seeTVTower(?Y_1), choseU(?Y_1, ?Y_1) .
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG restricted to Incoming from tooLargeGap
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] ------------ Transformations Done ------------
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO]  Ressources required: 
+        data/choseU.csv
+        data/choseB.csv
+        data/elevator.csv
+        data/platformHeight.csv
+        data/allowedDiff.csv
+        
+16:06:42 [INFO] ---------------- ADG Summary: ----------------
+16:06:42 [INFO] ADG Fact Nodes:                  8
+16:06:42 [INFO] ADG Relational Nodes:            14
+16:06:42 [INFO] ADG Fact Edges:                  8
+16:06:42 [INFO] ADG Relational Edges:            29
+16:06:42 [INFO] 
+16:06:42 [INFO] Next rule name would be:         r_CON_5
+16:06:42 [INFO] Next predicate name would be:    R_4
+16:06:42 [INFO] Next constant name would be:     c_1
+16:06:42 [INFO] Next string would be:            "str_3"
+16:06:42 [INFO] 
+16:06:42 [INFO] Output predicate:                validC
+16:06:42 [INFO] Rule count:                      6
+16:06:42 [INFO] Average arity:                   2
+16:06:42 [INFO] --------- Performed Transformations: ---------
+16:06:42 [INFO]  #      Type
+16:06:42 [INFO]  2      None - Transformation not applicable
+16:06:42 [INFO]  3      I     Add Relational Node
+16:06:42 [INFO]  3      II    Add Fact Node and Edge
+16:06:42 [INFO]  4      III   Add Relational edges - New Rule
+16:06:42 [INFO]  5      IV    Add Relational Edge - New Literal
+16:06:42 [INFO]  9      V     Remove Relational Edges - Whole Rule
+16:06:42 [INFO]  1      VI    Remove Relational Edge - Single Literal
+16:06:42 [INFO]  6      VII   Modify Rule - Add Equality
+16:06:42 [INFO]  1      VIII  Modify Rule - Remove Equality
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [DEBUG] (1) annotated_dependency_graphs: Writing ADG to file
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] -- Beginning Nemo Execution - Input Program --
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] Stratified program: [[2, 3, 5, 6, 7], [0, 1, 4]]
+16:06:42 [INFO] <<< STEP 1: APPLYING RULE 2 validC(?x, ?y) :- choseB(?x, ?y), choseU(?x, ?y) >>>
+16:06:42 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+16:06:42 [INFO] Starting data import
+16:06:42 [INFO] Finished import: processed 0 lines (dropped 0)
+16:06:42 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+16:06:42 [INFO] Starting data import
+16:06:42 [INFO] Finished import: processed 41 lines (dropped 0)
+16:06:42 [INFO] Execution step: Project/Reorder
+16:06:42 [INFO] Saved temporary table: 41 entries (9044)
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Rule duration: 1 ms
+16:06:42 [INFO] <<< STEP 2: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
+16:06:42 [INFO] Execution step: Project/Reorder
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Saved temporary table: 41 entries (9096)
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Saved permanent table validC (2) Permutation { idx_to_val: [], val_to_idx: [] } with 41 entries (9144)
+16:06:42 [INFO] Rule duration: 1 ms
+16:06:42 [INFO] <<< STEP 3: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
+16:06:42 [INFO] Execution step: Project/Reorder
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Rule duration: 0 ms
+16:06:42 [INFO] <<< STEP 4: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+16:06:42 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, Integer]) }
+16:06:42 [INFO] Starting data import
+16:06:42 [INFO] Finished import: processed 41 lines (dropped 35)
+16:06:42 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Integer, Integer]) }
+16:06:42 [INFO] Starting data import
+16:06:42 [INFO] Finished import: processed 7 lines (dropped 0)
+16:06:42 [INFO] Execution step: Project/Reorder
+16:06:42 [INFO] Saved temporary table: 7 entries (7072)
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Saved temporary table: 6 entries (3424)
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Saved permanent table tooLargeGap (4) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (3472)
+16:06:42 [INFO] Rule duration: 1 ms
+16:06:42 [INFO] <<< STEP 5: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+16:06:42 [INFO] Execution step: Project/Reorder
+16:06:42 [INFO] Saved temporary table: 7 entries (7072)
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Rule duration: 0 ms
+16:06:42 [INFO] <<< STEP 6: APPLYING RULE 6 mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) >>>
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Rule duration: 0 ms
+16:06:42 [INFO] <<< STEP 7: APPLYING RULE 7 mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) >>>
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Rule duration: 0 ms
+16:06:42 [INFO] <<< STEP 8: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
+16:06:42 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String]) }
+16:06:42 [INFO] Starting data import
+16:06:42 [INFO] Finished import: processed 41 lines (dropped 0)
+16:06:42 [INFO] Execution step: Project/Reorder
+16:06:42 [INFO] Saved temporary table: 6 entries (3472)
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Saved temporary table: 35 entries (3540)
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Saved permanent table canChangeAt (8) Permutation { idx_to_val: [], val_to_idx: [] } with 35 entries (3588)
+16:06:42 [INFO] Rule duration: 0 ms
+16:06:42 [INFO] <<< STEP 9: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
+16:06:42 [INFO] Execution step: Project/Reorder
+16:06:42 [INFO] Saved temporary table: 6 entries (3472)
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Rule duration: 0 ms
+16:06:42 [INFO] <<< STEP 10: APPLYING RULE 0 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) >>>
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Rule duration: 0 ms
+16:06:42 [INFO] <<< STEP 11: APPLYING RULE 1 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y) >>>
+16:06:42 [INFO] Execution step: Project/Reorder
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Body
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:06:42 [INFO] Trie does not contain any elements
+16:06:42 [INFO] Rule duration: 0 ms
+16:06:42 [INFO] Execution step: Combining Tables
+16:06:42 [INFO] Saved permanent table validC (0-3) Permutation { idx_to_val: [], val_to_idx: [] } with 41 entries (9144)
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] --- Finished Nemo Execution - Input Program --
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO]  Output validC 
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("wittenau"))), AnyDataValue(PlainString(StringDataValue(" rathaus_reinickendorf")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("rathaus_reinickendorf"))), AnyDataValue(PlainString(StringDataValue(" karl-bonhoeffer-nervenklinik")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("karl-bonhoeffer-nervenklinik"))), AnyDataValue(PlainString(StringDataValue(" lindauer_allee")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("lindauer_allee"))), AnyDataValue(PlainString(StringDataValue(" paracelsus-bad")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("paracelsus-bad"))), AnyDataValue(PlainString(StringDataValue(" residenzstraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("residenzstraße"))), AnyDataValue(PlainString(StringDataValue(" franz-neumann-platz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("franz-neumann-platz"))), AnyDataValue(PlainString(StringDataValue(" osloer_straße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("osloer_straße"))), AnyDataValue(PlainString(StringDataValue(" pankstraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("pankstraße"))), AnyDataValue(PlainString(StringDataValue(" gesundbrunnen")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("gesundbrunnen"))), AnyDataValue(PlainString(StringDataValue(" bernauer_straße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("bernauer_straße"))), AnyDataValue(PlainString(StringDataValue(" rosenthaler_platz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("rosenthaler_platz"))), AnyDataValue(PlainString(StringDataValue(" weinmeisterstraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("weinmeisterstraße"))), AnyDataValue(PlainString(StringDataValue(" alexanderplatz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("alexanderplatz"))), AnyDataValue(PlainString(StringDataValue(" jannowitzbrueke")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("jannowitzbrueke"))), AnyDataValue(PlainString(StringDataValue(" heinrich-heine_straße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("heinrich-heine_straße"))), AnyDataValue(PlainString(StringDataValue(" moritzplatz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("moritzplatz"))), AnyDataValue(PlainString(StringDataValue(" kottbusser_tor")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("kottbusser_tor"))), AnyDataValue(PlainString(StringDataValue(" schoenleinstraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("schoenleinstraße"))), AnyDataValue(PlainString(StringDataValue(" hermannplatz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("hermannplatz"))), AnyDataValue(PlainString(StringDataValue(" boddinstraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("boddinstraße"))), AnyDataValue(PlainString(StringDataValue(" leinestraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("leinestraße"))), AnyDataValue(PlainString(StringDataValue(" hermannstraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("jungfernheide"))), AnyDataValue(PlainString(StringDataValue(" mierendorffplatz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("mierendorffplatz"))), AnyDataValue(PlainString(StringDataValue(" richard-wagner_platz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("richard-wagner_platz"))), AnyDataValue(PlainString(StringDataValue(" bismarckstraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("bismarckstraße"))), AnyDataValue(PlainString(StringDataValue(" wilmersdorfer_straße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("wilmersdorfer_straße"))), AnyDataValue(PlainString(StringDataValue(" charlottenburg")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("charlottenburg"))), AnyDataValue(PlainString(StringDataValue(" adenauerplatz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("adenauerplatz"))), AnyDataValue(PlainString(StringDataValue(" konstanzer_straße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("konstanzer_straße"))), AnyDataValue(PlainString(StringDataValue(" fehrbelliner_platz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("fehrbelliner_platz"))), AnyDataValue(PlainString(StringDataValue(" blissestraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("blissestraße"))), AnyDataValue(PlainString(StringDataValue(" berliner_straße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("berliner_straße"))), AnyDataValue(PlainString(StringDataValue(" bayerischer_platz")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("bayerischer_platz"))), AnyDataValue(PlainString(StringDataValue(" eisenacher_straße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("eisenacher_straße"))), AnyDataValue(PlainString(StringDataValue(" kleistpark")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("kleistpark"))), AnyDataValue(PlainString(StringDataValue(" yorckstraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("yorckstraße"))), AnyDataValue(PlainString(StringDataValue(" moeckernbruecke")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("moeckernbruecke"))), AnyDataValue(PlainString(StringDataValue(" mehringdamm")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("mehringdamm"))), AnyDataValue(PlainString(StringDataValue(" gneisenaustraße")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("gneisenaustraße"))), AnyDataValue(PlainString(StringDataValue(" suedstern")))]
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("suedstern"))), AnyDataValue(PlainString(StringDataValue(" hermannplatz")))]
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] Beginning Nemo Execution - Transformed Program
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] Loading source SimpleTable { arity: 4, data: [AnyDataValue(PlainString(StringDataValue("str_1"))), AnyDataValue(PlainString(StringDataValue("alexanderplatz"))), AnyDataValue(PlainString(StringDataValue("kottbusser_tor"))), AnyDataValue(PlainString(StringDataValue("str_2")))] }
+16:06:42 [INFO] Execution step: Combining Tables
+16:06:42 [INFO] Saved permanent table validC (0-1) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (13808)
+16:06:42 [INFO] Execution step: Combining Tables
+16:06:42 [INFO] Saved permanent table validC (0-1) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (13808)
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO]  Finished Nemo Execution - Transformed Program
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO]  Output validC 
+16:06:42 [INFO]      [AnyDataValue(PlainString(StringDataValue("str_1"))), AnyDataValue(PlainString(StringDataValue("alexanderplatz"))), AnyDataValue(PlainString(StringDataValue("kottbusser_tor"))), AnyDataValue(PlainString(StringDataValue("str_2")))]
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [INFO] ------------ Asserting Oracle CON ------------
+16:06:42 [INFO] ----------------------------------------------
+16:06:42 [WARN] Output has not contracted
