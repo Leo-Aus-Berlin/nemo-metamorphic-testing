@@ -102,6 +102,7 @@ pub struct ADGRelationalNode {
     pub tag: Tag,
     pub inverse_stratum: Option<u32>,
     pub ancestry: Option<Ancestry>,
+    /// For each rule (`name`), the terms it uses
     pub head_tuples: IndexMap<String, Vec<Term>>,
 }
 impl Debug for ADGRelationalNode {
@@ -1207,9 +1208,15 @@ impl AnnotatedDependencyGraph {
 
     /// Remove an edge by its `EdgeIndex`. Fails if the edge did not exist!
     pub fn remove_edge(&mut self, id: EdgeIndex) {
+        let edge_weight = self.get_rel_edge_mut_by_index(id);
+        let rule_name = &edge_weight.rule_name.clone();
+        let (_, target) = self.get_edge_source_target_by_index(id).expect("Attempted to remove non-existant node!");
+        let head_weight = self.get_rel_node_weight_mut_by_index(target);
+        head_weight.head_tuples.swap_remove(rule_name);
         self.graph
             .remove_edge(id)
             .expect("Attempted to remove non-existant node!");
+
     }
 
     /// Get a relation node based on its `tag` (= name)
@@ -1497,6 +1504,14 @@ impl AnnotatedDependencyGraph {
                 ADGEdge::ADGRelationalEdge(_) => Some(edge.id()),
             })
             .collect()
+    }
+
+    /// Get the number of rules with the relation `tag` in their head.
+    pub fn get_rule_count_for_node(
+        &self,
+        tag: &Tag
+    ) -> usize {
+        self.get_rel_node(tag).head_tuples.keys().count()
     }
 
     #[allow(dead_code, unused_variables)]

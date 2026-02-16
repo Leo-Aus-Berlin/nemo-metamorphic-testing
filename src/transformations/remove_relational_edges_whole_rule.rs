@@ -43,9 +43,11 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
                 .get_none_ancestry_relational_nodes()
                 .iter()
                 .filter(|tag| {
-                    adg.get_rel_edges_from_node(*tag, petgraph::Direction::Incoming)
-                        .len()
-                        > 0
+                    // At least two incoming rules 
+                    // because want to maintain at least one rule
+                    debug!("Inc rule c for {}: {}",tag.name(),adg.get_rule_count_for_node(tag));
+                    adg.get_rule_count_for_node(tag)
+                        > 1
                 })
                 .choose(rng)?
                 .clone(),
@@ -53,9 +55,11 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
                 .get_leq_positive_ancestry_relational_nodes()
                 .iter()
                 .filter(|tag| {
-                    adg.get_rel_edges_from_node(*tag, petgraph::Direction::Incoming)
-                        .len()
-                        > 0
+                    // At least two incoming rules 
+                    // because want to maintain at least one rule
+                    debug!("Inc rule c for {}: {}",tag.name(),adg.get_rule_count_for_node(tag));
+                    adg.get_rule_count_for_node(tag)
+                        > 1
                 })
                 .choose(rng)?
                 .clone(),
@@ -63,9 +67,11 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRul
                 .get_leq_negative_ancestry_relational_nodes()
                 .iter()
                 .filter(|tag| {
-                    adg.get_rel_edges_from_node(*tag, petgraph::Direction::Incoming)
-                        .len()
-                        > 0
+                    // At least two incoming rules 
+                    // because want to maintain at least one rule
+                    debug!("Inc rule c for {}: {}",tag.name(),adg.get_rule_count_for_node(tag));
+                    adg.get_rule_count_for_node(tag)
+                        > 1
                 })
                 .choose(rng)?
                 .clone(),

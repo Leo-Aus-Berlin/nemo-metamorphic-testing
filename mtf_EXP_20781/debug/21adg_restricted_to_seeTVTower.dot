@@ -1,6 +1,6 @@
 digraph {
-    2 [ label = "(choseB, 2, +)" ]
-    7 [ label = "(seeTVTower, 0, n)" ]
+    2 [ label = "(choseB, 3, ?)" ]
+    7 [ label = "(seeTVTower, 1, n)" ]
     12 [ label = "(\"data/choseB.csv\")" ]
     16 [ label = "(\"str_1\")" ]
     12 -> 2 [ label = "fact edge" ]

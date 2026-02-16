@@ -3,13 +3,21 @@
 @import elevator :- csv{resource= "data/elevator.csv", format= string}.
 @import platformHeight :- csv{resource= "data/platformHeight.csv", format= (string, int)}.
 @import allowedDiff :- csv{resource= "data/allowedDiff.csv", format= (int, int)}.
+tooLargeGap(?y) :- platformHeight(?y, ?h), ~allowedDiff(?h, trainHeight) .
+mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) .
 @export validC :- csv{}.
-platformHeight("jungfernheide", "alexanderplatz").
-mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z), ~choseU(?y, ?y) .
-tooLargeGap("jungfernheide").
-success(?X_6, "alexanderplatz", ?X_4, ?X_5, ?X_2, ?X_1) :- success(?X_6, "alexanderplatz", ?X_4, ?X_1, ?X_2, ?X_1), choseU(?X_2, ?X_5), ~validC(?X_1, ?X_1, ?X_2, "alexanderplatz"), ~canChangeAt(?X_2), ~choseB(?X_2, ?X_2) .
-canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y), choseU(?Z_1, ?y) .
-mustChangeAt("kottbusser_tor") :- tooLargeGap(?Y_1), canChangeAt(?Y_1), choseB("kottbusser_tor", ?Y_1_new_1_new_1), choseU(?Y_1, ?Y_1_new_1_new_1), validC(?Y_1_new_1, trainHeight, "kottbusser_tor", "kottbusser_tor"), ~allowedDiff(?Y_1, ?Y_1_new_1_new_1), ~seeTVTower("kottbusser_tor"), ~choseU("kottbusser_tor", ?Y_1), ~tooLargeGap(?Y_1) .
-choseB(?X_2, ?X_1) :- allowedDiff(?X_2, ?X_1) .
-allowedDiff(c_1, "jungfernheide").
-platformHeight("kottbusser_tor", ?X_2_new_1) :- choseU("kottbusser_tor", ?X_2_new_1), tooLargeGap(?X_2_new_1), ~success(?X_2_new_1, ?X_2_new_1, ?X_2_new_1, ?X_2_new_1, "kottbusser_tor", trainHeight), ~choseB(?X_2_new_1, trainHeight), ~elevator(?X_2_new_1) .
+platformHeight(?X_2, "alexanderplatz") :- allowedDiff(trainHeight, ?Y_1), choseU(trainHeight, ?Y_1), platformHeight(?Y_1, ?X_2), mustChangeAt("alexanderplatz"), choseU("alexanderplatz", "alexanderplatz"), ~mustChangeAt("alexanderplatz") .
+success(s) :- validC("jungfernheide", "kottbusser_tor"), canChangeAt(?Z_1) .
+seeTVTower("str_1").
+canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y), choseU(?y, ?y) .
+platformHeight(trainHeight, c_1).
+tooLargeGap("str_2").
+allowedDiff(c_2, 9248626437155854463).
+tooLargeGap(?X_1) :- validC(?X_1, ?X_1_new_1), seeTVTower("str_1"), mustChangeAt("str_1"), ~allowedDiff("str_1", trainHeight), ~platformHeight(?X_1_new_1, "str_1"), ~choseU(?X_1_new_1, "str_1") .
+elevator("str_3").
+allowedDiff("kottbusser_tor", 11608093100454351159).
+validC(?x, ?y) :- ~choseU(?x, ?y), choseB(?x, ?y), choseU(?y, ?y), ~platformHeight(?y, "jungfernheide"), validC(c_2, ?x) .
+allowedDiff(c_3, "str_2").
+tooLargeGap("str_4").
+seeTVTower(s) :- validC(?x, ?x) .
+success(?X_1) :- validC(?X_1, ?X_1), validC(?Y_1, ?X_1) .

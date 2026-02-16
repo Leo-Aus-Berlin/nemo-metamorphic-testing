@@ -1,4 +1,7 @@
 digraph {
-    8 [ label = "(success, 1, n)" ]
-    8 -> 8 [ label = "(r_CON_2, +, (?X_6, \"alexanderplatz\", ?X_4, ?X_1, ?X_2, ?X_1, ))" ]
+    6 [ label = "(platformHeight, 2, -)" ]
+    10 [ label = "(validC, 1, +)" ]
+    10 -> 10 [ label = "(r_3, +, (c_2, ?x, ))" ]
+    6 -> 6 [ label = "(r_CON_1, +, (?Y_1, ?X_2, ))" ]
+    6 -> 10 [ label = "(r_3, -, (?y, \"jungfernheide\", ))" ]
 }
