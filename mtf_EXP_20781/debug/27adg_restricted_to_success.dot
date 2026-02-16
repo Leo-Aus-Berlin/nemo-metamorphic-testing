@@ -1,11 +1,11 @@
 digraph {
     1 [ label = "(canChangeAt, 2, n)" ]
-    2 [ label = "(choseB, 1, n)" ]
+    2 [ label = "(choseB, 2, n)" ]
     3 [ label = "(choseU, 2, n)" ]
     4 [ label = "(elevator, 2, n)" ]
     8 [ label = "(success, 1, n)" ]
     9 [ label = "(tooLargeGap, 3, n)" ]
-    10 [ label = "(validC, 2, +)" ]
+    10 [ label = "(validC, 2, n)" ]
     11 [ label = "(\"data/choseU.csv\")" ]
     12 [ label = "(\"data/choseB.csv\")" ]
     13 [ label = "(\"data/elevator.csv\")" ]

@@ -1,7 +1,7 @@
 digraph {
-    2 [ label = "(choseB, 3, n)" ]
-    4 [ label = "(elevator, 3, n)" ]
-    7 [ label = "(seeTVTower, 3, n)" ]
+    2 [ label = "(choseB, 2, n)" ]
+    4 [ label = "(elevator, 2, n)" ]
+    7 [ label = "(seeTVTower, 1, n)" ]
     12 [ label = "(\"data/choseB.csv\")" ]
     13 [ label = "(\"data/elevator.csv\")" ]
     12 -> 2 [ label = "fact edge" ]

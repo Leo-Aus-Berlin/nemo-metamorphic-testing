@@ -509,6 +509,11 @@ impl AnnotatedDependencyGraph {
         self.output_predicate.clone()
     }
 
+    // Return the `NodeIndex` of the output tag, if one is set already.
+    pub fn get_output_index(&self) -> Option<NodeIndex> {
+        Some(self.get_rel_node_index(&self.output_predicate.clone()?))
+    }
+
     #[allow(dead_code, unused_variables)]
     /// Return a breadth-first visit of the ADG
     pub fn get_bfs(

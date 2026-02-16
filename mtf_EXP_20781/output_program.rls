@@ -5,11 +5,11 @@
 @import allowedDiff :- csv{resource= "data/allowedDiff.csv", format= (int, int)}.
 @export validC :- csv{}.
 platformHeight("jungfernheide", "alexanderplatz").
-platformHeight("kottbusser_tor", ?X_2_new_1) :- choseU("kottbusser_tor", ?X_2), tooLargeGap(?X_2_new_1), ~success(?X_2_new_1, ?X_2, ?X_2_new_1, ?X_2, "kottbusser_tor", trainHeight), ~choseB(?X_2_new_1, trainHeight), ~mustChangeAt("kottbusser_tor"), ~elevator(?X_2_new_1) .
-canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
-mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z), ~choseB(?y, "alexanderplatz") .
-choseB(?X_2, ?X_1) :- validC("kottbusser_tor", ?X_1, ?X_2, ?X_2), choseB(?Y_1, ?X_1), choseU(?X_1, ?Y_1), seeTVTower(?X_1) .
-allowedDiff("alexanderplatz", "jungfernheide").
-success(?X_4, ?X_3, ?X_3, ?X_3, ?X_2, ?X_5) :- validC(?X_2, ?X_3, ?X_3, ?X_2), tooLargeGap(?X_2), choseU(?X_5, ?X_3), elevator("alexanderplatz"), mustChangeAt(?Y_2), success(?X_3, ?X_4, ?Y_1, ?X_2, ?X_3, ?X_4), ~allowedDiff("jungfernheide", "alexanderplatz"), ~choseB(?X_2, "jungfernheide"), ~choseU("jungfernheide", ?X_2), ~mustChangeAt(?X_3) .
-validC("str_1", "alexanderplatz", "kottbusser_tor", "str_2").
-tooLargeGap("alexanderplatz") :- success(?Y_1, "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz", "alexanderplatz"), elevator(?Y_1), ~seeTVTower(?Y_1), choseU(?Y_1, ?Y_1) .
+mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z), ~choseU(?y, ?y) .
+tooLargeGap("jungfernheide").
+success(?X_6, "alexanderplatz", ?X_4, ?X_5, ?X_2, ?X_1) :- success(?X_6, "alexanderplatz", ?X_4, ?X_1, ?X_2, ?X_1), choseU(?X_2, ?X_5), ~validC(?X_1, ?X_1, ?X_2, "alexanderplatz"), ~canChangeAt(?X_2), ~choseB(?X_2, ?X_2) .
+canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y), choseU(?Z_1, ?y) .
+mustChangeAt("kottbusser_tor") :- tooLargeGap(?Y_1), canChangeAt(?Y_1), choseB("kottbusser_tor", ?Y_1_new_1_new_1), choseU(?Y_1, ?Y_1_new_1_new_1), validC(?Y_1_new_1, trainHeight, "kottbusser_tor", "kottbusser_tor"), ~allowedDiff(?Y_1, ?Y_1_new_1_new_1), ~seeTVTower("kottbusser_tor"), ~choseU("kottbusser_tor", ?Y_1), ~tooLargeGap(?Y_1) .
+choseB(?X_2, ?X_1) :- allowedDiff(?X_2, ?X_1) .
+allowedDiff(c_1, "jungfernheide").
+platformHeight("kottbusser_tor", ?X_2_new_1) :- choseU("kottbusser_tor", ?X_2_new_1), tooLargeGap(?X_2_new_1), ~success(?X_2_new_1, ?X_2_new_1, ?X_2_new_1, ?X_2_new_1, "kottbusser_tor", trainHeight), ~choseB(?X_2_new_1, trainHeight), ~elevator(?X_2_new_1) .

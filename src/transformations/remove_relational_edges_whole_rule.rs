@@ -127,7 +127,10 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
                     if rule.name().expect("Rule not named!") == self.chosen_rule_name {
                         // don't keep it!
                         found_remove_rule = true;
-                        info!("  Removing the Rule of the name {}", rule.name().expect("Rule not named"));
+                        info!(
+                            "  Removing the Rule of the name {}",
+                            rule.name().expect("Rule not named")
+                        );
                         debug!("   {}", rule);
                     } else {
                         commit.keep(rule);
@@ -168,7 +171,13 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
                     .reset_ancestry_inverse_stratum_for_node_and_ancestors(*lit),
             )
         });
-        debug!("Literals we reset: {:?}",reset_literals.iter().map(| lit | self.adg.get_rel_node_weight_by_index(*lit).tag.name()).collect::<Vec<_>>());
+        debug!(
+            "Literals we reset: {:?}",
+            reset_literals
+                .iter()
+                .map(|lit| self.adg.get_rel_node_weight_by_index(*lit).tag.name())
+                .collect::<Vec<_>>()
+        );
         // 3) Re-Calculate anc and st by calling calculate update from the children
         //  a.k.a. the neighbours of the affected body literals
         let mut children: Vec<NodeIndex> = Vec::new();
@@ -186,6 +195,29 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
                 self.transformation_number,
             )
         });
+        // We might set the ancestry of the output node to None
+        // This obv is wrong, so we update ancestry from output node
+        // also. We need to do this explicitly, because it is likely
+        // that the output relation has no children from which
+        // we call update function (which by itself does notice
+        // output relation -> + ancestry, but needs to be called in order
+        // to do that!)
+        match self.adg.get_output_index() {
+            Some(id) => {
+                if reset_literals.contains(&id) {
+                    self.adg.update_ancestry_and_inverse_stratum_from(
+                        self.adg
+                            .get_output_tag()
+                            .expect("output tag still not set even though set"),
+                        self.transformation_number,
+                    );
+                }
+            }
+            None => {
+                error!("No output relation set still!");
+                exit(1);
+            }
+        };
 
         commit.submit()
     }

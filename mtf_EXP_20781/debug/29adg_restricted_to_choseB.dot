@@ -1,0 +1,9 @@
+digraph {
+    0 [ label = "(allowedDiff, 1, n)" ]
+    2 [ label = "(choseB, 2, n)" ]
+    12 [ label = "(\"data/choseB.csv\")" ]
+    15 [ label = "(\"data/allowedDiff.csv\")" ]
+    12 -> 2 [ label = "fact edge" ]
+    15 -> 0 [ label = "fact edge" ]
+    0 -> 2 [ label = "(r_CON_5, +, (?X_2, ?X_1, ))" ]
+}
