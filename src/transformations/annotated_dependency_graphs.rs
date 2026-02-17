@@ -1,4 +1,4 @@
-use crate::{NAME_OF_TRANSFORMATION_SEQUENCE, transformations::util};
+use crate::{transformations::util, NAME_OF_TRANSFORMATION_SEQUENCE};
 use std::{
     collections::{HashSet, VecDeque},
     fmt::{Debug, Formatter},
@@ -10,19 +10,20 @@ use indexmap::{IndexMap, IndexSet};
 use log::{debug, error, info, trace};
 use nemo::rule_model::{
     components::{
-        self, IterablePrimitives, statement,
+        self, statement,
         tag::Tag,
-        term::{Term, primitive::ground::GroundTerm},
+        term::{primitive::ground::GroundTerm, Term},
+        IterablePrimitives,
     },
-    programs::{ProgramRead, handle::ProgramHandle},
+    programs::{handle::ProgramHandle, ProgramRead},
 };
+use petgraph::{dot::Dot, graph::NodeIndex};
 use petgraph::{
-    Directed,
     prelude::StableGraph,
     stable_graph::{EdgeIndex, Edges},
     visit::EdgeRef,
+    Directed,
 };
-use petgraph::{dot::Dot, graph::NodeIndex};
 use rand::RngCore;
 use rand_chacha::ChaCha8Rng;
 
@@ -1206,17 +1207,24 @@ impl AnnotatedDependencyGraph {
         self.graph.edge_endpoints(id)
     }
 
-    /// Remove an edge by its `EdgeIndex`. Fails if the edge did not exist!
+    /// Remove an edge by its `EdgeIndex`.
+    /// 
+    /// Fails if the edge did not exist. If the last
+    /// edge of this rule is removed this way, the corresponding head literal is automatically removed
+    /// from the head literal's relational node's weight!
     pub fn remove_edge(&mut self, id: EdgeIndex) {
         let edge_weight = self.get_rel_edge_mut_by_index(id);
         let rule_name = &edge_weight.rule_name.clone();
-        let (_, target) = self.get_edge_source_target_by_index(id).expect("Attempted to remove non-existant node!");
-        let head_weight = self.get_rel_node_weight_mut_by_index(target);
-        head_weight.head_tuples.swap_remove(rule_name);
+        let (_, target) = self
+            .get_edge_source_target_by_index(id)
+            .expect("Attempted to remove non-existant node!");
+        if self.get_num_incoming_edges_for_node_index_for_rule(target, rule_name) <= 1 {
+            let head_weight = self.get_rel_node_weight_mut_by_index(target);
+            head_weight.head_tuples.swap_remove(rule_name);
+        }
         self.graph
             .remove_edge(id)
             .expect("Attempted to remove non-existant node!");
-
     }
 
     /// Get a relation node based on its `tag` (= name)
@@ -1329,7 +1337,9 @@ impl AnnotatedDependencyGraph {
             .get_rel_node_weight_mut_by_index(end_node)
             .head_tuples
             .entry(rule_name.clone());
-        stored_head_terms.or_insert(head_terms);
+        stored_head_terms.or_insert(head_terms.clone());
+        /* let end_node_weight = self.get_rel_node_weight_by_index(end_node);
+        debug!("Added head term {:?} to {}",head_terms,end_node_weight.tag.name()); */
         // multi heads would be hard ^^ here
         self.graph.add_edge(
             start_node,
@@ -1507,11 +1517,57 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get the number of rules with the relation `tag` in their head.
-    pub fn get_rule_count_for_node(
-        &self,
-        tag: &Tag
-    ) -> usize {
+    pub fn get_rule_count_for_node(&self, tag: &Tag) -> usize {
         self.get_rel_node(tag).head_tuples.keys().count()
+    }
+
+    /// Get the number of incoming relational edges for this specific relational node for a specific rule
+    pub fn get_num_incoming_edges_for_node_index_for_rule(
+        &self,
+        id: NodeIndex,
+        rule_name: &String,
+    ) -> usize {
+        let incoming = self.get_rel_edges_from_node_index(id, petgraph::Direction::Incoming);
+        let incoming_filtered = incoming
+            .iter()
+            .filter(|edge_index| self.get_rel_edge_by_index(**edge_index).rule_name == *rule_name);
+        incoming_filtered.count()
+    }
+
+    /// Get the number of incoming relational edges for this specific relational node for a specific rule
+    #[allow(dead_code)]
+    pub fn get_num_incoming_edges_for_tag_for_rule(&self, tag: &Tag, rule_name: &String) -> usize {
+        let incoming = self.get_rel_edges_from_node(tag, petgraph::Direction::Incoming);
+        let incoming_filtered = incoming
+            .iter()
+            .filter(|edge_index| self.get_rel_edge_by_index(**edge_index).rule_name == *rule_name);
+        incoming_filtered.count()
+    }
+
+    /// Get the incoming relational edges for this specific relational node for a specific rule
+    #[allow(dead_code)]
+    pub fn get_incoming_edges_for_tag_for_rule(
+        &self,
+        tag: &Tag,
+        rule_name: &String,
+    ) -> Vec<EdgeIndex<u32>> {
+        self.get_rel_edges_from_node(tag, petgraph::Direction::Incoming)
+            .into_iter()
+            .filter(|edge_index| self.get_rel_edge_by_index(*edge_index).rule_name == *rule_name)
+            .collect()
+    }
+
+    /// Get the incoming relational edges for this specific relational node for a specific rule
+    #[allow(dead_code)]
+    pub fn get_incoming_edges_for_node_index_for_rule(
+        &self,
+        node: NodeIndex,
+        rule_name: &String,
+    ) -> Vec<EdgeIndex<u32>> {
+        self.get_rel_edges_from_node_index(node, petgraph::Direction::Incoming)
+            .into_iter()
+            .filter(|edge_index| self.get_rel_edge_by_index(*edge_index).rule_name == *rule_name)
+            .collect()
     }
 
     #[allow(dead_code, unused_variables)]

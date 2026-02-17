@@ -1,7 +1,0 @@
-digraph {
-    6 [ label = "(platformHeight, 2, -)" ]
-    10 [ label = "(validC, 1, +)" ]
-    10 -> 10 [ label = "(r_3, +, (c_2, ?x, ))" ]
-    6 -> 6 [ label = "(r_CON_1, +, (?Y_1, ?X_2, ))" ]
-    6 -> 10 [ label = "(r_3, -, (?y, \"jungfernheide\", ))" ]
-}

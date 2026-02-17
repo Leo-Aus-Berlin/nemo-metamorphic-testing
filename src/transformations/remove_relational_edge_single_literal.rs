@@ -167,7 +167,7 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLit
         let mut var_appears_in_how_many_pos_lit: IndexMap<Variable, u32> = IndexMap::new();
 
         // Check for universal head variables
-        let head_vars = head_literal_weight.head_tuples[&chosen_rule_name]
+        let head_vars = head_literal_weight.head_tuples.get(&chosen_rule_name).expect(format!("chosen head literal {} has no terms for the chosen rule {}",head_literal_weight.tag.name(),chosen_rule_name).as_str())
             .iter()
             .flat_map(|t| t.variables());
         for v in head_vars {

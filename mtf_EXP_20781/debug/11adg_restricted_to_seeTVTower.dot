@@ -1,9 +1,0 @@
-digraph {
-    2 [ label = "(choseB, 2, +)" ]
-    7 [ label = "(seeTVTower, 0, n)" ]
-    12 [ label = "(\"data/choseB.csv\")" ]
-    16 [ label = "(\"str_1\")" ]
-    12 -> 2 [ label = "fact edge" ]
-    16 -> 7 [ label = "fact edge" ]
-    2 -> 7 [ label = "(r_10, +, (\"alexanderplatz\", ?x, ))" ]
-}
