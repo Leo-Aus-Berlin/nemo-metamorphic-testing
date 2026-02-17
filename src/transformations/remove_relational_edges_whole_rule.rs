@@ -14,7 +14,7 @@ use rand::seq::IteratorRandom;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
+use crate::transformations::{util, TestingTransformation};
 /// Remove an entire rule from the program.
 pub struct RemoveRelationalEdgesWholeRule<'a> {
     adg: &'a mut AnnotatedDependencyGraph,
@@ -23,7 +23,7 @@ pub struct RemoveRelationalEdgesWholeRule<'a> {
     transformation_number: u32, //transformation_type: TransformationTypes,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgesWholeRule<'a> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for RemoveRelationalEdgesWholeRule<'a> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */

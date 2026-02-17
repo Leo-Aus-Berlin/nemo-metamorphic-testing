@@ -18,7 +18,7 @@ use crate::transformations::annotated_dependency_graphs::{
     ADGRelationalEdge, ADGRelationalNode, AnnotatedDependencyGraph, Sign,
 };
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
+use crate::transformations::{util, TestingTransformation};
 
 /// Remove a single body literal from an existing rule, i.e. a single relational edge
 pub struct RemoveRelationalEdgeSingleLiteral<'a> {
@@ -30,7 +30,7 @@ pub struct RemoveRelationalEdgeSingleLiteral<'a> {
     //transformation_type: TransformationTypes,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for RemoveRelationalEdgeSingleLiteral<'a> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for RemoveRelationalEdgeSingleLiteral<'a> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */

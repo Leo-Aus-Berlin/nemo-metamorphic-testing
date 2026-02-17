@@ -16,7 +16,7 @@ use crate::transformations::{
     modify_rule_remove_equality::ModifyRuleRemoveEquality,
     remove_relational_edge_single_literal::RemoveRelationalEdgeSingleLiteral,
     remove_relational_edges_whole_rule::RemoveRelationalEdgesWholeRule,
-    transformation_types::TransformationTypes, MetamorphicTransformation,
+    transformation_types::TransformationTypes, TestingTransformation,
 };
 /*
 pub struct TransformationManager<'a, 'b> {
@@ -39,10 +39,10 @@ impl<'a, 'b> TransformationManager<'a, 'b> {
     /*
     pub fn get_next_metamorphic_transformation(
         &'a mut self,
-    ) -> Option<SomeMetamorphicTransformation<'a, 'a>> {
+    ) -> Option<SomeTestingTransformation<'a, 'a>> {
         let trans_types: TransformationTypes = self.transformation_types.clone();
-        let mut next_transform = SomeMetamorphicTransformation::Default();
-        for try_next_transform in IterateMetamorphicTransformations::new(self.adg, self.rng) {
+        let mut next_transform = SomeTestingTransformation::Default();
+        for try_next_transform in GenerateTestingTransformation::new(self.adg, self.rng) {
             let (can_apply, try_next_transform) = try_next_transform.can_apply(trans_types.clone());
             if can_apply {
                 next_transform = try_next_transform;
@@ -53,11 +53,11 @@ impl<'a, 'b> TransformationManager<'a, 'b> {
     } */
 }
 /* impl<'a> Iterator for TransformationManager<'a,'a> {
-    type Item = SomeMetamorphicTransformation<'a,'a>;
+    type Item = SomeTestingTransformation<'a,'a>;
     fn next(&mut self) -> Option<Self::Item> {
         let trans_types: TransformationTypes = self.transformation_types.clone();
-        let mut next_transform = SomeMetamorphicTransformation::Default();
-        for try_next_transform in IterateMetamorphicTransformations::new(self.adg, self.rng) {
+        let mut next_transform = SomeTestingTransformation::Default();
+        for try_next_transform in GenerateTestingTransformation::new(self.adg, self.rng) {
             let (can_apply, try_next_transform) = try_next_transform.can_apply(trans_types.clone());
             if can_apply {
                 next_transform = try_next_transform;
@@ -68,20 +68,20 @@ impl<'a, 'b> TransformationManager<'a, 'b> {
     }
 } */
  */
-pub struct IterateMetamorphicTransformations<'a, 'b> {
+pub struct GenerateTestingTransformation<'a, 'b> {
     adg: Option<&'a mut AnnotatedDependencyGraph>,
     rng: Option<&'b mut rand_chacha::ChaCha8Rng>,
     transformation_type: Option<TransformationTypes>,
     transformation_number: u32,
 }
-impl<'a, 'b> IterateMetamorphicTransformations<'a, 'b> {
+impl<'a, 'b> GenerateTestingTransformation<'a, 'b> {
     pub fn new(
         adg: &'a mut AnnotatedDependencyGraph,
         rng: &'b mut rand_chacha::ChaCha8Rng,
         transformation_type: TransformationTypes,
         transformation_number: u32,
-    ) -> IterateMetamorphicTransformations<'a, 'b> {
-        IterateMetamorphicTransformations {
+    ) -> GenerateTestingTransformation<'a, 'b> {
+        GenerateTestingTransformation {
             adg: Some(adg),
             rng: Some(rng),
             transformation_type: Some(transformation_type),
@@ -89,8 +89,8 @@ impl<'a, 'b> IterateMetamorphicTransformations<'a, 'b> {
         }
     }
 }
-impl<'a, 'b> Iterator for IterateMetamorphicTransformations<'a, 'b> {
-    type Item = SomeMetamorphicTransformation<'a, 'b>;
+impl<'a, 'b> Iterator for GenerateTestingTransformation<'a, 'b> {
+    type Item = SomeTestingTransformation<'a, 'b>;
     fn next(&mut self) -> Option<Self::Item> {
         debug_assert!(self.adg.is_some());
         debug_assert!(self.rng.is_some());
@@ -98,7 +98,7 @@ impl<'a, 'b> Iterator for IterateMetamorphicTransformations<'a, 'b> {
         let adg = self.adg.take();
         let rng = self.rng.take();
         let transformation_type = self.transformation_type.take();
-        SomeMetamorphicTransformation::new_opt(
+        SomeTestingTransformation::new_opt(
             adg,
             rng,
             transformation_type,
@@ -107,7 +107,7 @@ impl<'a, 'b> Iterator for IterateMetamorphicTransformations<'a, 'b> {
     }
 }
 
-pub enum SomeMetamorphicTransformation<'a, 'b> {
+pub enum SomeTestingTransformation<'a, 'b> {
     AddRelationalNode(AddRelationalNode<'a>),
     AddFactNodeAndEdge(AddFactNodeAndEdge<'a, 'b>),
     AddRelationalEdgeNewRule(AddRelationalEdgeNewRule<'a, 'b>),
@@ -118,7 +118,7 @@ pub enum SomeMetamorphicTransformation<'a, 'b> {
     ModifyRuleRemoveEquality(ModifyRuleRemoveEquality<'a, 'b>),
     Default(),
 }
-impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
+impl<'a, 'b> SomeTestingTransformation<'a, 'b> {
     fn new_opt(
         adg: Option<&'a mut AnnotatedDependencyGraph>,
         rng: Option<&'b mut rand_chacha::ChaCha8Rng>,
@@ -126,15 +126,15 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
         transformation_number: u32,
     ) -> Option<Self> {
         let Some(rng) = rng else {
-            error!("Found None where Some rng expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some rng expected in SomeTestingTransformation new_opt");
             exit(1);
         };
         let Some(adg) = adg else {
-            error!("Found None where Some adg expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some adg expected in SomeTestingTransformation new_opt");
             exit(1);
         };
         let Some(transformation_type) = transformation_type else {
-            error!("Found None where Some transformation_type expected in SomeMetamorphicTransformation new_opt");
+            error!("Found None where Some transformation_type expected in SomeTestingTransformation new_opt");
             exit(1);
         };
 
@@ -204,11 +204,11 @@ impl<'a, 'b> SomeMetamorphicTransformation<'a, 'b> {
 // ^^ add here
 static NUM_TRANSFORMATION_TYPES: i32 = 8;
 // vv and here
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation<'a, 'b> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for SomeTestingTransformation<'a, 'b> {
     fn name(&self) -> String {
         match self {
             Self::Default() => {
-                error!("Cannot apply default case of SomeMetamorphicTransformation");
+                error!("Cannot apply default case of SomeTestingTransformation");
                 exit(1);
             }
             Self::AddFactNodeAndEdge(a) => a.name(),
@@ -291,11 +291,11 @@ impl<'a, 'b> MetamorphicTransformation<'a, 'b> for SomeMetamorphicTransformation
         }
     }
 }
-impl<'a, 'b> ProgramTransformation for SomeMetamorphicTransformation<'a, 'b> {
+impl<'a, 'b> ProgramTransformation for SomeTestingTransformation<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         match self {
             Self::Default() => {
-                error!("Cannot apply default case of SomeMetamorphicTransformation");
+                error!("Cannot apply default case of SomeTestingTransformation");
                 exit(1);
             }
             Self::AddRelationalNode(t) => t.apply(program),

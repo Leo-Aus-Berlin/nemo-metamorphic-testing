@@ -1,6 +1,6 @@
 use std::{
     env::{current_dir, set_current_dir},
-    fs::{File, create_dir_all, remove_dir_all},
+    fs::{create_dir_all, remove_dir_all, remove_file, File},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -15,17 +15,17 @@ use simplelog::*;
 use nemo::{
     error::report::ProgramReport,
     execution::execution_parameters::ExecutionParameters,
-    io::{ImportManager, resource_providers::ResourceProviders},
+    io::{resource_providers::ResourceProviders, ImportManager},
     rule_file::RuleFile,
     rule_model::{
-        pipeline::transformations::{ProgramTransformation, default::TransformationDefault},
-        programs::{ProgramRead, handle::ProgramHandle},
+        pipeline::transformations::{default::TransformationDefault, ProgramTransformation},
+        programs::{handle::ProgramHandle, ProgramRead},
     },
 };
 
 mod transformations;
 
-use crate::transformations::MetamorphicTransformation;
+use crate::transformations::TestingTransformation;
 use transformations::{
     annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
     select_random_output_predicate::TransformationSelectRandomOutputPredicate,
@@ -39,7 +39,7 @@ use rand::SeedableRng;
 use std::sync::OnceLock;
 
 use crate::transformations::{
-    transformation_manager::IterateMetamorphicTransformations,
+    transformation_manager::GenerateTestingTransformation,
     transformation_types::TransformationTypes,
 };
 
@@ -87,6 +87,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .arg(
             arg!(
                 -d --debug "Turn debugging information on"
+            )
+            .value_parser(value_parser!(bool))
+            .required(false),
+        )
+        .arg(
+            arg!(
+                -l --lean "Keep only the log file and output program after transformation"
             )
             .value_parser(value_parser!(bool))
             .required(false),
@@ -144,6 +151,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .expect("Failed to set debug mode");
         }
     }
+    let lean_mode = match matches.get_one::<bool>("lean") {
+        None => {
+            error!("Failed to read if in debug mode or not");
+            exit(1);
+        }
+        Some(&lean_mode) => lean_mode,
+    };
 
     // Initialise RNG using the provided seed (if any)
     let seed = matches.get_one::<u64>("seed");
@@ -490,7 +504,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let transformation;
 
         loop {
-            let mut iter = IterateMetamorphicTransformations::new(
+            let mut iter = GenerateTestingTransformation::new(
                 &mut adg,
                 &mut rng,
                 trans_types.clone(),
@@ -572,7 +586,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             + "
         ")
     );
-    for data_req in res_statements {
+    for data_req in res_statements.iter() {
         let mut from_dir = PathBuf::from(vec_path[chosen]);
         from_dir.pop();
         from_dir = from_dir.join(&data_req);
@@ -700,7 +714,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             exit(1);
         }
     };
-    match set_current_dir(transformation_folder) {
+    match set_current_dir(transformation_folder.clone()) {
         Ok(()) => (),
         Err(e) => {
             error!("Failed to switch dir!");
@@ -873,6 +887,29 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             exit(1);
         }
     };
+
+    // Lean mode means we delete everything other than the log file and the output program
+    // to save on storage
+    if lean_mode {
+        for data_req in res_statements {
+            let mut from_dir = PathBuf::from(vec_path[chosen]);
+            from_dir.pop();
+            from_dir = from_dir.join(&data_req);
+            let to_dir = PathBuf::from(&transformation_folder).join(&data_req);
+            //println!("from: {} to: {}", from_dir.display(), to_dir.display());
+            // Create data folder
+            let mut data_folder_name = to_dir.clone();
+            data_folder_name.pop();
+            let _ = remove_dir_all(data_folder_name); // we don't care if it succeeds
+                                                      // cause itll succeed at least once
+        }
+        let _ = remove_file(input_folder_name.clone() + "/input_program.rls");
+        let _ = remove_file(input_folder_name.clone() + "/input_adg.dot");
+        let _ = remove_file(output_folder_name.clone() + "/output_adg.dot");
+        let _ = remove_file(transformation_folder.clone() + "/pre_update_adg.dot");
+        let _ = remove_dir_all(transformation_folder.clone() + "/debug");
+    }
+
     Ok(())
 }
 

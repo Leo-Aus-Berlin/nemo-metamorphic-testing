@@ -23,7 +23,7 @@ use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{MetamorphicTransformation, util};
+use crate::transformations::{TestingTransformation, util};
 
 /// Add a relational edge i.e. a literal to an existing rule
 pub struct AddRelationalEdgeNewLiteral<'a, 'b> {
@@ -38,7 +38,7 @@ pub struct AddRelationalEdgeNewLiteral<'a, 'b> {
     //transformation_type: TransformationTypes,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'a, 'b> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */

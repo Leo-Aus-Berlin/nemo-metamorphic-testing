@@ -16,7 +16,7 @@ use rand::seq::IteratorRandom;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{util, MetamorphicTransformation};
+use crate::transformations::{util, TestingTransformation};
 
 /// Modify an existing rule by adding an equality between a pari of its variables
 /// Modifies the corresponding relational edges' terms
@@ -30,7 +30,7 @@ pub struct ModifyRuleAddEquality<'a, 'b> {
     //transformation_type: TransformationTypes,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for ModifyRuleAddEquality<'a, 'b> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for ModifyRuleAddEquality<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */

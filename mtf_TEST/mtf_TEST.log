@@ -1,0 +1,386 @@
+16:33:14 [INFO] ----------------------------------------------
+16:33:14 [INFO] Beginning transformation mtf_TEST
+    Oracle:     CON      Number of T: 32
+    Debug Mode: false      u64 Seed:    27818
+    Internal Seed:        [235, 196, 135, 150, 86, 144, 23, 66, 211, 118, 238, 57, 230, 212, 222, 184, 220, 137, 128, 249, 23, 73, 148, 213, 95, 107, 22, 252, 104, 132, 145, 247]
+    Seed File: Currently not supported!
+16:33:14 [INFO] ----------------------------------------------
+16:33:14 [INFO] Renaming of rules complete
+16:33:14 [INFO] Choosing a predicate to export!
+16:33:14 [INFO] Found export: validC
+16:33:14 [INFO] Output names (0): 
+16:33:14 [INFO] Using the randomly chosen export predicate of 1: validC
+16:33:14 [INFO] Beginning inverse_stratum and ancestry computation starting at node validC
+16:33:14 [INFO] Ancestry and Inverse Stratum computation complete.
+16:33:14 [INFO] ----------------------------------------------
+16:33:14 [INFO] --------- Beginning Transformations ----------
+16:33:14 [INFO] --------  Oracle: CON    Number: 32
+16:33:14 [INFO] ----------------------------------------------
+16:33:14 [INFO] 1 / 32
+16:33:14 [INFO]   II Add Fact Node and Edge
+16:33:14 [INFO]   Added new fact platformHeight("jungfernheide", c_1).
+16:33:15 [INFO] 2 / 32
+16:33:15 [INFO]   VII Modify Rule - Add Equality
+16:33:15 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+16:33:15 [INFO] 3 / 32
+16:33:15 [INFO]   III Add Relational edges - New Rule
+16:33:15 [INFO]   Added new rule of name r_CON_1
+16:33:15 [INFO]   platformHeight(?X_2, c_1) :- allowedDiff(?X_2, ?X_2), choseB(?X_2, c_1), seeTVTower(c_1), seeTVTower(?X_2), choseU(c_1, c_1), ~allowedDiff(?X_2, c_1), ~choseB(c_1, ?X_2), ~allowedDiff("kottbusser_tor", c_1), ~seeTVTower(?X_2) .
+16:33:15 [INFO] 4 / 32
+16:33:15 [INFO]   V Remove Relational Edges - Whole Rule
+16:33:15 [INFO]   Removing the Rule of the name r_4
+16:33:15 [INFO] 5 / 32
+16:33:15 [INFO]   IV Add Relational Edge - New Literal
+16:33:15 [INFO]   Generated literal elevator(?y) for rule r_5
+16:33:15 [INFO] 6 / 32
+16:33:15 [INFO]   III Add Relational edges - New Rule
+16:33:15 [INFO]   Added new rule of name r_CON_2
+16:33:15 [INFO]   success(?X_1) :- seeTVTower(?X_1), canChangeAt(?Y_1), choseB(?Y_1, trainHeight), tooLargeGap(?X_1), success(?X_1), ~validC(?X_1, trainHeight) .
+16:33:15 [INFO] 7 / 32
+16:33:15 [INFO]   VIII Modify Rule - Remove Equality
+16:33:15 [INFO]   Replaced a random number of var X_1 with var X_1_new_1 in the rule r_CON_2
+16:33:15 [INFO] 8 / 32
+16:33:15 [INFO]   I Add Relational Node
+16:33:15 [INFO]   Added new relation R_1
+16:33:15 [INFO] 9 / 32
+16:33:15 [INFO]   I Add Relational Node
+16:33:15 [INFO]   Added new relation R_2
+16:33:15 [INFO] 10 / 32
+16:33:15 [INFO]   VIII Modify Rule - Remove Equality
+16:33:15 [INFO]   Replaced a random number of var X_2 with var X_2_new_1 in the rule r_CON_1
+16:33:15 [INFO] 11 / 32
+16:33:15 [INFO]   VI Remove Relational Edge - Single Literal
+16:33:15 [INFO]   Found the rule of the name r_CON_2
+16:33:15 [INFO]   Removed relational edge NodeIndex(1): (canChangeAt -> success)
+16:33:15 [INFO]   Attempting to remove the literal +canChangeAt(, ?Y_1) from the rule r_CON_2
+16:33:15 [INFO] 12 / 32
+16:33:15 [INFO]   II Add Fact Node and Edge
+16:33:15 [INFO]   Added new fact tooLargeGap(c_2).
+16:33:15 [INFO] 13 / 32
+16:33:15 [INFO]   VII Modify Rule - Add Equality
+16:33:15 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+16:33:15 [INFO] 14 / 32
+16:33:15 [INFO]   IV Add Relational Edge - New Literal
+16:33:15 [INFO]   Generated literal ~seeTVTower(?x) for rule r_3
+16:33:15 [INFO] 15 / 32
+16:33:15 [INFO]   I Add Relational Node
+16:33:15 [INFO]   Added new relation R_3
+16:33:15 [INFO] 16 / 32
+16:33:15 [INFO]   V Remove Relational Edges - Whole Rule
+16:33:15 [INFO]   Removing the Rule of the name r_CON_2
+16:33:15 [INFO] 17 / 32
+16:33:15 [INFO]   V Remove Relational Edges - Whole Rule
+16:33:15 [INFO]   Removing the Rule of the name r_3
+16:33:15 [INFO] 18 / 32
+16:33:15 [INFO]   VI Remove Relational Edge - Single Literal
+16:33:15 [INFO]   Found the rule of the name r_CON_1
+16:33:15 [INFO]   Removed relational edge NodeIndex(7): (seeTVTower -> platformHeight)
+16:33:15 [INFO]   Attempting to remove the literal +seeTVTower(, c_1) from the rule r_CON_1
+16:33:15 [INFO] 19 / 32
+16:33:15 [INFO]   I Add Relational Node
+16:33:15 [INFO]   Added new relation R_4
+16:33:15 [INFO] 20 / 32
+16:33:15 [INFO]   VIII Modify Rule - Remove Equality
+16:33:15 [INFO]   Replaced a random number of var X_2_new_1 with var X_2_new_1_new_1 in the rule r_CON_1
+16:33:15 [INFO] 21 / 32
+16:33:15 [INFO]   V Remove Relational Edges - Whole Rule
+16:33:15 [INFO]   Removing the Rule of the name r_2
+16:33:15 [INFO] 22 / 32
+16:33:15 [INFO]   III Add Relational edges - New Rule
+16:33:15 [INFO]   Assigned relation R_2 the artiy 6
+16:33:15 [INFO]   Assigned relation R_1 the artiy 1
+16:33:15 [INFO]   Assigned relation R_4 the artiy 5
+16:33:15 [INFO]   Added new rule of name r_CON_3
+16:33:15 [INFO]   tooLargeGap("kottbusser_tor") :- tooLargeGap("alexanderplatz"), R_2(?Y_1, "alexanderplatz", ?Y_1, "alexanderplatz", "kottbusser_tor", ?Y_1), R_1(?Y_1), choseU("kottbusser_tor", "kottbusser_tor"), R_4(?Y_1, "kottbusser_tor", "alexanderplatz", "kottbusser_tor", "kottbusser_tor") .
+16:33:15 [INFO] 23 / 32
+16:33:15 [INFO]   V Remove Relational Edges - Whole Rule
+16:33:15 [INFO]   Removing the Rule of the name r_7
+16:33:15 [INFO] 24 / 32
+16:33:15 [INFO]   III Add Relational edges - New Rule
+16:33:15 [INFO]   Added new rule of name r_CON_4
+16:33:15 [INFO]   success(trainHeight) :- validC(?Y_1, ?Y_1), canChangeAt(?Y_1), seeTVTower(trainHeight), platformHeight("kottbusser_tor", ?Y_1), platformHeight(?Y_1, "kottbusser_tor") .
+16:33:15 [INFO] 25 / 32
+16:33:15 [INFO]   IV Add Relational Edge - New Literal
+16:33:15 [INFO]   Generated literal R_4(?y, ?Z_2, trainHeight, ?y, ?y) for rule r_5
+16:33:15 [INFO] 26 / 32
+16:33:15 [INFO]   VII Modify Rule - Add Equality
+16:33:15 [INFO]   Replaced var ?Z_2 with var ?y in the rule r_5
+16:33:15 [INFO] 27 / 32
+16:33:15 [INFO]   III Add Relational edges - New Rule
+16:33:15 [INFO]   Added new rule of name r_CON_5
+16:33:15 [INFO]   tooLargeGap("alexanderplatz") :- elevator("alexanderplatz"), ~R_1("alexanderplatz") .
+16:33:15 [INFO] 28 / 32
+16:33:15 [INFO]   VIII Modify Rule - Remove Equality
+16:33:15 [INFO]   Replaced a random number of var X_2 with var X_2_new_2 in the rule r_CON_1
+16:33:15 [INFO] 29 / 32
+16:33:15 [INFO]   VIII Modify Rule - Remove Equality
+16:33:15 [INFO]   Replaced a random number of var Y_1 with var Y_1_new_1 in the rule r_CON_3
+16:33:15 [INFO] 30 / 32
+16:33:15 [INFO]   V Remove Relational Edges - Whole Rule
+16:33:15 [INFO]   Removing the Rule of the name r_11
+16:33:15 [INFO] 31 / 32
+16:33:15 [INFO]   IV Add Relational Edge - New Literal
+16:33:15 [INFO]   Generated literal ~canChangeAt(?y) for rule r_1
+16:33:15 [INFO] 32 / 32
+16:33:15 [INFO]   VI Remove Relational Edge - Single Literal
+16:33:15 [INFO]   Found the rule of the name r_CON_4
+16:33:15 [INFO]   Removed relational edge NodeIndex(7): (seeTVTower -> success)
+16:33:15 [INFO]   Attempting to remove the literal +seeTVTower(, trainHeight) from the rule r_CON_4
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] ------------ Transformations Done ------------
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO]  Ressources required: 
+        data/choseU.csv
+        data/choseB.csv
+        data/elevator.csv
+        data/platformHeight.csv
+        data/allowedDiff.csv
+        
+16:33:15 [INFO] ---------------- ADG Summary: ----------------
+16:33:15 [INFO] ADG Fact Nodes:                  7
+16:33:15 [INFO] ADG Relational Nodes:            15
+16:33:15 [INFO] ADG Fact Edges:                  7
+16:33:15 [INFO] ADG Relational Edges:            34
+16:33:15 [INFO] 
+16:33:15 [INFO] Next rule name would be:         r_CON_6
+16:33:15 [INFO] Next predicate name would be:    R_5
+16:33:15 [INFO] Next constant name would be:     c_3
+16:33:15 [INFO] Next string would be:            "str_1"
+16:33:15 [INFO] 
+16:33:15 [INFO] Output predicate:                validC
+16:33:15 [INFO] Rule count:                      10
+16:33:15 [INFO] Average arity:                   2
+16:33:15 [INFO] --------- Performed Transformations: ---------
+16:33:15 [INFO]  #      Type
+16:33:15 [INFO]  2      None - Transformation not applicable
+16:33:15 [INFO]  4      I     Add Relational Node
+16:33:15 [INFO]  2      II    Add Fact Node and Edge
+16:33:15 [INFO]  5      III   Add Relational edges - New Rule
+16:33:15 [INFO]  4      IV    Add Relational Edge - New Literal
+16:33:15 [INFO]  6      V     Remove Relational Edges - Whole Rule
+16:33:15 [INFO]  3      VI    Remove Relational Edge - Single Literal
+16:33:15 [INFO]  3      VII   Modify Rule - Add Equality
+16:33:15 [INFO]  5      VIII  Modify Rule - Remove Equality
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] -- Beginning Nemo Execution - Input Program --
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] Stratified program: [[2, 3, 5, 6, 7], [0, 1, 4]]
+16:33:15 [INFO] <<< STEP 1: APPLYING RULE 2 validC(?x, ?y) :- choseB(?x, ?y), choseU(?x, ?y) >>>
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 0 lines (dropped 0)
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 41 lines (dropped 0)
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 41 entries (9044)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 9 ms
+16:33:15 [INFO] <<< STEP 2: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Saved temporary table: 41 entries (9096)
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Saved permanent table validC (2) Permutation { idx_to_val: [], val_to_idx: [] } with 41 entries (9144)
+16:33:15 [INFO] Rule duration: 3 ms
+16:33:15 [INFO] <<< STEP 3: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 0 ms
+16:33:15 [INFO] <<< STEP 4: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, Integer]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 41 lines (dropped 35)
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Integer, Integer]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 7 lines (dropped 0)
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 7 entries (7072)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Saved temporary table: 6 entries (3424)
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Saved permanent table tooLargeGap (4) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (3472)
+16:33:15 [INFO] Rule duration: 5 ms
+16:33:15 [INFO] <<< STEP 5: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 7 entries (7072)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 1 ms
+16:33:15 [INFO] <<< STEP 6: APPLYING RULE 6 mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) >>>
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 0 ms
+16:33:15 [INFO] <<< STEP 7: APPLYING RULE 7 mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) >>>
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 0 ms
+16:33:15 [INFO] <<< STEP 8: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 41 lines (dropped 0)
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 6 entries (3472)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Saved temporary table: 35 entries (3540)
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Saved permanent table canChangeAt (8) Permutation { idx_to_val: [], val_to_idx: [] } with 35 entries (3588)
+16:33:15 [INFO] Rule duration: 2 ms
+16:33:15 [INFO] <<< STEP 9: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 6 entries (3472)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 1 ms
+16:33:15 [INFO] <<< STEP 10: APPLYING RULE 0 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) >>>
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 1 ms
+16:33:15 [INFO] <<< STEP 11: APPLYING RULE 1 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 2 ms
+16:33:15 [INFO] Execution step: Combining Tables
+16:33:15 [INFO] Saved permanent table validC (0-3) Permutation { idx_to_val: [], val_to_idx: [] } with 41 entries (9144)
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] --- Finished Nemo Execution - Input Program --
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] Output size: 41
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] Beginning Nemo Execution - Transformed Program
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] Stratified program: [[1, 2, 3, 5], [0, 6, 7], [4], [8]]
+16:33:15 [INFO] <<< STEP 1: APPLYING RULE 1 mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) >>>
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 0 lines (dropped 0)
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 41 lines (dropped 0)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 3 ms
+16:33:15 [INFO] <<< STEP 2: APPLYING RULE 2 seeTVTower(s) :- choseB(?_BODY_1, ?x), Equal(?_BODY_1, "alexanderplatz") >>>
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 0 ms
+16:33:15 [INFO] <<< STEP 3: APPLYING RULE 3 seeTVTower(s) :- choseB(?x, ?_BODY_1), Equal(?_BODY_1, "alexanderplatz") >>>
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 0 ms
+16:33:15 [INFO] <<< STEP 4: APPLYING RULE 5 tooLargeGap("alexanderplatz") :- elevator(?_BODY_1), R_1(?_BODY_2), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, "alexanderplatz") >>>
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 41 lines (dropped 0)
+16:33:15 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Iri(IriDataValue("c_2")))] }
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Saved temporary table: 1 entries (0)
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Saved permanent table tooLargeGap (4) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+16:33:15 [INFO] Rule duration: 2 ms
+16:33:15 [INFO] <<< STEP 5: APPLYING RULE 5 tooLargeGap("alexanderplatz") :- elevator(?_BODY_1), R_1(?_BODY_2), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, "alexanderplatz") >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 1 ms
+16:33:15 [INFO] <<< STEP 6: APPLYING RULE 6 platformHeight(?X_2, c_1) :- allowedDiff(?X_2, ?X_2_new_2), choseB(?X_2_new_1, ?_BODY_1), seeTVTower(?X_2_new_1_new_1), choseU(?_BODY_2, ?_BODY_3), allowedDiff(?X_2, ?_BODY_4), choseB(?_BODY_5, ?X_2_new_2), allowedDiff(?_BODY_6, ?_BODY_7), seeTVTower(?X_2_new_2), Equal(?_BODY_1, c_1), Equal(?_BODY_2, c_1), Equal(?_BODY_3, c_1), Equal(?_BODY_4, c_1), Equal(?_BODY_5, c_1), Equal(?_BODY_6, "kottbusser_tor"), Equal(?_BODY_7, c_1) >>>
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Integer, Integer]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 7 lines (dropped 0)
+16:33:15 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, Integer]) }
+16:33:15 [INFO] Starting data import
+16:33:15 [INFO] Finished import: processed 41 lines (dropped 35)
+16:33:15 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(PlainString(StringDataValue("jungfernheide"))), AnyDataValue(Iri(IriDataValue("c_1")))] }
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 7 entries (7072)
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 7 entries (7072)
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 5 ms
+16:33:15 [INFO] <<< STEP 7: APPLYING RULE 0 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 7 entries (7072)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Saved temporary table: 7 entries (3428)
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Saved permanent table tooLargeGap (7) Permutation { idx_to_val: [], val_to_idx: [] } with 7 entries (3476)
+16:33:15 [INFO] Rule duration: 4 ms
+16:33:15 [INFO] <<< STEP 8: APPLYING RULE 0 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 7 entries (7072)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 2 ms
+16:33:15 [INFO] <<< STEP 9: APPLYING RULE 7 tooLargeGap("kottbusser_tor") :- tooLargeGap(?_BODY_1), R_2(?Y_1, ?_BODY_2, ?Y_1_new_1, ?_BODY_3, ?_BODY_4, ?_BODY_5), R_1(?Y_1), choseU(?_BODY_6, ?_BODY_7), R_4(?Y_1, ?_BODY_8, ?_BODY_9, ?_BODY_10, ?_BODY_11), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, "alexanderplatz"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "kottbusser_tor"), Equal(?_BODY_5, ?Y_1_new_1), Equal(?_BODY_6, "kottbusser_tor"), Equal(?_BODY_7, "kottbusser_tor"), Equal(?_BODY_8, "kottbusser_tor"), Equal(?_BODY_9, "alexanderplatz"), Equal(?_BODY_10, "kottbusser_tor"), Equal(?_BODY_11, "kottbusser_tor") >>>
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 1 ms
+16:33:15 [INFO] <<< STEP 10: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), elevator(?y), R_4(?y, ?_BODY_1, ?_BODY_2, ?_BODY_3, ?_BODY_4), tooLargeGap(?y), Equal(?_BODY_1, ?y), Equal(?_BODY_2, trainHeight), Equal(?_BODY_3, ?y), Equal(?_BODY_4, ?y) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Saved temporary table: 9 entries (3484)
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 1 ms
+16:33:15 [INFO] <<< STEP 11: APPLYING RULE 8 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y), canChangeAt(?y) >>>
+16:33:15 [INFO] Execution step: Project/Reorder
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Body
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Execution step: Duplicate Elimination (Datalog)
+16:33:15 [INFO] Trie does not contain any elements
+16:33:15 [INFO] Rule duration: 1 ms
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO]  Finished Nemo Execution - Transformed Program
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] Output size: 0
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] ------------ Asserting Oracle CON ------------
+16:33:15 [INFO] ----------------------------------------------
+16:33:15 [INFO] All good, output has contracted

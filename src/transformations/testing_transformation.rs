@@ -15,7 +15,7 @@ use crate::transformations::annotated_dependency_graphs::{
     ADGEdge, ADGRelationalNode, AnnotatedDependencyGraph,
 };
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{MetamorphicTransformation, util};
+use crate::transformations::{TestingTransformation, util};
 
 #[allow(dead_code, unused_variables)]
 /// Provides an overview of code we can use
@@ -25,7 +25,7 @@ pub struct OverviewTransformation<'a, 'b> {
     rng: &'b mut rand_chacha::ChaCha8Rng,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for OverviewTransformation<'a, 'b> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for OverviewTransformation<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */

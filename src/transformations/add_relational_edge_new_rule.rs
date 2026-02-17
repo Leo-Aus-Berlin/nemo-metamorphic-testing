@@ -21,7 +21,7 @@ use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{MetamorphicTransformation, util};
+use crate::transformations::{TestingTransformation, util};
 
 /// Create a new rule, i.e. several related relational edges
 pub struct AddRelationalEdgeNewRule<'a, 'b> {
@@ -34,7 +34,7 @@ pub struct AddRelationalEdgeNewRule<'a, 'b> {
     transformation_number: u32,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 'b> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */

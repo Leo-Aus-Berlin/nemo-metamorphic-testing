@@ -8,7 +8,7 @@ use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::MetamorphicTransformation;
+use crate::transformations::TestingTransformation;
 
 /// Add a relational node with a new relational name and no
 /// edges to exisiting nodes.
@@ -17,7 +17,7 @@ pub struct AddRelationalNode<'a> {
     _transformation_number: u32,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddRelationalNode<'a> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for AddRelationalNode<'a> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */

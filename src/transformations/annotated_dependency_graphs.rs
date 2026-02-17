@@ -1305,7 +1305,7 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get a literal by the relational edge's edge index
-    #[allow(dead_code, unused_variables)]
+    #[allow(dead_code)]
     pub fn get_lit_terms_by_edge_index<'a, 'b>(&'a self, index: EdgeIndex) -> &'a Vec<Term> {
         &self.get_rel_edge_by_index(index).terms
     }

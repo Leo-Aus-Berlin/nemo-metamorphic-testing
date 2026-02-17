@@ -22,7 +22,7 @@ use crate::transformations::annotated_dependency_graphs::{
     AnnotatedDependencyGraph, Sign,
 };
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::{MetamorphicTransformation, util};
+use crate::transformations::{TestingTransformation, util};
 
 /// Replace some occurences of a variable in a rule with a new variable,
 /// effectively removing an equality restriction
@@ -37,7 +37,7 @@ pub struct ModifyRuleRemoveEquality<'a, 'b> {
     //transformation_type: TransformationTypes,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for ModifyRuleRemoveEquality<'a, 'b> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for ModifyRuleRemoveEquality<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */

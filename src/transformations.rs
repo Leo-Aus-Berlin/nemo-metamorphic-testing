@@ -25,7 +25,7 @@ mod util;
 /// Trait that defines a metamorphic transformation
 /// Includes a constructor "new" and a test for
 /// if this transformation can be applied under the current oracle
-pub trait MetamorphicTransformation<'a, 'b> {
+pub trait TestingTransformation<'a, 'b> {
     /// Fetch the ADG.
     // fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph;
     /// Initialise myself with references to rng and adg if I can be applied under the intended transformation type.

@@ -15,7 +15,7 @@ use rand::Rng;
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::MetamorphicTransformation;
+use crate::transformations::TestingTransformation;
 
 /// Add a fact node with a fact edge to some
 /// random exisiting relational node.
@@ -27,7 +27,7 @@ pub struct AddFactNodeAndEdge<'a, 'b> {
     _transformation_number: u32,
 }
 
-impl<'a, 'b> MetamorphicTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
+impl<'a, 'b> TestingTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
