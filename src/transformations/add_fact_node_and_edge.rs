@@ -90,7 +90,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
         // fact to the commit the program stores.
         let arity = match arity {
             None => {
-                let new_value: usize = self.rng.random_range(1..6);
+                let new_value: usize = self.rng.random_range(1..=6);
                 info!(
                     "  Assigned relation {} the artiy {}",
                     self.chosen_to_rel_node.name(),

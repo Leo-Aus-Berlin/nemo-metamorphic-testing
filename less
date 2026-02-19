@@ -1,0 +1,341 @@
+commit 13e32859f8665f83142f07445c4f7df822d26ae2
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Feb 17 19:02:36 2026 +0100
+
+    Lean mode and some renaming
+
+commit b8fe5bdfd3e057bc163071819eba7e2b35e27706
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Feb 17 12:57:46 2026 +0100
+
+    Accidentally too agressively removed head literal information when removing relational edges. Fixed by only removing if last rel edge is removed
+
+commit 2aeb4ac9afe0c828230e9ee64bb59bda53ed448c
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Mon Feb 16 15:43:43 2026 +0100
+
+    We can now track the number of incoming rules at the relation. We do not remove rules anymore if they are the last rule that has its head relation in the head
+
+commit 87b1c76e86a2f5c15aa4b09dca115e155c8bce79
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Mon Feb 16 14:05:40 2026 +0100
+
+    Fixed whole rule removal not updating from output relation
+
+commit 8c04375de7e790b34e4c853773aca8ed614354a8
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Mon Feb 16 12:35:07 2026 +0100
+
+    Did benchmark
+
+commit 51d7f38fe2d5fafd5abe2b310316ad0c0cc93e81
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 17:22:32 2026 +0100
+
+    Ensured that we only ever remove one lit with IV no matter what
+
+commit 89fbab45b6f83fdc9c49fafacb64c03f5be87bed
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 17:16:13 2026 +0100
+
+    Forgot to check for sign when removing
+
+commit afc37682dc3a09988c147fac9994228fd16344ff
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 16:01:45 2026 +0100
+
+    Now output predicate is actually ensured to always have pos ancestry
+
+commit 77cd05a35d4ec51a9c664e1c1bcc521dcab9f381
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 15:38:37 2026 +0100
+
+    Ensured that output relation retains its positive ancestry whenever we remove ancestries during transformations
+
+commit 1c0263f1c7ed1f78b701747377e54cdc2b4a64f0
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 14:47:08 2026 +0100
+
+    Fixing gitignore 3
+
+commit 94fc289c996f62c6142341099f1c97c05a3d2219
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 14:46:17 2026 +0100
+
+    Fixing gitignore 2
+
+commit 1d0b29da3887513abc64228ee278a10bdf180a23
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 14:44:21 2026 +0100
+
+    fixing gitignore
+
+commit b93a612fc8c4ebc2dd11a65a6e3afa3bd07a3698
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 14:43:39 2026 +0100
+
+    starting benchmark, fixed arity issue in add literal
+
+commit b7a0aca9049e551c848aac696b381296669e9c29
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 13:52:26 2026 +0100
+
+    Accidentally fixed an arity related error
+
+commit b1303a17480a1270b45ffa09b2f42a334f24aab8
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 13 12:31:04 2026 +0100
+
+    Extensive logs, improved main transformations: reports not as stored elsewhere, added TransformationDefault to correctly simulate nemo cli process, move data required for program exec, now execute nemo from within main, and can easily verify oracle from within main, fixed log writing
+
+commit ef10c013c2eb9e1ba9be9134f91f03d959326df6
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Feb 11 16:36:58 2026 +0100
+
+    Better logs, working on data move and such
+
+commit 0acb7142fb5355883e9af6ac265c1f9a897a3113
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 6 15:51:27 2026 +0100
+
+    Improved logging to count transformations and ADG nodes etc
+
+commit 8aebb047ca22a70d628cd26d234beb69a5d7ce6f
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Feb 6 12:44:55 2026 +0100
+
+    Fixed single pos literal rules for remove single literal transformation: Don't remove the last pos literal now
+
+commit 11df0731019c0b4560566659181f41a65793f2b9
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Feb 5 16:48:15 2026 +0100
+
+    Attempted to verify in-between programs and failed. Added transformation rule descriptions.
+
+commit 9914042ba81922c20436fb859d83ff0c9af7a7fa
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Feb 4 19:12:22 2026 +0100
+
+    added validation for well-formedness of program after each step
+
+commit c6e80f972a5797444d83e6db2b04ec273f466fdf
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Feb 4 18:41:20 2026 +0100
+
+    Attempting remove equ., discovered bug in new rule terms
+
+commit e4ef7dafa4b6b7c22a71db7a53f547875f644fd4
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Jan 29 20:26:31 2026 +0100
+
+    Beginning on remove equ transformation
+
+commit 1ef1a816a1b0087131170e37d83fafd2c31a7e0a
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Jan 29 13:59:59 2026 +0100
+
+    Add equality now doesn't introduce identities anymore, log aesthetic fixes
+
+commit fb72d2d74eb9fb0ade6a215c1a1c34f9a3caaac4
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Jan 28 17:02:59 2026 +0100
+
+    Reworked counting vars in remove single literal
+
+commit 8b526cec09556f3107e2a8929d3c7c058f9eab1a
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Jan 28 15:27:26 2026 +0100
+
+    Remove Literal now ignores single body literal rules
+
+commit b00671a9d12f97b6f17375c43e1fded7ce24a825
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Jan 28 14:04:16 2026 +0100
+
+    First attempt at add equality
+
+commit d62e3d28df0f79d546230cfe487644c6dfa14a53
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Jan 27 12:58:10 2026 +0100
+
+    Added Transformation for removing a single literal
+
+commit bdf6279e263282e0bca0fb7e6791e7c83d89372d
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Jan 22 16:09:39 2026 +0100
+
+    We now store literal terms including head in the relational edges
+
+commit 177d93d4db1ece5672e2dfeca148f72545408e29
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Mon Jan 19 15:43:21 2026 +0100
+
+    Aesthetic fixes
+
+commit c60b73c8caf065c64995f964f12800f8ca1e863b
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Mon Jan 19 15:40:06 2026 +0100
+
+    Added number of transformations tracking
+
+commit b2f8dcac2ab122d68bf58e14f14746e43c4a72c2
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Mon Jan 19 15:26:29 2026 +0100
+
+    Resetting anc and invs now returns set of affected nodes, and remove rule now updates from all children of reset nodes (which is the correct behaviour)
+
+commit 9ae6b2188b5f98122aa78ba0f3a7391e3a4fa2b7
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Jan 16 13:25:33 2026 +0100
+
+    fixes to remove rule
+
+commit 1382ef23a40eb789d1c66af72c32b4c7827e4cf1
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Jan 15 17:01:44 2026 +0100
+
+    Added remove rule
+
+commit 2752c60ae6816f55b0839c4f7dbd16c7e74a45b8
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Jan 14 14:36:02 2026 +0100
+
+    Now clears old log files
+
+commit 66c41276725e19c41e40a0b0e4e29e2701c50c8e
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Jan 13 15:23:31 2026 +0100
+
+    Added literal transformation and some aesthetic fixes
+
+commit b7a40e473ce06103d913ba8232ee43bb77330744
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Jan 8 16:40:52 2026 +0100
+
+    III seems to be working
+
+commit 9ea8ba9b279d3aefa60ea4bc3022ff132285edba
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Jan 7 16:00:05 2026 +0100
+
+    Working on command line functionalitiy
+
+commit 6a7c3fc2759a8a89a6f6a4b99842a2a9cad2f7bd
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Jan 6 15:40:48 2026 +0100
+
+    Added logger
+
+commit f8084dd68f3f3efa75aaceacef89a110e248fafb
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Jan 6 15:17:34 2026 +0100
+
+    fixed add rule, starting to add logging
+
+commit 578073c66877eaea58bec39d321d0d8a2b87279e
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Mon Jan 5 15:28:49 2026 +0100
+
+    Fixed body candidate detection not reconsidering if we newly know that we have a negative edge on the path
+
+commit b1a360d32041db6ee6c756c87b1f8471b90f2a5f
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Dec 18 16:18:43 2025 +0100
+
+    Ensured Stability thanks to IndexMap
+
+commit e96e66a28f14b991c14c13e4d9ed627eb2ea7401
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Dec 18 15:53:36 2025 +0100
+
+    Using fasthash to hopefully ensure experiment stability
+
+commit b0980bb1ba4ff5b20f1176137704e04ebf6e1982
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Dec 16 15:56:22 2025 +0100
+
+    Maybe it works already?
+
+commit 9d0ff99ce2258ba6abe5d18cd2e3d8321b058b78
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Dec 16 13:37:25 2025 +0100
+
+    Almost done assigning vars for new rule
+
+commit 7a1cedb29fd5c747bc4ba6113744bfcd951c04ac
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Dec 12 15:22:26 2025 +0100
+
+    Precomputation add rel edge new rule done
+
+commit 2188be419e53e0d45ee84ddc4f694d49e3bc7680
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Wed Dec 3 12:03:42 2025 +0100
+
+    better Printing, non random constant names, regular constants
+
+commit c83d2bccf1e57990566f0482b370af89dedae69b
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Dec 2 15:36:03 2025 +0100
+
+    Minor adjust
+
+commit c60696d4c472ef9e5274c60ec217458330f2e59d
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Dec 2 15:32:46 2025 +0100
+
+    add fact node and edge
+
+commit d33ef071ccdd5a4f3f810d858132925188e49911
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Dec 2 15:07:19 2025 +0100
+
+    attempting add_fact_node_and_edge
+
+commit 9582c321c1e23b728cfbe222d397aaa164f46c69
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Nov 27 15:58:40 2025 +0100
+
+    add fact transformation added
+
+commit cb955a28babc4bb839be429064bd3b6b936262b4
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Nov 27 15:29:34 2025 +0100
+
+    Refactored transformations: Only ^new^ no ^can_apply^ function anymore
+
+commit cc273f2c9ca12e00471dacdffa87fa46e917060c
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Nov 27 11:41:31 2025 +0100
+
+    Fixed Ancestry computation, added input/output folder and write
+
+commit c17036a299c26aa77a7e66c95cff0fb20800a550
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Tue Nov 25 15:33:55 2025 +0100
+
+    adgs for thesis drawn
+
+commit ceffe6d0060e04d4ef2f3cbbe8d482340beafc7d
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Nov 20 17:41:33 2025 +0100
+
+    Added Transformation Manager
+
+commit 503306668fc92d8d4d0f3e79b199d695f2500cb4
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Fri Nov 7 09:56:01 2025 +0100
+
+    Rules are now properly given names
+
+commit b15ab3cfcfcb041afd4d942d60fa38a2a57852d8
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Nov 6 17:23:08 2025 +0100
+
+    Main minor import fix
+
+commit 29ce4b21076938ce2f2f80dfcda113b19614d574
+Author: Leo Repp <leo.repp.0410@gmail.com>
+Date:   Thu Nov 6 17:14:13 2025 +0100
+
+    ADG basics, trying out transformations

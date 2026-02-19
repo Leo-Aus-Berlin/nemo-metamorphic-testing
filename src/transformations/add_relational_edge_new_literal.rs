@@ -179,7 +179,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
         let new_rel_arity: usize = match new_rel_arity {
             Some(v) => *v,
             None => {
-                let new_value: usize = self.rng.random_range(1..6);
+                let new_value: usize = self.rng.random_range(1..=6);
                 arities.insert(self.chosen_new_rel.clone(), new_value.clone()); // theoretically not necessary
                 info!(
                     "  Assigned relation {} the artiy {}",

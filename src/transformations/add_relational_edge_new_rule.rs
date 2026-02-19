@@ -88,7 +88,7 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 'b> 
                 .collect::<Vec<&str>>()
         ); */
 
-        // Add 33% chance of duplicates, min. 1
+        // Add "33% chance" of duplicates, min. 1, is not actually 33% chance but smth weird
         let amount = usize::max(body_pos_opt.len() / 3, 1);
         util::append_duplicates(&mut body_pos_opt, rng, amount);
         let amount = usize::max(body_neg_opt.len() / 3, 1);
@@ -165,7 +165,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
         let head_arity: usize = match head_arity {
             Some(v) => *v,
             None => {
-                let new_value: usize = self.rng.random_range(1..6);
+                let new_value: usize = self.rng.random_range(1..=6);
                 arities.insert(self.chosen_head_rel.clone(), new_value.clone());
                 info!(
                     "  Assigned relation {} the artiy {}",
