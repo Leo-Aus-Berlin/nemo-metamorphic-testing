@@ -15,3 +15,14 @@ seeTVTower(s) :- choseB(?x, "alexanderplatz") .
 seeTVTower(s) :- choseB("alexanderplatz", ?x) .
 success(s) :- validC("jungfernheide", "kottbusser_tor") .
 @export validC :- csv{}.
+tooLargeGap("str_1").
+seeTVTower("jungfernheide") :- R_OUT("jungfernheide", ?Y_1, "jungfernheide", "jungfernheide"), allowedDiff("jungfernheide", "jungfernheide"), canChangeAt("jungfernheide"), choseB("jungfernheide", ?Y_1), success("jungfernheide"), elevator("jungfernheide"), ~choseB(?Y_1, ?Y_1) .
+R_OUT("kottbusser_tor", 2730949651448125768, c_1, 9108087539966806366).
+platformHeight("str_1", trainHeight).
+canChangeAt(?X_1) :- platformHeight(?X_1, ?X_1), allowedDiff(?Y_1, trainHeight), R_1(?X_1, ?Y_1, trainHeight), seeTVTower(?X_1), R_3(?Y_1, ?X_1), ~platformHeight(?Y_1, ?X_1) .
+canChangeAt(c_2).
+R_2("str_1").
+R_3("str_1", c_3).
+choseU(?X_2, 9108087539966806366) :- canChangeAt(?X_2), mustChangeAt(9108087539966806366), ~seeTVTower(?X_2), ~allowedDiff(?X_2, 9108087539966806366), ~R_2(c_1), success(?X_2), ~validC(?X_2, ?X_2) .
+choseB("str_2", "kottbusser_tor").
+R_1(?X_3, ?X_1, ?X_3) :- tooLargeGap(?X_3), validC(?X_1, ?X_3), ~success(?X_3), ~allowedDiff("str_2", "str_2") .

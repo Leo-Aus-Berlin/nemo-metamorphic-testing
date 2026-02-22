@@ -7,7 +7,7 @@ use nemo::rule_model::programs::handle::ProgramHandle;
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use petgraph::graph::EdgeIndex;
-use rand::seq::IndexedRandom;
+use rand::seq::{IndexedRandom, IteratorRandom};
 
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
@@ -35,8 +35,11 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for RemoveRelationalNode<'a> {
     ) -> Option<Self> {
         // only none because we only do EQU case
         // always succeeds
+        // dont remove seed program relations
         let chosen_rel_node: Tag = adg
             .get_none_ancestry_relational_nodes()
+            .iter()
+            .filter(|rel| adg.can_idb_rel(rel))
             .choose(rng)?
             .clone();
 
@@ -53,6 +56,7 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for RemoveRelationalNode<'a> {
 impl<'a, 'b> ProgramTransformation for RemoveRelationalNode<'a> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         info!("  Xa Remove Relational Node - Rule Variant");
+        info!("  Removing relational node {}", self.chosen_rel_node.name());
         let mut commit: ProgramCommit = program.fork();
 
         // Remove any rule with the chosen relation and just keep the rest!
@@ -91,7 +95,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalNode<'a> {
             }
         }
         info!(
-            "   Removing at least {} relational edges.",
+            "  Removing at least {} relational edges.",
             to_remove_rel_edges.len()
         );
         if util::in_debug_mode() {
@@ -112,6 +116,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalNode<'a> {
             .iter()
             .for_each(|edge| self.adg.remove_rel_edge(*edge));
 
+        debug!("Attempting to remove relational node");
         // Now remove the relational node
         self.adg.remove_rel_node(&self.chosen_rel_node);
         debug!(

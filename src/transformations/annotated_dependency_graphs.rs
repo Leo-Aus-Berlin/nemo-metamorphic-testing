@@ -274,6 +274,7 @@ pub struct AnnotatedDependencyGraph {
     graph: StableGraph<ADGNode, ADGEdge, Directed, u32>,
     //predicates: Vec<&'a Tag>,
     predicate_ids: IndexMap<Tag, NodeIndex>,
+    edb_only_predicate: IndexMap<Tag, bool>,
     output_predicate: Option<Tag>,
     ground_terms: Vec<GroundTerm>,
     last_str_name: u32, // NodeIndex is u32 so no point in doing u64
@@ -284,6 +285,7 @@ pub struct AnnotatedDependencyGraph {
 
 /// An Annotated Dependency Graph. Provides a multitude of functions
 impl AnnotatedDependencyGraph {
+    /// Generate an ADG that fully represents a program
     pub fn from_program(program: &ProgramHandle) -> Option<Self> {
         let predicates: HashSet<Tag> = program.all_predicates();
 
@@ -324,6 +326,7 @@ impl AnnotatedDependencyGraph {
         let mut adg: AnnotatedDependencyGraph = AnnotatedDependencyGraph {
             graph: StableGraph::default(),
             predicate_ids: IndexMap::new(),
+            edb_only_predicate: IndexMap::new(),
             output_predicate: None,
             ground_terms,
             last_iri_name: 0,
@@ -333,7 +336,7 @@ impl AnnotatedDependencyGraph {
         };
         //debug!("{:#?}", adg.predicates);
         // Relational nodes
-        adg.init_rel_nodes(predicates);
+        adg.init_rel_nodes(predicates, false);
         // Store rules!
         for statement in program.statements() {
             match statement {
@@ -410,6 +413,76 @@ impl AnnotatedDependencyGraph {
         Some(adg)
     }
 
+    /// Generate an ADG from a program such that it only stores appearing
+    /// relations in the form of relational nodes and appearing ground terms
+    /// for later use in transformations
+    pub fn from_program_lite(program: &ProgramHandle) -> Option<Self> {
+        // Find predicates
+        let mut predicates: HashSet<Tag> = program.all_predicates();
+        // Construct output predicate
+        let mut output_tag: Tag = Tag::from("R_OUT");
+        let mut ii_name: u32 = 1;
+        while predicates.contains(&output_tag) {
+            output_tag = Tag::from(String::from("R_OUT") + &ii_name.to_string());
+            ii_name += 1;
+        }
+        predicates.insert(output_tag.clone());
+
+        // Find ground terms, which might be the same as constant symbols
+        // TODO: check this
+        // ground terms from facts
+        let mut ground_terms: Vec<GroundTerm> = Vec::new();
+        for fact in program.facts() {
+            for term in fact.terms() {
+                for prim_term in term.primitive_terms() {
+                    match prim_term {
+                        nemo::rule_model::components::term::primitive::Primitive::Ground(g) => {
+                            ground_terms.push(g.clone());
+                        }
+                        nemo::rule_model::components::term::primitive::Primitive::Variable(_) => {}
+                    }
+                }
+            }
+        }
+        // ground terms from rules
+        for rule in program.rules() {
+            for atom in rule.body_atoms() {
+                for term in atom.terms() {
+                    for prim_term in term.primitive_terms() {
+                        match prim_term {
+                            nemo::rule_model::components::term::primitive::Primitive::Ground(g) => {
+                                ground_terms.push(g.clone());
+                            }
+                            nemo::rule_model::components::term::primitive::Primitive::Variable(
+                                _,
+                            ) => {}
+                        }
+                    }
+                }
+            }
+        }
+        // base structure
+        let mut adg: AnnotatedDependencyGraph = AnnotatedDependencyGraph {
+            graph: StableGraph::default(),
+            predicate_ids: IndexMap::new(),
+            edb_only_predicate: IndexMap::new(),
+            output_predicate: None,
+            ground_terms,
+            last_iri_name: 0,
+            last_str_name: 0,
+            last_rel_name: 0,
+            last_rule_name: 0,
+        };
+        //debug!("{:#?}", adg.predicates);
+        // Relational nodes
+        adg.init_rel_nodes(predicates, true);
+        adg.set_output_rel(&output_tag);
+
+        // No rule representation -> done!
+
+        Some(adg)
+    }
+
     /// Write the ADG to the file name at path
     pub fn write_self_to_file(&self, path: Option<String>, name: Option<String>) {
         debug!("Writing ADG to file");
@@ -458,15 +531,15 @@ impl AnnotatedDependencyGraph {
         std::fs::write(path, format!("{:?}", basic_dot)).unwrap();
     }
 
-    fn init_rel_nodes(&mut self, predicates: HashSet<Tag>) {
+    fn init_rel_nodes(&mut self, predicates: HashSet<Tag>, are_edb_only: bool) {
         let mut predicates: IndexSet<Tag> = predicates.iter().cloned().collect();
         predicates.sort_by(|tag1, tag2| tag1.name().cmp(tag2.name()));
         for tag in predicates {
-            self.add_rel_node(tag);
+            self.add_rel_node(tag, are_edb_only);
         }
     }
 
-    #[allow(dead_code, unused_variables)]
+    #[allow(dead_code)]
     /// Get n vector of the predicates appearing in the ADG
     pub fn get_predicates(&self) -> Vec<Tag> {
         self.predicate_ids.keys().map(|tag| tag.clone()).collect()
@@ -557,7 +630,7 @@ impl AnnotatedDependencyGraph {
         Some(self.get_rel_node_index(&self.output_predicate.clone()?))
     }
 
-    #[allow(dead_code, unused_variables)]
+    #[allow(dead_code)]
     /// Return a breadth-first visit of the ADG
     pub fn get_bfs(
         &self,
@@ -680,14 +753,23 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get a mutable reference to the internal graph.
-    /// This is probably a bad idea...
-    pub fn graph_mut(&mut self) -> &mut StableGraph<ADGNode, ADGEdge, Directed, u32> {
+    /// This is probably a bad idea to give away to others --> private
+    fn graph_mut(&mut self) -> &mut StableGraph<ADGNode, ADGEdge, Directed, u32> {
         &mut self.graph
     }
 
-    /// Set the output relation of this ADG
+    /// Return the highest inverse stratum. Panics if the ADG has no rel. nodes.
+    pub fn get_highest_stratum(&self) -> u32 {
+        self.get_rel_nodes_iter()
+            .map(|rel_node| rel_node.inverse_stratum.unwrap_or(0))
+            .max()
+            .expect("ADG contains no nodes")
+    }
+
+    /// Set the output relation of this ADG. Set it to be an idb relation.
     pub fn set_output_rel(&mut self, tag: &Tag) {
         self.output_predicate = Some(tag.clone());
+        self.edb_only_predicate.insert(tag.clone(), false);
     }
 
     /// Calculate ancestry and inverse stratum of the ADG, does this itself
@@ -1072,18 +1154,20 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Add a new relational node with this tag. Register the relational name.
-    pub fn add_rel_node(&mut self, tag: Tag) {
+    /// If it is an edb only predicate, mark it as such
+    pub fn add_rel_node(&mut self, tag: Tag, is_edb_only: bool) {
         //self.predicates.push(tag.clone());
         self.predicate_ids.insert(
             tag.clone(),
             self.graph
                 .add_node(ADGNode::ADGRelationalNode(ADGRelationalNode {
-                    tag: tag,
+                    tag: tag.clone(),
                     inverse_stratum: None,
                     ancestry: None,
                     head_tuples: IndexMap::new(),
                 })),
         );
+        self.edb_only_predicate.insert(tag, is_edb_only);
     }
 
     /// Get the ground terms that appear in the program.
@@ -1191,7 +1275,10 @@ impl AnnotatedDependencyGraph {
 
     /// Get a predicates `nodeIndex` based on its tag (= name)
     pub fn get_rel_node_index(&self, tag: &Tag) -> NodeIndex {
-        self.predicate_ids[tag]
+        self.predicate_ids
+            .get(tag)
+            .expect("Predicate does not appear in the ADG")
+            .clone()
     }
 
     /// Get an iterator over a nodes edges, outgoing or incoming based on `dir` parameter
@@ -1203,7 +1290,7 @@ impl AnnotatedDependencyGraph {
         self.graph.edges_directed(self.get_rel_node_index(tag), dir)
     }
 
-    #[allow(dead_code, unused_variables)]
+    #[allow(dead_code)]
     /// Get a relational edge by its `EdgeIndex`
     pub fn get_rel_edge_by_index<'a>(&'a self, id: EdgeIndex) -> &'a ADGRelationalEdge {
         match self
@@ -1234,7 +1321,7 @@ impl AnnotatedDependencyGraph {
         }
     }
 
-    #[allow(dead_code, unused_variables)]
+    #[allow(dead_code)]
     /// Get an `ADGEdge` by its `EdgeIndex`
     pub fn get_edge_by_index<'a>(&'a self, id: EdgeIndex) -> &'a ADGEdge {
         &self.graph[id]
@@ -1472,11 +1559,14 @@ impl AnnotatedDependencyGraph {
             );
             exit(1);
         }
-        // Remove the storage for this predicate
-        self.predicate_ids.swap_remove(tag);
         // we collect beforehand to ensure in place manipulation does not make
         // this not work properly
-        let to_rem_index = self.get_rel_node_index(tag);
+        // also remove the storage for this node
+        let to_rem_index = self
+            .predicate_ids
+            .swap_remove(tag)
+            .expect("To remove node does not appear in the ADG");
+        self.edb_only_predicate.swap_remove(tag);
         let out_edges = self.graph.edges_directed(to_rem_index, Outgoing);
         let inc_edges = self.graph.edges_directed(to_rem_index, Incoming);
         let mut to_remove_fact_nodes: Vec<NodeIndex> = Vec::new();
@@ -1508,6 +1598,7 @@ impl AnnotatedDependencyGraph {
         for node in to_remove_fact_nodes {
             self.remove_fact_node(node);
         }
+        self.graph.remove_node(to_rem_index);
     }
 
     /// Remove a fact node from the ADG.
@@ -1518,7 +1609,56 @@ impl AnnotatedDependencyGraph {
         self.graph.remove_node(node);
     }
 
-    /// Get those relational nodes with positive or none ancestry
+    #[allow(dead_code)]
+    /// Is this relation an edb only relation? I.e. can I not use it in a body.
+    /// Most likely marked as such because it originated from a seed program
+    /// and this ADG was constructed using `from_program_lite`.
+    ///
+    /// Panics if this relation does not appear in the ADG.
+    pub fn is_edb_only_rel(&self, tag: &Tag) -> bool {
+        *self
+            .edb_only_predicate
+            .get(tag)
+            .expect("This relation does not appear!")
+    }
+
+    /// Is this relation a candidate for head literals?
+    /// Relations that originated from a seed program
+    /// when this ADG was constructed using `from_program_lite`
+    /// are marked as EDB-only relations.
+    ///
+    /// Panics if this relation does not appear in the ADG.
+    pub fn can_idb_rel(&self, tag: &Tag) -> bool {
+        !*self
+            .edb_only_predicate
+            .get(tag)
+            .expect("This relation does not appear!")
+    }
+
+    /// Get those relational nodes with positive or none ancestry.
+    /// You might want to filter out those relations are edb only also as follows:
+    /// ```
+    /// let chosen_head_rel: Tag = match transformation_type {
+    ///        TransformationTypes::EQU => adg
+    ///            .get_none_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::CON => adg
+    ///            .get_leq_negative_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::EXP => adg
+    ///            .get_leq_positive_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///    };
+    /// ```
     pub fn get_leq_positive_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         /* debug!("LEQ_POS");
@@ -1540,8 +1680,30 @@ impl AnnotatedDependencyGraph {
         vec
     }
 
-    #[allow(dead_code, unused_variables)]
     /// Get those relational nodes with positive ancestry
+    /// You might want to filter out those relations are edb only also as follows:
+    /// ```
+    /// let chosen_head_rel: Tag = match transformation_type {
+    ///        TransformationTypes::EQU => adg
+    ///            .get_none_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::CON => adg
+    ///            .get_negative_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::EXP => adg
+    ///            .get_positive_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///    };
+    /// ```
     pub fn get_positive_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
@@ -1560,6 +1722,29 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get those relational nodes with negative or none ancestry
+    /// You might want to filter out those relations are edb only also as follows:
+    /// ```
+    /// let chosen_head_rel: Tag = match transformation_type {
+    ///        TransformationTypes::EQU => adg
+    ///            .get_none_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::CON => adg
+    ///            .get_leq_negative_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::EXP => adg
+    ///            .get_leq_positive_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///    };
+    /// ```
     pub fn get_leq_negative_ancestry_relational_nodes(&self) -> Vec<Tag> {
         debug!("LEQ negative ancestry relational nodes:");
         let mut vec: Vec<Tag> = Vec::new();
@@ -1582,8 +1767,30 @@ impl AnnotatedDependencyGraph {
         vec
     }
 
-    #[allow(dead_code, unused_variables)]
     /// Get those relational nodes with negative ancestry
+    /// You might want to filter out those relations are edb only also as follows:
+    /// ```
+    /// let chosen_head_rel: Tag = match transformation_type {
+    ///        TransformationTypes::EQU => adg
+    ///            .get_none_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::CON => adg
+    ///            .get_negative_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::EXP => adg
+    ///            .get_positive_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///    };
+    /// ```
     pub fn get_negative_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         for rel_node in self.graph.node_weights().filter_map(|node| match node {
@@ -1602,6 +1809,29 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get those relational nodes with none ancestry
+    /// You might want to filter out those relations are edb only also as follows:
+    /// ```
+    /// let chosen_head_rel: Tag = match transformation_type {
+    ///        TransformationTypes::EQU => adg
+    ///            .get_none_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::CON => adg
+    ///            .get_leq_negative_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///        TransformationTypes::EXP => adg
+    ///            .get_leq_positive_ancestry_relational_nodes()
+    ///            .iter()
+    ///            .filter(|rel| adg.can_idb_rel(rel))
+    ///            .choose(rng)?
+    ///            .clone(),
+    ///    };
+    /// ```
     pub fn get_none_ancestry_relational_nodes(&self) -> Vec<Tag> {
         let mut vec: Vec<Tag> = Vec::new();
         /* debug!("None");
@@ -1623,6 +1853,43 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get those relational nodes with none ancestry
+    /// You might want to filter out those relations are edb only also as follows:
+    /// ```
+    /// let chosen_head_rel: Tag = adg.get_unknown_ancestry_relational_nodes()
+    ///        .iter()
+    ///        .filter(|rel| adg.can_idb_rel(rel))
+    ///        .choose(rng)?
+    ///        .clone();
+    /// ```
+    pub fn get_unknown_ancestry_relational_nodes(&self) -> Vec<Tag> {
+        let mut vec: Vec<Tag> = Vec::new();
+        /* debug!("None");
+        debug!("{:?}", self.graph.node_weights().collect::<Vec<&ADGNode>>()); */
+        for rel_node in self.graph.node_weights().filter_map(|node| match node {
+            ADGNode::ADGFactNode(_) => None,
+            ADGNode::ADGRelationalNode(rel_node) => {
+                if rel_node.ancestry == Some(Ancestry::Unknown) {
+                    Some(rel_node)
+                } else {
+                    None
+                }
+            }
+        }) {
+            vec.push(rel_node.tag.clone())
+        }
+        //debug!("{vec:?}");
+        vec
+    }
+
+    /// Get those relational nodes with none ancestry
+    /// You might want to filter out those relations are edb only also as follows: 
+    /// ```
+    /// let chosen_head_rel: Tag = adg.get_any_ancestry_relational_nodes()
+    ///        .iter()
+    ///        .filter(|rel| adg.can_idb_rel(rel))
+    ///        .choose(rng)?
+    ///        .clone();
+    /// ```
     pub fn get_any_ancestry_relational_nodes(&self) -> Vec<Tag> {
         self.graph
             .node_weights()
@@ -1774,8 +2041,9 @@ impl AnnotatedDependencyGraph {
             .collect()
     }
 
-    #[allow(dead_code, unused_variables)]
-    /// Get the neighbours outgoing/incoming (`dir`) from the node for `NodeIndex`.
+    #[allow(dead_code)]
+    /// Get the neighbours outgoing/incoming (`dir`) from the node for `NodeIndex`. You probably want
+    /// `get_rel_edges_from_node`, `get_rel_edges_from_node_index` or `get_fact_edges_inc_node_index`.
     pub fn get_neighbours_node_index<'b>(
         &'b self,
         id: NodeIndex,
@@ -1784,7 +2052,8 @@ impl AnnotatedDependencyGraph {
         self.graph.neighbors_directed(id, dir)
     }
 
-    /// Get the neighbours outgoing/incoming (`dir`) from the node for `NodeIndex`.
+    /// Get the neighbours outgoing/incoming (`dir`) from the node for `NodeIndex`. You probably want
+    /// `get_rel_edges_from_node`, `get_rel_edges_from_node_index` or `get_fact_edges_inc_node_index`.
     pub fn get_rel_neighbours_node_index<'b>(
         &'b self,
         id: NodeIndex,

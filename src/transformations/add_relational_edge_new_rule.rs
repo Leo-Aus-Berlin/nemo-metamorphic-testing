@@ -52,14 +52,20 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddRelationalEdgeNewRule<'a, 'b> 
         let chosen_head_rel: Tag = match transformation_type {
             TransformationTypes::EQU => adg
                 .get_none_ancestry_relational_nodes()
+                .iter()
+                .filter(|rel| adg.can_idb_rel(rel))
                 .choose(rng)?
                 .clone(),
             TransformationTypes::CON => adg
                 .get_leq_negative_ancestry_relational_nodes()
+                .iter()
+                .filter(|rel| adg.can_idb_rel(rel))
                 .choose(rng)?
                 .clone(),
             TransformationTypes::EXP => adg
                 .get_leq_positive_ancestry_relational_nodes()
+                .iter()
+                .filter(|rel| adg.can_idb_rel(rel))
                 .choose(rng)?
                 .clone(),
         };

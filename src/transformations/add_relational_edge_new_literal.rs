@@ -57,6 +57,7 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'a, '
             TransformationTypes::EQU => adg
                 .get_none_ancestry_relational_nodes()
                 .iter()
+                .filter(|rel| adg.can_idb_rel(rel))
                 .filter(|tag| {
                     adg.get_rel_edges_from_node(*tag, petgraph::Direction::Incoming)
                         .len()
@@ -67,6 +68,7 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'a, '
             TransformationTypes::CON => adg
                 .get_leq_positive_ancestry_relational_nodes()
                 .iter()
+                .filter(|rel| adg.can_idb_rel(rel))
                 .filter(|tag| {
                     adg.get_rel_edges_from_node(*tag, petgraph::Direction::Incoming)
                         .len()
@@ -77,6 +79,7 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddRelationalEdgeNewLiteral<'a, '
             TransformationTypes::EXP => adg
                 .get_leq_negative_ancestry_relational_nodes()
                 .iter()
+                .filter(|rel| adg.can_idb_rel(rel))
                 .filter(|tag| {
                     adg.get_rel_edges_from_node(*tag, petgraph::Direction::Incoming)
                         .len()
@@ -255,8 +258,13 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewLiteral<'a, 'b> {
             .choose_multiple(self.rng, new_rel_arity);
         // Fill up with constant symbols if arity not satisfied
         while generated_lit_vars.len() < new_rel_arity {
-            let constant_symbol: GroundTerm =
-                self.adg.get_ground_terms().iter().cloned().choose(self.rng).unwrap_or(GroundTerm::constant("c_first"));
+            let constant_symbol: GroundTerm = self
+                .adg
+                .get_ground_terms()
+                .iter()
+                .cloned()
+                .choose(self.rng)
+                .unwrap_or(GroundTerm::constant("c_first"));
             let constant_term = Term::Primitive(Primitive::Ground(constant_symbol.clone()));
             generated_lit_vars.push(constant_term);
         }

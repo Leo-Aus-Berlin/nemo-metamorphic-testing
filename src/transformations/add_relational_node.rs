@@ -49,7 +49,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalNode<'a> {
 
         // Add a new relational node
         info!("  Added new relation {}", new_relation_name.name());
-        self.adg.add_rel_node(new_relation_name);
+        self.adg.add_rel_node(new_relation_name, false);
 
         commit.submit()
     }

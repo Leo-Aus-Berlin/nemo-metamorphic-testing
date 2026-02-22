@@ -124,7 +124,7 @@ impl<'a, 'b> ProgramTransformation for RemoveFactNodeAndEdge<'a, 'b> {
                                 .expect("Managed to select import or otherwise non-fact fact node")
                     {
                         // don't keep it!
-                        info!("  Removed fact {} from the program", rem_fact_w.name);
+                        info!(" Removed fact {}({}). from the program", self.chosen_rel_node.name(), rem_fact_w.name);
                     } else {
                         commit.keep(fact);
                     }

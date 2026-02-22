@@ -1,6 +1,6 @@
 use std::{
     env::{current_dir, set_current_dir},
-    fs::{create_dir_all, remove_dir_all, remove_file, File},
+    fs::{File, create_dir_all, remove_dir_all, remove_file},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -15,17 +15,19 @@ use simplelog::*;
 use nemo::{
     error::report::ProgramReport,
     execution::execution_parameters::ExecutionParameters,
-    io::{resource_providers::ResourceProviders, ImportManager},
+    io::{ImportManager, resource_providers::ResourceProviders},
     rule_file::RuleFile,
     rule_model::{
-        pipeline::transformations::{default::TransformationDefault, ProgramTransformation},
-        programs::{handle::ProgramHandle, ProgramRead},
+        pipeline::transformations::{ProgramTransformation, default::TransformationDefault},
+        programs::{ProgramRead, handle::ProgramHandle},
     },
 };
 
 mod transformations;
 
-use crate::transformations::TestingTransformation;
+use crate::transformations::{
+    TestingTransformation, transformation_manager::GenerateProgramgenerationTransformation,
+};
 use transformations::{
     annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
     select_random_output_predicate::TransformationSelectRandomOutputPredicate,
@@ -50,76 +52,75 @@ static DEBUG_MODE: OnceLock<bool> = OnceLock::new();
 static NAME_OF_TRANSFORMATION_SEQUENCE: OnceLock<String> = OnceLock::new();
 static TRANSFORMATION_TYPE: OnceLock<TransformationTypes> = OnceLock::new();
 
-/* #[derive(Parser)]
-struct Cli {
-    //number of transformations
-    num: u32,
-    //debug mode
-    debug_mode: bool,
-    //seed
-    seed: u64,
-    //transformation type
-    transformation_types: String,
-} */
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialisiation
 
     // Command line args
-    let matches = command!() // requires `cargo` feature
-        .arg(arg!([name] "Optional name for this transformation sequence"))
-        .arg(
-            arg!(
-                -f --file <FILE> "Sets a custom seed file"
+    let matches = {
+        command!() // requires `cargo` feature
+            .arg(arg!([name] "Optional name for this transformation sequence"))
+            .arg(
+                arg!(
+                    -f --file <FILE> "Sets a custom seed file"
+                )
+                // We don't have syntax yet for optional options, so manually calling `required`
+                .required(false)
+                .value_parser(value_parser!(PathBuf)),
             )
-            // We don't have syntax yet for optional options, so manually calling `required`
-            .required(false)
-            .value_parser(value_parser!(PathBuf)),
-        )
-        .arg(
-            arg!(
-                -s --seed <NUM> "Optionally set a u64 seed for the rng."
+            .arg(
+                arg!(
+                    -s --seed <NUM> "Optionally set a u64 seed for the rng."
+                )
+                // We don't have syntax yet for optional options, so manually calling `required`
+                .required(false)
+                .value_parser(value_parser!(u64)),
             )
-            // We don't have syntax yet for optional options, so manually calling `required`
-            .required(false)
-            .value_parser(value_parser!(u64)),
-        )
-        .arg(
-            arg!(
-                -d --debug "Turn debugging information on"
+            .arg(
+                arg!(
+                    -d --debug "Turn debugging information on"
+                )
+                .value_parser(value_parser!(bool))
+                .required(false),
             )
-            .value_parser(value_parser!(bool))
-            .required(false),
-        )
-        .arg(
-            arg!(
-                -l --lean "Keep only the log file and output program after transformation"
+            .arg(
+                arg!(
+                    -l --lean "Keep only the log file and output program after transformation"
+                )
+                .value_parser(value_parser!(bool))
+                .required(false),
             )
-            .value_parser(value_parser!(bool))
-            .required(false),
-        )
-        .arg(
-            arg!(
-                -n --num <NUM> "How many transformations to perform"
+            .arg(
+                arg!(
+                    -n --num <NUM> "How many transformations to perform"
+                )
+                // We don't have syntax yet for optional options, so manually calling `required`
+                .required(true)
+                .value_parser(value_parser!(u32)),
             )
-            // We don't have syntax yet for optional options, so manually calling `required`
-            .required(true)
-            .value_parser(value_parser!(u32)),
-        )
-        .arg(
-            arg!(
-                -t --type <TT> "Transformation type: EQU, EXP or CON"
+            .arg(
+                arg!(
+                    -g --gen <NUM> "How many generating transformations to generate the seed program. Defaults to 20."
+                )
+                // We don't have syntax yet for optional options, so manually calling `required`
+                .required(false)
+                .value_parser(value_parser!(u32)),
             )
-            // We don't have syntax yet for optional options, so manually calling `required`
-            .required(true)
-            .value_parser(value_parser!(String)),
-        )
-        /* .subcommand(
-            Command::new("test")
-                .about("does testing things")
-                .arg(arg!(-l --list "lists test values").action(ArgAction::SetTrue)),
-        ) */
-        .get_matches();
+            .arg(
+                arg!(
+                    -t --type <TT> "Transformation type: EQU, EXP or CON"
+                )
+                // We don't have syntax yet for optional options, so manually calling `required`
+                .required(true)
+                .value_parser(value_parser!(String)),
+            )
+            /* .subcommand(
+                Command::new("test")
+                    .about("does testing things")
+                    .arg(arg!(-l --list "lists test values").action(ArgAction::SetTrue)),
+            ) */
+            .get_matches()
+    };
 
     // Read the command line parameters
     // You can check the value provided by positional arguments, or option arguments
@@ -140,6 +141,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .set(num.clone())
             .expect("Failed to set number of transformations");
     }
+    let num_gen_t = match matches.get_one::<u32>("gen") {
+        None => 20,
+        Some(num_gen_t) => *num_gen_t,
+    };
     match matches.get_one::<bool>("debug") {
         None => {
             error!("Failed to read if in debug mode or not");
@@ -336,11 +341,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .get()
             .expect("Number of transformations not set")),
     ));
+    // Begin transformation info
     info!("----------------------------------------------");
     info!(
         "Beginning transformation {}
     Oracle:     {}      Number of T: {}
     Debug Mode: {}      u64 Seed:    {}
+    Num. generating transformations: {}
     Internal Seed:        {:?}
     Seed File: Currently not supported!",
         NAME_OF_TRANSFORMATION_SEQUENCE
@@ -357,6 +364,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             None => String::from("None provided"),
             Some(s) => s.to_string(),
         },
+        num_gen_t.to_string(),
         rng.get_seed(),
         /* TODO: Seed file */
     );
@@ -369,6 +377,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     ];
     let chosen = 0;
 
+    info!("-------------- Reading Seed File -------------");
     // Open file
     let path = PathBuf::from(vec_path[chosen]);
     // "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls"
@@ -396,24 +405,83 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Name all of the rules!
     program = transform_and_err(&program, TransformationNameRules::new());
+    // We have a progress bar
+    let bar_gen = ProgressBar::new(u64::from(
+        *(NUM_TRANSFORMATIONS
+            .get()
+            .expect("Number of transformations not set")),
+    ));
+    info!("-------- Beginning Program Generation --------");
 
-    // Construct the ADG
-    let mut adg: AnnotatedDependencyGraph = match AnnotatedDependencyGraph::from_program(&program) {
-        Some(adg) => adg,
-        None => {
-            error!("Failed to build adg");
-            exit(1);
-        }
-    };
+    // Construct the seed ADG
+    let mut adg: AnnotatedDependencyGraph =
+        match AnnotatedDependencyGraph::from_program_lite(&program) {
+            Some(adg) => adg,
+            None => {
+                error!("Failed to build adg");
+                exit(1);
+            }
+        };
 
-    // Choose output predicate. The transformation also sets the adg's output predicate
+    // No longer random output predicate: Always R_OUT
+    /* // Choose output predicate. The transformation also sets the adg's output predicate
     program = transform_and_err(
         &program,
         TransformationSelectRandomOutputPredicate::new(&mut adg, &mut rng),
-    );
+    ); */
 
     // Let the ADG calculate its stratum and ancestry
     adg.calculate_ancestry_and_inverse_stratum();
+
+    info!("Constructed lite ADG");
+
+    // Compute Program
+    let mut count_gen_transformations: IndexMap<String, usize> = IndexMap::new();
+    // Perform num_gen_t transformations
+    for repetition in 1..=num_gen_t {
+        adg.verify_relational_edges();
+        if DEBUG_MODE
+            .get()
+            .expect("Debug mode not initialised")
+            .clone()
+        {
+            debug!("ADG edge verification succeeded");
+            debug!("RNG position: {}", rng.get_word_pos());
+        }
+        info!(
+            "{repetition} / {}",
+            NUM_TRANSFORMATIONS
+                .get()
+                .expect("Num transformations not initialised")
+        );
+        let transformation;
+
+        loop {
+            let mut iter = GenerateProgramgenerationTransformation::new(&mut adg, &mut rng);
+            match iter.next() {
+                None => {
+                    continue;
+                }
+                Some(loop_variable) => {
+                    transformation = loop_variable;
+                    break;
+                }
+            };
+        }
+
+        // count this transformation
+        count_gen_transformations
+            .entry(transformation.name())
+            .and_modify(|v| *v += 1)
+            .or_insert(1);
+
+        // calculate ith transformation
+        program = transform_and_err(&program, transformation);
+        bar_gen.inc(1);
+    }
+    bar_gen.finish_and_clear();
+
+    info!("----------- Program Generation Done ----------");
 
     // Write ADG to file
     adg.write_self_to_file(
@@ -465,11 +533,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .expect("Num transformations not initialised")
     );
     info!("----------------------------------------------");
-
-    // The available transformations
-    /* let mut transformation_manager =
-                   TransformationManager::new(&mut adg, &mut rng, TRANSFORMATION_TYPE.get().expect("Transformation type not set!"));
-    */
 
     // Count performed tranformations and
     // failed transformation initializations
@@ -615,65 +678,88 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     info!("---------------- ADG Summary: ----------------");
-    info!(
-        "ADG Fact Nodes:                  {}",
-        adg.get_fact_nodes_iter().count()
-    );
-    info!(
-        "ADG Relational Nodes:            {}",
-        adg.get_rel_nodes_iter().count()
-    );
-    info!(
-        "ADG Fact Edges:                  {}",
-        adg.get_fact_edges_iter().count()
-    );
-    info!(
-        "ADG Relational Edges:            {}",
-        adg.get_rel_edges_iter().count()
-    );
-    info!("");
-    info!(
-        "Next rule name would be:         {}",
-        adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
-    );
-    info!(
-        "Next predicate name would be:    {}",
-        adg.get_new_relation_name()
-    );
-    info!(
-        "Next constant name would be:     {}",
-        adg.get_and_register_new_iri_constant()
-    );
-    info!(
-        "Next string would be:            {}",
-        adg.get_and_register_new_string_constant()
-    );
-    info!("");
-    info!(
-        "Output predicate:                {}",
-        adg.get_output_tag().expect("No output tag set!")
-    );
-    info!(
-        "Rule count:                      {}",
-        program.rules().count()
-    );
-    info!(
-        "Average arity:                   {}",
-        program.arities().iter().fold(0, |total, ar| total + ar.1)
-            / program.arities().iter().count()
-    );
-    info!("--------- Performed Transformations: ---------");
-    info!(" #      Type");
-    info!(
-        " {}      None - Transformation not applicable",
-        count_failed_transformations
-    );
-    let mut trans = count_transformations.iter().collect::<Vec<_>>();
-    trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
-    trans.iter().for_each(|(key, v)| {
-        info!(" {}      {}", v, key);
-    });
-
+    {
+        info!(
+            "ADG Fact Nodes:                  {}",
+            adg.get_fact_nodes_iter().count()
+        );
+        info!(
+            "ADG Relational Nodes:            {}",
+            adg.get_rel_nodes_iter().count()
+        );
+        info!(
+            "ADG Fact Edges:                  {}",
+            adg.get_fact_edges_iter().count()
+        );
+        info!(
+            "ADG Relational Edges:            {}",
+            adg.get_rel_edges_iter().count()
+        );
+        info!(
+            "Number of inv. Strata:           {}",
+            adg.get_highest_stratum()
+        );
+        info!("");
+        info!(
+            "Nodes with None Ancestry:        {}",
+            adg.get_none_ancestry_relational_nodes().len()
+        );
+        info!(
+            "Nodes with Positive Ancestry:    {}",
+            adg.get_positive_ancestry_relational_nodes().len()
+        );
+        info!(
+            "Nodes with Negative Ancestry:    {}",
+            adg.get_negative_ancestry_relational_nodes().len()
+        );
+        info!(
+            "Nodes with Unknown Ancestry:     {}",
+            adg.get_unknown_ancestry_relational_nodes().len()
+        );
+        info!("");
+        info!(
+            "Next rule name would be:         {}",
+            adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
+        );
+        info!(
+            "Next predicate name would be:    {}",
+            adg.get_new_relation_name()
+        );
+        info!(
+            "Next constant name would be:     {}",
+            adg.get_and_register_new_iri_constant()
+        );
+        info!(
+            "Next string would be:            {}",
+            adg.get_and_register_new_string_constant()
+        );
+        info!("");
+        info!(
+            "Output predicate:                {}",
+            adg.get_output_tag().expect("No output tag set!")
+        );
+        info!(
+            "Rule count:                      {}",
+            program.rules().count()
+        );
+        info!(
+            "Average rel. arity:              {}",
+            program.arities().iter().fold(0, |total, ar| total + ar.1) as f64
+                / program.arities().iter().count() as f64
+        );
+        info!("Arity calc. may be inaccurate if arity > f64");
+        info!("--------- Performed Transformations: ---------");
+        info!(" #      Type");
+        info!(
+            " {}      None - Transformation not applicable",
+            count_failed_transformations
+        );
+        let mut trans = count_transformations.iter().collect::<Vec<_>>();
+        trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
+        trans.iter().for_each(|(key, v)| {
+            info!(" {}      {}", v, key);
+        });
+    }
     info!("----------------------------------------------");
 
     //info!("Next integer would be:           {}",adg.get_and_register_new_integer_constant(rng));
@@ -901,7 +987,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let mut data_folder_name = to_dir.clone();
             data_folder_name.pop();
             let _ = remove_dir_all(data_folder_name); // we don't care if it succeeds
-                                                      // cause itll succeed at least once
+            // cause itll succeed at least once
         }
         let _ = remove_file(input_folder_name.clone() + "/input_program.rls");
         let _ = remove_file(input_folder_name.clone() + "/input_adg.dot");

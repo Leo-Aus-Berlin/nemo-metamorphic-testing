@@ -1,8 +1,8 @@
 use log::{info, warn};
 use nemo::rule_model::components::fact::Fact;
 use nemo::rule_model::components::tag::Tag;
-use nemo::rule_model::components::term::primitive::Primitive;
 use nemo::rule_model::components::term::Term;
+use nemo::rule_model::components::term::primitive::Primitive;
 use nemo::rule_model::error::ValidationReport;
 use nemo::rule_model::pipeline::commit::ProgramCommit;
 use nemo::rule_model::programs::handle::ProgramHandle;
@@ -10,12 +10,12 @@ use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
-use rand::seq::IndexedRandom;
 use rand::Rng;
+use rand::seq::{IndexedRandom, IteratorRandom};
 
+use crate::transformations::TestingTransformation;
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
-use crate::transformations::TestingTransformation;
 
 /// Add a fact node with a fact edge to some
 /// random exisiting relational node.
@@ -45,6 +45,8 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
             TransformationTypes::EQU => Some(Self {
                 chosen_to_rel_node: adg
                     .get_none_ancestry_relational_nodes()
+                    .iter()
+                    .filter(|rel| adg.can_idb_rel(rel))
                     .choose(rng)?
                     .clone(),
                 adg: adg,
@@ -54,6 +56,8 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
             TransformationTypes::CON => Some(Self {
                 chosen_to_rel_node: adg
                     .get_leq_negative_ancestry_relational_nodes()
+                    .iter()
+                    .filter(|rel| adg.can_idb_rel(rel))
                     .choose(rng)?
                     .clone(),
                 adg: adg,
@@ -63,6 +67,8 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddFactNodeAndEdge<'a, 'b> {
             TransformationTypes::EXP => Some(Self {
                 chosen_to_rel_node: adg
                     .get_leq_positive_ancestry_relational_nodes()
+                    .iter()
+                    .filter(|rel| adg.can_idb_rel(rel))
                     .choose(rng)?
                     .clone(),
                 adg: adg,
@@ -97,7 +103,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
                     new_value
                 );
                 new_value
-            },
+            }
             Some(v) => *v,
         };
         let mut terms: Vec<Term> = Vec::new();
@@ -157,7 +163,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
         //let new_rule: Rule = Rule::new(vec![Atom::new(self.chosen_to_rel_node,[terms])], Vec::new());
         let fact: Fact = Fact::new(self.chosen_to_rel_node.clone(), terms.clone());
         commit.add_fact(fact);
-        let fact_node = self.adg.add_fact_node(terms_str.clone(),Some(terms));
+        let fact_node = self.adg.add_fact_node(terms_str.clone(), Some(terms));
         self.adg.add_fact_edge(
             fact_node,
             self.adg.get_rel_node_index(&self.chosen_to_rel_node),

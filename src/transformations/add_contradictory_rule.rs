@@ -48,7 +48,12 @@ impl<'a, 'b> TestingTransformation<'a, 'b> for AddContradictoryRule<'a, 'b> {
         transformation_number: u32,
     ) -> Option<Self> {
         // Chose a head relation
-        let chosen_head_rel: Tag = adg.get_any_ancestry_relational_nodes().choose(rng)?.clone();
+        let chosen_head_rel: Tag = adg
+            .get_any_ancestry_relational_nodes()
+            .iter()
+            .filter(|rel| adg.can_idb_rel(rel))
+            .choose(rng)?
+            .clone();
         let head_node_index = adg.get_rel_node_index(&chosen_head_rel);
 
         // We only care about relations that can appear negatively,
@@ -329,7 +334,10 @@ impl<'a, 'b> ProgramTransformation for AddContradictoryRule<'a, 'b> {
         for head_atom in rule.head() {
             debug!(
                 "  Adding the neg literal {}->{}) : ({},{},{})",
-                neg_literal.predicate().expect("Neg literal has no tag?").name(),
+                neg_literal
+                    .predicate()
+                    .expect("Neg literal has no tag?")
+                    .name(),
                 self.chosen_head_rel,
                 rule_name,
                 "-",
