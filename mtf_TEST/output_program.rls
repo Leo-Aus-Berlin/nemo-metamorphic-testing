@@ -21,9 +21,5 @@ R_OUT("jungfernheide", ?X_1, ?X_4, ?X_2) :- choseU(?Y_1, ?X_4), allowedDiff(?Y_1
 R_OUT(?X_4, ?X_1, ?X_3, "alexanderplatz") :- R_OUT("kottbusser_tor", ?X_4, ?X_3, "alexanderplatz"), validC(?X_4, ?X_1), choseB("alexanderplatz", ?X_4), ~platformHeight(?X_4, "alexanderplatz"), ~success("alexanderplatz"), ~R_1(?X_4, trainHeight, trainHeight, ?X_3, ?X_3) .
 R_2(c_1).
 R_OUT(?X_2, ?X_1, "alexanderplatz", ?X_1) :- platformHeight(?X_2, ?X_1), choseU("alexanderplatz", c_1), success(?X_1), validC(?X_2, ?Y_1), ~validC(?X_1, c_1), ~canChangeAt(?X_1), ~R_1(?Y_1, ?X_2, ?X_2, ?X_2, ?Y_1), ~platformHeight(c_1, ?Y_1) .
-R_OUT(?X_4, ?X_2, ?X_4, ?X_3) :- R_1(?X_4, ?X_4, ?X_4, ?X_4, ?Y_1), allowedDiff(?X_2, ?X_2), R_2(trainHeight), seeTVTower(?X_3), ~platformHeight(trainHeight, trainHeight) .
-R_6("alexanderplatz", c_3).
-R_4(c_2, "alexanderplatz", c_3, "jungfernheide", "alexanderplatz").
-R_3("jungfernheide", ?X_3, ?X_2, ?X_1) :- platformHeight(trainHeight, ?X_2), canChangeAt(?X_1), choseB(?X_1, ?X_3), success("jungfernheide"), seeTVTower(?X_3), ~validC(?X_2, ?X_2), success(?X_1), R_4(?Z_3, ?X_2, ?Z_4, "alexanderplatz", ?X_1) .
-R_6(?X_1, ?X_2) :- validC(?X_1, ?X_2), ~validC(?X_1, ?X_2), R_OUT(?Z_2, c_3, ?X_2, ?X_1) .
-R_4(?X_4, "kottbusser_tor", ?X_3, ?X_4, ?X_4) :- validC(?X_5, ?Y_1), validC(?X_3, ?X_4), canChangeAt(?X_4), mustChangeAt(?Y_1_new_1) .
+R_1(?X_4, ?X_5, ?X_1, ?X_2, ?X_3) :- elevator(?X_4), elevator(?X_5), elevator(?X_1), elevator(?X_2), elevator(?X_3), ~elevator(?X_4) .
+R_OUT(?X_1, ?X_3, ?X_1, "alexanderplatz") :- R_2(?X_1), R_2(?X_3), R_2(?X_1), R_2("alexanderplatz"), ~R_2(?X_1) .

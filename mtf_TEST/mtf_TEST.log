@@ -1,544 +1,532 @@
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] Beginning transformation mtf_TEST
-    Oracle:     EQU      Number of T: 10
-    Debug Mode: false      u64 Seed:    272
-    Num. generating transformations: 20
-    Internal Seed:        [118, 34, 238, 201, 198, 43, 83, 167, 62, 49, 229, 35, 151, 170, 254, 32, 151, 151, 181, 81, 162, 152, 214, 201, 253, 226, 249, 155, 206, 46, 246, 220]
-    Seed File: Currently not supported!
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] -------------- Reading Seed File -------------
-19:15:06 [INFO] Renaming of rules complete
-19:15:06 [INFO] -------- Beginning Program Generation --------
-19:15:06 [INFO] Removing old export statements
-19:15:06 [INFO] Beginning inverse_stratum and ancestry computation starting at node R_OUT
-19:15:06 [INFO] Ancestry and Inverse Stratum computation complete.
-19:15:06 [INFO] Constructed lite ADG
-19:15:06 [INFO] 1 / 10
-19:15:06 [INFO]   III Add Relational edges - New Rule
-19:15:06 [INFO]   Assigned relation R_OUT the artiy 4
-19:15:06 [INFO]   Added new rule of name r_EXP_1
-19:15:06 [INFO]   R_OUT("alexanderplatz", ?X_3, ?X_2, ?X_1) :- allowedDiff("alexanderplatz", ?X_3), allowedDiff(?X_2, ?X_1), ~allowedDiff("kottbusser_tor", "alexanderplatz"), ~canChangeAt(?X_1), ~platformHeight("alexanderplatz", ?X_1), ~mustChangeAt(?X_3) .
-19:15:06 [INFO] 2 / 10
-19:15:06 [INFO]   III Add Relational edges - New Rule
-19:15:06 [INFO]   Added new rule of name r_EXP_2
-19:15:06 [INFO]   R_OUT(?X_3, ?X_1, ?X_4, ?X_2) :- R_OUT(?X_3, ?Y_1, ?X_3, ?X_1), allowedDiff(?X_4, ?X_3), seeTVTower(?X_2), validC(?X_4, ?X_4), choseU(?X_1, ?X_2), mustChangeAt(?X_1) .
-19:15:06 [INFO] 3 / 10
-19:15:06 [INFO]   III Add Relational edges - New Rule
-19:15:06 [INFO]   Added new rule of name r_EXP_3
-19:15:06 [INFO]   R_OUT("jungfernheide", ?X_1, ?X_4, ?X_2) :- choseU(?Y_1, ?X_4), allowedDiff(?Y_1, ?X_2), validC("jungfernheide", ?X_1), choseB(?X_4, ?X_1), seeTVTower(?X_4) .
-19:15:06 [INFO] 4 / 10
-19:15:06 [INFO]   I Add Relational Node
-19:15:06 [INFO]   Added new relation R_1
-19:15:06 [INFO] 5 / 10
-19:15:06 [INFO]   III Add Relational edges - New Rule
-19:15:06 [INFO]   Assigned relation R_1 the artiy 5
-19:15:06 [INFO]   Added new rule of name r_EXP_4
-19:15:06 [INFO]   R_OUT(?X_4, ?X_1, ?X_3, "alexanderplatz") :- R_OUT("kottbusser_tor", ?X_4, ?X_3, "alexanderplatz"), validC(?X_4, ?X_1), choseB("alexanderplatz", ?X_4), ~platformHeight(?X_4, "alexanderplatz"), ~success("alexanderplatz"), ~R_1(?X_4, trainHeight, trainHeight, ?X_3, ?X_3) .
-19:15:06 [INFO] 6 / 10
-19:15:06 [INFO]   I Add Relational Node
-19:15:06 [INFO]   Added new relation R_2
-19:15:06 [INFO] 7 / 10
-19:15:06 [INFO]   II Add Fact Node and Edge
-19:15:06 [INFO]   Assigned relation R_2 the artiy 1
-19:15:06 [INFO]   Added new fact R_2(c_1).
-19:15:06 [INFO] 8 / 10
-19:15:06 [INFO]   I Add Relational Node
-19:15:06 [INFO]   Added new relation R_3
-19:15:06 [INFO] 9 / 10
-19:15:06 [INFO]   III Add Relational edges - New Rule
-19:15:06 [INFO]   Assigned relation R_3 the artiy 4
-19:15:06 [INFO]   Added new rule of name r_EXP_5
-19:15:06 [INFO]   R_3("jungfernheide", ?X_3, ?X_2, ?X_1) :- R_2("jungfernheide"), platformHeight(trainHeight, ?X_2), canChangeAt(?X_1), choseB(?X_1, ?X_3), success("jungfernheide"), seeTVTower(?X_3), ~validC(?X_2, ?X_2) .
-19:15:06 [INFO] 10 / 10
-19:15:06 [INFO]   III Add Relational edges - New Rule
-19:15:06 [INFO]   Added new rule of name r_EXP_6
-19:15:06 [INFO]   R_OUT(?X_2, ?X_1, "alexanderplatz", ?X_1) :- platformHeight(?X_2, ?X_1), choseU("alexanderplatz", c_1), success(?X_1), validC(?X_2, ?Y_1), ~validC(?X_1, c_1), ~canChangeAt(?X_1), ~R_1(?Y_1, ?X_2, ?X_2, ?X_2, ?Y_1), ~platformHeight(c_1, ?Y_1) .
-19:15:06 [INFO] 11 / 10
-19:15:06 [INFO]   II Add Fact Node and Edge
-19:15:06 [INFO]   Added new fact R_3("kottbusser_tor", "alexanderplatz", c_2, c_3).
-19:15:06 [INFO] 12 / 10
-19:15:06 [INFO]   III Add Relational edges - New Rule
-19:15:06 [INFO]   Added new rule of name r_EXP_7
-19:15:06 [INFO]   R_OUT(?X_4, ?X_2, ?X_4, ?X_3) :- R_1(?X_4, ?X_4, ?X_4, ?X_4, ?Y_1), allowedDiff(?X_2, ?X_2), R_2(trainHeight), seeTVTower(?X_3), ~platformHeight(trainHeight, trainHeight) .
-19:15:06 [INFO] 13 / 10
-19:15:06 [INFO]   IV Add Relational Edge - New Literal
-19:15:06 [INFO]   Generated literal success(?X_1) for rule r_EXP_5
-19:15:06 [INFO] 14 / 10
-19:15:06 [INFO]   I Add Relational Node
-19:15:06 [INFO]   Added new relation R_4
-19:15:06 [INFO] 15 / 10
-19:15:06 [INFO]   I Add Relational Node
-19:15:06 [INFO]   Added new relation R_5
-19:15:06 [INFO] 16 / 10
-19:15:06 [INFO]   III Add Relational edges - New Rule
-19:15:06 [INFO]   Assigned relation R_4 the artiy 5
-19:15:06 [INFO]   Added new rule of name r_EXP_8
-19:15:06 [INFO]   R_4(?X_5, "kottbusser_tor", ?X_3, ?X_5, ?X_4) :- validC(?X_5, ?Y_1), validC(?X_3, ?X_5), canChangeAt(?X_4), mustChangeAt("kottbusser_tor") .
-19:15:06 [INFO] 17 / 10
-19:15:06 [INFO]   I Add Relational Node
-19:15:06 [INFO]   Added new relation R_6
-19:15:06 [INFO] 18 / 10
-19:15:06 [INFO]   IV Add Relational Edge - New Literal
-19:15:06 [INFO]   Generated literal R_4(?Z_3, ?X_2, ?Z_4, "alexanderplatz", ?X_1) for rule r_EXP_5
-19:15:06 [INFO] 19 / 10
-19:15:06 [INFO]   II Add Fact Node and Edge
-19:15:06 [INFO]   Assigned relation R_6 the artiy 2
-19:15:06 [INFO]   Added new fact R_6("alexanderplatz", c_3).
-19:15:06 [INFO] 20 / 10
-19:15:06 [INFO]   I Add Relational Node
-19:15:06 [INFO]   Added new relation R_7
-19:15:06 [INFO] ----------- Program Generation Done ----------
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] --------- Beginning Transformations ----------
-19:15:06 [INFO] --------  Oracle: EQU    Number: 10
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] 1 / 10
-19:15:06 [INFO]   II Add Fact Node and Edge
-19:15:06 [INFO]   Added new fact R_4(c_2, "alexanderplatz", c_3, "jungfernheide", "alexanderplatz").
-19:15:06 [INFO] 2 / 10
-19:15:06 [INFO]   VI Remove Relational Edge - Single Literal
-19:15:06 [INFO]   Found the rule of the name r_EXP_8
-19:15:06 [INFO]   Removed relational edge NodeIndex(6): (mustChangeAt -> R_4)
-19:15:06 [INFO]   Attempting to remove the literal +mustChangeAt(, "kottbusser_tor") from the rule r_EXP_8
-19:15:06 [INFO] 3 / 10
-19:15:06 [INFO]   VI Remove Relational Edge - Single Literal
-19:15:06 [INFO]   Found the rule of the name r_EXP_5
-19:15:06 [INFO]   Removed relational edge NodeIndex(13): (R_2 -> R_3)
-19:15:06 [INFO]   Attempting to remove the literal +R_2(, "jungfernheide") from the rule r_EXP_5
-19:15:06 [INFO] 4 / 10
-19:15:06 [INFO]   VIII Modify Rule - Remove Equality
-19:15:06 [INFO]   Replaced a random number of var X_5 with var X_5_new_1 in the rule r_EXP_8
-19:15:06 [INFO] 5 / 10
-19:15:06 [INFO]   IX Remove Fact Node and Edge
-19:15:06 [INFO]  Removed fact R_3("kottbusser_tor", "alexanderplatz", c_2, c_3). from the program
-19:15:06 [INFO]    Removed fact R_3("kottbusser_tor", "alexanderplatz", c_2, c_3). from the ADG.
-19:15:06 [INFO] 6 / 10
-19:15:06 [INFO]   XI Add Contradictory Rule
-19:15:06 [INFO]   Added new contradictory rule of name r_EQU_9
-19:15:06 [INFO]   R_6(?X_1, ?X_2) :- validC(?X_1, ?X_2), ~validC(?X_1, ?X_2) .
-19:15:06 [INFO] 7 / 10
-19:15:06 [INFO]   IV Add Relational Edge - New Literal
-19:15:06 [INFO]   Generated literal mustChangeAt(?Y_1) for rule r_EXP_8
-19:15:06 [INFO] 8 / 10
-19:15:06 [INFO]   VIII Modify Rule - Remove Equality
-19:15:06 [INFO]   Replaced a random number of var Y_1 with var Y_1_new_1 in the rule r_EXP_8
-19:15:06 [INFO] 9 / 10
-19:15:06 [INFO]   IV Add Relational Edge - New Literal
-19:15:06 [INFO]   Generated literal R_OUT(?Z_2, c_3, ?X_2, ?X_1) for rule r_EQU_9
-19:15:06 [INFO] 10 / 10
-19:15:06 [INFO]   VII Modify Rule - Add Equality
-19:15:06 [INFO]   Replaced var ?X_5_new_1 with var ?X_4 in the rule r_EXP_8
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] ------------ Transformations Done ------------
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO]  Ressources required: 
-        data/choseU.csv
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO]                 Beginning transformation mtf_TEST
+                Oracle:     EQU          Number of T: 10
+                Debug Mode: false          u64 Seed:    272
+                Number of generating transformations: 10
+                Internal Seed:          [118, 34, 238, 201, 198, 43, 83, 167, 62, 49, 229, 35, 151, 170, 254, 32, 151, 151, 181, 81, 162, 152, 214, 201, 253, 226, 249, 155, 206, 46, 246, 220]
+                Seed File: Currently not supported!
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] -------------- Reading Seed File -------------
+19:32:35 [INFO] Renaming of rules complete
+19:32:35 [INFO] --------- Finished Reading Seed file ---------
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] 
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] -------- Beginning Program Generation --------
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] 
+19:32:35 [INFO] Removing old export statements
+19:32:35 [INFO] Beginning inverse_stratum and ancestry computation starting at node R_OUT
+19:32:35 [INFO] Ancestry and Inverse Stratum computation complete.
+19:32:35 [INFO] Constructed lite ADG
+19:32:35 [INFO] Generating Program...
+19:32:35 [INFO] 
+19:32:35 [INFO] 1 / 10
+19:32:35 [INFO]   III Add Relational edges - New Rule
+19:32:35 [INFO]   Assigned relation R_OUT the artiy 4
+19:32:35 [INFO]   Added new rule of name r_EXP_1
+19:32:35 [INFO]   R_OUT("alexanderplatz", ?X_3, ?X_2, ?X_1) :- allowedDiff("alexanderplatz", ?X_3), allowedDiff(?X_2, ?X_1), ~allowedDiff("kottbusser_tor", "alexanderplatz"), ~canChangeAt(?X_1), ~platformHeight("alexanderplatz", ?X_1), ~mustChangeAt(?X_3) .
+19:32:35 [INFO] 2 / 10
+19:32:35 [INFO]   III Add Relational edges - New Rule
+19:32:35 [INFO]   Added new rule of name r_EXP_2
+19:32:35 [INFO]   R_OUT(?X_3, ?X_1, ?X_4, ?X_2) :- R_OUT(?X_3, ?Y_1, ?X_3, ?X_1), allowedDiff(?X_4, ?X_3), seeTVTower(?X_2), validC(?X_4, ?X_4), choseU(?X_1, ?X_2), mustChangeAt(?X_1) .
+19:32:35 [INFO] 3 / 10
+19:32:35 [INFO]   III Add Relational edges - New Rule
+19:32:35 [INFO]   Added new rule of name r_EXP_3
+19:32:35 [INFO]   R_OUT("jungfernheide", ?X_1, ?X_4, ?X_2) :- choseU(?Y_1, ?X_4), allowedDiff(?Y_1, ?X_2), validC("jungfernheide", ?X_1), choseB(?X_4, ?X_1), seeTVTower(?X_4) .
+19:32:35 [INFO] 4 / 10
+19:32:35 [INFO]   I Add Relational Node
+19:32:35 [INFO]   Added new relation R_1
+19:32:35 [INFO] 5 / 10
+19:32:35 [INFO]   III Add Relational edges - New Rule
+19:32:35 [INFO]   Assigned relation R_1 the artiy 5
+19:32:35 [INFO]   Added new rule of name r_EXP_4
+19:32:35 [INFO]   R_OUT(?X_4, ?X_1, ?X_3, "alexanderplatz") :- R_OUT("kottbusser_tor", ?X_4, ?X_3, "alexanderplatz"), validC(?X_4, ?X_1), choseB("alexanderplatz", ?X_4), ~platformHeight(?X_4, "alexanderplatz"), ~success("alexanderplatz"), ~R_1(?X_4, trainHeight, trainHeight, ?X_3, ?X_3) .
+19:32:35 [INFO] 6 / 10
+19:32:35 [INFO]   I Add Relational Node
+19:32:35 [INFO]   Added new relation R_2
+19:32:35 [INFO] 7 / 10
+19:32:35 [INFO]   II Add Fact Node and Edge
+19:32:35 [INFO]   Assigned relation R_2 the artiy 1
+19:32:35 [INFO]   Added new fact R_2(c_1).
+19:32:35 [INFO] 8 / 10
+19:32:35 [INFO]   I Add Relational Node
+19:32:35 [INFO]   Added new relation R_3
+19:32:35 [INFO] 9 / 10
+19:32:35 [INFO]   III Add Relational edges - New Rule
+19:32:35 [INFO]   Assigned relation R_3 the artiy 4
+19:32:35 [INFO]   Added new rule of name r_EXP_5
+19:32:35 [INFO]   R_3("jungfernheide", ?X_3, ?X_2, ?X_1) :- R_2("jungfernheide"), platformHeight(trainHeight, ?X_2), canChangeAt(?X_1), choseB(?X_1, ?X_3), success("jungfernheide"), seeTVTower(?X_3), ~validC(?X_2, ?X_2) .
+19:32:35 [INFO] 10 / 10
+19:32:35 [INFO]   III Add Relational edges - New Rule
+19:32:35 [INFO]   Added new rule of name r_EXP_6
+19:32:35 [INFO]   R_OUT(?X_2, ?X_1, "alexanderplatz", ?X_1) :- platformHeight(?X_2, ?X_1), choseU("alexanderplatz", c_1), success(?X_1), validC(?X_2, ?Y_1), ~validC(?X_1, c_1), ~canChangeAt(?X_1), ~R_1(?Y_1, ?X_2, ?X_2, ?X_2, ?Y_1), ~platformHeight(c_1, ?Y_1) .
+19:32:35 [INFO] 
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] ----------- Program Generation Done ----------
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] 
+19:32:35 [INFO] Storing input ADG and input program
+19:32:35 [INFO] 
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] --------- Beginning Transformations ----------
+19:32:35 [INFO] --------  Oracle: EQU    Number: 10
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] 1 / 10
+19:32:35 [INFO]   VI Remove Relational Edge - Single Literal
+19:32:35 [INFO]   Found the rule of the name r_EXP_5
+19:32:35 [INFO]   Removed relational edge NodeIndex(13): (R_2 -> R_3)
+19:32:35 [INFO]   Attempting to remove the literal +R_2(, "jungfernheide") from the rule r_EXP_5
+19:32:35 [INFO] 2 / 10
+19:32:35 [INFO]   Xa Remove Relational Node - Rule Variant
+19:32:35 [INFO]   Removing relational node R_3
+19:32:35 [INFO]   Removing the Rule of the name r_EXP_5
+19:32:35 [INFO]   Removing at least 6 relational edges.
+19:32:35 [INFO] 3 / 10
+19:32:35 [INFO]   XI Add Contradictory Rule
+19:32:35 [INFO]   Added new contradictory rule of name r_EQU_7
+19:32:35 [INFO]   R_1(?X_4, ?X_5, ?X_1, ?X_2, ?X_3) :- elevator(?X_4), elevator(?X_5), elevator(?X_1), elevator(?X_2), elevator(?X_3), ~elevator(?X_4) .
+19:32:35 [INFO] 4 / 10
+19:32:35 [INFO]   XI Add Contradictory Rule
+19:32:35 [INFO]   Added new contradictory rule of name r_EQU_8
+19:32:35 [INFO]   R_OUT(?X_1, ?X_3, ?X_1, "alexanderplatz") :- R_2(?X_1), R_2(?X_3), R_2(?X_1), R_2("alexanderplatz"), ~R_2(?X_1) .
+19:32:35 [INFO] 5 / 10
+19:32:35 [INFO]   I Add Relational Node
+19:32:35 [INFO]   Added new relation R_4
+19:32:35 [INFO] 6 / 10
+19:32:35 [INFO]   XI Add Contradictory Rule
+19:32:35 [INFO]   Assigned relation R_4 the artiy 1
+19:32:35 [INFO]   Added new contradictory rule of name r_EQU_9
+19:32:35 [INFO]   R_4(?X_1) :- platformHeight(?X_1, ?X_1), ~platformHeight(?X_1, ?X_1) .
+19:32:35 [INFO] 7 / 10
+19:32:35 [INFO]   I Add Relational Node
+19:32:35 [INFO]   Added new relation R_5
+19:32:35 [INFO] 8 / 10
+19:32:35 [INFO]   IV Add Relational Edge - New Literal
+19:32:35 [INFO]   Generated literal platformHeight(?X_1, ?X_1) for rule r_EQU_9
+19:32:35 [INFO] 9 / 10
+19:32:35 [INFO]   IV Add Relational Edge - New Literal
+19:32:35 [INFO]   Generated literal ~mustChangeAt(?X_1) for rule r_EQU_9
+19:32:35 [INFO] 10 / 10
+19:32:35 [INFO]   Xa Remove Relational Node - Rule Variant
+19:32:35 [INFO]   Removing relational node R_4
+19:32:35 [INFO]   Removing the Rule of the name r_EQU_9
+19:32:35 [INFO]   Removing at least 4 relational edges.
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] ------------ Transformations Done ------------
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO]  Ressources required: 
+                data/choseU.csv
         data/choseB.csv
         data/elevator.csv
         data/platformHeight.csv
         data/allowedDiff.csv
         
-19:15:06 [INFO] ---------------- ADG Summary: ----------------
-19:15:06 [INFO] ADG Fact Nodes:                  3
-19:15:06 [INFO] ADG Relational Nodes:            19
-19:15:06 [INFO] ADG Fact Edges:                  3
-19:15:06 [INFO] ADG Relational Edges:            51
-19:15:06 [INFO] Number of inv. Strata:           1
-19:15:06 [INFO] 
-19:15:06 [INFO] Nodes with None Ancestry:        3
-19:15:06 [INFO] Nodes with Positive Ancestry:    5
-19:15:06 [INFO] Nodes with Negative Ancestry:    1
-19:15:06 [INFO] Nodes with Unknown Ancestry:     6
-19:15:06 [INFO] 
-19:15:06 [INFO] Next rule name would be:         r_EQU_10
-19:15:06 [INFO] Next predicate name would be:    R_8
-19:15:06 [INFO] Next constant name would be:     c_4
-19:15:06 [INFO] Next string would be:            "str_1"
-19:15:06 [INFO] 
-19:15:06 [INFO] Output predicate:                R_OUT
-19:15:06 [INFO] Rule count:                      20
-19:15:06 [INFO] Average rel. arity:              2.176470588235294
-19:15:06 [INFO] Arity calc. may be inaccurate if arity > f64
-19:15:06 [INFO] --------- Performed Transformations: ---------
-19:15:06 [INFO]  #      Type
-19:15:06 [INFO]  1      None - Transformation not applicable
-19:15:06 [INFO]  1      II    Add Fact Node and Edge
-19:15:06 [INFO]  2      IV    Add Relational Edge - New Literal
-19:15:06 [INFO]  1      IX    Remove Fact Node and Edge
-19:15:06 [INFO]  2      VI    Remove Relational Edge - Single Literal
-19:15:06 [INFO]  1      VII   Modify Rule - Add Equality
-19:15:06 [INFO]  2      VIII  Modify Rule - Remove Equality
-19:15:06 [INFO]  1      XI   Add Contradictory Rule
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] -- Beginning Nemo Execution - Input Program --
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] Stratified program: [[2, 3, 5, 6, 7, 8, 9, 16], [0, 1, 4, 10, 13], [11, 12, 14, 15]]
-19:15:06 [INFO] <<< STEP 1: APPLYING RULE 2 validC(?x, ?y) :- choseB(?x, ?y), choseU(?x, ?y) >>>
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 0 lines (dropped 0)
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 41 lines (dropped 0)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 41 entries (9044)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 2 ms
-19:15:06 [INFO] <<< STEP 2: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Saved temporary table: 41 entries (9096)
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Saved permanent table validC (2) Permutation { idx_to_val: [], val_to_idx: [] } with 41 entries (9144)
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 3: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 4: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, Integer]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 41 lines (dropped 35)
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Integer, Integer]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 7 lines (dropped 0)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 7 entries (7072)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Saved temporary table: 6 entries (3424)
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Saved permanent table tooLargeGap (4) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (3472)
-19:15:06 [INFO] Rule duration: 2 ms
-19:15:06 [INFO] <<< STEP 5: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 7 entries (7072)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 6: APPLYING RULE 6 mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 7: APPLYING RULE 7 mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 8: APPLYING RULE 8 seeTVTower(s) :- choseB(?x, ?_BODY_1), Equal(?_BODY_1, "alexanderplatz") >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 9: APPLYING RULE 9 seeTVTower(s) :- choseB(?_BODY_1, ?x), Equal(?_BODY_1, "alexanderplatz") >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 10: APPLYING RULE 16 R_OUT(?X_4, ?X_2, ?X_4, ?X_3) :- R_1(?X_4, ?_BODY_1, ?_BODY_2, ?_BODY_3, ?Y_1), allowedDiff(?X_2, ?_BODY_4), R_2(?_BODY_5), seeTVTower(?X_3), platformHeight(?_BODY_6, ?_BODY_7), Equal(?_BODY_1, ?X_4), Equal(?_BODY_2, ?X_4), Equal(?_BODY_3, ?X_4), Equal(?_BODY_4, ?X_2), Equal(?_BODY_5, trainHeight), Equal(?_BODY_6, trainHeight), Equal(?_BODY_7, trainHeight) >>>
-19:15:06 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Iri(IriDataValue("c_1")))] }
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (7208)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 11: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 41 lines (dropped 0)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (3472)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Saved temporary table: 35 entries (3540)
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Saved permanent table canChangeAt (11) Permutation { idx_to_val: [], val_to_idx: [] } with 35 entries (3588)
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 12: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (3472)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 13: APPLYING RULE 0 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 14: APPLYING RULE 1 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 15: APPLYING RULE 10 success(s) :- validC(?_BODY_1, ?_BODY_2), Equal(?_BODY_1, "jungfernheide"), Equal(?_BODY_2, "kottbusser_tor") >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 16: APPLYING RULE 13 R_OUT("jungfernheide", ?X_1, ?X_4, ?X_2) :- choseU(?Y_1, ?X_4), allowedDiff(?Y_1, ?X_2), validC(?_BODY_1, ?X_1), choseB(?X_4, ?X_1), seeTVTower(?X_4), Equal(?_BODY_1, "jungfernheide") >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 17: APPLYING RULE 11 R_OUT("alexanderplatz", ?X_3, ?X_2, ?X_1) :- allowedDiff(?_BODY_1, ?X_3), allowedDiff(?X_2, ?X_1), allowedDiff(?_BODY_2, ?_BODY_3), canChangeAt(?X_1), platformHeight(?_BODY_4, ?X_1), mustChangeAt(?X_3), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, "kottbusser_tor"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "alexanderplatz") >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 7 entries (7072)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 35 entries (3588)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (6880)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 3 ms
-19:15:06 [INFO] <<< STEP 18: APPLYING RULE 15 R_OUT(?X_2, ?X_1, "alexanderplatz", ?X_1) :- platformHeight(?X_2, ?X_1), choseU(?_BODY_1, ?_BODY_2), success(?X_1), validC(?X_2, ?Y_1), validC(?X_1, ?_BODY_3), canChangeAt(?X_1), R_1(?Y_1, ?X_2, ?_BODY_4, ?_BODY_5, ?_BODY_6), platformHeight(?_BODY_7, ?Y_1), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, c_1), Equal(?_BODY_3, c_1), Equal(?_BODY_4, ?X_2), Equal(?_BODY_5, ?X_2), Equal(?_BODY_6, ?Y_1), Equal(?_BODY_7, c_1) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 41 entries (9144)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 35 entries (3588)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (6880)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 2 ms
-19:15:06 [INFO] <<< STEP 19: APPLYING RULE 12 R_OUT(?X_3, ?X_1, ?X_4, ?X_2) :- R_OUT(?X_3, ?Y_1, ?_BODY_1, ?X_1), allowedDiff(?X_4, ?X_3), seeTVTower(?X_2), validC(?X_4, ?_BODY_2), choseU(?X_1, ?X_2), mustChangeAt(?X_1), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, ?X_4) >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 20: APPLYING RULE 14 R_OUT(?X_4, ?X_1, ?X_3, "alexanderplatz") :- R_OUT(?_BODY_1, ?X_4, ?X_3, ?_BODY_2), validC(?X_4, ?X_1), choseB(?_BODY_3, ?X_4), platformHeight(?X_4, ?_BODY_4), success(?_BODY_5), R_1(?X_4, ?_BODY_6, ?_BODY_7, ?X_3, ?_BODY_8), Equal(?_BODY_1, "kottbusser_tor"), Equal(?_BODY_2, "alexanderplatz"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "alexanderplatz"), Equal(?_BODY_5, "alexanderplatz"), Equal(?_BODY_6, trainHeight), Equal(?_BODY_7, trainHeight), Equal(?_BODY_8, ?X_3) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (7208)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] --- Finished Nemo Execution - Input Program --
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] Output size: 0
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] Beginning Nemo Execution - Transformed Program
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] Stratified program: [[2, 3, 5, 6, 7, 8, 9, 16], [0, 1, 4, 10, 13], [11, 12, 14, 15]]
-19:15:06 [INFO] <<< STEP 1: APPLYING RULE 2 validC(?x, ?y) :- choseB(?x, ?y), choseU(?x, ?y) >>>
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 0 lines (dropped 0)
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 41 lines (dropped 0)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 41 entries (9044)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 3 ms
-19:15:06 [INFO] <<< STEP 2: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Saved temporary table: 41 entries (9096)
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Saved permanent table validC (2) Permutation { idx_to_val: [], val_to_idx: [] } with 41 entries (9144)
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 3: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 4: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, Integer]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 41 lines (dropped 35)
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Integer, Integer]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 7 lines (dropped 0)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 7 entries (7072)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Saved temporary table: 6 entries (3424)
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Saved permanent table tooLargeGap (4) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (3472)
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 5: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 7 entries (7072)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 6: APPLYING RULE 6 mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 7: APPLYING RULE 7 mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 8: APPLYING RULE 8 seeTVTower(s) :- choseB(?x, ?_BODY_1), Equal(?_BODY_1, "alexanderplatz") >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 9: APPLYING RULE 9 seeTVTower(s) :- choseB(?_BODY_1, ?x), Equal(?_BODY_1, "alexanderplatz") >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 10: APPLYING RULE 16 R_OUT(?X_4, ?X_2, ?X_4, ?X_3) :- R_1(?X_4, ?_BODY_1, ?_BODY_2, ?_BODY_3, ?Y_1), allowedDiff(?X_2, ?_BODY_4), R_2(?_BODY_5), seeTVTower(?X_3), platformHeight(?_BODY_6, ?_BODY_7), Equal(?_BODY_1, ?X_4), Equal(?_BODY_2, ?X_4), Equal(?_BODY_3, ?X_4), Equal(?_BODY_4, ?X_2), Equal(?_BODY_5, trainHeight), Equal(?_BODY_6, trainHeight), Equal(?_BODY_7, trainHeight) >>>
-19:15:06 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Iri(IriDataValue("c_1")))] }
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (7208)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 11: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
-19:15:06 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String]) }
-19:15:06 [INFO] Starting data import
-19:15:06 [INFO] Finished import: processed 41 lines (dropped 0)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (3472)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Saved temporary table: 35 entries (3540)
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Saved permanent table canChangeAt (11) Permutation { idx_to_val: [], val_to_idx: [] } with 35 entries (3588)
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 12: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (3472)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 13: APPLYING RULE 0 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 14: APPLYING RULE 1 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 15: APPLYING RULE 10 success(s) :- validC(?_BODY_1, ?_BODY_2), Equal(?_BODY_1, "jungfernheide"), Equal(?_BODY_2, "kottbusser_tor") >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 16: APPLYING RULE 13 R_OUT("jungfernheide", ?X_1, ?X_4, ?X_2) :- choseU(?Y_1, ?X_4), allowedDiff(?Y_1, ?X_2), validC(?_BODY_1, ?X_1), choseB(?X_4, ?X_1), seeTVTower(?X_4), Equal(?_BODY_1, "jungfernheide") >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 17: APPLYING RULE 11 R_OUT("alexanderplatz", ?X_3, ?X_2, ?X_1) :- allowedDiff(?_BODY_1, ?X_3), allowedDiff(?X_2, ?X_1), allowedDiff(?_BODY_2, ?_BODY_3), canChangeAt(?X_1), platformHeight(?_BODY_4, ?X_1), mustChangeAt(?X_3), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, "kottbusser_tor"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "alexanderplatz") >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 7 entries (7072)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 35 entries (3588)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (6880)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 18: APPLYING RULE 15 R_OUT(?X_2, ?X_1, "alexanderplatz", ?X_1) :- platformHeight(?X_2, ?X_1), choseU(?_BODY_1, ?_BODY_2), success(?X_1), validC(?X_2, ?Y_1), validC(?X_1, ?_BODY_3), canChangeAt(?X_1), R_1(?Y_1, ?X_2, ?_BODY_4, ?_BODY_5, ?_BODY_6), platformHeight(?_BODY_7, ?Y_1), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, c_1), Equal(?_BODY_3, c_1), Equal(?_BODY_4, ?X_2), Equal(?_BODY_5, ?X_2), Equal(?_BODY_6, ?Y_1), Equal(?_BODY_7, c_1) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 41 entries (9144)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 35 entries (3588)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (6880)
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] <<< STEP 19: APPLYING RULE 12 R_OUT(?X_3, ?X_1, ?X_4, ?X_2) :- R_OUT(?X_3, ?Y_1, ?_BODY_1, ?X_1), allowedDiff(?X_4, ?X_3), seeTVTower(?X_2), validC(?X_4, ?_BODY_2), choseU(?X_1, ?X_2), mustChangeAt(?X_1), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, ?X_4) >>>
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 0 ms
-19:15:06 [INFO] <<< STEP 20: APPLYING RULE 14 R_OUT(?X_4, ?X_1, ?X_3, "alexanderplatz") :- R_OUT(?_BODY_1, ?X_4, ?X_3, ?_BODY_2), validC(?X_4, ?X_1), choseB(?_BODY_3, ?X_4), platformHeight(?X_4, ?_BODY_4), success(?_BODY_5), R_1(?X_4, ?_BODY_6, ?_BODY_7, ?X_3, ?_BODY_8), Equal(?_BODY_1, "kottbusser_tor"), Equal(?_BODY_2, "alexanderplatz"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "alexanderplatz"), Equal(?_BODY_5, "alexanderplatz"), Equal(?_BODY_6, trainHeight), Equal(?_BODY_7, trainHeight), Equal(?_BODY_8, ?X_3) >>>
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Saved temporary table: 6 entries (7208)
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Project/Reorder
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Body
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Execution step: Duplicate Elimination (Datalog)
-19:15:06 [INFO] Trie does not contain any elements
-19:15:06 [INFO] Rule duration: 1 ms
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO]  Finished Nemo Execution - Transformed Program
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] Output size: 0
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] ------------ Asserting Oracle EQU ------------
-19:15:06 [INFO] ----------------------------------------------
-19:15:06 [INFO] All good, output is equivalent
+19:32:35 [INFO] ---------------- ADG Summary: ----------------
+19:32:35 [INFO] ADG Fact Nodes:                  1
+19:32:35 [INFO] ADG Relational Nodes:            15
+19:32:35 [INFO] ADG Fact Edges:                  1
+19:32:35 [INFO] ADG Relational Edges:            42
+19:32:35 [INFO] Number of inv. Strata:           2
+19:32:35 [INFO] 
+19:32:35 [INFO] Nodes with None Ancestry:        0
+19:32:35 [INFO] Nodes with Positive Ancestry:    4
+19:32:35 [INFO] Nodes with Negative Ancestry:    2
+19:32:35 [INFO] Nodes with Unknown Ancestry:     7
+19:32:35 [INFO] 
+19:32:35 [INFO] Next rule name would be:         r_EQU_10
+19:32:35 [INFO] Next predicate name would be:    R_6
+19:32:35 [INFO] Next constant name would be:     c_2
+19:32:35 [INFO] Next string would be:            "str_1"
+19:32:35 [INFO] 
+19:32:35 [INFO] Output predicate:                R_OUT
+19:32:35 [INFO] Rule count:                      18
+19:32:35 [INFO] Average rel. arity:              1.8571428571428572
+19:32:35 [INFO] Arity calc. may be inaccurate if arity > f64
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] 
+19:32:35 [INFO] --------- Performed Transformations: ---------
+19:32:35 [INFO]  #      Type
+19:32:35 [INFO]  11      None - Transformation not applicable
+19:32:35 [INFO]  2      I     Add Relational Node
+19:32:35 [INFO]  2      IV    Add Relational Edge - New Literal
+19:32:35 [INFO]  1      VI    Remove Relational Edge - Single Literal
+19:32:35 [INFO]  3      XI   Add Contradictory Rule
+19:32:35 [INFO]  2      Xa     Remove Relational Node Rule Variant - None anc only
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] 
+19:32:35 [INFO] Writing output ADG and file.
+19:32:35 [INFO] 
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] -- Beginning Nemo Execution - Input Program --
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] Stratified program: [[2, 3, 5, 6, 7, 8, 9], [0, 1, 4, 10, 13], [11, 12, 14, 15]]
+19:32:35 [INFO] <<< STEP 1: APPLYING RULE 2 validC(?x, ?y) :- choseB(?x, ?y), choseU(?x, ?y) >>>
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 0 lines (dropped 0)
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 41 lines (dropped 0)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 41 entries (9044)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 2 ms
+19:32:35 [INFO] <<< STEP 2: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Saved temporary table: 41 entries (9096)
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Saved permanent table validC (2) Permutation { idx_to_val: [], val_to_idx: [] } with 41 entries (9144)
+19:32:35 [INFO] Rule duration: 4 ms
+19:32:35 [INFO] <<< STEP 3: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 1 ms
+19:32:35 [INFO] <<< STEP 4: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, Integer]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 41 lines (dropped 35)
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Integer, Integer]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 7 lines (dropped 0)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 7 entries (7072)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Saved temporary table: 6 entries (3424)
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Saved permanent table tooLargeGap (4) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (3472)
+19:32:35 [INFO] Rule duration: 2 ms
+19:32:35 [INFO] <<< STEP 5: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 7 entries (7072)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 1 ms
+19:32:35 [INFO] <<< STEP 6: APPLYING RULE 6 mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 7: APPLYING RULE 7 mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 8: APPLYING RULE 8 seeTVTower(s) :- choseB(?x, ?_BODY_1), Equal(?_BODY_1, "alexanderplatz") >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 9: APPLYING RULE 9 seeTVTower(s) :- choseB(?_BODY_1, ?x), Equal(?_BODY_1, "alexanderplatz") >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 10: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 41 lines (dropped 0)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 6 entries (3472)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Saved temporary table: 35 entries (3540)
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Saved permanent table canChangeAt (10) Permutation { idx_to_val: [], val_to_idx: [] } with 35 entries (3588)
+19:32:35 [INFO] Rule duration: 1 ms
+19:32:35 [INFO] <<< STEP 11: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 6 entries (3472)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 12: APPLYING RULE 0 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 13: APPLYING RULE 1 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 14: APPLYING RULE 10 success(s) :- validC(?_BODY_1, ?_BODY_2), Equal(?_BODY_1, "jungfernheide"), Equal(?_BODY_2, "kottbusser_tor") >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 15: APPLYING RULE 13 R_OUT("jungfernheide", ?X_1, ?X_4, ?X_2) :- choseU(?Y_1, ?X_4), allowedDiff(?Y_1, ?X_2), validC(?_BODY_1, ?X_1), choseB(?X_4, ?X_1), seeTVTower(?X_4), Equal(?_BODY_1, "jungfernheide") >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 16: APPLYING RULE 11 R_OUT("alexanderplatz", ?X_3, ?X_2, ?X_1) :- allowedDiff(?_BODY_1, ?X_3), allowedDiff(?X_2, ?X_1), allowedDiff(?_BODY_2, ?_BODY_3), canChangeAt(?X_1), platformHeight(?_BODY_4, ?X_1), mustChangeAt(?X_3), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, "kottbusser_tor"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "alexanderplatz") >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 7 entries (7072)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 35 entries (3588)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 6 entries (6880)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 1 ms
+19:32:35 [INFO] <<< STEP 17: APPLYING RULE 15 R_OUT(?X_2, ?X_1, "alexanderplatz", ?X_1) :- platformHeight(?X_2, ?X_1), choseU(?_BODY_1, ?_BODY_2), success(?X_1), validC(?X_2, ?Y_1), validC(?X_1, ?_BODY_3), canChangeAt(?X_1), R_1(?Y_1, ?X_2, ?_BODY_4, ?_BODY_5, ?_BODY_6), platformHeight(?_BODY_7, ?Y_1), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, c_1), Equal(?_BODY_3, c_1), Equal(?_BODY_4, ?X_2), Equal(?_BODY_5, ?X_2), Equal(?_BODY_6, ?Y_1), Equal(?_BODY_7, c_1) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 41 entries (9144)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 35 entries (3588)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 6 entries (6880)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 2 ms
+19:32:35 [INFO] <<< STEP 18: APPLYING RULE 12 R_OUT(?X_3, ?X_1, ?X_4, ?X_2) :- R_OUT(?X_3, ?Y_1, ?_BODY_1, ?X_1), allowedDiff(?X_4, ?X_3), seeTVTower(?X_2), validC(?X_4, ?_BODY_2), choseU(?X_1, ?X_2), mustChangeAt(?X_1), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, ?X_4) >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 19: APPLYING RULE 14 R_OUT(?X_4, ?X_1, ?X_3, "alexanderplatz") :- R_OUT(?_BODY_1, ?X_4, ?X_3, ?_BODY_2), validC(?X_4, ?X_1), choseB(?_BODY_3, ?X_4), platformHeight(?X_4, ?_BODY_4), success(?_BODY_5), R_1(?X_4, ?_BODY_6, ?_BODY_7, ?X_3, ?_BODY_8), Equal(?_BODY_1, "kottbusser_tor"), Equal(?_BODY_2, "alexanderplatz"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "alexanderplatz"), Equal(?_BODY_5, "alexanderplatz"), Equal(?_BODY_6, trainHeight), Equal(?_BODY_7, trainHeight), Equal(?_BODY_8, ?X_3) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 6 entries (7208)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 1 ms
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] --- Finished Nemo Execution - Input Program --
+19:32:35 [INFO] Output size: 0
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] 
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] Beginning Nemo Execution - Transformed Program
+19:32:35 [INFO] ----------------------------------------------
+19:32:35 [INFO] Stratified program: [[2, 3, 5, 6, 7, 8, 9, 16, 17], [0, 1, 4, 10, 13], [11, 12, 14, 15]]
+19:32:35 [INFO] <<< STEP 1: APPLYING RULE 2 validC(?x, ?y) :- choseB(?x, ?y), choseU(?x, ?y) >>>
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 0 lines (dropped 0)
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, String]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 41 lines (dropped 0)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 41 entries (9044)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 2 ms
+19:32:35 [INFO] <<< STEP 2: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Saved temporary table: 41 entries (9096)
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Saved permanent table validC (2) Permutation { idx_to_val: [], val_to_idx: [] } with 41 entries (9144)
+19:32:35 [INFO] Rule duration: 1 ms
+19:32:35 [INFO] <<< STEP 3: APPLYING RULE 3 validC(?x, ?y) :- choseU(?x, ?y), choseB(?x, ?y) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 4: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String, Integer]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 41 lines (dropped 35)
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Integer, Integer]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 7 lines (dropped 0)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 7 entries (7072)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Saved temporary table: 6 entries (3424)
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Saved permanent table tooLargeGap (4) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (3472)
+19:32:35 [INFO] Rule duration: 1 ms
+19:32:35 [INFO] <<< STEP 5: APPLYING RULE 5 tooLargeGap(?y) :- platformHeight(?y, ?h), allowedDiff(?h, ?_BODY_1), Equal(?_BODY_1, trainHeight) >>>
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 7 entries (7072)
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 6: APPLYING RULE 6 mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 7: APPLYING RULE 7 mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 8: APPLYING RULE 8 seeTVTower(s) :- choseB(?x, ?_BODY_1), Equal(?_BODY_1, "alexanderplatz") >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 9: APPLYING RULE 9 seeTVTower(s) :- choseB(?_BODY_1, ?x), Equal(?_BODY_1, "alexanderplatz") >>>
+19:32:35 [INFO] Execution step: Body
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:35 [INFO] Trie does not contain any elements
+19:32:35 [INFO] Rule duration: 0 ms
+19:32:35 [INFO] <<< STEP 10: APPLYING RULE 16 R_1(?X_4, ?X_5, ?X_1, ?X_2, ?X_3) :- elevator(?X_4), elevator(?X_5), elevator(?X_1), elevator(?X_2), elevator(?X_3), elevator(?X_4) >>>
+19:32:35 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([String]) }
+19:32:35 [INFO] Starting data import
+19:32:35 [INFO] Finished import: processed 41 lines (dropped 0)
+19:32:35 [INFO] Execution step: Project/Reorder
+19:32:35 [INFO] Saved temporary table: 41 entries (3612)
+19:32:35 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 558 ms
+19:32:36 [INFO] <<< STEP 11: APPLYING RULE 17 R_OUT(?X_1, ?X_3, ?X_1, "alexanderplatz") :- R_2(?X_1), R_2(?X_3), R_2(?X_1), R_2(?_BODY_1), R_2(?X_1), Equal(?_BODY_1, "alexanderplatz") >>>
+19:32:36 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Iri(IriDataValue("c_1")))] }
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 1 entries (3452)
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 1 ms
+19:32:36 [INFO] <<< STEP 12: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 6 entries (3472)
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Saved temporary table: 35 entries (3540)
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Saved permanent table canChangeAt (12) Permutation { idx_to_val: [], val_to_idx: [] } with 35 entries (3588)
+19:32:36 [INFO] Rule duration: 1 ms
+19:32:36 [INFO] <<< STEP 13: APPLYING RULE 4 canChangeAt(?y) :- elevator(?y), tooLargeGap(?y) >>>
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 6 entries (3472)
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 0 ms
+19:32:36 [INFO] <<< STEP 14: APPLYING RULE 0 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) >>>
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 1 ms
+19:32:36 [INFO] <<< STEP 15: APPLYING RULE 1 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y) >>>
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 0 ms
+19:32:36 [INFO] <<< STEP 16: APPLYING RULE 10 success(s) :- validC(?_BODY_1, ?_BODY_2), Equal(?_BODY_1, "jungfernheide"), Equal(?_BODY_2, "kottbusser_tor") >>>
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 0 ms
+19:32:36 [INFO] <<< STEP 17: APPLYING RULE 13 R_OUT("jungfernheide", ?X_1, ?X_4, ?X_2) :- choseU(?Y_1, ?X_4), allowedDiff(?Y_1, ?X_2), validC(?_BODY_1, ?X_1), choseB(?X_4, ?X_1), seeTVTower(?X_4), Equal(?_BODY_1, "jungfernheide") >>>
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 0 ms
+19:32:36 [INFO] <<< STEP 18: APPLYING RULE 11 R_OUT("alexanderplatz", ?X_3, ?X_2, ?X_1) :- allowedDiff(?_BODY_1, ?X_3), allowedDiff(?X_2, ?X_1), allowedDiff(?_BODY_2, ?_BODY_3), canChangeAt(?X_1), platformHeight(?_BODY_4, ?X_1), mustChangeAt(?X_3), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, "kottbusser_tor"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "alexanderplatz") >>>
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 7 entries (7072)
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 35 entries (3588)
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 6 entries (6880)
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 2 ms
+19:32:36 [INFO] <<< STEP 19: APPLYING RULE 15 R_OUT(?X_2, ?X_1, "alexanderplatz", ?X_1) :- platformHeight(?X_2, ?X_1), choseU(?_BODY_1, ?_BODY_2), success(?X_1), validC(?X_2, ?Y_1), validC(?X_1, ?_BODY_3), canChangeAt(?X_1), R_1(?Y_1, ?X_2, ?_BODY_4, ?_BODY_5, ?_BODY_6), platformHeight(?_BODY_7, ?Y_1), Equal(?_BODY_1, "alexanderplatz"), Equal(?_BODY_2, c_1), Equal(?_BODY_3, c_1), Equal(?_BODY_4, ?X_2), Equal(?_BODY_5, ?X_2), Equal(?_BODY_6, ?Y_1), Equal(?_BODY_7, c_1) >>>
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 41 entries (9144)
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 35 entries (3588)
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 6 entries (6880)
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 2 ms
+19:32:36 [INFO] <<< STEP 20: APPLYING RULE 12 R_OUT(?X_3, ?X_1, ?X_4, ?X_2) :- R_OUT(?X_3, ?Y_1, ?_BODY_1, ?X_1), allowedDiff(?X_4, ?X_3), seeTVTower(?X_2), validC(?X_4, ?_BODY_2), choseU(?X_1, ?X_2), mustChangeAt(?X_1), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, ?X_4) >>>
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 0 ms
+19:32:36 [INFO] <<< STEP 21: APPLYING RULE 14 R_OUT(?X_4, ?X_1, ?X_3, "alexanderplatz") :- R_OUT(?_BODY_1, ?X_4, ?X_3, ?_BODY_2), validC(?X_4, ?X_1), choseB(?_BODY_3, ?X_4), platformHeight(?X_4, ?_BODY_4), success(?_BODY_5), R_1(?X_4, ?_BODY_6, ?_BODY_7, ?X_3, ?_BODY_8), Equal(?_BODY_1, "kottbusser_tor"), Equal(?_BODY_2, "alexanderplatz"), Equal(?_BODY_3, "alexanderplatz"), Equal(?_BODY_4, "alexanderplatz"), Equal(?_BODY_5, "alexanderplatz"), Equal(?_BODY_6, trainHeight), Equal(?_BODY_7, trainHeight), Equal(?_BODY_8, ?X_3) >>>
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Saved temporary table: 6 entries (7208)
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Project/Reorder
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Body
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Execution step: Duplicate Elimination (Datalog)
+19:32:36 [INFO] Trie does not contain any elements
+19:32:36 [INFO] Rule duration: 1 ms
+19:32:36 [INFO] ----------------------------------------------
+19:32:36 [INFO]  Finished Nemo Execution - Transformed Program
+19:32:36 [INFO] Output size: 0
+19:32:36 [INFO] ----------------------------------------------
+19:32:36 [INFO] 
+19:32:36 [INFO] ----------------------------------------------
+19:32:36 [INFO] ------------ Asserting Oracle EQU ------------
+19:32:36 [INFO] ----------------------------------------------
+19:32:36 [INFO] All good, output is equivalent

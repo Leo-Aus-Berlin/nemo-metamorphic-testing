@@ -18,21 +18,26 @@ use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGrap
 /// as the only output predicate. If none are available,
 /// select a random predicate from the idb predicates.
 // #[derive(Debug, Clone, Copy, Default)]
-pub struct TransformationSelectRandomOutputPredicate<'a,'b> {
+#[allow(dead_code)]
+pub struct TransformationSelectRandomOutputPredicate<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
     rng: &'b mut rand_chacha::ChaCha8Rng,
 }
 
-impl<'a,'b> TransformationSelectRandomOutputPredicate<'a,'b> {
+impl<'a, 'b> TransformationSelectRandomOutputPredicate<'a, 'b> {
     /* fn fetch_adg(self) -> &'a mut AnnotatedDependencyGraph {
         self.adg
     } */
-    pub fn new(adg: &'a mut AnnotatedDependencyGraph, rng: &'b mut rand_chacha::ChaCha8Rng) -> Self {
+    #[allow(dead_code)]
+    pub fn new(
+        adg: &'a mut AnnotatedDependencyGraph,
+        rng: &'b mut rand_chacha::ChaCha8Rng,
+    ) -> Self {
         Self { adg, rng }
     }
 }
 
-impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a,'b> {
+impl<'a, 'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<'a, 'b> {
     fn apply(self, program: &ProgramHandle) -> Result<ProgramHandle, ValidationReport> {
         info!("Choosing a predicate to export!");
 
@@ -41,26 +46,23 @@ impl<'a,'b> ProgramTransformation for TransformationSelectRandomOutputPredicate<
         // Collect export & output statements
         let mut export_directives: Vec<&Statement> = Vec::new();
         // Keep all other than original export statements
-        program
-            .statements()
-            .for_each(|s| match s {
-                Statement::Export(export) => {
-                    export_directives.push(s);
-                    info!("Found export: {}", export.predicate());
-                }
-                // werden gleich wie export behandelt von nemo, aber nie in eine datei geschrieben
-                // sollen vollständig ausgerechnet werden
-                Statement::Output(output) => {
-                    export_directives.push(s);
-                    info!("Found output: {}", output.predicate());
-                }
-                /* Statement::Rule(rule)=>{
-                    info!("Name: {:?}",rule.name());
-                    commit.keep(s);
-                } */
-
-                _ => commit.keep(s),
-            });
+        program.statements().for_each(|s| match s {
+            Statement::Export(export) => {
+                export_directives.push(s);
+                info!("Found export: {}", export.predicate());
+            }
+            // werden gleich wie export behandelt von nemo, aber nie in eine datei geschrieben
+            // sollen vollständig ausgerechnet werden
+            Statement::Output(output) => {
+                export_directives.push(s);
+                info!("Found output: {}", output.predicate());
+            }
+            /* Statement::Rule(rule)=>{
+                info!("Name: {:?}",rule.name());
+                commit.keep(s);
+            } */
+            _ => commit.keep(s),
+        });
 
         // what is the difference between an output and an export?
         let mut output_names = String::from("Output names (0): ");

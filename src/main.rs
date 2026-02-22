@@ -32,7 +32,6 @@ use crate::transformations::{
 };
 use transformations::{
     annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
-    select_random_output_predicate::TransformationSelectRandomOutputPredicate,
 };
 /*
 use lazy_static::lazy_static;
@@ -346,12 +345,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Begin transformation info
     info!("----------------------------------------------");
     info!(
-        "Beginning transformation {}
-    Oracle:     {}      Number of T: {}
-    Debug Mode: {}      u64 Seed:    {}
-    Num. generating transformations: {}
-    Internal Seed:        {:?}
-    Seed File: Currently not supported!",
+        "                Beginning transformation {}
+                Oracle:     {}          Number of T: {}
+                Debug Mode: {}          u64 Seed:    {}
+                Number of generating transformations: {}
+                Internal Seed:          {:?}
+                Seed File: Currently not supported!",
         NAME_OF_TRANSFORMATION_SEQUENCE
             .get()
             .expect("Name of Transformation Sequence not set"),
@@ -413,8 +412,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .get()
             .expect("Number of transformations not set")),
     ));
+    info!("--------- Finished Reading Seed file ---------");
+    info!("----------------------------------------------");
+    info!("");
+    info!("----------------------------------------------");
     info!("-------- Beginning Program Generation --------");
-
+    info!("----------------------------------------------");
+    info!("");
     // Construct the seed ADG
     let mut adg: AnnotatedDependencyGraph =
         match AnnotatedDependencyGraph::from_program_lite(&program) {
@@ -445,6 +449,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     adg.calculate_ancestry_and_inverse_stratum();
 
     info!("Constructed lite ADG");
+    info!("Generating Program...");
+    info!("");
 
     // Compute Program
     let mut count_gen_transformations: IndexMap<String, usize> = IndexMap::new();
@@ -459,12 +465,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             debug!("ADG edge verification succeeded");
             debug!("RNG position: {}", rng.get_word_pos());
         }
-        info!(
-            "{repetition} / {}",
-            NUM_TRANSFORMATIONS
-                .get()
-                .expect("Num transformations not initialised")
-        );
+        info!("{repetition} / {}", num_gen_t);
         let transformation;
 
         loop {
@@ -492,8 +493,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     bar_gen.finish_and_clear();
 
+    info!("");
+    info!("----------------------------------------------");
     info!("----------- Program Generation Done ----------");
+    info!("----------------------------------------------");
+    info!("");
 
+    info!("Storing input ADG and input program");
+    info!("");
     // Write ADG to file
     adg.write_self_to_file(
         Some(input_folder_name.clone()),
@@ -654,11 +661,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     info!(
         " Ressources required: 
-        {}",
+                {}",
         res_statements.iter().fold(String::from(""), |s, v| s
             + v.to_str().expect("PathBuf not stringable")
             + "
-        ")
+                ")
     );
     for data_req in res_statements.iter() {
         let mut from_dir = PathBuf::from(vec_path[chosen]);
@@ -759,6 +766,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 / program.arities().iter().count() as f64
         );
         info!("Arity calc. may be inaccurate if arity > f64");
+        info!("----------------------------------------------");
+        info!("");
         info!("--------- Performed Transformations: ---------");
         info!(" #      Type");
         info!(
@@ -773,6 +782,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     info!("----------------------------------------------");
 
+    info!("");
+    info!("Writing output ADG and file.");
     //info!("Next integer would be:           {}",adg.get_and_register_new_integer_constant(rng));
     //info!() adg.next_rule_name(oracle)
 
@@ -820,6 +831,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
 
+    info!("");
     info!("----------------------------------------------");
     info!("-- Beginning Nemo Execution - Input Program --");
     info!("----------------------------------------------");
@@ -858,13 +870,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
     info!("----------------------------------------------");
     info!("--- Finished Nemo Execution - Input Program --");
-    info!("----------------------------------------------");
     if DEBUG_MODE
         .get()
         .expect("Debug mode not initialised")
         .clone()
     {
-        info!(" Output {} ", output_pred.name());
+        info!("--- Output {} ", output_pred.name());
         for line in out.iter() {
             info!("     {line:?}");
         }
@@ -872,6 +883,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("Output size: {}", out.len());
     }
 
+    info!("----------------------------------------------");
+    info!("");
     info!("----------------------------------------------");
     info!("Beginning Nemo Execution - Transformed Program");
     info!("----------------------------------------------");
@@ -917,14 +930,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
     info!("----------------------------------------------");
     info!(" Finished Nemo Execution - Transformed Program");
-    info!("----------------------------------------------");
 
     if DEBUG_MODE
         .get()
         .expect("Debug mode not initialised")
         .clone()
     {
-        info!(" Output {} ", output_pred.name());
+        info!("--- Output {} ", output_pred.name());
         for line in out_2.iter() {
             info!("     {line:?}");
         }
@@ -932,6 +944,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("Output size: {}", out_2.len());
     }
 
+    info!("----------------------------------------------");
+    info!("");
     info!("----------------------------------------------");
     info!(
         "------------ Asserting Oracle {} ------------",
