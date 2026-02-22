@@ -486,26 +486,30 @@ impl AnnotatedDependencyGraph {
     }
 
     #[allow(dead_code)]
-    /// Get a node by its `NodeIndex`. You probably meant to use `get_rel_node_weight_by_index` 
+    /// Get a node by its `NodeIndex`. You probably meant to use `get_rel_node_weight_by_index`
     /// or `get_fact_node_weight_by_index` instead. Panics if the node does not exist.
-    pub fn get_node_by_index(&self, node : NodeIndex) -> &ADGNode {
+    pub fn get_node_by_index(&self, node: NodeIndex) -> &ADGNode {
         self.graph.node_weight(node).expect("Node does not exist!")
     }
 
     #[allow(dead_code)]
-    /// Get a node by its `NodeIndex` mutably. You probably meant to use `get_rel_node_weight_mut_by_index` 
+    /// Get a node by its `NodeIndex` mutably. You probably meant to use `get_rel_node_weight_mut_by_index`
     /// or `get_fact_node_weight_mut_by_index` instead. Panics if the node does not exist.
-    pub fn get_node_mut_by_index(&mut self, node : NodeIndex) -> &mut ADGNode {
-        self.graph.node_weight_mut(node).expect("Node does not exist!")
+    pub fn get_node_mut_by_index(&mut self, node: NodeIndex) -> &mut ADGNode {
+        self.graph
+            .node_weight_mut(node)
+            .expect("Node does not exist!")
     }
 
     #[allow(dead_code)]
     /// Get an iterator over the fact nodes `NodeIndex` appearing in the ADG
     pub fn get_fact_nodes_index_iter(&self) -> impl Iterator<Item = NodeIndex> {
-        self.graph.node_indices().filter_map(|node| match self.get_node_by_index(node) {
-            ADGNode::ADGFactNode(_) => Some(node),
-            ADGNode::ADGRelationalNode(_) => None,
-        })
+        self.graph
+            .node_indices()
+            .filter_map(|node| match self.get_node_by_index(node) {
+                ADGNode::ADGFactNode(_) => Some(node),
+                ADGNode::ADGRelationalNode(_) => None,
+            })
     }
 
     /// Get an iterator over the relational nodes appearing in the ADG
@@ -527,10 +531,12 @@ impl AnnotatedDependencyGraph {
     #[allow(dead_code)]
     /// Get an iterator over the relational edges' `EdgeIndex` appearing in the ADG
     pub fn get_rel_edges_index_iter(&self) -> impl Iterator<Item = EdgeIndex> {
-        self.graph.edge_indices().filter_map(|edge| match self.get_edge_by_index(edge) {
-            ADGEdge::ADGFactEdge(_) => None,
-            ADGEdge::ADGRelationalEdge(_) => Some(edge),
-        })
+        self.graph
+            .edge_indices()
+            .filter_map(|edge| match self.get_edge_by_index(edge) {
+                ADGEdge::ADGFactEdge(_) => None,
+                ADGEdge::ADGRelationalEdge(_) => Some(edge),
+            })
     }
 
     /// Get an iterator over the fact edges appearing in the ADG
@@ -1477,7 +1483,7 @@ impl AnnotatedDependencyGraph {
         let mut to_remove_fact_edges: Vec<EdgeIndex> = Vec::new();
         let mut to_remove_rel_edges: Vec<EdgeIndex> = Vec::new();
         // Need to collect seperately due to non-mutable borrowing of the ADG
-        for edge in out_edges.chain(inc_edges).map(| e | e.id()) {
+        for edge in out_edges.chain(inc_edges).map(|e| e.id()) {
             match self.get_edge_by_index(edge) {
                 ADGEdge::ADGFactEdge(_) => {
                     // must be incoming right?
@@ -1614,6 +1620,17 @@ impl AnnotatedDependencyGraph {
         }
         //debug!("{vec:?}");
         vec
+    }
+
+    /// Get those relational nodes with none ancestry
+    pub fn get_any_ancestry_relational_nodes(&self) -> Vec<Tag> {
+        self.graph
+            .node_weights()
+            .filter_map(|node| match node {
+                ADGNode::ADGFactNode(_) => None,
+                ADGNode::ADGRelationalNode(rel_node) => Some(rel_node.tag.clone()),
+            })
+            .collect()
     }
 
     /// Get an index map that stores relational edges going/coming (`dir`) from the relational node for `tag` by their rule name.

@@ -18,7 +18,7 @@ use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGrap
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{util, TestingTransformation};
 
-/// Modify an existing rule by adding an equality between a pari of its variables
+/// Modify an existing rule by adding an equality between a pair of its variables
 /// Modifies the corresponding relational edges' terms
 pub struct ModifyRuleAddEquality<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,

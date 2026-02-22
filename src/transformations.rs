@@ -21,6 +21,7 @@ pub mod modify_rule_add_equality;
 pub mod modify_rule_remove_equality;
 pub mod remove_fact_node_and_edge;
 pub mod remove_relational_node;
+pub mod add_contradictory_rule;
 mod util;
 // pub mod testing_transformation;
 

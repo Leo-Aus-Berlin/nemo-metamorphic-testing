@@ -13,8 +13,7 @@ use crate::transformations::TestingTransformation;
 use crate::transformations::annotated_dependency_graphs::AnnotatedDependencyGraph;
 use crate::transformations::transformation_types::TransformationTypes;
 
-/// Add a fact node with a fact edge to some
-/// random exisiting relational node.
+/// Remove a fact node and corresponding fact edge.
 /// Oracle depends on ancestry of the connected relational node.
 pub struct RemoveFactNodeAndEdge<'a, 'b> {
     adg: &'a mut AnnotatedDependencyGraph,
