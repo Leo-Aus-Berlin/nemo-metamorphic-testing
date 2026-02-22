@@ -26,7 +26,9 @@ use nemo::{
 mod transformations;
 
 use crate::transformations::{
-    TestingTransformation, transformation_manager::GenerateProgramgenerationTransformation,
+    TestingTransformation,
+    select_specific_output_predicate::TransformationSelectSpecificOutputPredicate,
+    transformation_manager::GenerateProgramgenerationTransformation,
 };
 use transformations::{
     annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
@@ -422,6 +424,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 exit(1);
             }
         };
+
+    // Set the output predicate to R_OUT of the ADG
+    program = transform_and_err(
+        &program,
+        TransformationSelectSpecificOutputPredicate::new(
+            adg.get_output_tag()
+                .expect("Gen. program ADG has no output predicate?"),
+        ),
+    );
 
     // No longer random output predicate: Always R_OUT
     /* // Choose output predicate. The transformation also sets the adg's output predicate

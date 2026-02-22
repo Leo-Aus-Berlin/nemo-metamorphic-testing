@@ -285,6 +285,7 @@ pub struct AnnotatedDependencyGraph {
 
 /// An Annotated Dependency Graph. Provides a multitude of functions
 impl AnnotatedDependencyGraph {
+    #[allow(dead_code)]
     /// Generate an ADG that fully represents a program
     pub fn from_program(program: &ProgramHandle) -> Option<Self> {
         let predicates: HashSet<Tag> = program.all_predicates();

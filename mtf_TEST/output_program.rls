@@ -3,25 +3,27 @@
 @import elevator :- csv{resource= "data/elevator.csv", format= string}.
 @import platformHeight :- csv{resource= "data/platformHeight.csv", format= (string, int)}.
 @import allowedDiff :- csv{resource= "data/allowedDiff.csv", format= (int, int)}.
+validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), mustChangeAt(?y), canChangeAt(?y) .
 validC(?x, ?z) :- validC(?x, ?y), validC(?y, ?z), ~mustChangeAt(?y) .
 validC(?x, ?y) :- ~choseU(?x, ?y), choseB(?x, ?y) .
 validC(?x, ?y) :- choseU(?x, ?y), ~choseB(?x, ?y) .
+canChangeAt(?y) :- elevator(?y), ~tooLargeGap(?y) .
 tooLargeGap(?y) :- platformHeight(?y, ?h), ~allowedDiff(?h, trainHeight) .
 mustChangeAt(?y) :- choseU(?x, ?y), choseB(?y, ?z) .
 mustChangeAt(?y) :- choseB(?x, ?y), choseU(?y, ?z) .
 seeTVTower(s) :- choseB(?x, "alexanderplatz") .
 seeTVTower(s) :- choseB("alexanderplatz", ?x) .
 success(s) :- validC("jungfernheide", "kottbusser_tor") .
-@export validC :- csv{}.
-tooLargeGap("str_1").
-R_OUT("kottbusser_tor", 2730949651448125768, c_1, 9108087539966806366).
-canChangeAt(c_2).
-R_2("str_1").
-R_3("str_1", c_3).
-R_1(?X_3_new_1, ?X_1, ?X_3) :- tooLargeGap(?X_3), validC(?X_1, ?X_3_new_1), ~success(?X_3), ~allowedDiff("str_2", "str_2") .
-R_3(14461912103537454128, "str_3").
-platformHeight(?X_2, ?X_1) :- choseB(?X_2, ?X_1), ~choseB(?X_2, ?X_1) .
-allowedDiff(?X_2, "str_1") :- platformHeight(?X_2, "str_1"), ~R_OUT(c_2, c_2, c_2, ?X_2), ~validC(?X_2, "str_1") .
-R_3(c_3, ?X_1) :- R_OUT(c_3, ?Y_1, ?X_1, ?X_1), ~R_OUT(c_3, ?Y_1, ?X_1, ?X_1) .
-validC("str_2", "str_2").
-choseB("str_3", ?X_2) :- R_5(?X_2, ?Y_1, ?Y_1, "str_3", ?Y_1), choseU("str_3", "alexanderplatz"), choseB(?X_2, "alexanderplatz"), ~R_2("str_3"), ~tooLargeGap("alexanderplatz"), ~R_3(14461912103537454128, "alexanderplatz") .
+@export R_OUT :- csv{}.
+R_OUT("alexanderplatz", ?X_3, ?X_2, ?X_1) :- allowedDiff("alexanderplatz", ?X_3), allowedDiff(?X_2, ?X_1), ~allowedDiff("kottbusser_tor", "alexanderplatz"), ~canChangeAt(?X_1), ~platformHeight("alexanderplatz", ?X_1), ~mustChangeAt(?X_3) .
+R_OUT(?X_3, ?X_1, ?X_4, ?X_2) :- R_OUT(?X_3, ?Y_1, ?X_3, ?X_1), allowedDiff(?X_4, ?X_3), seeTVTower(?X_2), validC(?X_4, ?X_4), choseU(?X_1, ?X_2), mustChangeAt(?X_1) .
+R_OUT("jungfernheide", ?X_1, ?X_4, ?X_2) :- choseU(?Y_1, ?X_4), allowedDiff(?Y_1, ?X_2), validC("jungfernheide", ?X_1), choseB(?X_4, ?X_1), seeTVTower(?X_4) .
+R_OUT(?X_4, ?X_1, ?X_3, "alexanderplatz") :- R_OUT("kottbusser_tor", ?X_4, ?X_3, "alexanderplatz"), validC(?X_4, ?X_1), choseB("alexanderplatz", ?X_4), ~platformHeight(?X_4, "alexanderplatz"), ~success("alexanderplatz"), ~R_1(?X_4, trainHeight, trainHeight, ?X_3, ?X_3) .
+R_2(c_1).
+R_OUT(?X_2, ?X_1, "alexanderplatz", ?X_1) :- platformHeight(?X_2, ?X_1), choseU("alexanderplatz", c_1), success(?X_1), validC(?X_2, ?Y_1), ~validC(?X_1, c_1), ~canChangeAt(?X_1), ~R_1(?Y_1, ?X_2, ?X_2, ?X_2, ?Y_1), ~platformHeight(c_1, ?Y_1) .
+R_OUT(?X_4, ?X_2, ?X_4, ?X_3) :- R_1(?X_4, ?X_4, ?X_4, ?X_4, ?Y_1), allowedDiff(?X_2, ?X_2), R_2(trainHeight), seeTVTower(?X_3), ~platformHeight(trainHeight, trainHeight) .
+R_6("alexanderplatz", c_3).
+R_4(c_2, "alexanderplatz", c_3, "jungfernheide", "alexanderplatz").
+R_3("jungfernheide", ?X_3, ?X_2, ?X_1) :- platformHeight(trainHeight, ?X_2), canChangeAt(?X_1), choseB(?X_1, ?X_3), success("jungfernheide"), seeTVTower(?X_3), ~validC(?X_2, ?X_2), success(?X_1), R_4(?Z_3, ?X_2, ?Z_4, "alexanderplatz", ?X_1) .
+R_6(?X_1, ?X_2) :- validC(?X_1, ?X_2), ~validC(?X_1, ?X_2), R_OUT(?Z_2, c_3, ?X_2, ?X_1) .
+R_4(?X_4, "kottbusser_tor", ?X_3, ?X_4, ?X_4) :- validC(?X_5, ?Y_1), validC(?X_3, ?X_4), canChangeAt(?X_4), mustChangeAt(?Y_1_new_1) .
