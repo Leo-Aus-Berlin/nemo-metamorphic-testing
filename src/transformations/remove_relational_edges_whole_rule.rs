@@ -167,7 +167,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgesWholeRule<'a> {
         // 1) Remove the edges
         self.chosen_body_literals
             .iter()
-            .for_each(|e| self.adg.remove_edge(*e));
+            .for_each(|e| self.adg.remove_rel_edge(*e));
         // 2) Reset anc and st for the affected literals
         let mut reset_literals: IndexSet<NodeIndex> = IndexSet::new();
         affected_body_literals.iter().for_each(|lit| {

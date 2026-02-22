@@ -155,9 +155,9 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
 
         //let new_tuple : Tuple = Tuple::new([terms]);
         //let new_rule: Rule = Rule::new(vec![Atom::new(self.chosen_to_rel_node,[terms])], Vec::new());
-        let fact: Fact = Fact::new(self.chosen_to_rel_node.clone(), terms);
+        let fact: Fact = Fact::new(self.chosen_to_rel_node.clone(), terms.clone());
         commit.add_fact(fact);
-        let fact_node = self.adg.add_fact_node(terms_str.clone());
+        let fact_node = self.adg.add_fact_node(terms_str.clone(),Some(terms));
         self.adg.add_fact_edge(
             fact_node,
             self.adg.get_rel_node_index(&self.chosen_to_rel_node),

@@ -1,4 +1,4 @@
-use crate::{transformations::util, NAME_OF_TRANSFORMATION_SEQUENCE};
+use crate::{NAME_OF_TRANSFORMATION_SEQUENCE, transformations::util};
 use std::{
     collections::{HashSet, VecDeque},
     fmt::{Debug, Formatter},
@@ -10,20 +10,20 @@ use indexmap::{IndexMap, IndexSet};
 use log::{debug, error, info, trace};
 use nemo::rule_model::{
     components::{
-        self, statement,
+        IterablePrimitives, statement,
         tag::Tag,
-        term::{primitive::ground::GroundTerm, Term},
-        IterablePrimitives,
+        term::{Term, primitive::ground::GroundTerm},
     },
-    programs::{handle::ProgramHandle, ProgramRead},
+    programs::{ProgramRead, handle::ProgramHandle},
 };
-use petgraph::{dot::Dot, graph::NodeIndex};
 use petgraph::{
+    Directed,
+    Direction::Outgoing,
     prelude::StableGraph,
     stable_graph::{EdgeIndex, Edges},
     visit::EdgeRef,
-    Directed,
 };
+use petgraph::{Direction::Incoming, dot::Dot, graph::NodeIndex};
 use rand::RngCore;
 use rand_chacha::ChaCha8Rng;
 
@@ -172,6 +172,8 @@ impl ADGRelationalNode {
 #[derive(Clone)]
 pub struct ADGFactNode {
     pub name: String,
+    // The included terms. Is None if this is actually an import statement
+    pub terms: Option<Vec<Term>>,
 }
 impl Debug for ADGFactNode {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
@@ -343,7 +345,8 @@ impl AnnotatedDependencyGraph {
                         term_str.push_str(",\n");
                         fact_str.push_str(&term_str);
                     }
-                    let fact_node: NodeIndex = adg.add_fact_node(fact_str);
+                    let fact_node: NodeIndex =
+                        adg.add_fact_node(fact_str, Some(fact.terms().cloned().collect()));
                     let rel_node: NodeIndex = adg.get_rel_node_index(fact.predicate());
                     adg.add_fact_edge(fact_node, rel_node);
                 }
@@ -392,7 +395,7 @@ impl AnnotatedDependencyGraph {
                     // I think the first is the file name
                     import_str
                         .push_str(&(import.primitive_terms().collect::<Vec<_>>()[0].to_string()));
-                    let fact_node: NodeIndex = adg.add_fact_node(import_str);
+                    let fact_node: NodeIndex = adg.add_fact_node(import_str, None);
                     let rel_node: NodeIndex = adg.get_rel_node_index(import.predicate());
                     adg.add_fact_edge(fact_node, rel_node);
                 }
@@ -474,10 +477,33 @@ impl AnnotatedDependencyGraph {
         self.predicate_ids.keys().map(|tag| tag.clone())
     }
 
-    /// Get an iterator over the fact nodes appearing in the ADG
+    /// Get an iterator over the fact nodes' weights appearing in the ADG
     pub fn get_fact_nodes_iter(&self) -> impl Iterator<Item = &ADGFactNode> {
         self.graph.node_weights().filter_map(|node| match node {
             ADGNode::ADGFactNode(fact_node) => Some(fact_node),
+            ADGNode::ADGRelationalNode(_) => None,
+        })
+    }
+
+    #[allow(dead_code)]
+    /// Get a node by its `NodeIndex`. You probably meant to use `get_rel_node_weight_by_index` 
+    /// or `get_fact_node_weight_by_index` instead. Panics if the node does not exist.
+    pub fn get_node_by_index(&self, node : NodeIndex) -> &ADGNode {
+        self.graph.node_weight(node).expect("Node does not exist!")
+    }
+
+    #[allow(dead_code)]
+    /// Get a node by its `NodeIndex` mutably. You probably meant to use `get_rel_node_weight_mut_by_index` 
+    /// or `get_fact_node_weight_mut_by_index` instead. Panics if the node does not exist.
+    pub fn get_node_mut_by_index(&mut self, node : NodeIndex) -> &mut ADGNode {
+        self.graph.node_weight_mut(node).expect("Node does not exist!")
+    }
+
+    #[allow(dead_code)]
+    /// Get an iterator over the fact nodes `NodeIndex` appearing in the ADG
+    pub fn get_fact_nodes_index_iter(&self) -> impl Iterator<Item = NodeIndex> {
+        self.graph.node_indices().filter_map(|node| match self.get_node_by_index(node) {
+            ADGNode::ADGFactNode(_) => Some(node),
             ADGNode::ADGRelationalNode(_) => None,
         })
     }
@@ -490,11 +516,20 @@ impl AnnotatedDependencyGraph {
         })
     }
 
-    /// Get an iterator over the relational edges appearing in the ADG
+    /// Get an iterator over the relational edges' weights appearing in the ADG
     pub fn get_rel_edges_iter(&self) -> impl Iterator<Item = &ADGRelationalEdge> {
         self.graph.edge_weights().filter_map(|edge| match edge {
             ADGEdge::ADGFactEdge(_) => None,
             ADGEdge::ADGRelationalEdge(rel_edge) => Some(rel_edge),
+        })
+    }
+
+    #[allow(dead_code)]
+    /// Get an iterator over the relational edges' `EdgeIndex` appearing in the ADG
+    pub fn get_rel_edges_index_iter(&self) -> impl Iterator<Item = EdgeIndex> {
+        self.graph.edge_indices().filter_map(|edge| match self.get_edge_by_index(edge) {
+            ADGEdge::ADGFactEdge(_) => None,
+            ADGEdge::ADGRelationalEdge(_) => Some(edge),
         })
     }
 
@@ -1207,12 +1242,12 @@ impl AnnotatedDependencyGraph {
         self.graph.edge_endpoints(id)
     }
 
-    /// Remove an edge by its `EdgeIndex`.
-    /// 
+    /// Remove a relational edge by its `EdgeIndex`.
+    ///
     /// Fails if the edge did not exist. If the last
     /// edge of this rule is removed this way, the corresponding head literal is automatically removed
     /// from the head literal's relational node's weight!
-    pub fn remove_edge(&mut self, id: EdgeIndex) {
+    pub fn remove_rel_edge(&mut self, id: EdgeIndex) {
         let edge_weight = self.get_rel_edge_mut_by_index(id);
         let rule_name = &edge_weight.rule_name.clone();
         let (_, target) = self
@@ -1222,6 +1257,15 @@ impl AnnotatedDependencyGraph {
             let head_weight = self.get_rel_node_weight_mut_by_index(target);
             head_weight.head_tuples.swap_remove(rule_name);
         }
+        self.graph
+            .remove_edge(id)
+            .expect("Attempted to remove non-existant node!");
+    }
+
+    /// Remove a fact edge by its `EdgeIndex`.
+    ///
+    /// Fails if the edge did not exist. Does not remove the corresponding fact node!
+    pub fn remove_fact_edge(&mut self, id: EdgeIndex) {
         self.graph
             .remove_edge(id)
             .expect("Attempted to remove non-existant node!");
@@ -1281,6 +1325,24 @@ impl AnnotatedDependencyGraph {
         }
     }
 
+    #[allow(dead_code)]
+    /// Get a fact node weight based on its `NodeIndex`
+    pub fn get_fact_node_weight_by_index<'a>(&'a self, index: NodeIndex) -> &'a ADGFactNode {
+        match self.graph.node_weight(index) {
+            None => {
+                error!("Could not find node {:#?}", index);
+                exit(1);
+            }
+            Some(weight) => match weight {
+                ADGNode::ADGFactNode(fact) => fact,
+                ADGNode::ADGRelationalNode(_rel) => {
+                    error!("Expected relation node for {:#?} but found rel node", index);
+                    exit(1);
+                }
+            },
+        }
+    }
+
     /// Get a relation node weight mutably based on its `NodeIndex`
     pub fn get_rel_node_weight_mut_by_index<'a>(
         &'a mut self,
@@ -1300,6 +1362,30 @@ impl AnnotatedDependencyGraph {
                     exit(1);
                 }
                 ADGNode::ADGRelationalNode(rel) => rel,
+            },
+        }
+    }
+
+    #[allow(dead_code)]
+    /// Get a relation node weight mutably based on its `NodeIndex`
+    pub fn get_fact_node_weight_mut_by_index<'a>(
+        &'a mut self,
+        index: NodeIndex,
+    ) -> &'a mut ADGFactNode {
+        match self.graph.node_weight_mut(index) {
+            None => {
+                error!("Could not find node {:#?}", index);
+                exit(1);
+            }
+            Some(weight) => match weight {
+                ADGNode::ADGFactNode(fact) => fact,
+                ADGNode::ADGRelationalNode(_rel) => {
+                    error!(
+                        "Expected relation node for {:#?} but found fact node",
+                        index
+                    );
+                    exit(1);
+                }
             },
         }
     }
@@ -1352,9 +1438,12 @@ impl AnnotatedDependencyGraph {
         )
     }
 
-    pub fn add_fact_node(&mut self, name: String) -> NodeIndex {
-        self.graph
-            .add_node(ADGNode::ADGFactNode(ADGFactNode { name: name }))
+    // Add a fact node to the ADG. Use None for `terms` to represent import statements
+    pub fn add_fact_node(&mut self, name: String, terms: Option<Vec<Term>>) -> NodeIndex {
+        self.graph.add_node(ADGNode::ADGFactNode(ADGFactNode {
+            name: name,
+            terms: terms,
+        }))
     }
 
     pub fn add_fact_edge(&mut self, fact_node: NodeIndex, rel_node: NodeIndex) {
@@ -1362,16 +1451,65 @@ impl AnnotatedDependencyGraph {
             .add_edge(fact_node, rel_node, ADGEdge::ADGFactEdge(ADGFactEdge {}));
     }
 
-    #[allow(dead_code, unused_variables)]
+    /// Remove a relational node. This updates my stored predicate id list
+    /// and fails if we attempt to remove the output predicate!
+    ///
+    /// Will also remove all outgoing and incoming relational edges for this node,
+    /// as well as fact edges with their respective fact nodes. Fact edges that
+    /// go out from this relational node are considered an illegal ADG state.
+    /// Fact nodes that have multiple fact edges are considered an illegal ADG state.
     pub fn remove_rel_node(&mut self, tag: &Tag) {
-        // Important: Need to remove tag/nodeIndex pair from predicateIds !
-        // That way we
-        todo!();
+        if Some(tag.clone()) == self.output_predicate {
+            error!(
+                "Attempted to remove the relational node for the output predicate {}. We consider this undefined behaviour!",
+                tag.name()
+            );
+            exit(1);
+        }
+        // Remove the storage for this predicate
+        self.predicate_ids.swap_remove(tag);
+        // we collect beforehand to ensure in place manipulation does not make
+        // this not work properly
+        let to_rem_index = self.get_rel_node_index(tag);
+        let out_edges = self.graph.edges_directed(to_rem_index, Outgoing);
+        let inc_edges = self.graph.edges_directed(to_rem_index, Incoming);
+        let mut to_remove_fact_nodes: Vec<NodeIndex> = Vec::new();
+        let mut to_remove_fact_edges: Vec<EdgeIndex> = Vec::new();
+        let mut to_remove_rel_edges: Vec<EdgeIndex> = Vec::new();
+        // Need to collect seperately due to non-mutable borrowing of the ADG
+        for edge in out_edges.chain(inc_edges).map(| e | e.id()) {
+            match self.get_edge_by_index(edge) {
+                ADGEdge::ADGFactEdge(_) => {
+                    // must be incoming right?
+                    let (source, _) = self
+                        .get_edge_source_target_by_index(edge)
+                        .expect("Edge does not exist!")
+                        .clone();
+                    to_remove_fact_nodes.push(source);
+                    to_remove_fact_edges.push(edge);
+                }
+                ADGEdge::ADGRelationalEdge(_) => {
+                    to_remove_rel_edges.push(edge);
+                }
+            }
+        }
+        for edge in to_remove_rel_edges {
+            self.remove_rel_edge(edge);
+        }
+        for edge in to_remove_fact_edges {
+            self.remove_fact_edge(edge);
+        }
+        for node in to_remove_fact_nodes {
+            self.remove_fact_node(node);
+        }
     }
 
-    #[allow(dead_code, unused_variables)]
-    fn get_fact_node(&self, rule: components::rule::Rule) -> Option<ADGFactNode> {
-        todo!()
+    /// Remove a fact node from the ADG.
+    ///
+    /// Panics if it does not exist or is not a fact node
+    pub fn remove_fact_node(&mut self, node: NodeIndex) {
+        let _ = self.get_fact_node_weight_by_index(node);
+        self.graph.remove_node(node);
     }
 
     /// Get those relational nodes with positive or none ancestry
@@ -1570,7 +1708,6 @@ impl AnnotatedDependencyGraph {
             .collect()
     }
 
-    #[allow(dead_code, unused_variables)]
     /// Get the indexes of all relational edges outgoing/incoming (`dir`) from the node with this `NodeIndex`.
     pub fn get_rel_edges_from_node_index<'b>(
         &'b self,
@@ -1582,6 +1719,40 @@ impl AnnotatedDependencyGraph {
             .filter_map(|edge| match edge.weight() {
                 ADGEdge::ADGFactEdge(_) => None,
                 ADGEdge::ADGRelationalEdge(_) => Some(edge.id()),
+            })
+            .collect()
+    }
+
+    #[allow(dead_code)]
+    /// Get the indexes of all fact edges incoming to the node with this `NodeIndex`. Note, that import
+    /// statements are also represented using such fact nodes
+    pub fn get_fact_edges_inc_node_index<'b>(&'b self, id: NodeIndex) -> Vec<EdgeIndex> {
+        self.graph
+            .edges_directed(id, Incoming)
+            .filter_map(|edge| match edge.weight() {
+                ADGEdge::ADGFactEdge(_) => Some(edge.id()),
+                ADGEdge::ADGRelationalEdge(_) => None,
+            })
+            .collect()
+    }
+
+    /// Get the indexes of all fact edges incoming to the node with this `NodeIndex`. Only
+    /// fact nodes that do not represent imports are allowed here
+    pub fn get_non_import_fact_edges_inc_node_index<'b>(&'b self, id: NodeIndex) -> Vec<EdgeIndex> {
+        self.graph
+            .edges_directed(id, Incoming)
+            .filter_map(|edge| match edge.weight() {
+                ADGEdge::ADGFactEdge(_) => {
+                    let (source, _) = self
+                        .get_edge_source_target_by_index(edge.id())
+                        .expect("Invalid edge somehow");
+                    match self.get_fact_node_weight_by_index(source).terms {
+                        // We use terms=None to represent import statements
+                        None => None,
+                        Some(_) => Some(edge.id()),
+                    }
+                }
+                ADGEdge::ADGRelationalEdge(_) => None,
             })
             .collect()
     }

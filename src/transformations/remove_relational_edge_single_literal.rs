@@ -323,7 +323,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
 
         /* // Find the affected body literal relations R_1,..,R_m - R_j
         let mut other_body_relations: Vec<NodeIndex> = Vec::new();
-        for to_remove_edge in self.other_body_literals.iter() {
+        for to_remove_rel_edge in self.other_body_literals.iter() {
             other_body_relations.push(
                 self.adg
                     .get_edge_source_target_by_index(*to_remove_edge)
@@ -349,7 +349,7 @@ impl<'a, 'b> ProgramTransformation for RemoveRelationalEdgeSingleLiteral<'a> {
 
         // Update the ADG
         // 1) Remove the edge // Multi-heads would be multiple
-        self.adg.remove_edge(self.chosen_body_literal);
+        self.adg.remove_rel_edge(self.chosen_body_literal);
         info!(
             "  Removed relational edge {chosen_body_relation:?}: ({} -> {})",
             chosen_rel_w.tag.name(),
