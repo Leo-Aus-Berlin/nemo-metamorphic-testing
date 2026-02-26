@@ -109,7 +109,7 @@ impl<'a, 'b> Iterator for GenerateTestingTransformation<'a, 'b> {
     }
 }
 
-pub struct GenerateProgramgenerationTransformation<'a, 'b> {
+/* pub struct GenerateProgramgenerationTransformation<'a, 'b> {
     adg: Option<&'a mut AnnotatedDependencyGraph>,
     rng: Option<&'b mut rand_chacha::ChaCha8Rng>,
     //transformation_type: Option<TransformationTypes>,
@@ -141,7 +141,7 @@ impl<'a, 'b> Iterator for GenerateProgramgenerationTransformation<'a, 'b> {
         //let transformation_type = self.transformation_type.take();
         ProgramgeneratingTransformation::new_opt(adg, rng, Some(TransformationTypes::EXP), 0)
     }
-}
+} */
 
 pub enum SomeTestingTransformation<'a, 'b> {
     AddRelationalNode(AddRelationalNode<'a>),
@@ -393,6 +393,7 @@ impl<'a, 'b> ProgramTransformation for SomeTestingTransformation<'a, 'b> {
     }
 }
 
+/* 
 pub enum ProgramgeneratingTransformation<'a, 'b> {
     AddRelationalNode(AddRelationalNode<'a>),
     AddFactNodeAndEdge(AddFactNodeAndEdge<'a, 'b>),
@@ -525,3 +526,4 @@ impl<'a, 'b> ProgramTransformation for ProgramgeneratingTransformation<'a, 'b> {
         }
     }
 }
+ */

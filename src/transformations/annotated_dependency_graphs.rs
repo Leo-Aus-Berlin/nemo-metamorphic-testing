@@ -89,7 +89,7 @@ impl Ancestry {
             Ancestry::None => Ancestry::None,
         }
     }
-    #[allow(dead_code, unused_variables)]
+    #[allow(dead_code)]
     pub fn is_some(self) -> bool {
         match self {
             Ancestry::None => false,
@@ -181,7 +181,7 @@ impl Debug for ADGFactNode {
     }
 }
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Copy)]
 pub enum Sign {
     Positive,
     Negative,
@@ -230,7 +230,7 @@ impl Debug for ADGRelationalEdge {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct ADGFactEdge {}
 impl Debug for ADGFactEdge {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
@@ -1259,6 +1259,12 @@ impl AnnotatedDependencyGraph {
         String::from("r_") + oracle.to_string().as_str() + "_" + &self.last_rule_name.to_string()
     }
 
+     /// Build the next rule name, program generation only
+    pub fn next_rule_name_gen(&mut self) -> String {
+        self.last_rule_name += 1;
+        String::from("r_GEN_") + &self.last_rule_name.to_string()
+    }
+
     /// Get a new relation name. Does not register the relation name in the adg.
     pub fn get_new_relation_name(&mut self) -> Tag {
         let mut new_relation_tag: Tag = Tag::new(String::from("NoNewRelationNameFound"));
@@ -1901,6 +1907,11 @@ impl AnnotatedDependencyGraph {
             .collect()
     }
 
+    /// Fetch the seed relations
+    pub fn get_seed_rel(&self) -> Vec<Tag> {
+        self.get_predicates_iter().filter(|tag|self.is_edb_only_rel(tag)).collect()
+    }
+
     /// Get an index map that stores relational edges going/coming (`dir`) from the relational node for `tag` by their rule name.
     pub fn get_rel_edges_from_node_by_rule_name<'b>(
         &'b self,
@@ -1942,6 +1953,15 @@ impl AnnotatedDependencyGraph {
     /// Get the number of rules with the relation `tag` in their head.
     pub fn get_rule_count_for_node(&self, tag: &Tag) -> usize {
         self.get_rel_node(tag).head_tuples.keys().count()
+    }
+
+    /// Get the rules of all names appearing in the ADG.
+    pub fn get_rule_names(&self) -> IndexSet<String> {
+        let mut set = IndexSet::new();
+        for edge in self.get_rel_edges_iter() {
+            set.insert(edge.rule_name.clone());
+        }
+        set
     }
 
     /// Get the number of incoming relational edges for this specific relational node for a specific rule

@@ -35,7 +35,6 @@ digraph {
     33 [ label = "(\"str_1\", <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil>, <http://www.w3.org/2000/01/rdf-schema#subClassOf>, \"str_2\", <http://www.w3.org/2000/01/rdf-schema#subPropertyOf>)" ]
     34 [ label = "(R_6, None, None)" ]
     35 [ label = "(R_7, None, None)" ]
-    36 [ label = "(R_8, None, None)" ]
     31 -> 2 [ label = "(r_GEN_1, +, (?X_1, ?X_2, ?X_3, ?X_3, <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, ?X_5, ))" ]
     23 -> 29 [ label = "(r_GEN_2, +, (?X_2, ))" ]
     23 -> 29 [ label = "(r_GEN_2, +, (?X_1, ))" ]

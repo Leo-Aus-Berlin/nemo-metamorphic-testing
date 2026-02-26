@@ -1,6 +1,6 @@
 use std::{
     env::{current_dir, set_current_dir},
-    fs::{File, create_dir_all, remove_dir_all, remove_file},
+    fs::{create_dir_all, remove_dir_all, remove_file, File},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -15,20 +15,23 @@ use simplelog::*;
 use nemo::{
     error::report::ProgramReport,
     execution::execution_parameters::ExecutionParameters,
-    io::{ImportManager, resource_providers::ResourceProviders},
+    io::{resource_providers::ResourceProviders, ImportManager},
     rule_file::RuleFile,
     rule_model::{
-        pipeline::transformations::{ProgramTransformation, default::TransformationDefault},
-        programs::{ProgramRead, handle::ProgramHandle},
+        pipeline::transformations::{default::TransformationDefault, ProgramTransformation},
+        programs::{handle::ProgramHandle, ProgramRead},
     },
 };
 
 mod transformations;
 
 use crate::transformations::{
-    TestingTransformation,
+    add_fact_node_and_edge::AddFactNodeAndEdge, add_relational_node::AddRelationalNode,
+    ensure_output_is_derived::EnsureOutputIsDerived,
+    generate_out_rel_edge_chosen_relation::GenerateOutgoingRelationalEdgeChosenBodyLiteral,
+    generate_rule_for_chosen_relation::GenerateNewRuleChosenRelation,
     select_specific_output_predicate::TransformationSelectSpecificOutputPredicate,
-    transformation_manager::GenerateProgramgenerationTransformation,
+    TestingTransformation,
 };
 use transformations::{
     annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
@@ -37,7 +40,7 @@ use transformations::{
 use lazy_static::lazy_static;
 use std::sync::Mutex;
  */
-use rand::SeedableRng;
+use rand::{seq::IndexedRandom, Rng, SeedableRng};
 
 use std::sync::OnceLock;
 
@@ -101,7 +104,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -g --gen <NUM> "How many generating transformations to generate the seed program. Defaults to 20."
+                    -g --gen <NUM> "How many relations to generate for the input program."
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
@@ -109,7 +112,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -t --type <TT> "Transformation type: EQU, EXP or CON"
+                    -t --type <TT> "Transformation type: EQU|EXP|CON|ANY"
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(true)
@@ -142,9 +145,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .set(num.clone())
             .expect("Failed to set number of transformations");
     }
-    let num_gen_t = match matches.get_one::<u32>("gen") {
+    let gen_size = match matches.get_one::<u32>("gen") {
         None => 20,
-        Some(num_gen_t) => *num_gen_t,
+        Some(gen_size) => *gen_size,
     };
     match matches.get_one::<bool>("debug") {
         None => {
@@ -181,6 +184,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     //let seed3 : u64 = u64::from_le_bytes(seed2[1..32].try_into().unwrap());
     //assert_eq!(42, seed3);
 
+    let type_options = vec![
+        TransformationTypes::EXP,
+        TransformationTypes::CON,
+        TransformationTypes::EQU,
+    ];
     let transformation_types: TransformationTypes =
         if let Some(transformation_types) = matches.get_one::<String>("type") {
             match transformation_types.as_str() {
@@ -190,6 +198,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "exp" => TransformationTypes::EXP,
                 "con" => TransformationTypes::CON,
                 "equ" => TransformationTypes::EQU,
+                "any" => *type_options.choose(&mut rng).expect("Table empty?"),
+                "ANY" => *type_options.choose(&mut rng).expect("Table empty?"),
                 _ => {
                     println!("Failed to parse input transformation type");
                     exit(1);
@@ -345,7 +355,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Begin transformation info
     info!("----------------------------------------------");
     info!(
-        "                Beginning transformation {}
+        "Beginning transformation {}
                 Oracle:     {}          Number of T: {}
                 Debug Mode: {}          u64 Seed:    {}
                 Number of generating transformations: {}
@@ -365,7 +375,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             None => String::from("None provided"),
             Some(s) => s.to_string(),
         },
-        num_gen_t.to_string(),
+        gen_size.to_string(),
         rng.get_seed(),
         /* TODO: Seed file */
     );
@@ -375,15 +385,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/owl-el/from-owl-rdf/owl-rdf-complete-reasoning.rls",
     ];
-    let chosen = 0;
+    let chosen = 3;
 
     info!("-------------- Reading Seed File -------------");
     // Open file
     let path = PathBuf::from(vec_path[chosen]);
     // "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls"
-    let file: RuleFile = match RuleFile::load(path) {
-        Err(_) => panic!("Could not find example file"),
+    let file: RuleFile = match RuleFile::load(path.clone()) {
+        Err(_) => {
+            error!("Could not find seed file {}", path.to_str().unwrap_or("?"));
+            exit(1);
+        }
         Ok(file) => file,
     };
     // The program handle
@@ -406,12 +420,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Name all of the rules!
     program = transform_and_err(&program, TransformationNameRules::new());
-    // We have a progress bar
-    let bar_gen = ProgressBar::new(u64::from(
-        *(NUM_TRANSFORMATIONS
-            .get()
-            .expect("Number of transformations not set")),
-    ));
+
     info!("--------- Finished Reading Seed file ---------");
     info!("----------------------------------------------");
     info!("");
@@ -452,10 +461,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Generating Program...");
     info!("");
 
-    // Compute Program
+    // We have a progress bar
+    let gen_size_usize: usize = gen_size.try_into().unwrap();
+    let bar_gen = ProgressBar::new(
+        (adg.get_seed_rel().len() + 4 * gen_size_usize - 2)
+            .try_into()
+            .unwrap(),
+    );
+
+    // Generate Program
     let mut count_gen_transformations: IndexMap<String, usize> = IndexMap::new();
-    // Perform num_gen_t transformations
-    for repetition in 1..=num_gen_t {
+
+    // Add gen_size Relational Nodes -1 (as R_OUT)
+    for repetition in 1..gen_size {
         adg.verify_relational_edges();
         if DEBUG_MODE
             .get()
@@ -465,21 +483,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             debug!("ADG edge verification succeeded");
             debug!("RNG position: {}", rng.get_word_pos());
         }
-        info!("{repetition} / {}", num_gen_t);
-        let transformation;
-
-        loop {
-            let mut iter = GenerateProgramgenerationTransformation::new(&mut adg, &mut rng);
-            match iter.next() {
-                None => {
-                    continue;
-                }
-                Some(loop_variable) => {
-                    transformation = loop_variable;
-                    break;
-                }
-            };
-        }
+        info!("{repetition} / {}", gen_size - 1);
+        let transformation =
+            AddRelationalNode::new(&mut adg, &mut rng, TransformationTypes::EXP, 0)
+                .expect("Failed to generate Relational Node");
 
         // count this transformation
         count_gen_transformations
@@ -491,14 +498,216 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         program = transform_and_err(&program, transformation);
         bar_gen.inc(1);
     }
+
+    info!("");
+    info!("Adding a new rule for each relation other than the seed relations");
+    info!("");
+
+    let non_seed_predicates: Vec<_> = adg
+        .get_predicates_iter()
+        .filter(|tag| adg.can_idb_rel(tag))
+        .collect();
+    // Add incoming relational edge with a new rule for each relation other than seed program rel.
+    for ii in 0..non_seed_predicates.len() {
+        adg.verify_relational_edges();
+        if DEBUG_MODE
+            .get()
+            .expect("Debug mode not initialised")
+            .clone()
+        {
+            debug!("ADG edge verification succeeded");
+            debug!("RNG position: {}", rng.get_word_pos());
+        }
+        info!("{} / {}", ii + 1, non_seed_predicates.len());
+        let transformation =
+            GenerateNewRuleChosenRelation::new(&mut adg, &mut rng, &non_seed_predicates[ii])
+                .expect("Failed to generate new rule");
+
+        // count this transformation
+        count_gen_transformations
+            .entry(transformation.name())
+            .and_modify(|v| *v += 1)
+            .or_insert(1);
+
+        // calculate ith transformation
+        program = transform_and_err(&program, transformation);
+        bar_gen.inc(1);
+    }
+
+    info!("");
+    info!("Adding a outgoing relational edge for each relation other than R_OUT");
+    info!("");
+
+    let predicates: Vec<_> = adg
+        .get_predicates_iter()
+        .filter(|tag| !adg.is_output_pred(tag))
+        .collect();
+    // Add an outgoing relational edge for each relation other than R_OUT
+    for ii in 0..predicates.len() {
+        adg.verify_relational_edges();
+        if DEBUG_MODE
+            .get()
+            .expect("Debug mode not initialised")
+            .clone()
+        {
+            debug!("ADG edge verification succeeded");
+            debug!("RNG position: {}", rng.get_word_pos());
+        }
+        info!("{} / {}", ii + 1, predicates.len());
+        let transformation = GenerateOutgoingRelationalEdgeChosenBodyLiteral::new(
+            &mut adg,
+            &mut rng,
+            &predicates[ii],
+        )
+        .expect("Failed to generate new rule");
+
+        // count this transformation
+        count_gen_transformations
+            .entry(transformation.name())
+            .and_modify(|v| *v += 1)
+            .or_insert(1);
+
+        // calculate ith transformation
+        program = transform_and_err(&program, transformation);
+        bar_gen.inc(1);
+    }
+
+    info!("");
+    info!("Adding gen. size facts");
+    info!("");
+
+    // Add some fact edges
+    for repetition in 1..=gen_size {
+        adg.verify_relational_edges();
+        if DEBUG_MODE
+            .get()
+            .expect("Debug mode not initialised")
+            .clone()
+        {
+            debug!("ADG edge verification succeeded");
+            debug!("RNG position: {}", rng.get_word_pos());
+        }
+        info!("{repetition} / {}", gen_size);
+        let oracle_of_fact = match rng.random_bool(0.5) {
+            true => TransformationTypes::EXP,
+            false => TransformationTypes::CON,
+        };
+        let transformation = match AddFactNodeAndEdge::new(&mut adg, &mut rng, oracle_of_fact, 0) {
+            None => continue,
+            Some(t) => t,
+        };
+
+        // count this transformation
+        count_gen_transformations
+            .entry(transformation.name())
+            .and_modify(|v| *v += 1)
+            .or_insert(1);
+
+        // calculate ith transformation
+        program = transform_and_err(&program, transformation);
+        bar_gen.inc(1);
+    }
+
     bar_gen.finish_and_clear();
+
+    // Because we add a rule for the output relation it is always derived somehow
+    /* info!("");
+    info!("Ensuring that the output relation is derived");
+    program = transform_and_err(&program, EnsureOutputIsDerived::new(&mut adg, &mut rng)); */
 
     info!("");
     info!("----------------------------------------------");
     info!("----------- Program Generation Done ----------");
     info!("----------------------------------------------");
     info!("");
+    info!("----------- Generated ADG Summary: -----------");
+    {
+        info!(
+            "ADG Fact Nodes:                  {}",
+            adg.get_fact_nodes_iter().count()
+        );
+        info!(
+            "ADG Relational Nodes:            {}",
+            adg.get_rel_nodes_iter().count()
+        );
+        info!(
+            "ADG Fact Edges:                  {}",
+            adg.get_fact_edges_iter().count()
+        );
+        info!(
+            "ADG Relational Edges:            {}",
+            adg.get_rel_edges_iter().count()
+        );
+        info!(
+            "Number of inv. Strata:           {}",
+            adg.get_highest_stratum()
+        );
+        info!("");
+        info!(
+            "Nodes with None Ancestry:        {}",
+            adg.get_none_ancestry_relational_nodes().len()
+        );
+        info!(
+            "Nodes with Positive Ancestry:    {}",
+            adg.get_positive_ancestry_relational_nodes().len()
+        );
+        info!(
+            "Nodes with Negative Ancestry:    {}",
+            adg.get_negative_ancestry_relational_nodes().len()
+        );
+        info!(
+            "Nodes with Unknown Ancestry:     {}",
+            adg.get_unknown_ancestry_relational_nodes().len()
+        );
+        info!("");
+        info!(
+            "Next rule name would be:         {}",
+            adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
+        );
+        info!(
+            "Next predicate name would be:    {}",
+            adg.get_new_relation_name()
+        );
+        info!(
+            "Next constant name would be:     {}",
+            adg.get_and_register_new_iri_constant()
+        );
+        info!(
+            "Next string would be:            {}",
+            adg.get_and_register_new_string_constant()
+        );
+        info!("");
+        info!(
+            "Output predicate:                {}",
+            adg.get_output_tag().expect("No output tag set!")
+        );
+        info!(
+            "Generated rule count:            {}",
+            adg.get_rule_names().len()
+        );
+        info!(
+            "Rule count:                      {}",
+            program.rules().count()
+        );
+        info!(
+            "Average rel. arity:              {}",
+            program.arities().iter().fold(0, |total, ar| total + ar.1) as f64
+                / program.arities().iter().count() as f64
+        );
+        info!("Arity calc. may be inaccurate if arity > f64");
+        info!("----------------------------------------------");
+        info!("");
+        info!("------ Performed Gen. Transformations: -------");
+        info!(" #      Type");
+        let mut trans = count_gen_transformations.iter().collect::<Vec<_>>();
+        trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
+        trans.iter().for_each(|(key, v)| {
+            info!(" {}      {}", v, key);
+        });
+    }
+    info!("----------------------------------------------");
 
+    info!("");
     info!("Storing input ADG and input program");
     info!("");
     // Write ADG to file
@@ -695,7 +904,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    info!("---------------- ADG Summary: ----------------");
+    info!("---------- Transformed ADG Summary: ----------");
     {
         info!(
             "ADG Fact Nodes:                  {}",
@@ -1012,7 +1221,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let mut data_folder_name = to_dir.clone();
             data_folder_name.pop();
             let _ = remove_dir_all(data_folder_name); // we don't care if it succeeds
-            // cause itll succeed at least once
+                                                      // cause itll succeed at least once
         }
         let _ = remove_file(input_folder_name.clone() + "/input_program.rls");
         let _ = remove_file(input_folder_name.clone() + "/input_adg.dot");

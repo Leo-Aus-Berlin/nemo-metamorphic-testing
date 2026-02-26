@@ -1,0 +1,13 @@
+digraph {
+    4 [ label = "(auxClass, 1, n)" ]
+    11 [ label = "(http://rulewerk.semantic-web.org/normalForm/conj, 0, +)" ]
+    19 [ label = "(last, 0, +)" ]
+    23 [ label = "(nonlast, 0, n)" ]
+    30 [ label = "(R_2, 0, n)" ]
+    19 -> 30 [ label = "(r_GEN_3, +, (?X_3, ))" ]
+    19 -> 30 [ label = "(r_GEN_3, +, (?X_1, ))" ]
+    19 -> 30 [ label = "(r_GEN_3, +, (?X_3, ))" ]
+    4 -> 30 [ label = "(r_GEN_3, -, (?X_3, ))" ]
+    11 -> 30 [ label = "(r_GEN_3, +, (?X_1, ?Z_3, ?X_1, ))" ]
+    23 -> 30 [ label = "(r_GEN_3, +, (?X_1, ))" ]
+}
