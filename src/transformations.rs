@@ -23,7 +23,7 @@ pub mod remove_fact_node_and_edge;
 pub mod remove_relational_node;
 pub mod add_contradictory_rule;
 pub mod select_specific_output_predicate;
-pub mod ensure_output_is_derived;
+//pub mod ensure_output_is_derived;
 pub mod generate_out_rel_edge_chosen_relation;
 pub mod generate_rule_for_chosen_relation;
 mod util;

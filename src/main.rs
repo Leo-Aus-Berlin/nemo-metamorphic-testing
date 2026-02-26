@@ -27,7 +27,7 @@ mod transformations;
 
 use crate::transformations::{
     add_fact_node_and_edge::AddFactNodeAndEdge, add_relational_node::AddRelationalNode,
-    ensure_output_is_derived::EnsureOutputIsDerived,
+    //ensure_output_is_derived::EnsureOutputIsDerived,
     generate_out_rel_edge_chosen_relation::GenerateOutgoingRelationalEdgeChosenBodyLiteral,
     generate_rule_for_chosen_relation::GenerateNewRuleChosenRelation,
     select_specific_output_predicate::TransformationSelectSpecificOutputPredicate,
