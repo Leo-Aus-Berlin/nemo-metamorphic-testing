@@ -1907,6 +1907,7 @@ impl AnnotatedDependencyGraph {
             .collect()
     }
 
+    #[allow(dead_code)]
     /// Fetch the seed relations
     pub fn get_seed_rel(&self) -> Vec<Tag> {
         self.get_predicates_iter().filter(|tag|self.is_edb_only_rel(tag)).collect()

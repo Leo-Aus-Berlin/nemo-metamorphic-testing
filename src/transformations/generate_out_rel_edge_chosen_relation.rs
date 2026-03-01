@@ -16,7 +16,7 @@ use nemo::rule_model::programs::handle::ProgramHandle;
 use nemo::rule_model::programs::{ProgramRead, ProgramWrite};
 
 use nemo::rule_model::pipeline::transformations::ProgramTransformation;
-use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
+use rand::seq::{IteratorRandom, SliceRandom};
 use rand::Rng;
 
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
@@ -51,26 +51,26 @@ impl<'a, 'b> GenerateOutgoingRelationalEdgeChosenBodyLiteral<'a, 'b> {
         // Positive with high likelihood
         let is_pos = rng.random_bool(0.75);
         // Chose a head relation by randomly attempting until it works
-        let predicates_with_rules: Vec<_> = adg
+        let mut predicates_with_rules: Vec<_> = adg
             .get_predicates_iter()
             .filter(|tag| adg.get_rule_count_for_node(tag) > 0)
             .collect();
+        predicates_with_rules.shuffle(rng);
 
-        let chosen_head_rel: &Tag = loop {
-            let chosen_head_rel = predicates_with_rules
-                .choose(rng)
-                .expect("ADG has no predicates somehow");
-            let head_node_index = adg.get_rel_node_index(chosen_head_rel);
+        let chosen_head_rel: Tag = loop {
+            let candidate = predicates_with_rules.pop()?;
+            debug!("Considering candidate {}",candidate.name());
+            let head_node_index = adg.get_rel_node_index(&candidate);
             let (body_pos_opt, body_neg_opt) = adg.get_body_literal_candidates(head_node_index);
             match is_pos {
                 true => {
                     if body_pos_opt.contains(chosen_body_rel) {
-                        break chosen_head_rel;
+                        break candidate;
                     }
                 }
                 false => {
                     if body_neg_opt.contains(chosen_body_rel) {
-                        break chosen_head_rel;
+                        break candidate;
                     }
                 }
             }

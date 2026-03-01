@@ -1,6 +1,6 @@
 use std::{
     env::{current_dir, set_current_dir},
-    fs::{create_dir_all, remove_dir_all, remove_file, File},
+    fs::{File, OpenOptions, create_dir_all, remove_dir_all, remove_file},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -8,30 +8,31 @@ use std::{
 
 use color_print::cprintln;
 use indexmap::{IndexMap, IndexSet};
-use indicatif::ProgressBar;
+//use indicatif::{MultiProgress, ProgressBar};
 use log::{debug, error, info, warn};
 use simplelog::*;
 
 use nemo::{
     error::report::ProgramReport,
     execution::execution_parameters::ExecutionParameters,
-    io::{resource_providers::ResourceProviders, ImportManager},
+    io::{ImportManager, resource_providers::ResourceProviders},
     rule_file::RuleFile,
     rule_model::{
-        pipeline::transformations::{default::TransformationDefault, ProgramTransformation},
-        programs::{handle::ProgramHandle, ProgramRead},
+        pipeline::transformations::{ProgramTransformation, default::TransformationDefault},
+        programs::{ProgramRead, handle::ProgramHandle},
     },
 };
 
 mod transformations;
 
 use crate::transformations::{
-    add_fact_node_and_edge::AddFactNodeAndEdge, add_relational_node::AddRelationalNode,
+    TestingTransformation,
+    add_fact_node_and_edge::AddFactNodeAndEdge,
+    add_relational_node::AddRelationalNode,
     //ensure_output_is_derived::EnsureOutputIsDerived,
     generate_out_rel_edge_chosen_relation::GenerateOutgoingRelationalEdgeChosenBodyLiteral,
     generate_rule_for_chosen_relation::GenerateNewRuleChosenRelation,
     select_specific_output_predicate::TransformationSelectSpecificOutputPredicate,
-    TestingTransformation,
 };
 use transformations::{
     annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
@@ -40,7 +41,7 @@ use transformations::{
 use lazy_static::lazy_static;
 use std::sync::Mutex;
  */
-use rand::{seq::IndexedRandom, Rng, SeedableRng};
+use rand::{Rng, SeedableRng, seq::IndexedRandom};
 
 use std::sync::OnceLock;
 
@@ -71,6 +72,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
                 .value_parser(value_parser!(PathBuf)),
+            )
+            .arg(
+                arg!(
+                    -r --random_file "Use a random seed file from our selection. Is superseeded if --file is used. If neither this nor a seed file are set, use an empty seed (not recommended)"
+                )
+                // We don't have syntax yet for optional options, so manually calling `required`
+                .required(false)
+                .value_parser(value_parser!(bool)),
             )
             .arg(
                 arg!(
@@ -112,7 +121,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -t --type <TT> "Transformation type: EQU|EXP|CON|ANY"
+                    -t --type <TT> "Transformation sequence oracle: EQU|EXP|CON|[ANY|RNG|RND]"
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(true)
@@ -137,9 +146,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .set(String::from("transformation_sequence_1"))
             .expect("Failed to set transformation sequence name!");
     }
-    if let Some(seed_path) = matches.get_one::<PathBuf>("file") {
-        println!("Value for seed_path: {}", seed_path.display());
-    }
+
     if let Some(num) = matches.get_one::<u32>("num") {
         NUM_TRANSFORMATIONS
             .set(num.clone())
@@ -184,7 +191,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     //let seed3 : u64 = u64::from_le_bytes(seed2[1..32].try_into().unwrap());
     //assert_eq!(42, seed3);
 
-    let type_options = vec![
+    let type_options: Vec<TransformationTypes> = vec![
         TransformationTypes::EXP,
         TransformationTypes::CON,
         TransformationTypes::EQU,
@@ -200,6 +207,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "equ" => TransformationTypes::EQU,
                 "any" => *type_options.choose(&mut rng).expect("Table empty?"),
                 "ANY" => *type_options.choose(&mut rng).expect("Table empty?"),
+                "RNG" => *type_options.choose(&mut rng).expect("Table empty?"),
+                "rng" => *type_options.choose(&mut rng).expect("Table empty?"),
+                "RND" => *type_options.choose(&mut rng).expect("Table empty?"),
+                "rnd" => *type_options.choose(&mut rng).expect("Table empty?"),
                 _ => {
                     println!("Failed to parse input transformation type");
                     exit(1);
@@ -309,7 +320,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 LevelFilter::Debug,
                 Config::default(),
                 File::create(
-                    log_name
+                    log_name.clone()
                         + "/"
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
@@ -333,7 +344,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 LevelFilter::Info,
                 Config::default(),
                 File::create(
-                    log_name
+                    log_name.clone()
                         + "/"
                         + NAME_OF_TRANSFORMATION_SEQUENCE
                             .get()
@@ -346,12 +357,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap();
     }
 
-    // We have a progress bar
-    let bar = ProgressBar::new(u64::from(
+    // We do not have a progress bar
+    /* let bar = ProgressBar::new(u64::from(
         *(NUM_TRANSFORMATIONS
             .get()
             .expect("Number of transformations not set")),
-    ));
+    )); */
     // Begin transformation info
     info!("----------------------------------------------");
     info!(
@@ -381,24 +392,51 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
     info!("----------------------------------------------");
 
+    info!("-------------- Reading Seed File: ------------");
+
     let vec_path: Vec<&str> = vec![
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
-        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/constant-folding/constant-folding.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/datalogMtlSensor/datalogMtlSensor.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/datalogMtlWeather/datalogMtlWeather.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/lime-trees/old-lime-trees.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/owl-el/from-owl-rdf/owl-rdf-complete-reasoning.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/owl-el/from-owl-rdf/owl-rdf-preprocessing.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/owl-el/from-owl-preprocessed-csv/el-calc.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wikidata-yago-like-inverse-property-cleanup/yagoExample.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
     ];
-    let chosen = 3;
 
-    info!("-------------- Reading Seed File -------------");
-    // Open file
-    let path = PathBuf::from(vec_path[chosen]);
-    // "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls"
-    let file: RuleFile = match RuleFile::load(path.clone()) {
-        Err(_) => {
-            error!("Could not find seed file {}", path.to_str().unwrap_or("?"));
-            exit(1);
+    // Select a seed file
+    let path: Option<PathBuf> = match matches.get_one::<PathBuf>("file") {
+        // If a file is provided, use that one
+        Some(seed_path) => Some(seed_path.clone()),
+        // Otherwise, use
+        None => match matches.get_one::<bool>("random_file") {
+            // a random seed file if that is asked for
+            Some(true) => Some(PathBuf::from(vec_path[rng.random_range(0..vec_path.len())])),
+            // an empty seed file otherwise
+            Some(false) => None,
+            None => None,
+        },
+    };
+
+    let file: RuleFile = match &path {
+        None => {
+            info!("Empty Seed Program");
+            RuleFile::default()
         }
-        Ok(file) => file,
+        Some(path) => match RuleFile::load(path.clone()) {
+            Err(_) => {
+                error!("Could not find seed file {}", path.to_str().unwrap_or("?"));
+                exit(1);
+            }
+            Ok(file) => {
+                info!("{:?}", path.clone());
+                file
+            }
+        },
     };
     // The program handle
     let handle = ProgramHandle::from_file(&file);
@@ -461,16 +499,29 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Generating Program...");
     info!("");
 
-    // We have a progress bar
-    let gen_size_usize: usize = gen_size.try_into().unwrap();
-    let bar_gen = ProgressBar::new(
-        (adg.get_seed_rel().len() + 4 * gen_size_usize - 2)
+    // We do not have a progress bar
+    /* let gen_size_usize: usize = gen_size.try_into().unwrap();
+    let gen_mult: usize = if path.is_none() { 7 } else { 4 };
+    let mb = MultiProgress::new();
+    let bar = mb.add(bar);
+    let bar_gen = mb.add(ProgressBar::new(
+        (adg.get_seed_rel().len() + gen_mult * gen_size_usize - 2)
             .try_into()
             .unwrap(),
-    );
+    )); */
 
     // Generate Program
     let mut count_gen_transformations: IndexMap<String, usize> = IndexMap::new();
+    {
+        // Add default value 0 for all transformation rules
+        count_gen_transformations.insert(
+            String::from("Generate New Rule with Probably Single Lit"),
+            0,
+        );
+        count_gen_transformations.insert(String::from("Generating an Outgoing Relational Edge"), 0);
+        count_gen_transformations.insert(String::from("I     Add Relational Node"), 0);
+        count_gen_transformations.insert(String::from("II    Add Fact Node and Edge"), 0);
+    }
 
     // Add gen_size Relational Nodes -1 (as R_OUT)
     for repetition in 1..gen_size {
@@ -496,7 +547,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // calculate ith transformation
         program = transform_and_err(&program, transformation);
-        bar_gen.inc(1);
+        //bar_gen.inc(1);
     }
 
     info!("");
@@ -531,7 +582,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // calculate ith transformation
         program = transform_and_err(&program, transformation);
-        bar_gen.inc(1);
+        // bar_gen.inc(1);
     }
 
     info!("");
@@ -554,12 +605,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             debug!("RNG position: {}", rng.get_word_pos());
         }
         info!("{} / {}", ii + 1, predicates.len());
-        let transformation = GenerateOutgoingRelationalEdgeChosenBodyLiteral::new(
+        let transformation = match GenerateOutgoingRelationalEdgeChosenBodyLiteral::new(
             &mut adg,
             &mut rng,
             &predicates[ii],
-        )
-        .expect("Failed to generate new rule");
+        ) {
+            Some(trans) => trans,
+            None => {
+                warn!(
+                    "Could not generate outgoing relational edge for {}",
+                    predicates[ii].name()
+                );
+                continue;
+            }
+        };
 
         // count this transformation
         count_gen_transformations
@@ -569,15 +628,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // calculate ith transformation
         program = transform_and_err(&program, transformation);
-        bar_gen.inc(1);
+        //bar_gen.inc(1);
     }
 
     info!("");
     info!("Adding gen. size facts");
     info!("");
 
-    // Add some fact edges
-    for repetition in 1..=gen_size {
+    // Add some fact edges, triple if empty seed
+    let num_facts = match path.is_none() {
+        // path is none -> no seed file -> more facts
+        true => gen_size * 3,
+        false => gen_size,
+    };
+    for repetition in 1..=num_facts {
         adg.verify_relational_edges();
         if DEBUG_MODE
             .get()
@@ -605,16 +669,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // calculate ith transformation
         program = transform_and_err(&program, transformation);
-        bar_gen.inc(1);
+        //bar_gen.inc(1);
     }
 
-    bar_gen.finish_and_clear();
+    //bar_gen.finish_and_clear();
 
     // Because we add a rule for the output relation it is always derived somehow
     /* info!("");
     info!("Ensuring that the output relation is derived");
     program = transform_and_err(&program, EnsureOutputIsDerived::new(&mut adg, &mut rng)); */
 
+    // Later write our statistics to a file
+    let mut statistics_string: String = String::from("");
     info!("");
     info!("----------------------------------------------");
     info!("----------- Program Generation Done ----------");
@@ -666,20 +732,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         );
         info!(
             "Next predicate name would be:    {}",
-            adg.get_new_relation_name()
+            adg.get_new_relation_name().name()
         );
         info!(
             "Next constant name would be:     {}",
-            adg.get_and_register_new_iri_constant()
+            adg.get_and_register_new_iri_constant().value()
         );
         info!(
             "Next string would be:            {}",
-            adg.get_and_register_new_string_constant()
+            adg.get_and_register_new_string_constant().value()
         );
         info!("");
         info!(
             "Output predicate:                {}",
-            adg.get_output_tag().expect("No output tag set!")
+            adg.get_output_tag().expect("No output tag set!").name()
         );
         info!(
             "Generated rule count:            {}",
@@ -704,6 +770,71 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         trans.iter().for_each(|(key, v)| {
             info!(" {}      {}", v, key);
         });
+        {
+            // Store this logging information in the statsitics string!
+            statistics_string.push_str(
+                (NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("").to_owned() + ", ").as_str(),
+            );
+            statistics_string.push_str(format!("{}, ", transformation_types).as_str());
+            statistics_string.push_str(format!("{:?}, ", seed).as_str());
+            statistics_string.push_str(format!("{}, ", gen_size).as_str());
+            statistics_string.push_str(
+                (String::from(NUM_TRANSFORMATIONS.get().expect("").to_string()) + ", ").as_str(),
+            );
+            statistics_string
+                .push_str((String::from(DEBUG_MODE.get().expect("").to_string()) + ", ").as_str());
+            statistics_string.push_str(format!("{}, ", adg.get_fact_nodes_iter().count()).as_str());
+            statistics_string.push_str(format!("{}, ", adg.get_rel_nodes_iter().count()).as_str());
+            statistics_string.push_str(format!("{}, ", adg.get_fact_edges_iter().count()).as_str());
+            statistics_string.push_str(format!("{}, ", adg.get_rel_edges_iter().count()).as_str());
+            statistics_string.push_str(format!("{:?}, ", adg.get_highest_stratum()).as_str());
+            statistics_string
+                .push_str(format!("{}, ", adg.get_none_ancestry_relational_nodes().len()).as_str());
+            statistics_string.push_str(
+                format!("{}, ", adg.get_positive_ancestry_relational_nodes().len()).as_str(),
+            );
+            statistics_string.push_str(
+                format!("{}, ", adg.get_negative_ancestry_relational_nodes().len()).as_str(),
+            );
+            statistics_string.push_str(
+                format!("{}, ", adg.get_unknown_ancestry_relational_nodes().len()).as_str(),
+            );
+            statistics_string.push_str(
+                format!(
+                    "{}, ",
+                    adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
+                )
+                .as_str(),
+            );
+            statistics_string
+                .push_str(format!("{}, ", adg.get_new_relation_name().name()).as_str());
+            statistics_string.push_str(
+                format!("{}, ", adg.get_and_register_new_iri_constant().value()).as_str(),
+            );
+            statistics_string.push_str(
+                format!("{}, ", adg.get_and_register_new_string_constant().value()).as_str(),
+            );
+            statistics_string.push_str(
+                format!(
+                    "{}, ",
+                    adg.get_output_tag().expect("No output tag set!").name()
+                )
+                .as_str(),
+            );
+            statistics_string.push_str(format!("{}, ", adg.get_rule_names().len()).as_str());
+            statistics_string.push_str(format!("{}, ", program.rules().count()).as_str());
+            statistics_string.push_str(
+                format!(
+                    "{}, ",
+                    program.arities().iter().fold(0, |total, ar| total + ar.1) as f64
+                        / program.arities().iter().count() as f64
+                )
+                .as_str(),
+            );
+            trans.iter().for_each(|(_key, v)| {
+                statistics_string.push_str(format!("{}, ", v).as_str());
+            });
+        }
     }
     info!("----------------------------------------------");
 
@@ -764,6 +895,29 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Count performed tranformations and
     // failed transformation initializations
     let mut count_transformations: IndexMap<String, usize> = IndexMap::new();
+    {
+        // Add default value 0 for all transformation types
+        count_transformations.insert(String::from("I     Add Relational Node"), 0);
+        count_transformations.insert(String::from("II    Add Fact Node and Edge"), 0);
+        count_transformations.insert(String::from("III   Add Relational edges - New Rule"), 0);
+        count_transformations.insert(String::from("IV    Add Relational Edge - New Literal"), 0);
+        count_transformations.insert(String::from("IX    Remove Fact Node and Edge"), 0);
+        count_transformations.insert(
+            String::from("V     Remove Relational Edges - Whole Rule"),
+            0,
+        );
+        count_transformations.insert(
+            String::from("VI    Remove Relational Edge - Single Literal"),
+            0,
+        );
+        count_transformations.insert(String::from("VII   Modify Rule - Add Equality"), 0);
+        count_transformations.insert(String::from("VIII  Modify Rule - Remove Equality"), 0);
+        count_transformations.insert(String::from("XI   Add Contradictory Rule"), 0);
+        count_transformations.insert(
+            String::from("Xa     Remove Relational Node Rule Variant - None anc only"),
+            0,
+        );
+    }
     let mut count_failed_transformations: usize = 0;
 
     // Perform NUM_TRANSFORMATIONS transformations
@@ -841,9 +995,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
         }; */
 
-        bar.inc(1);
+        //bar.inc(1);
     }
-    bar.finish_and_clear();
+    //bar.finish_and_clear();
 
     info!("----------------------------------------------");
     info!("------------ Transformations Done ------------");
@@ -876,31 +1030,38 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             + "
                 ")
     );
-    for data_req in res_statements.iter() {
-        let mut from_dir = PathBuf::from(vec_path[chosen]);
-        from_dir.pop();
-        from_dir = from_dir.join(&data_req);
-        let to_dir = PathBuf::from(&transformation_folder).join(&data_req);
-        //println!("from: {} to: {}", from_dir.display(), to_dir.display());
-        // Create data folder
-        let mut data_folder_name = to_dir.clone();
-        data_folder_name.pop();
-        //println!("data folder: {:?}", data_folder_name);
-        match create_dir_all(data_folder_name) {
-            Ok(_) => (),
-            Err(_) => {
-                error!("Failed to create data folder");
-                exit(1);
+    // Move data if there is any
+    match &path {
+        // no data requirements if empty program
+        None => (),
+        Some(path) => {
+            for data_req in res_statements.iter() {
+                let mut from_dir = PathBuf::from(path.clone());
+                from_dir.pop();
+                from_dir = from_dir.join(&data_req);
+                let to_dir = PathBuf::from(&transformation_folder).join(&data_req);
+                //println!("from: {} to: {}", from_dir.display(), to_dir.display());
+                // Create data folder
+                let mut data_folder_name = to_dir.clone();
+                data_folder_name.pop();
+                //println!("data folder: {:?}", data_folder_name);
+                match create_dir_all(data_folder_name) {
+                    Ok(_) => (),
+                    Err(_) => {
+                        error!("Failed to create data folder");
+                        exit(1);
+                    }
+                }
+                // move (=copy) required data
+                match std::fs::copy(from_dir, to_dir) {
+                    Err(e) => {
+                        error!("Failed to move required edb data");
+                        error!("{e}");
+                        exit(1);
+                    }
+                    Ok(_) => (),
+                }
             }
-        }
-        // move (=copy) required data
-        match std::fs::copy(from_dir, to_dir) {
-            Err(e) => {
-                error!("Failed to move required edb data");
-                error!("{e}");
-                exit(1);
-            }
-            Ok(_) => (),
         }
     }
 
@@ -950,20 +1111,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         );
         info!(
             "Next predicate name would be:    {}",
-            adg.get_new_relation_name()
+            adg.get_new_relation_name().name()
         );
         info!(
             "Next constant name would be:     {}",
-            adg.get_and_register_new_iri_constant()
+            adg.get_and_register_new_iri_constant().value()
         );
         info!(
             "Next string would be:            {}",
-            adg.get_and_register_new_string_constant()
+            adg.get_and_register_new_string_constant().value()
         );
         info!("");
         info!(
             "Output predicate:                {}",
-            adg.get_output_tag().expect("No output tag set!")
+            adg.get_output_tag().expect("No output tag set!").name()
         );
         info!(
             "Rule count:                      {}",
@@ -980,7 +1141,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("--------- Performed Transformations: ---------");
         info!(" #      Type");
         info!(
-            " {}      None - Transformation not applicable",
+            " {}      Failed Transformation Attempts",
             count_failed_transformations
         );
         let mut trans = count_transformations.iter().collect::<Vec<_>>();
@@ -1163,6 +1324,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .expect("Transformation type not set")
     );
     info!("----------------------------------------------");
+
+    let mut found_bug = false;
     match TRANSFORMATION_TYPE
         .get()
         .expect("Transformation type not set")
@@ -1173,8 +1336,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 cprintln!("<g>All good, output is equivalent</>");
             }
             false => {
-                warn!("Outputs not equivalent");
-                cprintln!("<r>Outputs not equivalent</>");
+                warn!("Potentially found Nemo Bug - Output is not equivalent");
+                cprintln!("<r>Potentially found Nemo Bug - Output is not equivalent</>");
+                found_bug = true;
             }
         },
         TransformationTypes::CON => match out_2.is_subset(&out) {
@@ -1183,8 +1347,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 cprintln!("<g>All good, output has contracted</>");
             }
             false => {
-                warn!("Output has not contracted");
-                cprintln!("<r>Output has not contracted</>");
+                warn!("Potentially found Nemo Bug - Output has not contracted");
+                cprintln!("<r>Potentially found Nemo Bug - Output has not contracted</>");
+                found_bug = true;
             }
         },
         TransformationTypes::EXP => match out.is_subset(&out_2) {
@@ -1193,13 +1358,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 cprintln!("<g>All good, output is expanding</>");
             }
             false => {
-                warn!("Outputs has not expanded");
-                cprintln!("<r>Outputs has not expanded</>");
+                warn!("Potentially found Nemo Bug - Outputs has not expanded");
+                cprintln!("<r>Potentially found Nemo Bug - Outputs has not expanded</>");
+                found_bug = true;
             }
         },
     }
 
-    match set_current_dir(old_dir) {
+    // Return to original directory
+    match set_current_dir(&old_dir) {
         Ok(()) => (),
         Err(e) => {
             error!("Failed to switch dir to old directory!");
@@ -1208,26 +1375,150 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
 
+    // If I found a bug move the log file to upper directory
+    if found_bug {
+        let log_file_name = log_name
+            + "/"
+            + NAME_OF_TRANSFORMATION_SEQUENCE
+                .get()
+                .expect("Name of Transformation Sequence not set")
+            + ".log";
+        match create_dir_all(old_dir.join(PathBuf::from("bugs"))) {
+            Ok(_) => (),
+            Err(e) => {
+                error!("Failed to create bugs folder");
+                error!("{}", e.to_string());
+                exit(1);
+            }
+        }
+        // move (=copy) required data
+        match std::fs::copy(
+            log_file_name.clone(),
+            old_dir.join(PathBuf::from(
+                String::from("bugs")
+                    + "/"
+                    + NAME_OF_TRANSFORMATION_SEQUENCE
+                        .get()
+                        .expect("Name of Transformation Sequence not set")
+                    + ".log",
+            )),
+        ) {
+            Err(e) => {
+                error!("Failed to move bug/log data");
+                error!("{e}");
+                exit(1);
+            }
+            Ok(_) => (),
+        }
+    }
+
     // Lean mode means we delete everything other than the log file and the output program
     // to save on storage
     if lean_mode {
-        for data_req in res_statements {
-            let mut from_dir = PathBuf::from(vec_path[chosen]);
-            from_dir.pop();
-            from_dir = from_dir.join(&data_req);
-            let to_dir = PathBuf::from(&transformation_folder).join(&data_req);
-            //println!("from: {} to: {}", from_dir.display(), to_dir.display());
-            // Create data folder
-            let mut data_folder_name = to_dir.clone();
-            data_folder_name.pop();
-            let _ = remove_dir_all(data_folder_name); // we don't care if it succeeds
-                                                      // cause itll succeed at least once
+        match path {
+            None => (),
+            Some(path) => {
+                for data_req in res_statements {
+                    let mut from_dir = PathBuf::from(path.clone());
+                    from_dir.pop();
+                    from_dir = from_dir.join(&data_req);
+                    let to_dir = PathBuf::from(&transformation_folder).join(&data_req);
+                    //println!("from: {} to: {}", from_dir.display(), to_dir.display());
+                    // Create data folder
+                    let mut data_folder_name = to_dir.clone();
+                    data_folder_name.pop();
+                    let _ = remove_dir_all(data_folder_name); // we don't care if it succeeds
+                    // cause itll succeed at least once
+                }
+            }
         }
         let _ = remove_file(input_folder_name.clone() + "/input_program.rls");
         let _ = remove_file(input_folder_name.clone() + "/input_adg.dot");
         let _ = remove_file(output_folder_name.clone() + "/output_adg.dot");
         let _ = remove_file(transformation_folder.clone() + "/pre_update_adg.dot");
         let _ = remove_dir_all(transformation_folder.clone() + "/debug");
+    }
+
+    // Collect statistics
+    {
+        info!("old_dir {old_dir:?}");
+        match OpenOptions::new()
+            .append(true)
+            .open(old_dir.join("transformation_statistics.csv"))
+        {
+            // If there is none just ignore
+            Err(_) => {
+                info!(
+                    "Create a transformation_statistics.csv file in the folder you are calling this from to begin to collect transformation statistics for all your transformations.
+                    Header:
+                Name, Oracle, Seed, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug,"
+                )
+            } // If there is a stats folder write a bunch of information to it
+            Ok(mut stats_file) => {
+                statistics_string
+                    .push_str(format!("{}, ", adg.get_fact_nodes_iter().count()).as_str());
+                statistics_string
+                    .push_str(format!("{}, ", adg.get_rel_nodes_iter().count()).as_str());
+                statistics_string
+                    .push_str(format!("{}, ", adg.get_fact_edges_iter().count()).as_str());
+                statistics_string
+                    .push_str(format!("{}, ", adg.get_rel_edges_iter().count()).as_str());
+                statistics_string.push_str(format!("{:?}, ", adg.get_highest_stratum()).as_str());
+                statistics_string.push_str(
+                    format!("{}, ", adg.get_none_ancestry_relational_nodes().len()).as_str(),
+                );
+                statistics_string.push_str(
+                    format!("{}, ", adg.get_positive_ancestry_relational_nodes().len()).as_str(),
+                );
+                statistics_string.push_str(
+                    format!("{}, ", adg.get_negative_ancestry_relational_nodes().len()).as_str(),
+                );
+                statistics_string.push_str(
+                    format!("{}, ", adg.get_unknown_ancestry_relational_nodes().len()).as_str(),
+                );
+                statistics_string.push_str(
+                    format!(
+                        "{}, ",
+                        adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
+                    )
+                    .as_str(),
+                );
+                statistics_string
+                    .push_str(format!("{}, ", adg.get_new_relation_name().name()).as_str());
+                statistics_string.push_str(
+                    format!("{}, ", adg.get_and_register_new_iri_constant().value()).as_str(),
+                );
+                statistics_string.push_str(
+                    format!("{}, ", adg.get_and_register_new_string_constant().value()).as_str(),
+                );
+                statistics_string.push_str(format!("{}, ", adg.get_rule_names().len()).as_str());
+                statistics_string.push_str(format!("{}, ", program.rules().count()).as_str());
+                statistics_string.push_str(
+                    format!(
+                        "{}, ",
+                        program.arities().iter().fold(0, |total, ar| total + ar.1) as f64
+                            / program.arities().iter().count() as f64
+                    )
+                    .as_str(),
+                );
+                statistics_string.push_str(format!("{}, ", count_failed_transformations).as_str());
+                let mut trans = count_transformations.iter().collect::<Vec<_>>();
+                trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
+                trans.iter().for_each(|(_key, v)| {
+                    statistics_string.push_str(format!("{}, ", v).as_str());
+                });
+                statistics_string.push_str(format!("{}, ", out.len()).as_str());
+                statistics_string.push_str(format!("{}, ", out_2.len()).as_str());
+                statistics_string.push_str(format!("{}, ", found_bug).as_str());
+                statistics_string.push_str("\n");
+                match stats_file.write(statistics_string.as_bytes()) {
+                    Ok(_) => (),
+                    Err(e) => {
+                        warn!("Failed to write statistics {}", e);
+                    }
+                }
+            }
+        }
     }
 
     Ok(())

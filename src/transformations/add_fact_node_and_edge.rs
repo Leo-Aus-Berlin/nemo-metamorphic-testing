@@ -108,7 +108,7 @@ impl<'a, 'b> ProgramTransformation for AddFactNodeAndEdge<'a, 'b> {
         };
         let mut terms: Vec<Term> = Vec::new();
         if self.adg.get_ground_terms().len() == 0 {
-            warn!("  0 ground terms");
+            warn!("  0 ground terms. Expected case if no seed program was provided.");
         }
         for _index in 0..arity {
             match self.rng.random_bool(0.5) {
