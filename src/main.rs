@@ -4,14 +4,13 @@ use std::{
     io::Write,
     path::PathBuf,
     process::exit,
+    time::Duration,
 };
 
 use color_print::cprintln;
 use indexmap::{IndexMap, IndexSet};
 //use indicatif::{MultiProgress, ProgressBar};
 use log::{debug, error, info, warn};
-use simplelog::*;
-
 use nemo::{
     error::report::ProgramReport,
     execution::execution_parameters::ExecutionParameters,
@@ -22,6 +21,8 @@ use nemo::{
         programs::{handle::ProgramHandle, ProgramRead},
     },
 };
+use simplelog::*;
+use tokio::time::timeout;
 
 mod transformations;
 
@@ -77,6 +78,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
                 .value_parser(value_parser!(bool)),
+            )
+            .arg(
+                arg!(
+                    -t --timeout "Timeout our nemo computations after how many minutes. Default 30mins."
+                )
+                // We don't have syntax yet for optional options, so manually calling `required`
+                .required(false)
+                .value_parser(value_parser!(u64)),
             )
             .arg(
                 arg!(
@@ -145,6 +154,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         None => 20,
         Some(gen_size) => *gen_size,
     };
+
+    let timeout_after_mins = match matches.get_one::<u64>("timeout") {
+        None => 30,
+        Some(t) => *t,
+    };
+
     match matches.get_one::<bool>("debug") {
         None => {
             error!("Failed to read if in debug mode or not");
@@ -1147,21 +1162,205 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         input_program,
         ImportManager::new(ResourceProviders::default()),
     );
-    let mut pre_exec = match nemo_engine_input.await {
-        Err(r) => {
-            error!("Failed nemo calc.");
-            error!("{r}");
+    let mut pre_exec = match timeout(Duration::from_mins(timeout_after_mins), nemo_engine_input).await {
+        Err(time) => {
+            error!("Timeout after {time}!");
+            {
+                info!("old_dir {old_dir:?}");
+                match OpenOptions::new()
+                    .append(true)
+                    .open(old_dir.join("transformation_statistics.csv"))
+                {
+                    // If there is none just ignore
+                    Err(_) => {
+                        info!(
+                    "Create a transformation_statistics.csv file in the folder you are calling this from to begin to collect transformation statistics for all your transformations.
+                    Header:
+                Name, Oracle, Seed, Seed_File, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug,"
+                )
+                    } // If there is a stats folder write a bunch of information to it
+                    Ok(mut stats_file) => {
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_fact_nodes_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rel_nodes_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_fact_edges_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rel_edges_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{:?}, ", adg.get_highest_stratum()).as_str());
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_none_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_positive_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_negative_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_unknown_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.next_rule_name(transformation_types)).as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_new_relation_name().name()).as_str());
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_and_register_new_iri_constant().value())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_and_register_new_string_constant().value())
+                                .as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rule_names().len()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", program.rules().count()).as_str());
+                        statistics_string.push_str(
+                            format!(
+                                "{}, ",
+                                program.arities().iter().fold(0, |total, ar| total + ar.1) as f64
+                                    / program.arities().iter().count() as f64
+                            )
+                            .as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", count_failed_transformations).as_str());
+                        let mut trans = count_transformations.iter().collect::<Vec<_>>();
+                        trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
+                        trans.iter().for_each(|(_key, v)| {
+                            statistics_string.push_str(format!("{}, ", v).as_str());
+                        });
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str("\n");
+                        match stats_file.write(statistics_string.as_bytes()) {
+                            Ok(_) => (),
+                            Err(e) => {
+                                warn!("Failed to write statistics {}", e);
+                            }
+                        }
+                    }
+                }
+            }
             exit(1);
         }
-        Ok(v) => v,
+        Ok(res) => match res {
+            Err(r) => {
+                error!("Failed nemo calc.");
+                error!("{r}");
+                exit(1);
+            }
+            Ok(v) => v,
+        },
     };
-    match pre_exec.execute().await {
-        Err(r) => {
-            error!("Failed nemo exec.");
-            error!("{r}");
+    match timeout(Duration::from_mins(timeout_after_mins), pre_exec.execute()).await {
+        Ok(res) => match res {
+            Err(r) => {
+                error!("Failed nemo exec.");
+                error!("{r}");
+                exit(1);
+            }
+            Ok(v) => v,
+        },
+        Err(time) => {
+            error!("Timeout after {time}!");
+            {
+                info!("old_dir {old_dir:?}");
+                match OpenOptions::new()
+                    .append(true)
+                    .open(old_dir.join("transformation_statistics.csv"))
+                {
+                    // If there is none just ignore
+                    Err(_) => {
+                        info!(
+                    "Create a transformation_statistics.csv file in the folder you are calling this from to begin to collect transformation statistics for all your transformations.
+                    Header:
+                Name, Oracle, Seed, Seed_File, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug,"
+                )
+                    } // If there is a stats folder write a bunch of information to it
+                    Ok(mut stats_file) => {
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_fact_nodes_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rel_nodes_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_fact_edges_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rel_edges_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{:?}, ", adg.get_highest_stratum()).as_str());
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_none_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_positive_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_negative_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_unknown_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.next_rule_name(transformation_types)).as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_new_relation_name().name()).as_str());
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_and_register_new_iri_constant().value())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_and_register_new_string_constant().value())
+                                .as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rule_names().len()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", program.rules().count()).as_str());
+                        statistics_string.push_str(
+                            format!(
+                                "{}, ",
+                                program.arities().iter().fold(0, |total, ar| total + ar.1) as f64
+                                    / program.arities().iter().count() as f64
+                            )
+                            .as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", count_failed_transformations).as_str());
+                        let mut trans = count_transformations.iter().collect::<Vec<_>>();
+                        trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
+                        trans.iter().for_each(|(_key, v)| {
+                            statistics_string.push_str(format!("{}, ", v).as_str());
+                        });
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str("\n");
+                        match stats_file.write(statistics_string.as_bytes()) {
+                            Ok(_) => (),
+                            Err(e) => {
+                                warn!("Failed to write statistics {}", e);
+                            }
+                        }
+                    }
+                }
+            }
             exit(1);
         }
-        Ok(v) => v,
     };
     let output_pred = adg.get_output_tag().expect("adg has no output pred.");
     let out = match pre_exec.predicate_rows(&output_pred).await {
@@ -1209,21 +1408,204 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         program.materialize(),
         ImportManager::new(ResourceProviders::default()),
     );
-    let mut pre_exec_2 = match nemo_engine_input_2.await {
-        Err(r) => {
-            error!("Failed nemo calc.");
-            error!("{r}");
+    let mut pre_exec_2 = match timeout(Duration::from_mins(timeout_after_mins), nemo_engine_input_2).await {
+        Ok(res) => match res {
+            Err(r) => {
+                error!("Failed nemo calc.");
+                error!("{r}");
+                exit(1);
+            }
+            Ok(v) => v,
+        },
+        Err(time) => {
+            error!("Timeout after {time}!");
+            {
+                info!("old_dir {old_dir:?}");
+                match OpenOptions::new()
+                    .append(true)
+                    .open(old_dir.join("transformation_statistics.csv"))
+                {
+                    // If there is none just ignore
+                    Err(_) => {
+                        info!(
+                    "Create a transformation_statistics.csv file in the folder you are calling this from to begin to collect transformation statistics for all your transformations.
+                    Header:
+                Name, Oracle, Seed, Seed_File, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug,"
+                )
+                    } // If there is a stats folder write a bunch of information to it
+                    Ok(mut stats_file) => {
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_fact_nodes_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rel_nodes_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_fact_edges_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rel_edges_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{:?}, ", adg.get_highest_stratum()).as_str());
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_none_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_positive_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_negative_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_unknown_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.next_rule_name(transformation_types)).as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_new_relation_name().name()).as_str());
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_and_register_new_iri_constant().value())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_and_register_new_string_constant().value())
+                                .as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rule_names().len()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", program.rules().count()).as_str());
+                        statistics_string.push_str(
+                            format!(
+                                "{}, ",
+                                program.arities().iter().fold(0, |total, ar| total + ar.1) as f64
+                                    / program.arities().iter().count() as f64
+                            )
+                            .as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", count_failed_transformations).as_str());
+                        let mut trans = count_transformations.iter().collect::<Vec<_>>();
+                        trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
+                        trans.iter().for_each(|(_key, v)| {
+                            statistics_string.push_str(format!("{}, ", v).as_str());
+                        });
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str("\n");
+                        match stats_file.write(statistics_string.as_bytes()) {
+                            Ok(_) => (),
+                            Err(e) => {
+                                warn!("Failed to write statistics {}", e);
+                            }
+                        }
+                    }
+                }
+            }
             exit(1);
         }
-        Ok(v) => v,
     };
-    match pre_exec_2.execute().await {
-        Err(r) => {
+    match timeout(Duration::from_mins(timeout_after_mins), pre_exec_2.execute()).await {
+        Ok(res) => match res {Err(r) => {
             error!("Failed nemo exec.");
             error!("{r}");
             exit(1);
         }
-        Ok(v) => v,
+        Ok(v) => v,}
+        Err(time) => {
+            error!("Timeout after {time}!");
+            {
+                info!("old_dir {old_dir:?}");
+                match OpenOptions::new()
+                    .append(true)
+                    .open(old_dir.join("transformation_statistics.csv"))
+                {
+                    // If there is none just ignore
+                    Err(_) => {
+                        info!(
+                    "Create a transformation_statistics.csv file in the folder you are calling this from to begin to collect transformation statistics for all your transformations.
+                    Header:
+                Name, Oracle, Seed, Seed_File, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug,"
+                )
+                    } // If there is a stats folder write a bunch of information to it
+                    Ok(mut stats_file) => {
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_fact_nodes_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rel_nodes_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_fact_edges_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rel_edges_iter().count()).as_str());
+                        statistics_string
+                            .push_str(format!("{:?}, ", adg.get_highest_stratum()).as_str());
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_none_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_positive_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_negative_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_unknown_ancestry_relational_nodes().len())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.next_rule_name(transformation_types)).as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_new_relation_name().name()).as_str());
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_and_register_new_iri_constant().value())
+                                .as_str(),
+                        );
+                        statistics_string.push_str(
+                            format!("{}, ", adg.get_and_register_new_string_constant().value())
+                                .as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", adg.get_rule_names().len()).as_str());
+                        statistics_string
+                            .push_str(format!("{}, ", program.rules().count()).as_str());
+                        statistics_string.push_str(
+                            format!(
+                                "{}, ",
+                                program.arities().iter().fold(0, |total, ar| total + ar.1) as f64
+                                    / program.arities().iter().count() as f64
+                            )
+                            .as_str(),
+                        );
+                        statistics_string
+                            .push_str(format!("{}, ", count_failed_transformations).as_str());
+                        let mut trans = count_transformations.iter().collect::<Vec<_>>();
+                        trans.sort_by(|s1, s2| s1.0.cmp(s2.0));
+                        trans.iter().for_each(|(_key, v)| {
+                            statistics_string.push_str(format!("{}, ", v).as_str());
+                        });
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str(format!("None, ").as_str());
+                        statistics_string.push_str("\n");
+                        match stats_file.write(statistics_string.as_bytes()) {
+                            Ok(_) => (),
+                            Err(e) => {
+                                warn!("Failed to write statistics {}", e);
+                            }
+                        }
+                    }
+                }
+            }
+            exit(1);
+        }
+    
     };
     let out_2 = match pre_exec_2.predicate_rows(&output_pred).await {
         Err(e) => {
