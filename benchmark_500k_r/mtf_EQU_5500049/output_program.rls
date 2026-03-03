@@ -1,0 +1,69 @@
+LocatedInState("StationA", "Ohio", "0"^^<http://www.w3.org/2001/XMLSchema#double>, "1000"^^<http://www.w3.org/2001/XMLSchema#double>).
+TempAbove41("StationA", "213.4"^^<http://www.w3.org/2001/XMLSchema#double>, "213.5"^^<http://www.w3.org/2001/XMLSchema#double>).
+TempAbove24("StationA", "210"^^<http://www.w3.org/2001/XMLSchema#double>, "215"^^<http://www.w3.org/2001/XMLSchema#double>).
+HeavyWindForce("StationA", "111.7"^^<http://www.w3.org/2001/XMLSchema#double>, "112"^^<http://www.w3.org/2001/XMLSchema#double>).
+HeavyWindForce("StationA", "113.4"^^<http://www.w3.org/2001/XMLSchema#double>, "115.2"^^<http://www.w3.org/2001/XMLSchema#double>).
+HeavyWindForce("StationA", "115.3"^^<http://www.w3.org/2001/XMLSchema#double>, "117"^^<http://www.w3.org/2001/XMLSchema#double>).
+HeavyWindForce("StationA", "117.1"^^<http://www.w3.org/2001/XMLSchema#double>, "118"^^<http://www.w3.org/2001/XMLSchema#double>).
+TempAbove41DiamondMinus1(?Station, ?Start, ?End + "1"^^<http://www.w3.org/2001/XMLSchema#double>) :- TempAbove41(?Station, ?Start, ?End) .
+TempConstantOver24AtLeastFor1(?Station, ?Start + "1"^^<http://www.w3.org/2001/XMLSchema#double>, ?End) :- TempAbove24(?Station, ?Start, ?End), ?Start + "1"^^<http://www.w3.org/2001/XMLSchema#double> < ?End .
+ExcessiveHeat(?Station, (MAX(?Start24, ?Start41)) - "1"^^<http://www.w3.org/2001/XMLSchema#double>, MIN(?End41, ?End24)) :- TempAbove41DiamondMinus1(?Station, ?Start41, ?End41), TempConstantOver24AtLeastFor1(?Station, ?Start24, ?End24), ?Start41 < ?End24, ?Start24 < ?End41 .
+HeatAffectedState(?State, MAX(?StartHeat, ?StartIn), MIN(?EndHeat, ?EndIn)) :- ExcessiveHeat(?Station, ?StartHeat, ?EndHeat), LocatedInState(?Station, ?State, ?StartIn, ?EndIn), ?StartHeat < ?EndIn, ?StartIn < ?EndHeat .
+HeavyWind(?Station, ?Start, ?End) :- HeavyWindForce(?Station, ?Start, ?End), ?Start + "1"^^<http://www.w3.org/2001/XMLSchema#double> < ?End .
+HeavyWindAffectedState(?State, MAX(?StartWind, ?StartIn), MIN(?EndWind, ?EndIn)) :- HeavyWind(?Station, ?StartWind, ?EndWind), LocatedInState(?Station, ?State, ?StartIn, ?EndIn), ?StartWind < ?EndIn, ?StartIn < ?EndWind .
+@export R_OUT :- csv{}.
+R_1(?X_3, "210"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2) :- R_19(?X_3, "210"^^<http://www.w3.org/2001/XMLSchema#double>, "StationA", ?Y_1, ?X_2) .
+R_2(?X_2, ?X_2) :- R_6(?X_2, ?X_2, "115.3"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_2, "115.3"^^<http://www.w3.org/2001/XMLSchema#double>) .
+R_6(?X_5, ?X_4, ?X_1, ?X_3, "118"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1) :- LocatedInState("115.2"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?Y_2, ?X_3), LocatedInState("118"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_1, ?X_5) .
+R_15(?X_1, ?X_1, ?X_3, ?X_2) :- R_1(?Y_1, ?X_1, "112"^^<http://www.w3.org/2001/XMLSchema#double>), R_1(?X_2, ?X_1, ?X_3) .
+R_18(?X_1) :- R_6(?X_1, ?Y_1, ?X_1, ?X_1, ?Y_1, ?X_1) .
+R_17(?X_2, ?X_3, "112"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?X_4) :- R_16(?X_2), R_16(?X_3), R_16("112"^^<http://www.w3.org/2001/XMLSchema#double>), R_16(?X_4), R_16(?X_4), ExcessiveHeat(?Z_2, ?X_3, ?X_4) .
+R_7(?X_2, "StationA") :- TempAbove41(?X_2, "112"^^<http://www.w3.org/2001/XMLSchema#double>, "StationA"), HeavyWindAffectedState(?X_2, ?X_2, ?Z_1) .
+R_5(?X_6, ?X_4, "215"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_2, ?X_1) :- HeavyWindForce(?X_6, ?X_4, "215"^^<http://www.w3.org/2001/XMLSchema#double>), HeavyWindForce(?X_3, ?X_2, ?X_1), LocatedInState(?X_6, ?X_2, ?Z_2, "213.4"^^<http://www.w3.org/2001/XMLSchema#double>), TempAbove24(?X_4, ?X_1, ?Z_4) .
+R_9("StationA") :- ExcessiveHeat("StationA", "StationA", "StationA"), ~TempAbove41DiamondMinus1("115.3"^^<http://www.w3.org/2001/XMLSchema#double>, "0"^^<http://www.w3.org/2001/XMLSchema#double>, "1000"^^<http://www.w3.org/2001/XMLSchema#double>), R_2("118"^^<http://www.w3.org/2001/XMLSchema#double>, ?Z_1) .
+R_16(?X_1) :- HeatAffectedState(?X_1, "117.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1), HeatAffectedState("StationA", ?X_1, ?X_1), TempConstantOver24AtLeastFor1(?X_1, ?X_1, ?Z_1), R_4(?X_1, ?X_1, ?Z_4, ?X_1, ?X_1) .
+R_10(?X_2, ?X_4, ?X_1, ?X_3) :- R_7(?X_2, ?X_4), R_7(?X_1, ?X_3), TempAbove41(?X_1, ?X_1, ?X_2), R_6(?X_4, ?X_3, ?X_2, ?X_1, ?X_2, ?Z_2) .
+R_11("0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_1, ?X_4, ?X_5) :- TempAbove41DiamondMinus1("0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_1), TempAbove41DiamondMinus1(?X_4, ?X_5, ?X_2), R_10(?X_4, ?X_2, ?X_2, ?X_1) .
+R_13(?X_1, "210"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_2) :- R_9(?X_1), R_9("210"^^<http://www.w3.org/2001/XMLSchema#double>), R_9(?X_3), R_9(?X_2), R_11(?X_3, "StationA", ?X_1, ?X_2, ?X_2) .
+R_8(?X_1, ?X_2, ?X_4, ?X_6, "117"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3) :- R_19(?X_1, ?X_4, ?X_4, ?X_4, ?X_1), R_19(?X_3, "117"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_6, ?X_2, ?X_6), HeavyWind(?X_1, ?Z_2, ?X_2), R_3(?X_2, ?Z_4, ?X_4), R_12(?Z_4, ?Z_2, ?X_6, "118"^^<http://www.w3.org/2001/XMLSchema#double>) .
+R_4(?X_1, "StationA", ?X_3, ?X_5, ?X_4) :- R_11(?X_1, "StationA", ?X_3, ?X_5, ?X_4), R_1(?X_4, ?X_1, ?Z_1), R_13(?X_1, ?Z_1, ?X_3, ?X_4) .
+R_12(?X_2, ?X_3, ?X_4, ?X_1) :- R_8(?Y_1, ?X_3, ?X_4, ?X_1, ?X_2, "StationA"), R_14(?Z_3, ?X_3, ?X_3) .
+R_3(?X_1, "StationA", ?X_3) :- R_15(?Y_1, "StationA", ?X_3, ?X_1), R_7(?X_3, ?Z_1), ~R_9(?Y_1), R_15(?X_1, ?X_1, ?Y_1, ?Z_4) .
+R_14(?X_3, ?X_3, ?X_2) :- R_11(?X_2, ?X_3, "StationA", ?X_2, ?X_3), R_16(?X_2) .
+R_19(?X_3, ?X_5, "210"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_4) :- R_3(?X_4, ?X_5, "210"^^<http://www.w3.org/2001/XMLSchema#double>), R_3(?X_1, ?X_4, ?X_3), R_5(?X_1, ?Z_3, ?X_4, ?X_5, ?Z_1, ?X_3), R_8(?X_4, ?Z_5, ?Z_2, ?X_4, ?X_5, ?X_3), R_18(?Z_2) .
+R_OUT(?X_2, ?X_1, ?X_3) :- HeavyWind(?X_2, ?X_1, ?X_3), HeavyWindForce(?X_2, ?X_2, ?Z_2), ~R_17(?Z_2, ?X_1, ?X_3, ?X_2, ?X_2), R_19(?Z_5, "StationA", ?X_3, ?X_1, ?X_2) .
+R_17("215"^^<http://www.w3.org/2001/XMLSchema#double>, "215"^^<http://www.w3.org/2001/XMLSchema#double>, "117.1"^^<http://www.w3.org/2001/XMLSchema#double>, "Ohio", "115.2"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_17("str_1", c_1, "117.1"^^<http://www.w3.org/2001/XMLSchema#double>, c_2, "210"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_17("Ohio", 18384886770202202936, 18384886770202202936, "115.2"^^<http://www.w3.org/2001/XMLSchema#double>, "210"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_OUT("str_2", "213.5"^^<http://www.w3.org/2001/XMLSchema#double>, "213.5"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_17(3458956254703931496, c_3, "str_1", c_4, "str_1").
+R_OUT(c_4, "115.2"^^<http://www.w3.org/2001/XMLSchema#double>, 3847744805701495938).
+R_17("str_3", c_5, "StationA", "str_2", 3458956254703931496).
+R_17("112"^^<http://www.w3.org/2001/XMLSchema#double>, c_6, "213.5"^^<http://www.w3.org/2001/XMLSchema#double>, "115.2"^^<http://www.w3.org/2001/XMLSchema#double>, "215"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_OUT(3458956254703931496, "StationA", c_4).
+R_OUT("str_4", c_7, "StationA").
+R_OUT("113.4"^^<http://www.w3.org/2001/XMLSchema#double>, "str_5", 16742037668050906954).
+R_OUT("117.1"^^<http://www.w3.org/2001/XMLSchema#double>, "111.7"^^<http://www.w3.org/2001/XMLSchema#double>, c_8).
+R_OUT(c_3, 3458956254703931496, 14820479962864370478).
+R_17("str_6", "0"^^<http://www.w3.org/2001/XMLSchema#double>, "StationA", 4449329531337822340, 6032314067681919842).
+R_17("213.5"^^<http://www.w3.org/2001/XMLSchema#double>, "113.4"^^<http://www.w3.org/2001/XMLSchema#double>, "StationA", c_7, "StationA").
+R_OUT(c_9, "str_6", 4449329531337822340).
+R_17("Ohio", c_10, c_11, "str_7", "StationA").
+R_17("115.3"^^<http://www.w3.org/2001/XMLSchema#double>, c_12, c_13, 13406093573717760936, "str_8").
+R_OUT(16742037668050906954, 14156994711038173609, "str_9").
+R_OUT("str_6", c_14, "StationA").
+R_3(?X_3, ?X_1, ?X_3) :- HeatAffectedState(?X_3, ?X_1, ?X_3), ~HeatAffectedState(?X_3, ?X_1, ?X_3) .
+R_8(?X_2, ?X_1, ?X_3, ?X_6, "118"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4) :- TempAbove24(?X_2, ?X_1, ?X_3), TempAbove24(?X_6, "118"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4), ~TempAbove24(?X_2, ?X_1, ?X_3) .
+R_14(?X_1, ?X_3, ?X_2) :- HeatAffectedState(?X_1, ?X_3, ?X_2), ~HeatAffectedState(?X_1, ?X_3, ?X_2) .
+R_7(?X_2, c_15) :- TempConstantOver24AtLeastFor1(?X_2, ?Y_1, c_15), ~TempConstantOver24AtLeastFor1(?X_2, ?Y_1, c_15) .
+R_6(?X_5, ?X_6, ?X_5, "StationA", ?X_4, ?X_2) :- HeavyWind(?X_5, ?X_6, ?X_5), HeavyWind("StationA", ?X_4, ?X_2), ~HeavyWind(?X_5, ?X_6, ?X_5) .
+R_2(?X_2, "StationA") :- R_30(?X_2, ?X_2, ?Y_1, ?Y_1, "StationA"), ~R_30(?X_2, ?X_2, ?Y_1, ?Y_1, "StationA") .
+R_7(?X_1, ?X_2) :- R_23(?X_1, ?X_2, ?Y_1, ?X_1, ?X_2), ~R_23(?X_1, ?X_2, ?Y_1, ?X_1, ?X_2) .
+R_18(?X_1) :- R_22(?X_1, ?Y_1, ?Y_1), ~R_22(?X_1, ?Y_1, ?Y_1) .
+R_23(?X_5, ?X_4, ?X_1, ?X_2, ?X_3) :- R_30(?X_5, ?X_4, ?X_1, ?X_2, ?X_3), ~R_30(?X_5, ?X_4, ?X_1, ?X_2, ?X_3) .
+R_3(?X_3, c_6, ?X_2) :- R_22(?X_3, c_6, ?X_2), ~R_22(?X_3, c_6, ?X_2) .
+R_6(?X_6, ?X_5, ?X_2, c_3, ?X_4, ?X_1) :- TempAbove41DiamondMinus1(?X_6, ?X_5, ?X_2), TempAbove41DiamondMinus1(c_3, ?X_4, ?X_1), ~TempAbove41DiamondMinus1(?X_6, ?X_5, ?X_2) .
+R_1(?X_3, ?X_2, ?X_1) :- HeavyWindForce(?X_3, ?X_2, ?X_1), ~HeavyWindForce(?X_3, ?X_2, ?X_1) .
+R_17(?X_3, ?X_4, ?X_1, c_4, ?X_1) :- R_34(?X_3), R_34(?X_4), R_34(?X_1), R_34(c_4), R_34(?X_1), ~R_34(?X_3) .
+R_26(?X_1, ?X_3, ?X_4, ?X_1, c_17) :- R_23(?X_1, ?X_3, ?X_3, ?X_3, ?Y_1), R_17(c_17, ?X_3, ?X_4, c_17, ?X_1), R_29(?X_1, c_14, ?X_4, ?X_4, ?Y_1) .
+R_26(c_18, 1217437301409356000, 3730440734263005989, c_19, c_17).

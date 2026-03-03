@@ -1,0 +1,117 @@
+@import TRIPLE :- rdf{resource= "galen-el.nt.gz"}.
+ClassObject(<http://www.w3.org/2002/07/owl#someValuesFrom>).
+ClassObject(<http://www.w3.org/1999/02/22-rdf-syntax-ns#first>).
+ClassObject(<http://www.w3.org/2000/01/rdf-schema#subClassOf>).
+ClassObject(<http://www.w3.org/2002/07/owl#equivalentClass>).
+ClassSubject(<http://www.w3.org/2000/01/rdf-schema#subClassOf>).
+ClassSubject(<http://www.w3.org/2002/07/owl#equivalentClass>).
+class(?O) :- TRIPLE(?X, ?P, ?O), ClassObject(?P) .
+class(?X) :- TRIPLE(?X, ?P, ?O), ClassSubject(?P) .
+synEx(?Y, ?P, ?X), auxClass(?X) :- TRIPLE(?X, <http://www.w3.org/2002/07/owl#someValuesFrom>, ?Y), TRIPLE(?X, <http://www.w3.org/2002/07/owl#onProperty>, ?P) .
+next(?L1, ?L2) :- TRIPLE(?L1, <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>, ?L2) .
+first(?L1) :- TRIPLE(?X, <http://www.w3.org/2002/07/owl#intersectionOf>, ?L1) .
+nonfirst(?L2) :- first(?L1), next(?L1, ?L2) .
+nonfirst(?L2) :- nonfirst(?L1), next(?L1, ?L2) .
+last(?Ln) :- next(?Ln, <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil>) .
+nonlast(?L) :- next(?L, ?Ln), last(?Ln) .
+nonlast(?L1) :- next(?L1, ?L2), nonlast(?L2) .
+in(?L, ?C) :- TRIPLE(?L, <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, ?C) .
+synConj(?X, ?C1, ?C2), auxClass(?X) :- TRIPLE(?X, <http://www.w3.org/2002/07/owl#intersectionOf>, ?L1), next(?L1, ?L2), last(?L2), in(?L1, ?C1), in(?L2, ?C2) .
+synConj(?X, ?C1, ?L2), auxClass(?X) :- TRIPLE(?X, <http://www.w3.org/2002/07/owl#intersectionOf>, ?L1), next(?L1, ?L2), nonlast(?L2), in(?L1, ?C1) .
+synConj(?L1, ?C1, ?L2), auxClass(?L1) :- nonfirst(?L1), next(?L1, ?L2), nonlast(?L2), in(?L1, ?C1) .
+synConj(?L1, ?C1, ?C2), auxClass(?L1) :- nonfirst(?L1), next(?L1, ?L2), last(?L2), in(?L1, ?C1), in(?L2, ?C2) .
+<http://rulewerk.semantic-web.org/normalForm/isMainClass>(?X) :- class(?X), ~auxClass(?X) .
+repOf(?X, ?X) :- <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?X) .
+synExRep(?X, ?P, ?Rep) :- synEx(?Y, ?P, ?X), repOf(?Y, ?Rep) .
+<http://rulewerk.semantic-web.org/normalForm/exists>(!New, ?P, ?Rep) :- synExRep(?X, ?P, ?Rep) .
+repOf(?X, ?N) :- synExRep(?X, ?P, ?Rep), <http://rulewerk.semantic-web.org/normalForm/exists>(?N, ?P, ?Rep) .
+<http://rulewerk.semantic-web.org/normalForm/conj>(!New, ?R1, ?R2) :- synConj(?X, ?C1, ?C2), repOf(?C1, ?R1), repOf(?C2, ?R2) .
+repOf(?X, ?N) :- synConj(?X, ?C1, ?C2), repOf(?C1, ?R1), repOf(?C2, ?R2), <http://rulewerk.semantic-web.org/normalForm/conj>(?N, ?R1, ?R2) .
+<http://rulewerk.semantic-web.org/normalForm/subPropChain>(?S, ?T, ?R), <http://rulewerk.semantic-web.org/normalForm/subProp>(?R, ?R) :- TRIPLE(?L, <http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, ?R), TRIPLE(?L, <http://www.w3.org/2002/07/owl#propertyChain>, ?L1), in(?L1, ?S), next(?L1, ?L2), in(?L2, ?T) .
+prepareSco(?X, ?Y) :- TRIPLE(?X, <http://www.w3.org/2000/01/rdf-schema#subClassOf>, ?Y) .
+prepareSco(?X, ?Y), prepareSco(?Y, ?X) :- TRIPLE(?X, <http://www.w3.org/2002/07/owl#equivalentClass>, ?Y) .
+<http://rulewerk.semantic-web.org/normalForm/subClassOf>(?RX, ?RY), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?RX) :- prepareSco(?X, ?Y), repOf(?X, ?RX), repOf(?Y, ?RY) .
+<http://rulewerk.semantic-web.org/normalForm/subClassOf>(!C, <http://www.w3.org/2002/07/owl#Nothing>), <http://rulewerk.semantic-web.org/normalForm/conj>(!C, ?X, ?Y), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(!C), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?X), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?Y) :- TRIPLE(?X, <http://www.w3.org/2002/07/owl#disjointWith>, ?Y) .
+<http://rulewerk.semantic-web.org/normalForm/isSubClass>(?D) :- <http://rulewerk.semantic-web.org/normalForm/exists>(?C, ?P, ?D), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?C) .
+<http://rulewerk.semantic-web.org/normalForm/isSubClass>(?C1), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?C2) :- <http://rulewerk.semantic-web.org/normalForm/conj>(?X, ?C1, ?C2), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?X) .
+directSubProp(?R, ?S) :- TRIPLE(?R, <http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, ?S) .
+<http://rulewerk.semantic-web.org/normalForm/subProp>(?P, ?P) :- <http://rulewerk.semantic-web.org/normalForm/exists>(?C, ?P, ?D), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?C) .
+<http://rulewerk.semantic-web.org/normalForm/subProp>(?R, ?T) :- <http://rulewerk.semantic-web.org/normalForm/subProp>(?R, ?S), directSubProp(?S, ?T) .
+<http://rulewerk.semantic-web.org/inferred/init>(?C) :- <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?C) .
+<http://rulewerk.semantic-web.org/inferred/init>(?C) :- <http://rulewerk.semantic-web.org/inferred/ex>(?E, ?R, ?C) .
+<http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?C) :- <http://rulewerk.semantic-web.org/inferred/init>(?C) .
+<http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, "<http://www.w3.org/2002/07/owl#Thing>") :- <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?C) .
+<http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?D1), <http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?D2) :- <http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?Y), <http://rulewerk.semantic-web.org/normalForm/conj>(?Y, ?D1, ?D2) .
+<http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?I) :- <http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?D1), <http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?D2), <http://rulewerk.semantic-web.org/normalForm/conj>(?I, ?D1, ?D2), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?I) .
+<http://rulewerk.semantic-web.org/inferred/ex>(?E, ?R, ?C) :- <http://rulewerk.semantic-web.org/inferred/subClassOf>(?E, ?Y), <http://rulewerk.semantic-web.org/normalForm/exists>(?Y, ?R, ?C) .
+<http://rulewerk.semantic-web.org/inferred/subClassOf>(?E, ?Y) :- <http://rulewerk.semantic-web.org/inferred/ex>(?E, ?R, ?C), <http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?D), <http://rulewerk.semantic-web.org/normalForm/subProp>(?R, ?S), <http://rulewerk.semantic-web.org/normalForm/exists>(?Y, ?S, ?D), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?Y) .
+<http://rulewerk.semantic-web.org/inferred/ex>(?E, ?S, ?D) :- <http://rulewerk.semantic-web.org/inferred/ex>(?E, ?R1, ?C), <http://rulewerk.semantic-web.org/inferred/ex>(?C, ?R2, ?D), <http://rulewerk.semantic-web.org/normalForm/subProp>(?R1, ?S1), <http://rulewerk.semantic-web.org/normalForm/subProp>(?R2, ?S2), <http://rulewerk.semantic-web.org/normalForm/subPropChain>(?S1, ?S2, ?S) .
+<http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?E) :- <http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, ?D), <http://rulewerk.semantic-web.org/normalForm/subClassOf>(?D, ?E) .
+<http://rulewerk.semantic-web.org/inferred/subClassOf>(?E, "<http://www.w3.org/2002/07/owl#Nothing>") :- <http://rulewerk.semantic-web.org/inferred/ex>(?E, ?R, ?C), <http://rulewerk.semantic-web.org/inferred/subClassOf>(?C, "<http://www.w3.org/2002/07/owl#Nothing>") .
+mainSubClassOf(?A, ?B) :- <http://rulewerk.semantic-web.org/inferred/subClassOf>(?A, ?B), <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?A), <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?B) .
+@export R_OUT :- csv{}.
+R_3(?X_3, ?X_2, ?X_4, ?X_4, ?X_1) :- R_28(?X_3, ?X_2, ?X_4, <http://www.w3.org/2002/07/owl#intersectionOf>, ?X_1, ?X_4) .
+R_4(?X_1, ?X_4, ?X_3, ?X_6, ?X_2, ?X_5) :- R_25(?X_1, ?X_4, ?X_3, ?X_6, ?X_2, ?X_5) .
+R_7(<http://www.w3.org/2002/07/owl#someValuesFrom>) :- R_21(<http://www.w3.org/2002/07/owl#someValuesFrom>) .
+R_16(?X_5, ?X_3, ?X_4, ?X_1, ?X_4) :- prepareSco(?X_5, ?X_3), prepareSco(?X_4, ?X_1), prepareSco(?X_4, ?X_4) .
+R_25(?X_2, ?X_1, ?X_4, ?X_6, ?X_5, ?X_1) :- TRIPLE(?X_2, ?X_1, ?X_4), TRIPLE(?X_6, ?X_5, ?X_1) .
+R_14(?X_1) :- R_12(?X_1, <http://www.w3.org/2002/07/owl#onProperty>, ?Y_1, ?X_1), TRIPLE(?Z_2, ?X_1, ?X_1), auxClass(?Z_3) .
+R_21(?X_1) :- <http://rulewerk.semantic-web.org/inferred/ex>(?Y_1, ?X_1, <http://www.w3.org/2002/07/owl#equivalentClass>), ~last(?X_1) .
+R_2(?X_2, ?X_1, <http://www.w3.org/2002/07/owl#equivalentClass>, ?X_3) :- R_4(?Y_1, ?X_1, <http://www.w3.org/2002/07/owl#equivalentClass>, ?Y_1, ?X_3, ?X_2), nonlast(?Y_1) .
+R_28(<http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, ?X_6, ?X_1, ?X_4, ?X_1, ?X_5) :- <http://rulewerk.semantic-web.org/inferred/ex>(<http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, ?X_6, ?X_1), <http://rulewerk.semantic-web.org/inferred/ex>(?X_4, ?X_1, ?X_5), ~<http://rulewerk.semantic-web.org/normalForm/isSubClass>(?X_5), ~next(?X_1, ?X_5), nonfirst(?X_1), R_1(?X_4, ?X_1, ?Z_1, ?Z_3, ?X_1, ?X_5) .
+R_17(?X_1, ?X_2, ?X_3) :- R_17(?X_1, ?X_2, ?X_3), synExRep(?Z_2, ?X_2, ?X_1), R_2(?X_3, ?Z_1, ?X_2, ?X_1) .
+R_OUT(<http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, ?X_1) :- next(<http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, ?X_1), ~<http://rulewerk.semantic-web.org/normalForm/subClassOf>(?X_1, ?X_1), R_5(?X_1, ?Z_1, ?Z_2, ?X_1, ?X_1), R_7(?X_1) .
+R_1(<http://www.w3.org/2002/07/owl#onProperty>, ?X_4, ?X_1, ?X_5, ?X_6, ?X_3) :- R_18(<http://www.w3.org/2002/07/owl#onProperty>, ?X_4, ?X_1, ?X_5, ?X_6, ?X_3), R_8(?X_5, ?X_3, ?X_6, ?X_3, ?Z_4) .
+R_24(?X_3, <http://www.w3.org/2002/07/owl#propertyChain>, ?X_1, ?X_4) :- R_15(?X_3, <http://www.w3.org/2002/07/owl#propertyChain>, ?X_1), R_15(?X_4, <http://www.w3.org/2002/07/owl#propertyChain>, ?Y_1), in(?X_1, <http://www.w3.org/2002/07/owl#onProperty>), R_10(?Y_1, ?X_3, ?Z_3, ?X_1, ?X_4, ?X_1) .
+R_18(<http://www.w3.org/2000/01/rdf-schema#subClassOf>, ?X_1, ?X_4, ?X_5, ?X_6, ?X_2) :- in(<http://www.w3.org/2000/01/rdf-schema#subClassOf>, ?X_1), in(?X_4, ?X_5), in(?X_6, ?X_2), ~mainSubClassOf(?X_1, ?X_6), ~R_12(?X_1, ?X_4, ?X_2, ?X_1) .
+R_15(?X_2, ?X_1, ?X_3) :- R_28(?X_2, ?X_1, ?X_3, <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, ?Y_1, ?X_3), <http://rulewerk.semantic-web.org/inferred/init>(?Z_1), <http://rulewerk.semantic-web.org/normalForm/subProp>(?X_3, ?X_3), repOf(?X_3, ?Z_1), R_13(?X_1, ?X_3, ?X_3) .
+R_12(<http://www.w3.org/1999/02/22-rdf-syntax-ns#nil>, ?X_4, ?X_1, ?X_3) :- R_16(<http://www.w3.org/1999/02/22-rdf-syntax-ns#nil>, ?X_4, ?X_3, ?X_3, ?X_1), R_4(?X_3, ?X_1, ?X_4, ?X_4, ?Z_3, <http://www.w3.org/2002/07/owl#equivalentClass>), R_14(?X_4) .
+R_22(?X_5, ?X_4, ?X_1, ?X_3, ?X_2, ?X_6) :- R_25(?X_5, ?X_4, ?X_1, ?X_3, ?X_2, ?X_6), <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?X_1), R_3(?Z_3, ?Z_1, ?X_4, ?X_6, ?X_4), ~R_17(?X_1, ?X_4, ?X_2) .
+R_8(?X_3, <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, ?X_5, ?X_2, ?X_3) :- R_26(?X_3, <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, ?X_5, ?X_2, ?X_3, ?X_2), ~<http://rulewerk.semantic-web.org/normalForm/subPropChain>(?X_2, ?X_3, ?X_5), R_16(?X_3, ?X_5, ?Z_4, ?X_3, ?X_3), R_18(?X_3, ?X_2, ?Z_8, ?Z_2, ?X_2, ?Z_3) .
+R_13(?X_2, <http://www.w3.org/2002/07/owl#disjointWith>, ?X_1) :- <http://rulewerk.semantic-web.org/inferred/ex>(?X_2, <http://www.w3.org/2002/07/owl#disjointWith>, ?X_1), ~<http://rulewerk.semantic-web.org/normalForm/exists>(?X_1, <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil>, ?X_2), synConj(?X_2, ?X_1, ?X_1), R_20(?Z_3, ?X_1, ?X_2, ?X_1) .
+R_26(<http://www.w3.org/2002/07/owl#someValuesFrom>, ?X_6, ?X_2, ?X_2, ?X_3, ?X_4) :- repOf(<http://www.w3.org/2002/07/owl#someValuesFrom>, ?X_6), repOf(?X_2, ?X_2), repOf(?X_3, ?X_4), <http://rulewerk.semantic-web.org/inferred/subClassOf>(?Z_2, ?X_4), ~synEx(?X_2, ?X_4, ?X_6), R_9(?X_6, ?X_4, ?X_4, ?X_2, ?X_6), R_22(?Z_6, ?X_6, ?X_4, <http://www.w3.org/2000/01/rdf-schema#subClassOf>, ?X_2, ?Z_5) .
+R_9(?X_3, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_4, ?X_2, ?X_1) :- <http://rulewerk.semantic-web.org/normalForm/subProp>(?X_2, "<http://www.w3.org/2002/07/owl#Nothing>"), <http://rulewerk.semantic-web.org/normalForm/subProp>(?X_4, ?X_2), <http://rulewerk.semantic-web.org/normalForm/subProp>(?X_1, ?X_3), class(?X_3), ~R_25(?X_3, ?X_4, <http://www.w3.org/2002/07/owl#equivalentClass>, ?X_3, ?X_1, ?X_1) .
+R_20(?X_4, <http://www.w3.org/2002/07/owl#intersectionOf>, ?X_1, ?X_3) :- directSubProp(?X_4, <http://www.w3.org/2002/07/owl#intersectionOf>), directSubProp(?X_1, ?X_3), ~R_27(<http://www.w3.org/2002/07/owl#someValuesFrom>, ?X_1, ?X_4, ?X_3, ?X_3, ?X_4) .
+R_11(?X_2, ?X_1, ?X_2) :- R_OUT(?Y_1, ?X_1), R_OUT(?X_2, ?X_2), ~ClassSubject(?X_2), ~prepareSco(?X_2, ?X_2), R_24(?X_2, ?X_1, ?X_2, ?X_2), R_28(?Y_1, ?Z_4, ?X_2, ?X_2, ?X_2, ?X_2) .
+R_23(<http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, ?X_2, ?X_1, ?X_3, ?X_2, ?X_4) :- R_22(<http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, ?X_2, ?X_1, ?X_3, ?X_2, ?X_4), <http://rulewerk.semantic-web.org/inferred/ex>(?Z_1, ?Z_3, ?Z_2), R_29(?X_2, ?X_3, ?Z_3, ?Z_2, ?X_4, ?X_2) .
+R_29("str_1", 18224627337033890099, c_1, 4775054159690564854, "str_2", <http://www.w3.org/2002/07/owl#intersectionOf>).
+R_7(<http://www.w3.org/2000/01/rdf-schema#subClassOf>).
+R_6(<http://www.w3.org/2002/07/owl#someValuesFrom>, <http://www.w3.org/2002/07/owl#intersectionOf>, <http://www.w3.org/2002/07/owl#intersectionOf>, <http://www.w3.org/2002/07/owl#onProperty>).
+R_6(c_2, "str_1", <http://www.w3.org/2000/01/rdf-schema#subClassOf>, 5212281777913270014).
+R_27(<http://www.w3.org/2002/07/owl#disjointWith>, "str_3", c_3, 5212281777913270014, <http://www.w3.org/2002/07/owl#someValuesFrom>, <http://www.w3.org/2002/07/owl#intersectionOf>).
+R_27(13094496824040567762, 12501160599866116044, "str_4", <http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, c_4, "str_5").
+R_15(c_5, 17122736574521185340, <http://www.w3.org/2000/01/rdf-schema#subPropertyOf>).
+R_19(<http://www.w3.org/2000/01/rdf-schema#subClassOf>, c_6, "str_3").
+R_6(18224627337033890099, c_7, <http://www.w3.org/2002/07/owl#equivalentClass>, 12501160599866116044).
+R_27(<http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, 9222219536591031438, c_4, c_8, <http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, c_9).
+R_13(c_10, c_11, "str_1").
+R_19("str_7", 18364758193411404491, c_13).
+R_27(18364758193411404491, 10345855565341844848, c_1, c_14, 18364758193411404491, c_5).
+R_6("<http://www.w3.org/2002/07/owl#Nothing>", "str_8", c_13, 16103988145069398140).
+R_27(c_3, c_15, "str_9", c_16, c_17, <http://www.w3.org/2002/07/owl#intersectionOf>).
+R_27("str_8", "str_3", c_4, c_8, <http://www.w3.org/2000/01/rdf-schema#subPropertyOf>, "str_10").
+R_6(6585472424535280959, <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>, c_5, "str_9").
+R_27(c_18, c_19, "str_11", "str_8", <http://www.w3.org/2002/07/owl#intersectionOf>, <http://www.w3.org/2002/07/owl#intersectionOf>).
+R_23(c_14, "str_15", "str_3", "str_15", 5172723633948807197, c_20).
+R_6(7312945419571468139, 15578749118835071120, "str_16", c_21).
+R_11(c_8, c_22, "str_13").
+R_29(c_23, c_24, 7635555549770573704, 10092324753490282406, c_25, c_26).
+R_6(179513151031439072, "str_17", "str_18", <http://www.w3.org/2002/07/owl#equivalentClass>).
+R_7("str_19").
+R_6(c_27, c_7, "str_20", c_28).
+R_20(c_29, 7635555549770573704, c_28, c_28).
+R_27(c_30, c_10, c_31, 15348358895262148836, "str_21", c_18).
+R_13(c_32, c_18, c_33).
+R_19(<http://www.w3.org/2002/07/owl#propertyChain>, ?X_2, ?X_2) :- R_4(<http://www.w3.org/2002/07/owl#propertyChain>, ?X_2, ?X_2, ?X_2, ?X_2, ?X_2) .
+R_5(?X_3, ?X_4, ?X_1, ?X_2, ?X_5) :- R_23(?X_3, ?X_4, ?X_1, ?X_2, ?X_4, ?X_5), first(?X_1), <http://rulewerk.semantic-web.org/normalForm/conj>(?Z_5, ?Z_4, ?X_3), R_11(?Z_4, ?X_1, ?X_4), R_15(?X_4, ?X_5, ?X_1), R_19(?Z_4, ?X_4, ?X_1), ~<http://rulewerk.semantic-web.org/inferred/subClassOf>(?X_4, ?X_3), last(?X_1) .
+R_2(?X_2, ?X_3, ?X_4, ?X_3) :- prepareSco(?X_2, ?X_3), prepareSco(?X_4, ?X_3), ~prepareSco(?X_2, ?X_3) .
+R_27(?X_3, ?X_2, ?X_2, ?X_6, "str_18", ?X_5) :- R_19(?X_3, ?X_2, ?X_2_new_1), R_19(?X_6, "str_18", ?X_5), ~R_19(?X_3, ?X_2_new_1, ?X_2) .
+R_10(?X_2, <http://www.w3.org/2002/07/owl#disjointWith>, ?X_6, ?X_3, ?X_4, ?X_2) :- R_29(?X_2, <http://www.w3.org/2002/07/owl#disjointWith>, ?X_6, ?X_3, ?X_4, ?X_2), R_23(?Z_4, ?X_2, ?X_3, ?X_4, <http://www.w3.org/2002/07/owl#intersectionOf>, ?X_4), ~<http://rulewerk.semantic-web.org/normalForm/exists>(?X_3, ?Z_4, <http://www.w3.org/2002/07/owl#onProperty>) .
+R_29(?X_1, ?X_4, <http://www.w3.org/2002/07/owl#propertyChain>, ?X_5, ?X_2, ?X_3) :- R_8(?X_4, ?X_4, ?X_1, ?X_5, ?X_2), R_8(?X_2, ?X_1, ?X_2, ?X_3, <http://www.w3.org/2002/07/owl#propertyChain>), ~R_19(?X_3, ?X_1, c_8) .
+R_27(18364758193411404491, "str_24", c_26, 6371843197081594715, c_22, c_17).
+R_34(c_36, 13103850748772208418, "str_25", c_37).
+R_6(?X_3, <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>, ?X_2, ?X_2) :- <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?X_3), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(<http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?X_2), <http://rulewerk.semantic-web.org/normalForm/isSubClass>(?X_2), ~class(<http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>), ~R_9(?X_3, <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>, ?X_2, ?X_3, ?X_3) .
+R_27(?X_2, ?X_4, ?X_1, <http://www.w3.org/2002/07/owl#equivalentClass>, ?X_4, ?X_3) :- repOf(?X_2, ?X_4_new_1), repOf(?X_1, <http://www.w3.org/2002/07/owl#equivalentClass>), repOf(?X_4, ?X_3), R_6(?X_1, ?X_4_new_1, ?X_4, ?Z_1), ~R_21(?X_4), R_26(?Z_6, ?X_4, ?X_2, ?Z_4, ?X_4_new_1, <http://www.w3.org/2002/07/owl#propertyChain>) .
+R_34(c_5, "str_20", <http://www.w3.org/2002/07/owl#equivalentClass>, 427754239670078637).
+R_33(?X_1) :- R_23("str_3", ?X_1, ?Y_1, ?X_1, ?Y_1, ?X_1), R_28(?X_1, ?Y_1, "str_3", ?X_1, ?Y_1, "str_3"), ~R_28(?X_1, ?Y_1, "str_3", ?Y_1, ?Y_1, ?Y_1) .
+R_6(?X_2_new_1, <http://www.w3.org/2000/01/rdf-schema#subClassOf>, ?X_1, ?X_3) :- <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?X_2_new_1), <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?X_1), <http://rulewerk.semantic-web.org/normalForm/isMainClass>(?X_3), ~directSubProp(?X_3, ?X_1) .

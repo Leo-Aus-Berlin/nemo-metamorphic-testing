@@ -18,7 +18,6 @@ use nemo::rule_model::pipeline::transformations::ProgramTransformation;
 use rand::Rng;
 use rand::seq::{IndexedRandom, IteratorRandom, SliceRandom};
 
-use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::transformation_types::TransformationTypes;
 use crate::transformations::{TestingTransformation, util};
@@ -460,9 +459,7 @@ impl<'a, 'b> ProgramTransformation for AddRelationalEdgeNewRule<'a, 'b> {
             self.adg.write_self_to_file(
                 Some(
                     String::from("./")
-                        + NAME_OF_TRANSFORMATION_SEQUENCE
-                            .get()
-                            .expect("Name of Transformation Sequence not set")
+                        + self.adg.get_transformation_sequence_name()
                         //+ "/log",
                 ),
                 Some(String::from("pre_update_adg")),

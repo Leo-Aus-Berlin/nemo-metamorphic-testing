@@ -1,0 +1,73 @@
+TRUE("true"^^<http://www.w3.org/2001/XMLSchema#boolean>).
+PI("3.14159"^^<http://www.w3.org/2001/XMLSchema#double>).
+CIRC_EARTH("40075000"^^<http://www.w3.org/2001/XMLSchema#double>).
+@import endangered :- csv{resource= "data/endangered.csv", format= (string)}.
+@import locations :- csv{resource= "data/locations.csv", format= (double, double, skip, skip, skip, skip, skip, skip, skip, skip, skip, skip, string)}.
+project("Wind Turbine A").
+project_location("Wind Turbine A", "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>, "50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>).
+project_height_m("Wind Turbine A", 60).
+project_species("Wind Turbine A", "Rotmilan").
+project_species("Wind Turbine A", "Feldsperling").
+project("Wind Turbine B").
+project_location("Wind Turbine B", "13.704927907097524"^^<http://www.w3.org/2001/XMLSchema#double>, "50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>).
+project_height_m("Wind Turbine B", 40).
+project_species("Wind Turbine B", "Gartenschläfer").
+project("Wind Turbine C").
+project_location("Wind Turbine C", "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, "50.90297432498729"^^<http://www.w3.org/2001/XMLSchema#double>).
+project_height_m("Wind Turbine C", 60).
+project_species("Wind Turbine C", "Mauersegler").
+coordinates(?longitude, ?latitude) :- locations(?longitude, ?latitude, ?tag), TRUE(CONTAINS(?tag, "addr")) .
+coordinates_m(?Xm, ?Ym) :- coordinates(?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), ?Xm = ?longitude * ?earth * (COS(?latitude / "180"^^<http://www.w3.org/2001/XMLSchema#double> * ?PI)) / "360"^^<http://www.w3.org/2001/XMLSchema#double>, ?Ym = ?latitude * ?earth / "360"^^<http://www.w3.org/2001/XMLSchema#double> .
+project_location_m(?project, ?Xm, ?Ym) :- project_location(?project, ?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), ?Xm = ?longitude * ?earth * (COS(?latitude / "180"^^<http://www.w3.org/2001/XMLSchema#double> * ?PI)) / "360"^^<http://www.w3.org/2001/XMLSchema#double>, ?Ym = ?latitude * ?earth / "360"^^<http://www.w3.org/2001/XMLSchema#double> .
+environmental_impact(?project) :- project_height_m(?project, ?height), ?height >= 50 .
+distance(?project, ?distance) :- project_location_m(?project, ?Xp, ?Yp), coordinates_m(?Xr, ?Yr), ?distance = SQRT((POW(?Xp - ?Xr, "2"^^<http://www.w3.org/2001/XMLSchema#double>)) + (POW(?Yp - ?Yr, "2"^^<http://www.w3.org/2001/XMLSchema#double>))) .
+project_reject(?project) :- distance(?project, ?distance), ?distance < "200"^^<http://www.w3.org/2001/XMLSchema#double> .
+project_reject(?project) :- environmental_impact(?project), project_species(?project, ?species), endangered(?species) .
+project_approved(?project) :- project(?project), ~project_reject(?project) .
+closest_house(?project, #min(?distance)) :- distance(?project, ?distance) .
+@export R_OUT :- csv{}.
+R_22(?X_4, "Wind Turbine A", ?X_2, ?X_1) :- R_20("Wind Turbine A", "Wind Turbine A", ?X_2, ?X_1, ?Y_1, ?X_4) .
+R_23(?X_2, "Wind Turbine B", ?X_5, ?X_6, ?X_4, ?X_3) :- locations(?X_2, "Wind Turbine B", ?X_5), locations(?X_6, ?X_4, ?X_3) .
+R_OUT("Feldsperling", ?X_2) :- R_23(?X_2, ?X_2, "Feldsperling", ?X_2, ?X_2, ?Y_1), coordinates(?X_2, ?Z_2) .
+R_12(?X_3, ?X_5, ?X_2, ?X_1, ?X_4) :- R_2(?X_3, ?X_5), R_2(?X_1, ?X_1), R_2(?X_4, ?X_2), endangered(?X_1) .
+R_3(?X_2, ?X_1, ?X_3, ?X_4, ?X_3) :- project_height_m(?X_2, ?X_1), project_height_m(?X_3, ?X_4), project_height_m(?X_3, ?Y_1), locations(?X_2, ?Z_1, ?X_4) .
+R_14(?X_2, ?X_1, ?X_4, "Wind Turbine C", ?X_3) :- R_12(?X_2, ?X_1, ?X_4, "Wind Turbine C", ?X_3), project_approved(?X_4) .
+R_15(?X_1, ?X_1) :- endangered(?X_1), endangered(?X_1), ~project_height_m(?X_1, ?X_1) .
+R_5(?X_2, ?X_6, "Wind Turbine A", ?X_1, ?X_4, ?X_2) :- R_20(?X_2, ?X_6, "Wind Turbine A", ?X_1, ?X_4, ?X_2), TRUE(?Z_2), project_location_m(?X_1, ?X_2, ?Z_3) .
+R_2(?X_1, ?X_2) :- project_species(?X_1, ?X_2), ~project_species("Wind Turbine A", ?X_2) .
+R_20(?X_1, ?X_4, ?X_1, ?X_5, ?X_2, ?X_6) :- R_24(?X_1, ?X_4, ?X_1, ?X_5, ?X_2, ?X_6), CIRC_EARTH(?Z_3), PI(?X_5), R_4(?X_2, ?X_4) .
+R_18(?X_6, ?X_3, ?X_5, ?X_4, "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2) :- R_21(?X_6, ?X_3, ?X_5, ?X_4, "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2), R_7(?Z_3, ?X_3, ?X_6) .
+R_19("40075000"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2) :- R_20(?Y_1, ?X_2, ?X_2, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>, "3.14159"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2), ~closest_house("Wind Turbine A", ?X_2), R_8(?X_2, ?Z_1), R_9(?Y_1) .
+R_24(?X_2, ?X_5, ?X_6, 60, ?X_3, ?X_1) :- R_OUT(?X_2, ?X_5), R_OUT(?X_6, 60), R_OUT(?X_3, ?X_1), R_6(?Z_3, ?X_2, ?X_6, "Wind Turbine B", ?X_3), ~R_10("40075000"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_3, ?X_6) .
+R_4(?X_1, ?X_2) :- R_15(?X_1, ?X_2), distance(?Z_2, ?X_2), environmental_impact(?X_1), R_13("Wind Turbine A", ?X_2, ?Z_2) .
+R_10(?X_4, ?X_3, ?X_2, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>) :- R_14("50.90297432498729"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_2, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_4), R_15(?X_3, "3.14159"^^<http://www.w3.org/2001/XMLSchema#double>) .
+R_9(?X_1) :- CIRC_EARTH(?X_1), R_17(?Z_1, ?X_1, ?X_1, 40, ?X_1) .
+R_16(?X_2, ?X_2) :- project_reject(?X_2), project_reject(?X_2), project(?X_2), R_19(?X_2, ?X_2), R_20(?Z_1, ?X_2, ?X_2, ?X_2, ?X_2, ?Z_3), R_22(?X_2, ?Z_4, ?X_2, ?X_2) .
+R_1(?X_2, ?X_1, "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_17(?X_2, ?X_1, ?X_2, "Wind Turbine B", "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>), R_3(?X_1, ?X_1, ?X_2, ?Z_1, ?X_2), R_23(?X_2, ?X_2, ?Z_3, ?X_1, ?X_1, ?Z_4) .
+R_7(?X_2, "Wind Turbine A", ?X_3) :- R_20(?X_2, "addr", ?X_3, "Wind Turbine A", "Wind Turbine A", ?X_3), ~R_5(?X_3, ?X_3, ?X_3, ?X_2, ?X_2, "Wind Turbine C"), ~R_14(?X_3, ?X_3, ?X_3, ?X_3, ?X_3), R_18(?Z_5, ?X_3, "Wind Turbine A", ?X_3, ?X_2, ?X_3), R_24(?X_2, ?Z_8, ?X_2, ?X_2, ?X_3, ?X_2) .
+R_12("true"^^<http://www.w3.org/2001/XMLSchema#boolean>, "Wind Turbine A", 40, "Feldsperling", c_1).
+R_1(c_2, "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>, c_3).
+R_3(12313174342861107982, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>, "Feldsperling", c_1, "Wind Turbine A").
+R_4(c_4, c_5).
+R_6(c_6, c_1, 60, c_7, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_6(c_8, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>, "Feldsperling", "Wind Turbine C", "3.14159"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_7(c_9, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>, c_10).
+R_OUT(c_11, "Rotmilan").
+R_19("Wind Turbine A", "str_1").
+R_4("Wind Turbine A", c_12).
+R_7(c_16, "Wind Turbine C", 11197406685852653717).
+R_22("50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>, "Wind Turbine B", c_5, c_12).
+R_17("addr", c_18, c_19, c_20, 8331805404248463148).
+R_9("str_6").
+R_7("Wind Turbine C", "str_7", c_21).
+R_16(7916136241448410635, c_13).
+R_18(2255553993516873772, "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>, "Wind Turbine C", "str_8", 10767552128471924024, "Rotmilan").
+R_1(17961880002270533222, c_23, 16053445138585832529).
+R_22("str_5", 10767552128471924024, "str_9", 2255553993516873772).
+R_4(c_25, "str_10").
+R_17(?X_2, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_5, ?X_1, ?X_2) :- project_approved(?X_2), project_approved("true"^^<http://www.w3.org/2001/XMLSchema#boolean>), project_approved(?X_5), project_approved(?X_1), project_approved(?X_2), project_reject("13.704927907097524"^^<http://www.w3.org/2001/XMLSchema#double>), R_1(?X_2, ?Z_3, "Wind Turbine B"), ~project_height_m(?X_1, ?Z_3) .
+R_3(c_29, 10767552128471924024, "Wind Turbine C", "Rotmilan", c_30).
+R_7(5081282708931444221, c_31, 10022251727022050797).
+R_21(c_14, ?X_1, ?X_3, ?X_5, ?X_2, ?X_4) :- R_23(c_14, ?X_1, ?X_3, ?X_5, ?X_2, ?X_4), ~R_23(c_14, ?X_1, ?X_3, ?X_5, ?X_2, ?X_4) .
+R_4(9643509782468193690, c_11).
+R_8(?X_2, ?X_2) :- TRUE(?X_2), TRUE(?X_2), R_12(?X_2, ?Z_1, ?X_2, ?X_2, ?X_2), R_8(?X_2, ?Z_2) .

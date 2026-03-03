@@ -1,0 +1,820 @@
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] Beginning transformation mtf_CON_5500025
+                Oracle:     CON          Number of T: 34
+                Debug Mode: false          u64 Seed:    5500025
+                Number of generating transformations: 36
+                Internal Seed:          [5, 133, 226, 255, 216, 67, 82, 111, 137, 6, 159, 229, 148, 248, 27, 209, 84, 64, 146, 121, 210, 218, 194, 54, 117, 240, 216, 53, 218, 20, 164, 220]
+                Seed File: Currently not supported!
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] -------------- Reading Seed File: ------------
+18:44:55 [INFO] "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/datalogMtlSensor/datalogMtlSensor.rls"
+18:44:55 [INFO] Renaming of rules complete
+18:44:55 [INFO] --------- Finished Reading Seed file ---------
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] 
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] -------- Beginning Program Generation --------
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] 
+18:44:55 [INFO] Removing old export statements
+18:44:55 [INFO] Beginning inverse_stratum and ancestry computation starting at node R_OUT
+18:44:55 [INFO] Ancestry and Inverse Stratum computation complete.
+18:44:55 [INFO] Constructed lite ADG
+18:44:55 [INFO] Generating Program...
+18:44:55 [INFO] 
+18:44:55 [INFO] 1 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_1
+18:44:55 [INFO] 2 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_2
+18:44:55 [INFO] 3 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_3
+18:44:55 [INFO] 4 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_4
+18:44:55 [INFO] 5 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_5
+18:44:55 [INFO] 6 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_6
+18:44:55 [INFO] 7 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_7
+18:44:55 [INFO] 8 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_8
+18:44:55 [INFO] 9 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_9
+18:44:55 [INFO] 10 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_10
+18:44:55 [INFO] 11 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_11
+18:44:55 [INFO] 12 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_12
+18:44:55 [INFO] 13 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_13
+18:44:55 [INFO] 14 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_14
+18:44:55 [INFO] 15 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_15
+18:44:55 [INFO] 16 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_16
+18:44:55 [INFO] 17 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_17
+18:44:55 [INFO] 18 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_18
+18:44:55 [INFO] 19 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_19
+18:44:55 [INFO] 20 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_20
+18:44:55 [INFO] 21 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_21
+18:44:55 [INFO] 22 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_22
+18:44:55 [INFO] 23 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_23
+18:44:55 [INFO] 24 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_24
+18:44:55 [INFO] 25 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_25
+18:44:55 [INFO] 26 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_26
+18:44:55 [INFO] 27 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_27
+18:44:55 [INFO] 28 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_28
+18:44:55 [INFO] 29 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_29
+18:44:55 [INFO] 30 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_30
+18:44:55 [INFO] 31 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_31
+18:44:55 [INFO] 32 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_32
+18:44:55 [INFO] 33 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_33
+18:44:55 [INFO] 34 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_34
+18:44:55 [INFO] 35 / 35
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_35
+18:44:55 [INFO] 
+18:44:55 [INFO] Adding a new rule for each relation other than the seed relations
+18:44:55 [INFO] 
+18:44:55 [INFO] 1 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_OUT
+18:44:55 [INFO]   Assigned relation R_OUT the artiy 2
+18:44:55 [INFO]   Added new rule of name r_GEN_1
+18:44:55 [INFO]   R_OUT(?X_1, ?X_2) :- HighTemperature(?X_1, ?X_2, ?Y_1) .
+18:44:55 [INFO] 2 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_1
+18:44:55 [INFO]   Assigned relation R_1 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_2
+18:44:55 [INFO]   R_1(?X_6, ?X_2, ?X_1, ?X_4, "20"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3) :- Overheat(?X_6, ?X_2, ?X_1), Overheat(?X_4, "20"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3) .
+18:44:55 [INFO] 3 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_2
+18:44:55 [INFO]   Assigned relation R_2 the artiy 1
+18:44:55 [INFO]   Assigned relation R_10 the artiy 3
+18:44:55 [INFO]   Added new rule of name r_GEN_3
+18:44:55 [INFO]   R_2(?X_1) :- R_10(?X_1, "sensor2", ?X_1) .
+18:44:55 [INFO] 4 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_3
+18:44:55 [INFO]   Assigned relation R_3 the artiy 6
+18:44:55 [INFO]   Assigned relation R_15 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_4
+18:44:55 [INFO]   R_3(?X_2, ?X_1, ?X_3, ?X_4, ?X_4, ?X_5) :- R_15(?X_2, ?X_1, ?X_3, ?X_4, ?X_4, ?X_5) .
+18:44:55 [INFO] 5 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_4
+18:44:55 [INFO]   Assigned relation R_4 the artiy 3
+18:44:55 [INFO]   Assigned relation R_17 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_5
+18:44:55 [INFO]   R_4("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_1) :- R_17("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, ?X_1, ?Y_1, ?X_2, ?X_1) .
+18:44:55 [INFO] 6 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_5
+18:44:55 [INFO]   Assigned relation R_5 the artiy 2
+18:44:55 [INFO]   Assigned relation R_20 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_6
+18:44:55 [INFO]   R_5(?X_1, ?X_1) :- R_20(?X_1, ?X_1, ?X_1, ?X_1) .
+18:44:55 [INFO] 7 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_6
+18:44:55 [INFO]   Assigned relation R_6 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_7
+18:44:55 [INFO]   R_6(?X_3, ?X_1, ?X_4, "sensor2") :- SameLocation(?X_3, ?X_1), SameLocation(?X_4, "sensor2") .
+18:44:55 [INFO] 8 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_7
+18:44:55 [INFO]   Assigned relation R_7 the artiy 2
+18:44:55 [INFO]   Assigned relation R_34 the artiy 3
+18:44:55 [INFO]   Added new rule of name r_GEN_8
+18:44:55 [INFO]   R_7("14.7"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2) :- R_34("14.7"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, "sensor2") .
+18:44:55 [INFO] 9 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_8
+18:44:55 [INFO]   Assigned relation R_8 the artiy 2
+18:44:55 [INFO]   Assigned relation R_21 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_9
+18:44:55 [INFO]   R_8("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1) :- R_21("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?Y_1) .
+18:44:55 [INFO] 10 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_9
+18:44:55 [INFO]   Assigned relation R_9 the artiy 4
+18:44:55 [INFO]   Assigned relation R_25 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_10
+18:44:55 [INFO]   R_9(?X_3, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4) :- R_25(?X_3, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, ?X_4) .
+18:44:55 [INFO] 11 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_10
+18:44:55 [INFO]   Added new rule of name r_GEN_11
+18:44:55 [INFO]   R_10(?X_1, ?X_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) :- Alert(?X_1, ?X_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 12 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_11
+18:44:55 [INFO]   Assigned relation R_11 the artiy 1
+18:44:55 [INFO]   Added new rule of name r_GEN_12
+18:44:55 [INFO]   R_11(?X_1) :- R_1(?Y_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, ?X_1, ?X_1, ?X_1) .
+18:44:55 [INFO] 13 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_12
+18:44:55 [INFO]   Assigned relation R_12 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_13
+18:44:55 [INFO]   R_12(?X_5, ?X_6, ?X_1, ?X_2, "sensor2", ?X_3) :- R_34(?X_5, ?X_6, ?X_1), R_34(?X_2, "sensor2", ?X_3) .
+18:44:55 [INFO] 14 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_13
+18:44:55 [INFO]   Assigned relation R_13 the artiy 1
+18:44:55 [INFO]   Added new rule of name r_GEN_14
+18:44:55 [INFO]   R_13("sensor1") :- HighTemperature("sensor1", ?Y_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 15 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_14
+18:44:55 [INFO]   Assigned relation R_14 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_15
+18:44:55 [INFO]   R_14(?X_1, ?X_4, ?X_2, ?X_3) :- R_OUT(?X_1, ?X_4), R_OUT(?X_2, ?X_3) .
+18:44:55 [INFO] 16 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_15
+18:44:55 [INFO]   Added new rule of name r_GEN_16
+18:44:55 [INFO]   R_15(?X_4, ?X_2, ?X_1, ?X_5, ?X_3, ?X_6) :- R_17(?X_4, ?X_2, ?X_1, ?X_5, ?X_3, ?X_6) .
+18:44:55 [INFO] 17 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_16
+18:44:55 [INFO]   Assigned relation R_16 the artiy 1
+18:44:55 [INFO]   Added new rule of name r_GEN_17
+18:44:55 [INFO]   R_16(?X_1) :- R_7(?X_1, ?X_1) .
+18:44:55 [INFO] 18 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_17
+18:44:55 [INFO]   Added new rule of name r_GEN_18
+18:44:55 [INFO]   R_17(?X_6, ?X_1, ?X_4, ?X_2, ?X_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_34(?X_6, ?X_1, ?X_4), R_34(?X_2, ?X_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 19 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_18
+18:44:55 [INFO]   Assigned relation R_18 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_19
+18:44:55 [INFO]   R_18(?X_2, ?X_1, ?X_4, "sensor2") :- R_9(?X_2, ?X_1, ?X_4, "sensor2") .
+18:44:55 [INFO] 20 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_19
+18:44:55 [INFO]   Assigned relation R_19 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_20
+18:44:55 [INFO]   R_19(?X_2, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_3, ?X_5) :- HighTemperature(?X_2, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1), HighTemperature(?X_3, ?X_1, ?X_5) .
+18:44:55 [INFO] 21 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_20
+18:44:55 [INFO]   Added new rule of name r_GEN_21
+18:44:55 [INFO]   R_20(?X_3, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4) :- R_3(?X_3, ?Y_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?X_1, ?X_4) .
+18:44:55 [INFO] 22 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_21
+18:44:55 [INFO]   Added new rule of name r_GEN_22
+18:44:55 [INFO]   R_21(?X_4, ?X_3, ?X_1, "sensor2", ?X_5) :- R_4("sensor1", ?X_3, ?X_1), R_4("sensor2", ?X_5, ?X_4) .
+18:44:55 [INFO] 23 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_22
+18:44:55 [INFO]   Assigned relation R_22 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_23
+18:44:55 [INFO]   R_22("sensor2", ?X_3, ?X_2, ?X_1) :- R_3("sensor2", ?X_3, "sensor2", ?X_2, ?X_1, ?X_2) .
+18:44:55 [INFO] 24 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_23
+18:44:55 [INFO]   Assigned relation R_23 the artiy 3
+18:44:55 [INFO]   Assigned relation R_28 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_24
+18:44:55 [INFO]   R_23(?X_3, ?X_3, ?X_1) :- R_28(?X_3, ?X_3, "sensor2", ?X_3, ?X_1) .
+18:44:55 [INFO] 25 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_24
+18:44:55 [INFO]   Assigned relation R_24 the artiy 1
+18:44:55 [INFO]   Added new rule of name r_GEN_25
+18:44:55 [INFO]   R_24(?X_1) :- SameLocation(?X_1, "sensor2") .
+18:44:55 [INFO] 26 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_25
+18:44:55 [INFO]   Added new rule of name r_GEN_26
+18:44:55 [INFO]   R_25(?X_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5, ?X_4, ?X_3) :- Alert(?X_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5), Alert(?X_4, ?X_3, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 27 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_26
+18:44:55 [INFO]   Assigned relation R_26 the artiy 6
+18:44:55 [INFO]   Assigned relation R_27 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_27
+18:44:55 [INFO]   R_26(?X_4, ?X_6, "sensor2", ?X_5, ?X_4, ?X_3) :- R_27(?X_4, ?X_6, "sensor2", ?X_5, ?X_4, ?X_3) .
+18:44:55 [INFO] 28 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_27
+18:44:55 [INFO]   Assigned relation R_29 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_28
+18:44:55 [INFO]   R_27(?X_4, ?X_2, ?X_6, ?X_5, ?X_3, ?X_1) :- R_29(?X_4, ?X_2, ?X_6, ?X_5, ?X_3, ?X_1) .
+18:44:55 [INFO] 29 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_28
+18:44:55 [INFO]   Added new rule of name r_GEN_29
+18:44:55 [INFO]   R_28(?X_2, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_4) :- R_21(?X_2, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_4) .
+18:44:55 [INFO] 30 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_29
+18:44:55 [INFO]   Added new rule of name r_GEN_30
+18:44:55 [INFO]   R_29(?X_4, ?X_6, "sensor2", ?X_6, ?X_3, ?X_5) :- R_29(?X_4, ?X_6, "sensor2", ?X_6, ?X_3, ?X_5) .
+18:44:55 [INFO] 31 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_30
+18:44:55 [INFO]   Assigned relation R_30 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_31
+18:44:55 [INFO]   R_30(?X_2, ?X_3, ?X_1, ?X_2) :- R_25(?X_2, ?X_3, ?X_1, ?X_3, ?X_2) .
+18:44:55 [INFO] 32 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_31
+18:44:55 [INFO]   Assigned relation R_31 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_32
+18:44:55 [INFO]   R_31(?X_3, ?X_4, ?X_2, ?X_1) :- R_26("sensor2", "sensor2", ?X_2, ?X_1, ?X_3, ?X_4) .
+18:44:55 [INFO] 33 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_32
+18:44:55 [INFO]   Assigned relation R_32 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_33
+18:44:55 [INFO]   R_32(?X_3, "sensor1", ?X_4, ?X_1) :- R_27(?X_3, "sensor1", ?Y_1, ?X_1, "sensor1", ?X_4) .
+18:44:55 [INFO] 34 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_33
+18:44:55 [INFO]   Assigned relation R_33 the artiy 1
+18:44:55 [INFO]   Added new rule of name r_GEN_34
+18:44:55 [INFO]   R_33(?X_1) :- R_OUT(?X_1, ?X_1) .
+18:44:55 [INFO] 35 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_34
+18:44:55 [INFO]   Added new rule of name r_GEN_35
+18:44:55 [INFO]   R_34("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_1) :- R_10("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_1) .
+18:44:55 [INFO] 36 / 36
+18:44:55 [INFO]   Generating new single body literal rule for R_35
+18:44:55 [INFO]   Assigned relation R_35 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_36
+18:44:55 [INFO]   R_35("3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_5, ?X_2, ?X_1) :- R_4("20"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_5), R_4(?X_2, ?X_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 
+18:44:55 [INFO] Adding a outgoing relational edge for each relation other than R_OUT
+18:44:55 [INFO] 
+18:44:55 [INFO] 1 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from Alert for r_GEN_3
+18:44:55 [INFO]   Generated literal Alert(?X_1, ?X_1, "sensor1") for rule r_GEN_3
+18:44:55 [INFO] 2 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from HighTemperature for r_GEN_4
+18:44:55 [INFO]   Generated literal ~HighTemperature(?X_3, ?X_5, ?X_1) for rule r_GEN_4
+18:44:55 [INFO] 3 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from HighTemperatureSometimes for r_GEN_21
+18:44:55 [INFO]   Generated literal HighTemperatureSometimes(?X_1, ?X_3, ?Y_1) for rule r_GEN_21
+18:44:55 [INFO] 4 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from Overheat for r_GEN_18
+18:44:55 [INFO]   Generated literal ~Overheat(?X_2, ?X_4, ?X_4) for rule r_GEN_18
+18:44:55 [INFO] 5 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from SameLocation for r_GEN_36
+18:44:55 [INFO]   Generated literal SameLocation(?X_2, ?X_1) for rule r_GEN_36
+18:44:55 [INFO] 6 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_1 for r_GEN_6
+18:44:55 [INFO]   Generated literal R_1(?X_1, ?Z_2, ?X_1, ?X_1, ?Z_1, ?X_1) for rule r_GEN_6
+18:44:55 [INFO] 7 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_2 for r_GEN_20
+18:44:55 [INFO]   Generated literal R_2(?X_1) for rule r_GEN_20
+18:44:55 [INFO] 8 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_3 for r_GEN_19
+18:44:55 [INFO]   Generated literal R_3(?X_2, ?X_2, ?X_1, ?Z_2, ?X_1, ?Z_1) for rule r_GEN_19
+18:44:55 [INFO] 9 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_4 for r_GEN_8
+18:44:55 [INFO]   Generated literal R_4("10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?Z_1) for rule r_GEN_8
+18:44:55 [INFO] 10 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_5 for r_GEN_7
+18:44:55 [INFO]   Generated literal R_5(?X_1, ?X_3) for rule r_GEN_7
+18:44:55 [INFO] 11 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_6 for r_GEN_29
+18:44:55 [INFO]   Generated literal ~R_6(?X_4, ?X_3, ?X_1, "sensor1") for rule r_GEN_29
+18:44:55 [INFO] 12 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_7 for r_GEN_5
+18:44:55 [INFO]   Generated literal R_7(?Z_3, "sensor2") for rule r_GEN_5
+18:44:55 [INFO] 13 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_8 for r_GEN_34
+18:44:55 [INFO]   Generated literal R_8(?X_1, ?X_1) for rule r_GEN_34
+18:44:55 [INFO] 14 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_9 for r_GEN_18
+18:44:55 [INFO]   Generated literal R_9(?X_1, ?X_4, ?Z_5, ?X_2) for rule r_GEN_18
+18:44:55 [INFO] 15 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_10 for r_GEN_36
+18:44:55 [INFO]   Generated literal ~R_10(?X_2, ?X_2, ?X_1) for rule r_GEN_36
+18:44:55 [INFO] 16 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_11 for r_GEN_35
+18:44:55 [INFO]   Generated literal ~R_11(?X_3) for rule r_GEN_35
+18:44:55 [INFO] 17 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_12 for r_GEN_21
+18:44:55 [INFO]   Generated literal R_12(?X_4, ?X_1, ?X_1, ?X_4, ?Z_1, ?X_3) for rule r_GEN_21
+18:44:55 [INFO] 18 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_13 for r_GEN_36
+18:44:55 [INFO]   Generated literal R_13(?Z_5) for rule r_GEN_36
+18:44:55 [INFO] 19 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_14 for r_GEN_20
+18:44:55 [INFO]   Generated literal R_14(?X_1, ?X_3, ?X_1, ?Z_4) for rule r_GEN_20
+18:44:55 [INFO] 20 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_15 for r_GEN_35
+18:44:55 [INFO]   Generated literal R_15(?X_3, ?Z_1, ?X_3, ?X_1, ?X_3, ?Z_2) for rule r_GEN_35
+18:44:55 [INFO] 21 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_16 for r_GEN_21
+18:44:55 [INFO]   Generated literal R_16(?Y_1) for rule r_GEN_21
+18:44:55 [INFO] 22 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_17 for r_GEN_17
+18:44:55 [INFO]   Generated literal R_17("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_1, ?Z_1, ?X_1, ?X_1) for rule r_GEN_17
+18:44:55 [INFO] 23 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_18 for r_GEN_25
+18:44:55 [INFO]   Generated literal ~R_18(?X_1, ?X_1, "sensor2", ?X_1) for rule r_GEN_25
+18:44:55 [INFO] 24 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_19 for r_GEN_27
+18:44:55 [INFO]   Generated literal R_19(?X_5, ?X_4, ?X_6, ?Z_3, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) for rule r_GEN_27
+18:44:55 [INFO] 25 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_20 for r_GEN_7
+18:44:55 [INFO]   Generated literal ~R_20(?X_1, ?X_3, ?X_4, ?X_3) for rule r_GEN_7
+18:44:55 [INFO] 26 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_21 for r_GEN_5
+18:44:55 [INFO]   Generated literal R_21(?X_2, ?X_1, ?Z_4, ?X_2, ?Z_3) for rule r_GEN_5
+18:44:55 [INFO] 27 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_22 for r_GEN_28
+18:44:55 [INFO]   Generated literal R_22(?X_5, ?X_2, ?X_2, ?X_6) for rule r_GEN_28
+18:44:55 [INFO] 28 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_23 for r_GEN_33
+18:44:55 [INFO]   Generated literal R_23("sensor1", ?X_4, ?X_3) for rule r_GEN_33
+18:44:55 [INFO] 29 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_24 for r_GEN_6
+18:44:55 [INFO]   Generated literal R_24(?X_1) for rule r_GEN_6
+18:44:55 [INFO] 30 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_25 for r_GEN_32
+18:44:55 [INFO]   Generated literal ~R_25(?X_2, ?X_1, "20"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_2) for rule r_GEN_32
+18:44:55 [INFO] 31 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_26 for r_GEN_23
+18:44:55 [INFO]   Generated literal R_26(?X_2, ?X_2, ?X_3, ?X_3, ?X_1, ?Z_1) for rule r_GEN_23
+18:44:55 [INFO] 32 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_27 for r_GEN_36
+18:44:55 [INFO]   Generated literal R_27(?Z_5, ?X_3, ?X_2, ?X_2, ?X_5, ?Z_6) for rule r_GEN_36
+18:44:55 [INFO] 33 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_28 for r_GEN_14
+18:44:55 [INFO]   Generated literal R_28(?Y_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, "sensor2", ?Z_1) for rule r_GEN_14
+18:44:55 [INFO] 34 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_29 for r_GEN_32
+18:44:55 [INFO]   Generated literal R_29(?X_2, ?X_3, ?X_4, "sensor1", ?X_2, ?Z_5) for rule r_GEN_32
+18:44:55 [INFO] 35 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_30 for r_GEN_8
+18:44:55 [INFO]   Generated literal ~R_30("14.7"^^<http://www.w3.org/2001/XMLSchema#double>, ?Z_1, ?X_2, ?Z_1) for rule r_GEN_8
+18:44:55 [INFO] 36 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_31 for r_GEN_9
+18:44:55 [INFO]   Generated literal R_31(?X_1, "sensor2", ?Y_1, ?Z_1) for rule r_GEN_9
+18:44:55 [INFO] 37 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_32 for r_GEN_20
+18:44:55 [INFO]   Generated literal R_32(?X_5, ?Z_6, ?X_3, ?X_1) for rule r_GEN_20
+18:44:55 [INFO] 38 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_33 for r_GEN_9
+18:44:55 [INFO]   Generated literal R_33("sensor2") for rule r_GEN_9
+18:44:55 [INFO] 39 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_34 for r_GEN_13
+18:44:55 [INFO]   Generated literal R_34(?X_5, ?X_2, ?X_2) for rule r_GEN_13
+18:44:55 [INFO] 40 / 40
+18:44:55 [INFO]   Adding outgoing relational edge from R_35 for r_GEN_15
+18:44:55 [INFO]   Generated literal R_35(?X_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_3, ?X_1) for rule r_GEN_15
+18:44:55 [INFO] 
+18:44:55 [INFO] Adding gen. size facts
+18:44:55 [INFO] 
+18:44:55 [INFO] 1 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_27("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, "20"^^<http://www.w3.org/2001/XMLSchema#double>, c_1, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, c_2, c_3).
+18:44:55 [INFO] 2 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_29(c_1, c_4, "sensor1", c_5, c_6, "str_1").
+18:44:55 [INFO] 3 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_11("sensor1").
+18:44:55 [INFO] 4 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_20(c_7, "20"^^<http://www.w3.org/2001/XMLSchema#double>, c_8, 3733930863991098438).
+18:44:55 [INFO] 5 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_23("20"^^<http://www.w3.org/2001/XMLSchema#double>, c_9, c_10).
+18:44:55 [INFO] 6 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_12(c_11, 10942110340047376488, c_12, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, c_13, "sensor2").
+18:44:55 [INFO] 7 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_4("str_2", c_14, 14727020493423053480).
+18:44:55 [INFO] 8 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_2(c_1).
+18:44:55 [INFO] 9 / 36
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_34(c_15, c_16, c_17).
+18:44:56 [INFO] 10 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_30("sensor1", c_18, c_19, c_20).
+18:44:56 [INFO] 11 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_13("10"^^<http://www.w3.org/2001/XMLSchema#double>).
+18:44:56 [INFO] 12 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_OUT(c_21, c_22).
+18:44:56 [INFO] 13 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_26(c_23, c_24, 13038458451360149550, "str_3", c_20, "str_2").
+18:44:56 [INFO] 14 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_14(c_11, c_17, 16548907593374094922, c_11).
+18:44:56 [INFO] 15 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_13(c_25).
+18:44:56 [INFO] 16 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_15(13038458451360149550, c_26, "10"^^<http://www.w3.org/2001/XMLSchema#double>, c_20, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, "str_4").
+18:44:56 [INFO] 17 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_7("str_5", 15291750065651010290).
+18:44:56 [INFO] 18 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_24("5.1"^^<http://www.w3.org/2001/XMLSchema#double>).
+18:44:56 [INFO] 19 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_9(c_27, c_9, 13038458451360149550, "str_6").
+18:44:56 [INFO] 20 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_33("str_7").
+18:44:56 [INFO] 21 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_19(c_22, c_28, 3733930863991098438, c_29, c_28).
+18:44:56 [INFO] 22 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_2("sensor1").
+18:44:56 [INFO] 23 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_33(13038458451360149550).
+18:44:56 [INFO] 24 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_29("str_8", "str_9", c_27, "10"^^<http://www.w3.org/2001/XMLSchema#double>, "str_10", 16548907593374094922).
+18:44:56 [INFO] 25 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_16(c_24).
+18:44:56 [INFO] 26 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_29(13038458451360149550, "sensor2", 10548079028772122653, "str_11", "sensor2", "sensor2").
+18:44:56 [INFO] 27 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_19(c_30, 8665528538816777604, "str_12", c_13, c_8).
+18:44:56 [INFO] 28 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_7(c_25, c_31).
+18:44:56 [INFO] 29 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_12(c_14, c_19, "str_10", "20"^^<http://www.w3.org/2001/XMLSchema#double>, "str_13", c_32).
+18:44:56 [INFO] 30 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_24(c_33).
+18:44:56 [INFO] 31 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_9(3365123479750687259, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, 1587558600432253134, c_34).
+18:44:56 [INFO] 32 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_14("sensor1", c_35, 15080656766736576341, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>).
+18:44:56 [INFO] 33 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_31(28036436724401852, "str_14", 13883949782574366923, c_36).
+18:44:56 [INFO] 34 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_4(c_37, c_27, 4520203345222228718).
+18:44:56 [INFO] 35 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_19(c_29, 6227363429782004240, 10548079028772122653, c_3, c_11).
+18:44:56 [INFO] 36 / 36
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_31(7466578378722693968, 3365123479750687259, c_38, c_5).
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] ----------- Program Generation Done ----------
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------- Generated ADG Summary: -----------
+18:44:56 [INFO] ADG Fact Nodes:                  36
+18:44:56 [INFO] ADG Relational Nodes:            41
+18:44:56 [INFO] ADG Fact Edges:                  36
+18:44:56 [INFO] ADG Relational Edges:            85
+18:44:56 [INFO] Number of inv. Strata:           3
+18:44:56 [INFO] 
+18:44:56 [INFO] Nodes with None Ancestry:        39
+18:44:56 [INFO] Nodes with Positive Ancestry:    2
+18:44:56 [INFO] Nodes with Negative Ancestry:    0
+18:44:56 [INFO] Nodes with Unknown Ancestry:     0
+18:44:56 [INFO] 
+18:44:56 [INFO] Next rule name would be:         r_CON_37
+18:44:56 [INFO] Next predicate name would be:    R_36
+18:44:56 [INFO] Next constant name would be:     c_39
+18:44:56 [INFO] Next string would be:            "str_15"
+18:44:56 [INFO] 
+18:44:56 [INFO] Output predicate:                R_OUT
+18:44:56 [INFO] Generated rule count:            36
+18:44:56 [INFO] Rule count:                      42
+18:44:56 [INFO] Average rel. arity:              3.6341463414634148
+18:44:56 [INFO] Arity calc. may be inaccurate if arity > f64
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] ------ Performed Gen. Transformations: -------
+18:44:56 [INFO]  #      Type
+18:44:56 [INFO]  36      Generate New Rule with Probably Single Lit
+18:44:56 [INFO]  40      Generating an Outgoing Relational Edge
+18:44:56 [INFO]  35      I     Add Relational Node
+18:44:56 [INFO]  36      II    Add Fact Node and Edge
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] Storing input ADG and input program
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] --------- Beginning Transformations ----------
+18:44:56 [INFO] --------  Oracle: CON    Number: 34
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 1 / 34
+18:44:56 [INFO]   XI Add Contradictory Rule
+18:44:56 [INFO]   Added new contradictory rule of name r_CON_39
+18:44:56 [INFO]   R_16(?X_1) :- Overheat(13883949782574366923, ?X_1, 13883949782574366923), ~Overheat(13883949782574366923, ?X_1, 13883949782574366923) .
+18:44:56 [INFO] 2 / 34
+18:44:56 [INFO]   VIII Modify Rule - Remove Equality
+18:44:56 [INFO]   Replaced a random number of var X_1 with var X_1_new_1 in the rule r_GEN_9
+18:44:56 [INFO] 3 / 34
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_22(c_30, c_41, c_42, 13883949782574366923).
+18:44:56 [INFO] 4 / 34
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Generated literal R_7(?Z_3, ?X_2) for rule r_GEN_36
+18:44:56 [INFO] 5 / 34
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_4
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_22
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_5
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_8
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_36
+18:44:56 [INFO]   Removing at least 15 relational edges.
+18:44:56 [INFO] 6 / 34
+18:44:56 [INFO]   VII Modify Rule - Add Equality
+18:44:56 [INFO]   Replaced var ?X_1 with var ?Z_2 in the rule r_GEN_19
+18:44:56 [INFO] 7 / 34
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Generated literal R_12("str_11", ?X_1, ?Z_1, ?X_1, ?X_1, ?X_1) for rule r_CON_39
+18:44:56 [INFO] 8 / 34
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_17(8187947412774353490, c_43, "str_17", "str_13", c_44, "str_18").
+18:44:56 [INFO] 9 / 34
+18:44:56 [INFO]   I Add Relational Node
+18:44:56 [INFO]   Added new relation R_38
+18:44:56 [INFO] 10 / 34
+18:44:56 [INFO]   VII Modify Rule - Add Equality
+18:44:56 [INFO]   Replaced var ?X_1 with var ?X_2 in the rule r_GEN_15
+18:44:56 [INFO] 11 / 34
+18:44:56 [INFO]   V Remove Relational Edges - Whole Rule
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_17
+18:44:56 [INFO] 12 / 34
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_31(28036436724401852, "str_14", 13883949782574366923, c_36). from the program
+18:44:56 [INFO]   Removed fact R_31(28036436724401852, "str_14", 13883949782574366923, c_36). from the ADG.
+18:44:56 [INFO] 13 / 34
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_30
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_31
+18:44:56 [INFO]   Removing at least 1 relational edges.
+18:44:56 [INFO] 14 / 34
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_20
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_21
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_7
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_6
+18:44:56 [INFO]   Removing at least 11 relational edges.
+18:44:56 [INFO] 15 / 34
+18:44:56 [INFO]   I Add Relational Node
+18:44:56 [INFO]   Added new relation R_39
+18:44:56 [INFO] 16 / 34
+18:44:56 [INFO]   XI Add Contradictory Rule
+18:44:56 [INFO]   Added new contradictory rule of name r_CON_40
+18:44:56 [INFO]   R_12(?X_4, ?X_6, ?X_5, ?X_6, ?X_1, ?X_3) :- R_22(?X_4, ?X_6, ?Y_1, ?X_6), R_22(c_28, ?X_3, ?X_5, ?X_1), ~R_22(?X_4, ?X_6, ?Y_1, ?X_6) .
+18:44:56 [INFO] 17 / 34
+18:44:56 [INFO]   I Add Relational Node
+18:44:56 [INFO]   Added new relation R_40
+18:44:56 [INFO] 18 / 34
+18:44:56 [INFO]   VIII Modify Rule - Remove Equality
+18:44:56 [INFO]   Replaced a random number of var X_5 with var X_5_new_1 in the rule r_GEN_20
+18:44:56 [INFO] 19 / 34
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Generated literal ~R_OUT(?X_3, 4520203345222228718) for rule r_GEN_35
+18:44:56 [INFO] 20 / 34
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_24("str_12").
+18:44:56 [INFO] 21 / 34
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_29(13038458451360149550, "sensor2", 10548079028772122653, "str_11", "sensor2", "sensor2"). from the program
+18:44:56 [INFO]   Removed fact R_29(13038458451360149550, "sensor2", 10548079028772122653, "str_11", "sensor2", "sensor2"). from the ADG.
+18:44:56 [INFO] 22 / 34
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_34(c_15, c_16, c_17). from the program
+18:44:56 [INFO]   Removed fact R_34(c_15, c_16, c_17). from the ADG.
+18:44:56 [INFO] 23 / 34
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_OUT(c_21, c_22). from the program
+18:44:56 [INFO]   Removed fact R_OUT(c_21, c_22). from the ADG.
+18:44:56 [INFO] 24 / 34
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_14
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_15
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_20
+18:44:56 [INFO]   Removing at least 8 relational edges.
+18:44:56 [INFO] 25 / 34
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Generated literal ~R_7(?Y_1, ?Y_1) for rule r_CON_40
+18:44:56 [INFO] 26 / 34
+18:44:56 [INFO]   I Add Relational Node
+18:44:56 [INFO]   Added new relation R_41
+18:44:56 [INFO] 27 / 34
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Assigned relation R_38 the artiy 1
+18:44:56 [INFO]   Generated literal ~R_38(?X_1) for rule r_GEN_32
+18:44:56 [INFO] 28 / 34
+18:44:56 [INFO]   VII Modify Rule - Add Equality
+18:44:56 [INFO]   Replaced var ?X_1 with var ?X_2 in the rule r_GEN_2
+18:44:56 [INFO] 29 / 34
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_19(c_30, 8665528538816777604, "str_12", c_13, c_8). from the program
+18:44:56 [INFO]   Removed fact R_19(c_30, 8665528538816777604, "str_12", c_13, c_8). from the ADG.
+18:44:56 [INFO] 30 / 34
+18:44:56 [INFO]   I Add Relational Node
+18:44:56 [INFO]   Added new relation R_42
+18:44:56 [INFO] 31 / 34
+18:44:56 [INFO]   XI Add Contradictory Rule
+18:44:56 [INFO]   Added new contradictory rule of name r_CON_41
+18:44:56 [INFO]   R_1(?X_6, ?X_5, ?X_5, ?X_4, ?X_1, ?X_2) :- Overheat(?X_6, ?X_5, ?X_5), Overheat(?X_4, ?X_1, ?X_2), ~Overheat(?X_6, ?X_5, ?X_5) .
+18:44:56 [INFO] 32 / 34
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Generated literal ~R_27(?Z_2, ?Z_2, "str_8", ?Z_2, ?Z_2, ?Z_2) for rule r_GEN_19
+18:44:56 [INFO] 33 / 34
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Assigned relation R_5 the artiy 6
+18:44:56 [INFO]   Generated literal R_5(?Z_3, ?X_2, ?X_4, ?X_1, ?X_1, ?X_3) for rule r_GEN_29
+18:44:56 [INFO] 34 / 34
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Generated literal ~SameLocation(?X_2, ?X_1) for rule r_GEN_1
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] ------------ Transformations Done ------------
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO]  Ressources required: 
+                
+18:44:56 [INFO] ---------- Transformed ADG Summary: ----------
+18:44:56 [INFO] ADG Fact Nodes:                  28
+18:44:56 [INFO] ADG Relational Nodes:            42
+18:44:56 [INFO] ADG Fact Edges:                  28
+18:44:56 [INFO] ADG Relational Edges:            64
+18:44:56 [INFO] Number of inv. Strata:           5
+18:44:56 [INFO] 
+18:44:56 [INFO] Nodes with None Ancestry:        35
+18:44:56 [INFO] Nodes with Positive Ancestry:    2
+18:44:56 [INFO] Nodes with Negative Ancestry:    1
+18:44:56 [INFO] Nodes with Unknown Ancestry:     0
+18:44:56 [INFO] 
+18:44:56 [INFO] Next rule name would be:         r_CON_42
+18:44:56 [INFO] Next predicate name would be:    R_43
+18:44:56 [INFO] Next constant name would be:     c_45
+18:44:56 [INFO] Next string would be:            "str_19"
+18:44:56 [INFO] 
+18:44:56 [INFO] Output predicate:                R_OUT
+18:44:56 [INFO] Rule count:                      34
+18:44:56 [INFO] Average rel. arity:              3.6341463414634148
+18:44:56 [INFO] Arity calc. may be inaccurate if arity > f64
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] --------- Performed Transformations: ---------
+18:44:56 [INFO]  #      Type
+18:44:56 [INFO]  6      Failed Transformation Attempts
+18:44:56 [INFO]  5      I     Add Relational Node
+18:44:56 [INFO]  3      II    Add Fact Node and Edge
+18:44:56 [INFO]  0      III   Add Relational edges - New Rule
+18:44:56 [INFO]  8      IV    Add Relational Edge - New Literal
+18:44:56 [INFO]  5      IX    Remove Fact Node and Edge
+18:44:56 [INFO]  1      V     Remove Relational Edges - Whole Rule
+18:44:56 [INFO]  0      VI    Remove Relational Edge - Single Literal
+18:44:56 [INFO]  3      VII   Modify Rule - Add Equality
+18:44:56 [INFO]  2      VIII  Modify Rule - Remove Equality
+18:44:56 [INFO]  3      XI   Add Contradictory Rule
+18:44:56 [INFO]  4      Xa     Remove Relational Node Rule Variant - None anc only
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] Writing output ADG and file.
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] -- Beginning Nemo Execution - Input Program --
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(Iri(IriDataValue("c_21"))), AnyDataValue(Iri(IriDataValue("c_22")))] }
+18:44:56 [INFO] Execution step: Combining Tables
+18:44:56 [INFO] Saved permanent table R_OUT (0-1) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (6904)
+18:44:56 [INFO] <<< STEP 1: APPLYING RULE 0 R_OUT(?X_1, ?X_2) :- HighTemperature(?X_1, ?X_2, ?Y_1) >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(Double(DoubleDataValue(0.0))), AnyDataValue(Double(DoubleDataValue(27.5))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(3.5))), AnyDataValue(Double(DoubleDataValue(3.5))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(14.7))), AnyDataValue(Double(DoubleDataValue(14.7))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(20.0))), AnyDataValue(Double(DoubleDataValue(20.0)))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 6 entries (6952)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table R_OUT (1) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (7000)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 2: APPLYING RULE 0 R_OUT(?X_1, ?X_2) :- HighTemperature(?X_1, ?X_2, ?Y_1) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] Execution step: Combining Tables
+18:44:56 [INFO] Saved permanent table R_OUT (0-2) Permutation { idx_to_val: [], val_to_idx: [] } with 7 entries (7056)
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] --- Finished Nemo Execution - Input Program --
+18:44:56 [INFO] Output size: 7
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] Beginning Nemo Execution - Transformed Program
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] <<< STEP 1: APPLYING RULE 0 R_OUT(?X_1, ?X_2) :- HighTemperature(?X_1, ?X_2, ?Y_1), SameLocation(?X_2, ?X_1) >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(Double(DoubleDataValue(0.0))), AnyDataValue(Double(DoubleDataValue(27.5))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(3.5))), AnyDataValue(Double(DoubleDataValue(3.5))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(14.7))), AnyDataValue(Double(DoubleDataValue(14.7))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(20.0))), AnyDataValue(Double(DoubleDataValue(20.0)))] }
+18:44:56 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(PlainString(StringDataValue("sensor2")))] }
+18:44:56 [INFO] Execution step: Project/Reorder
+18:44:56 [INFO] Saved temporary table: 1 entries (6856)
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 6 entries (6952)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table R_OUT (1) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (7000)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 2: APPLYING RULE 0 R_OUT(?X_1, ?X_2) :- HighTemperature(?X_1, ?X_2, ?Y_1), SameLocation(?X_2, ?X_1) >>>
+18:44:56 [INFO] Execution step: Project/Reorder
+18:44:56 [INFO] Saved temporary table: 1 entries (6856)
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] Execution step: Combining Tables
+18:44:56 [INFO] Saved permanent table R_OUT (0-2) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (7000)
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO]  Finished Nemo Execution - Transformed Program
+18:44:56 [INFO] Output size: 6
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] ------------ Asserting Oracle CON ------------
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] All good, output has contracted
+18:44:56 [INFO] old_dir "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/benchmark_500k_r"

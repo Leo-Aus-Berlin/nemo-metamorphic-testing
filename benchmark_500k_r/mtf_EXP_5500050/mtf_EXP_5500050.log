@@ -1,0 +1,1301 @@
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] Beginning transformation mtf_EXP_5500050
+                Oracle:     EXP          Number of T: 59
+                Debug Mode: false          u64 Seed:    5500050
+                Number of generating transformations: 21
+                Internal Seed:          [254, 179, 25, 128, 184, 232, 120, 140, 125, 54, 251, 234, 110, 243, 108, 163, 249, 182, 165, 92, 68, 169, 231, 209, 131, 65, 164, 203, 163, 105, 112, 74]
+                Seed File: Currently not supported!
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] -------------- Reading Seed File: ------------
+08:51:33 [INFO] "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wikidata-yago-like-inverse-property-cleanup/yagoExample.rls"
+08:51:33 [INFO] Renaming of rules complete
+08:51:33 [INFO] --------- Finished Reading Seed file ---------
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] -------- Beginning Program Generation --------
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] Removing old export statements
+08:51:33 [INFO] Beginning inverse_stratum and ancestry computation starting at node R_OUT
+08:51:33 [INFO] Ancestry and Inverse Stratum computation complete.
+08:51:33 [INFO] Constructed lite ADG
+08:51:33 [INFO] Generating Program...
+08:51:33 [INFO] 
+08:51:33 [INFO] 1 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_1
+08:51:33 [INFO] 2 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_2
+08:51:33 [INFO] 3 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_3
+08:51:33 [INFO] 4 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_4
+08:51:33 [INFO] 5 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_5
+08:51:33 [INFO] 6 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_6
+08:51:33 [INFO] 7 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_7
+08:51:33 [INFO] 8 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_8
+08:51:33 [INFO] 9 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_9
+08:51:33 [INFO] 10 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_10
+08:51:33 [INFO] 11 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_11
+08:51:33 [INFO] 12 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_12
+08:51:33 [INFO] 13 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_13
+08:51:33 [INFO] 14 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_14
+08:51:33 [INFO] 15 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_15
+08:51:33 [INFO] 16 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_16
+08:51:33 [INFO] 17 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_17
+08:51:33 [INFO] 18 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_18
+08:51:33 [INFO] 19 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_19
+08:51:33 [INFO] 20 / 20
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_20
+08:51:33 [INFO] 
+08:51:33 [INFO] Adding a new rule for each relation other than the seed relations
+08:51:33 [INFO] 
+08:51:33 [INFO] 1 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_OUT
+08:51:33 [INFO]   Assigned relation R_OUT the artiy 1
+08:51:33 [INFO]   Added new rule of name r_GEN_1
+08:51:33 [INFO]   R_OUT(?X_1) :- R_OUT(?X_1) .
+08:51:33 [INFO] 2 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_1
+08:51:33 [INFO]   Assigned relation R_1 the artiy 5
+08:51:33 [INFO]   Assigned relation R_3 the artiy 5
+08:51:33 [INFO]   Added new rule of name r_GEN_2
+08:51:33 [INFO]   R_1(?X_2, ?X_3, "x", ?X_2, ?X_1) :- R_3(?X_2, ?X_3, "x", ?X_2, ?X_1) .
+08:51:33 [INFO] 3 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_2
+08:51:33 [INFO]   Assigned relation R_2 the artiy 1
+08:51:33 [INFO]   Added new rule of name r_GEN_3
+08:51:33 [INFO]   R_2(?X_1) :- R_1(?Y_1, "x", ?X_1, ?X_1, ?Y_1) .
+08:51:33 [INFO] 4 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_3
+08:51:33 [INFO]   Assigned relation R_13 the artiy 6
+08:51:33 [INFO]   Added new rule of name r_GEN_4
+08:51:33 [INFO]   R_3(?X_5, ?X_4, ?X_2, ?X_1, "x") :- R_13(?X_5, ?X_4, ?X_2, ?X_1, "x", ?X_1) .
+08:51:33 [INFO] 5 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_4
+08:51:33 [INFO]   Assigned relation R_4 the artiy 3
+08:51:33 [INFO]   Added new rule of name r_GEN_5
+08:51:33 [INFO]   R_4(?X_2, ?X_1, ?X_1) :- R_2(?X_2), R_2(?X_1), R_2(?X_1) .
+08:51:33 [INFO] 6 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_5
+08:51:33 [INFO]   Assigned relation R_5 the artiy 4
+08:51:33 [INFO]   Assigned relation R_12 the artiy 6
+08:51:33 [INFO]   Added new rule of name r_GEN_6
+08:51:33 [INFO]   R_5("y", ?X_1, ?X_2, ?X_3) :- R_12("y", ?X_1, ?X_2, "y", ?X_3, ?X_3) .
+08:51:33 [INFO] 7 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_6
+08:51:33 [INFO]   Assigned relation R_6 the artiy 3
+08:51:33 [INFO]   Added new rule of name r_GEN_7
+08:51:33 [INFO]   R_6(?X_3, ?X_2, "x") :- avgObjCountPerPredicate(?X_3, ?X_2), avgObjCountPerPredicate("a", "x") .
+08:51:33 [INFO] 8 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_7
+08:51:33 [INFO]   Assigned relation R_7 the artiy 3
+08:51:33 [INFO]   Added new rule of name r_GEN_8
+08:51:33 [INFO]   R_7(?X_3, <http://wikiba.se/ontology#directClaim>, ?X_1) :- R_13(?X_3, ?Y_1, ?X_1, ?Y_1, <http://wikiba.se/ontology#directClaim>, "entityB") .
+08:51:33 [INFO] 9 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_8
+08:51:33 [INFO]   Assigned relation R_8 the artiy 3
+08:51:33 [INFO]   Added new rule of name r_GEN_9
+08:51:33 [INFO]   R_8("x", ?X_3, ?X_3) :- R_8("x", ?X_3, ?X_3) .
+08:51:33 [INFO] 10 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_9
+08:51:33 [INFO]   Assigned relation R_9 the artiy 2
+08:51:33 [INFO]   Added new rule of name r_GEN_10
+08:51:33 [INFO]   R_9("a", ?X_2) :- R_9("a", ?X_2) .
+08:51:33 [INFO] 11 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_10
+08:51:33 [INFO]   Assigned relation R_10 the artiy 3
+08:51:33 [INFO]   Added new rule of name r_GEN_11
+08:51:33 [INFO]   R_10(?X_3, ?X_3, "a") :- R_1(?X_3, ?X_3, "a", ?X_3, ?X_3) .
+08:51:33 [INFO] 12 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_11
+08:51:33 [INFO]   Assigned relation R_11 the artiy 6
+08:51:33 [INFO]   Added new rule of name r_GEN_12
+08:51:33 [INFO]   R_11(?X_3, ?X_1, ?X_6, ?X_5, ?X_2, ?X_4) :- R_13(?X_3, ?X_1, ?X_6, ?X_5, ?X_2, ?X_4) .
+08:51:33 [INFO] 13 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_12
+08:51:33 [INFO]   Added new rule of name r_GEN_13
+08:51:33 [INFO]   R_12(?X_3, ?X_4, ?X_1, ?X_5, <http://wikiba.se/ontology#directClaim>, ?X_3) :- R_4(?X_3, ?X_4, ?X_1), R_4(?X_5, <http://wikiba.se/ontology#directClaim>, ?X_3) .
+08:51:33 [INFO] 14 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_13
+08:51:33 [INFO]   Added new rule of name r_GEN_14
+08:51:33 [INFO]   R_13(?X_6, ?X_2, ?X_1, ?X_5, ?X_2, ?X_3) :- R_9(?X_6, ?X_2), R_9(?X_1, ?X_5), R_9(?X_2, ?X_3) .
+08:51:33 [INFO] 15 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_14
+08:51:33 [INFO]   Assigned relation R_14 the artiy 3
+08:51:33 [INFO]   Added new rule of name r_GEN_15
+08:51:33 [INFO]   R_14(?X_1, ?X_3, ?X_2) :- R_2(?X_1), R_2(?X_3), R_2(?X_2) .
+08:51:33 [INFO] 16 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_15
+08:51:33 [INFO]   Assigned relation R_15 the artiy 5
+08:51:33 [INFO]   Added new rule of name r_GEN_16
+08:51:33 [INFO]   R_15(?X_5, ?X_4, ?X_3, <http://wikiba.se/ontology#directClaim>, ?X_2) :- R_3(?X_5, ?X_4, ?X_3, <http://wikiba.se/ontology#directClaim>, ?X_2) .
+08:51:33 [INFO] 17 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_16
+08:51:33 [INFO]   Assigned relation R_16 the artiy 6
+08:51:33 [INFO]   Added new rule of name r_GEN_17
+08:51:33 [INFO]   R_16(?X_4, <http://wikiba.se/ontology#directClaim>, ?X_3, ?X_1, ?X_5, ?X_1) :- totalSubjCountPerPred(?X_4, <http://wikiba.se/ontology#directClaim>), totalSubjCountPerPred(?X_3, ?X_1), totalSubjCountPerPred(?X_5, ?X_1) .
+08:51:33 [INFO] 18 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_17
+08:51:33 [INFO]   Assigned relation R_17 the artiy 3
+08:51:33 [INFO]   Added new rule of name r_GEN_18
+08:51:33 [INFO]   R_17(<http://wikiba.se/ontology#directClaim>, ?X_1, ?X_2) :- R_17(<http://wikiba.se/ontology#directClaim>, ?X_1, ?X_2) .
+08:51:33 [INFO] 19 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_18
+08:51:33 [INFO]   Assigned relation R_18 the artiy 6
+08:51:33 [INFO]   Added new rule of name r_GEN_19
+08:51:33 [INFO]   R_18(?X_6, ?X_3, ?X_2, ?X_3, ?X_5, "z") :- inversePropEntities(?X_6, ?X_3), inversePropEntities(?X_2, ?X_3), inversePropEntities(?X_5, "z") .
+08:51:33 [INFO] 20 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_19
+08:51:33 [INFO]   Assigned relation R_19 the artiy 3
+08:51:33 [INFO]   Added new rule of name r_GEN_20
+08:51:33 [INFO]   R_19("x", ?X_1, ?X_2) :- totalSubjCountPerPred("b", ?X_1), totalSubjCountPerPred(?X_2, "x") .
+08:51:33 [INFO] 21 / 21
+08:51:33 [INFO]   Generating new single body literal rule for R_20
+08:51:33 [INFO]   Assigned relation R_20 the artiy 1
+08:51:33 [INFO]   Added new rule of name r_GEN_21
+08:51:33 [INFO]   R_20(?X_1) :- avgObjCountPerPredicate("a", ?X_1) .
+08:51:33 [INFO] 
+08:51:33 [INFO] Adding a outgoing relational edge for each relation other than R_OUT
+08:51:33 [INFO] 
+08:51:33 [INFO] 1 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from avgObjCountPerPredicate for r_GEN_20
+08:51:33 [INFO]   Generated literal ~avgObjCountPerPredicate("z", ?X_2) for rule r_GEN_20
+08:51:33 [INFO] 2 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from inv for r_GEN_5
+08:51:33 [INFO]   Generated literal inv(?Z_1, ?X_1) for rule r_GEN_5
+08:51:33 [INFO] 3 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from inversePropEntities for r_GEN_18
+08:51:33 [INFO]   Generated literal inversePropEntities(?X_2, ?Z_1) for rule r_GEN_18
+08:51:33 [INFO] 4 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from objCountPerPredAndSource for r_GEN_10
+08:51:33 [INFO]   Generated literal objCountPerPredAndSource(?X_2, "z", ?X_2) for rule r_GEN_10
+08:51:33 [INFO] 5 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from pred for r_GEN_4
+08:51:33 [INFO]   Generated literal ~pred(?X_5) for rule r_GEN_4
+08:51:33 [INFO] 6 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from predToKeep for r_GEN_19
+08:51:33 [INFO]   Generated literal predToKeep(?X_3) for rule r_GEN_19
+08:51:33 [INFO] 7 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from rightSmaller for r_GEN_21
+08:51:33 [INFO]   Generated literal rightSmaller(?X_1) for rule r_GEN_21
+08:51:33 [INFO] 8 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from totalSubjCountPerPred for r_GEN_20
+08:51:33 [INFO]   Generated literal ~totalSubjCountPerPred(?X_2, ?X_2) for rule r_GEN_20
+08:51:33 [INFO] 9 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from wikidata for r_GEN_11
+08:51:33 [INFO]   Generated literal wikidata(?X_3, ?Z_2, "a") for rule r_GEN_11
+08:51:33 [INFO] 10 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_1 for r_GEN_11
+08:51:33 [INFO]   Generated literal R_1(?Z_4, ?X_3, ?X_3, ?Z_2, ?X_3) for rule r_GEN_11
+08:51:33 [INFO] 11 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_2 for r_GEN_3
+08:51:33 [INFO]   Generated literal R_2(?Y_1) for rule r_GEN_3
+08:51:33 [INFO] 12 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_3 for r_GEN_9
+08:51:33 [INFO]   Generated literal R_3(?X_3, "entityB", ?X_3, ?X_3, ?Z_1) for rule r_GEN_9
+08:51:33 [INFO] 13 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_4 for r_GEN_18
+08:51:33 [INFO]   Generated literal R_4(?X_2, ?X_1, ?X_2) for rule r_GEN_18
+08:51:33 [INFO] 14 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_5 for r_GEN_7
+08:51:33 [INFO]   Generated literal R_5("x", ?X_2, ?X_3, ?X_2) for rule r_GEN_7
+08:51:33 [INFO] 15 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_6 for r_GEN_2
+08:51:33 [INFO]   Generated literal R_6(?X_1, ?X_2, ?Z_2) for rule r_GEN_2
+08:51:33 [INFO] 16 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_7 for r_GEN_17
+08:51:33 [INFO]   Generated literal R_7(?X_5, ?Z_4, ?X_3) for rule r_GEN_17
+08:51:33 [INFO] 17 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_8 for r_GEN_4
+08:51:33 [INFO]   Generated literal R_8(?Z_3, ?X_2, <http://wikiba.se/ontology#directClaim>) for rule r_GEN_4
+08:51:33 [INFO] 18 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_9 for r_GEN_3
+08:51:33 [INFO]   Generated literal ~R_9(?Y_1, "x") for rule r_GEN_3
+08:51:33 [INFO] 19 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_10 for r_GEN_15
+08:51:33 [INFO]   Generated literal ~R_10(?X_3, "b", ?X_1) for rule r_GEN_15
+08:51:33 [INFO] 20 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_11 for r_GEN_1
+08:51:33 [INFO]   Generated literal R_11(?X_1, ?X_1, "a", ?Z_1, "entityA", ?X_1) for rule r_GEN_1
+08:51:33 [INFO] 21 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_12 for r_GEN_4
+08:51:33 [INFO]   Generated literal R_12(?Z_5, ?X_1, ?X_2, "b", ?X_5, ?X_5) for rule r_GEN_4
+08:51:33 [INFO] 22 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_13 for r_GEN_17
+08:51:33 [INFO]   Generated literal R_13(?X_5, ?X_5, ?Z_2, ?X_4, ?Z_6, ?X_5) for rule r_GEN_17
+08:51:33 [INFO] 23 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_14 for r_GEN_12
+08:51:33 [INFO]   Generated literal R_14(?Z_1, ?X_4, ?X_4) for rule r_GEN_12
+08:51:33 [INFO] 24 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_15 for r_GEN_3
+08:51:33 [INFO]   Generated literal R_15(?X_1, ?Z_1, "a", ?X_1, ?Y_1) for rule r_GEN_3
+08:51:33 [INFO] 25 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_16 for r_GEN_2
+08:51:33 [INFO]   Generated literal R_16(?X_3, <http://wikiba.se/ontology#directClaim>, ?Z_4, ?Z_1, ?X_1, ?X_2) for rule r_GEN_2
+08:51:33 [INFO] 26 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_17 for r_GEN_19
+08:51:33 [INFO]   Generated literal R_17(?X_2, ?X_2, ?X_6) for rule r_GEN_19
+08:51:33 [INFO] 27 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_18 for r_GEN_11
+08:51:33 [INFO]   Generated literal ~R_18(?Z_2, ?X_3, ?X_3, ?X_3, ?X_3, ?Z_4) for rule r_GEN_11
+08:51:33 [INFO] 28 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_19 for r_GEN_1
+08:51:33 [INFO]   Generated literal R_19(?Z_2, ?X_1, ?X_1) for rule r_GEN_1
+08:51:33 [INFO] 29 / 29
+08:51:33 [INFO]   Adding outgoing relational edge from R_20 for r_GEN_3
+08:51:33 [INFO]   Generated literal R_20(?Y_1) for rule r_GEN_3
+08:51:33 [INFO] 
+08:51:33 [INFO] Adding gen. size facts
+08:51:33 [INFO] 
+08:51:33 [INFO] 1 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10("str_1", "y", c_1).
+08:51:33 [INFO] 2 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10(c_2, c_3, c_4).
+08:51:33 [INFO] 3 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10(c_1, c_5, c_6).
+08:51:33 [INFO] 4 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10(14635272335933535057, c_7, "y").
+08:51:33 [INFO] 5 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10("a", 15293303269288636319, "x").
+08:51:33 [INFO] 6 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_14("entityB", "a", 15444104110688489752).
+08:51:33 [INFO] 7 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_OUT("str_2").
+08:51:33 [INFO] 8 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_14(c_1, c_2, <http://wikiba.se/ontology#directClaim>).
+08:51:33 [INFO] 9 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10(1398424989949641586, "x", c_8).
+08:51:33 [INFO] 10 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10("str_3", <http://wikiba.se/ontology#directClaim>, "str_2").
+08:51:33 [INFO] 11 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10(c_9, c_10, c_11).
+08:51:33 [INFO] 12 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_11(<http://www.wikidata.org/prop/direct/P1696>, c_12, "y", <http://wikiba.se/ontology#directClaim>, c_4, 3948985956184308585).
+08:51:33 [INFO] 13 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10(c_12, "b", c_13).
+08:51:33 [INFO] 14 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10("str_2", c_14, c_7).
+08:51:33 [INFO] 15 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10("str_4", "b", "x").
+08:51:33 [INFO] 16 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_11("str_5", c_15, c_15, 15480147422050766993, c_16, c_17).
+08:51:33 [INFO] 17 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_14("str_6", c_18, c_19).
+08:51:33 [INFO] 18 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_10("str_5", "str_7", "x").
+08:51:33 [INFO] 19 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_17("entityA", c_14, 3948985956184308585).
+08:51:33 [INFO] 20 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_OUT(15480147422050766993).
+08:51:33 [INFO] 21 / 21
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_18(c_20, "str_8", "b", "str_9", c_15, c_21).
+08:51:33 [INFO] 
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] ----------- Program Generation Done ----------
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] ----------- Generated ADG Summary: -----------
+08:51:33 [INFO] ADG Fact Nodes:                  21
+08:51:33 [INFO] ADG Relational Nodes:            30
+08:51:33 [INFO] ADG Fact Edges:                  21
+08:51:33 [INFO] ADG Relational Edges:            63
+08:51:33 [INFO] Number of inv. Strata:           3
+08:51:33 [INFO] 
+08:51:33 [INFO] Nodes with None Ancestry:        0
+08:51:33 [INFO] Nodes with Positive Ancestry:    8
+08:51:33 [INFO] Nodes with Negative Ancestry:    2
+08:51:33 [INFO] Nodes with Unknown Ancestry:     20
+08:51:33 [INFO] 
+08:51:33 [INFO] Next rule name would be:         r_EXP_22
+08:51:33 [INFO] Next predicate name would be:    R_21
+08:51:33 [INFO] Next constant name would be:     c_22
+08:51:33 [INFO] Next string would be:            "str_10"
+08:51:33 [INFO] 
+08:51:33 [INFO] Output predicate:                R_OUT
+08:51:33 [INFO] Generated rule count:            21
+08:51:33 [INFO] Rule count:                      31
+08:51:33 [INFO] Average rel. arity:              3.1666666666666665
+08:51:33 [INFO] Arity calc. may be inaccurate if arity > f64
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] ------ Performed Gen. Transformations: -------
+08:51:33 [INFO]  #      Type
+08:51:33 [INFO]  21      Generate New Rule with Probably Single Lit
+08:51:33 [INFO]  29      Generating an Outgoing Relational Edge
+08:51:33 [INFO]  20      I     Add Relational Node
+08:51:33 [INFO]  21      II    Add Fact Node and Edge
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] Storing input ADG and input program
+08:51:33 [INFO] 
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] --------- Beginning Transformations ----------
+08:51:33 [INFO] --------  Oracle: EXP    Number: 59
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 1 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_18(1398424989949641586, 14635272335933535057, "a", "str_12", 1780265276006053827, c_19).
+08:51:33 [INFO] 2 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Generated literal ~wikidata(?Z_4, ?X_3, ?X_3) for rule r_GEN_11
+08:51:33 [INFO] 3 / 59
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_23
+08:51:33 [INFO] 4 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_11(c_17, 290695971604925496, c_14, c_23, c_24, c_12).
+08:51:33 [INFO] 5 / 59
+08:51:33 [INFO]   VIII Modify Rule - Remove Equality
+08:51:33 [INFO]   Replaced a random number of var X_1 with var X_1_new_1 in the rule r_GEN_18
+08:51:33 [INFO] 6 / 59
+08:51:33 [INFO]   IX Remove Fact Node and Edge
+08:51:33 [INFO]   Removed fact R_10(14635272335933535057, c_7, "y"). from the program
+08:51:33 [INFO]   Removed fact R_10(14635272335933535057, c_7, "y"). from the ADG.
+08:51:33 [INFO] 7 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Replaced var ?Z_4 with var ?Z_2 in the rule r_GEN_11
+08:51:33 [INFO] 8 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Generated literal R_6(?X_3, ?Z_2, ?X_3) for rule r_GEN_11
+08:51:33 [INFO] 9 / 59
+08:51:33 [INFO]   III Add Relational edges - New Rule
+08:51:33 [INFO]   Added new rule of name r_EXP_24
+08:51:33 [INFO]   R_17(?X_1, "x", ?X_2) :- R_18(?X_1, "x", <http://www.wikidata.org/prop/direct/P1696>, ?X_2, <http://www.wikidata.org/prop/direct/P1696>, ?Y_1), ~R_4(<http://www.wikidata.org/prop/direct/P1696>, ?X_1, "entityB"), ~R_13(<http://www.wikidata.org/prop/direct/P1696>, <http://www.wikidata.org/prop/direct/P1696>, "entityB", "x", ?X_2, <http://www.wikidata.org/prop/direct/P1696>), ~objCountPerPredAndSource("entityB", <http://www.wikidata.org/prop/direct/P1696>, ?X_1) .
+08:51:33 [INFO] 10 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Generated literal ~predToKeep(?X_3) for rule r_GEN_11
+08:51:33 [INFO] 11 / 59
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_24
+08:51:33 [INFO] 12 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Replaced var ?X_3 with var ?Z_2 in the rule r_GEN_11
+08:51:33 [INFO] 13 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_17(c_25, c_26, "str_13").
+08:51:33 [INFO] 14 / 59
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_25
+08:51:33 [INFO] 15 / 59
+08:51:33 [INFO]   VIII Modify Rule - Remove Equality
+08:51:33 [INFO]   Replaced a random number of var X_2 with var X_2_new_1 in the rule r_GEN_19
+08:51:33 [INFO] 16 / 59
+08:51:33 [INFO]   III Add Relational edges - New Rule
+08:51:33 [INFO]   Assigned relation R_25 the artiy 5
+08:51:33 [INFO]   Assigned relation R_23 the artiy 5
+08:51:33 [INFO]   Added new rule of name r_EXP_25
+08:51:33 [INFO]   R_25(c_25, ?X_3, ?X_2, ?X_5, ?X_4) :- R_23(?X_3, "y", ?X_4, ?Y_1, ?X_3), avgObjCountPerPredicate(?X_4, ?X_2), R_12(?Y_1, ?X_3, c_25, c_25, ?X_2, ?Y_1), R_17(c_25, ?X_2, ?Y_1), R_2(?X_5), R_20(?X_4), ~R_3(?X_3, "str_1", ?X_4, c_25, c_25), ~R_2(?X_4), ~R_18(c_25, ?X_2, ?X_4, ?X_2, ?X_2, ?X_5), ~R_17("y", ?Y_1, ?X_3) .
+08:51:33 [INFO] 17 / 59
+08:51:33 [INFO]   IX Remove Fact Node and Edge
+08:51:33 [INFO]   Removed fact R_10("str_1", "y", c_1). from the program
+08:51:33 [INFO]   Removed fact R_10("str_1", "y", c_1). from the ADG.
+08:51:33 [INFO] 18 / 59
+08:51:33 [INFO]   Xa Remove Relational Node - Rule Variant
+08:51:33 [INFO]   Removing relational node R_25
+08:51:33 [INFO]   Removing the Rule of the name r_EXP_25
+08:51:33 [INFO]   Removing at least 10 relational edges.
+08:51:33 [INFO] 19 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+08:51:33 [INFO] 20 / 59
+08:51:33 [INFO]   XI Add Contradictory Rule
+08:51:33 [INFO]   Added new contradictory rule of name r_EXP_26
+08:51:33 [INFO]   R_11(?X_2, ?X_6, ?X_1, ?X_4, ?X_3, ?X_1) :- R_1(?X_3, ?X_6, ?X_1, ?X_4, ?X_1), R_1(?Y_1, ?Y_1, ?X_2, ?X_1, ?X_3), ~R_1(?X_3, ?X_6, ?X_1, ?X_4, ?X_1) .
+08:51:33 [INFO] 21 / 59
+08:51:33 [INFO]   IX Remove Fact Node and Edge
+08:51:33 [INFO]   Removed fact R_10("str_2", c_14, c_7). from the program
+08:51:33 [INFO]   Removed fact R_10("str_2", c_14, c_7). from the ADG.
+08:51:33 [INFO] 22 / 59
+08:51:33 [INFO]   VIII Modify Rule - Remove Equality
+08:51:33 [INFO]   Replaced a random number of var X_2 with var X_2_new_1 in the rule r_GEN_18
+08:51:33 [INFO] 23 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+08:51:33 [INFO] 24 / 59
+08:51:33 [INFO]   VIII Modify Rule - Remove Equality
+08:51:33 [INFO]   Replaced a random number of var X_1 with var X_1_new_1 in the rule r_GEN_1
+08:51:33 [INFO] 25 / 59
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_26
+08:51:33 [INFO] 26 / 59
+08:51:33 [INFO]   Xa Remove Relational Node - Rule Variant
+08:51:33 [INFO]   Removing relational node R_23
+08:51:33 [INFO]   Removing at least 0 relational edges.
+08:51:33 [INFO] 27 / 59
+08:51:33 [INFO]   IX Remove Fact Node and Edge
+08:51:33 [INFO]   Removed fact R_10(c_2, c_3, c_4). from the program
+08:51:33 [INFO]   Removed fact R_10(c_2, c_3, c_4). from the ADG.
+08:51:33 [INFO] 28 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_17("x", "entityA", "z").
+08:51:33 [INFO] 29 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Generated literal ~R_19(?Z_2, ?Z_2, 290695971604925496) for rule r_GEN_11
+08:51:33 [INFO] 30 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Generated literal ~wikidata(?Z_2, ?Z_2, ?Z_2) for rule r_GEN_11
+08:51:33 [INFO] 31 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_OUT(c_27).
+08:51:33 [INFO] 32 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_18("y", c_28, c_19, c_29, c_30, c_31).
+08:51:33 [INFO] 33 / 59
+08:51:33 [INFO]   III Add Relational edges - New Rule
+08:51:33 [INFO]   Assigned relation R_24 the artiy 1
+08:51:33 [INFO]   Added new rule of name r_EXP_27
+08:51:33 [INFO]   R_18(?X_1, ?X_2, ?X_5, ?X_6, ?X_3, ?X_4) :- R_6(?X_1, ?X_2, ?X_5), R_24(?X_2), inversePropEntities(?X_5, ?X_4), wikidata(?X_3, ?X_2, ?X_1), pred(?X_6), R_20(?X_1) .
+08:51:33 [INFO] 34 / 59
+08:51:33 [INFO]   XI Add Contradictory Rule
+08:51:33 [INFO]   Added new contradictory rule of name r_EXP_28
+08:51:33 [INFO]   R_OUT("y") :- R_16("y", ?Y_1, "y", ?Y_1, <http://www.wikidata.org/prop/direct/P1696>, ?Y_1), ~R_16("y", ?Y_1, "y", ?Y_1, <http://www.wikidata.org/prop/direct/P1696>, ?Y_1) .
+08:51:33 [INFO] 35 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_14(c_32, "str_14", 1780265276006053827).
+08:51:33 [INFO] 36 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+08:51:33 [INFO] 37 / 59
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_27
+08:51:33 [INFO] 38 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Generated literal ~predToKeep(?Z_2) for rule r_GEN_11
+08:51:33 [INFO] 39 / 59
+08:51:33 [INFO]   XI Add Contradictory Rule
+08:51:33 [INFO]   Added new contradictory rule of name r_EXP_29
+08:51:33 [INFO]   R_24(?X_1) :- R_9(?X_1, ?X_1), ~R_9(?X_1, ?X_1) .
+08:51:33 [INFO] 40 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+08:51:33 [INFO] 41 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Added new fact R_14(c_16, c_8, "str_15").
+08:51:33 [INFO] 42 / 59
+08:51:33 [INFO]   IX Remove Fact Node and Edge
+08:51:33 [INFO]   Removed fact R_10("a", 15293303269288636319, "x"). from the program
+08:51:33 [INFO]   Removed fact R_10("a", 15293303269288636319, "x"). from the ADG.
+08:51:33 [INFO] 43 / 59
+08:51:33 [INFO]   II Add Fact Node and Edge
+08:51:33 [INFO]   Assigned relation R_27 the artiy 6
+08:51:33 [INFO]   Added new fact R_27("str_16", c_33, <http://wikiba.se/ontology#directClaim>, "y", "str_17", "str_13").
+08:51:33 [INFO] 44 / 59
+08:51:33 [INFO]   VIII Modify Rule - Remove Equality
+08:51:33 [INFO]   Replaced a random number of var X_2 with var X_2_new_2 in the rule r_GEN_18
+08:51:33 [INFO] 45 / 59
+08:51:33 [INFO]   III Add Relational edges - New Rule
+08:51:33 [INFO]   Added new rule of name r_EXP_30
+08:51:33 [INFO]   R_11(?X_2, ?X_4, ?X_5, ?X_6, ?X_2, ?X_3) :- R_18(?X_2, ?X_5, ?Y_2, ?X_6, ?Y_1, ?X_6), R_8(?X_4, ?X_2, ?X_5), inv(?X_2, ?X_2), R_7(c_10, ?X_3, ?X_3), ~wikidata(?X_5, ?X_3, ?X_3), ~R_7(?X_6, ?Y_2, "str_14"), ~R_13("str_14", ?X_2, ?Y_2, ?X_5, ?X_3, ?X_6) .
+08:51:33 [INFO] 46 / 59
+08:51:33 [INFO]   XI Add Contradictory Rule
+08:51:33 [INFO]   Added new contradictory rule of name r_EXP_31
+08:51:33 [INFO]   R_17("str_10", ?X_3, ?X_1) :- R_19("str_10", ?X_3, ?X_1), ~R_19("str_10", ?X_3, ?X_1) .
+08:51:33 [INFO] 47 / 59
+08:51:33 [INFO]   VIII Modify Rule - Remove Equality
+08:51:33 [INFO]   Replaced a random number of var X_6 with var X_6_new_1 in the rule r_GEN_19
+08:51:33 [INFO] 48 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Generated literal R_18(?Z_8, ?Z_2, ?Z_2, ?Z_2, ?Z_2, ?Z_7) for rule r_GEN_11
+08:51:33 [INFO] 49 / 59
+08:51:33 [INFO]   IX Remove Fact Node and Edge
+08:51:33 [INFO]   Removed fact R_27("str_16", c_33, <http://wikiba.se/ontology#directClaim>, "y", "str_17", "str_13"). from the program
+08:51:33 [INFO]   Removed fact R_27("str_16", c_33, <http://wikiba.se/ontology#directClaim>, "y", "str_17", "str_13"). from the ADG.
+08:51:33 [INFO] 50 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Replaced var ?Z_2 with var ?Z_8 in the rule r_GEN_11
+08:51:33 [INFO] 51 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Replaced var ?Z_7 with var ?Z_8 in the rule r_GEN_11
+08:51:33 [INFO] 52 / 59
+08:51:33 [INFO]   IX Remove Fact Node and Edge
+08:51:33 [INFO]   Removed fact R_10(1398424989949641586, "x", c_8). from the program
+08:51:33 [INFO]   Removed fact R_10(1398424989949641586, "x", c_8). from the ADG.
+08:51:33 [INFO] 53 / 59
+08:51:33 [INFO]   VII Modify Rule - Add Equality
+08:51:33 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+08:51:33 [INFO] 54 / 59
+08:51:33 [INFO]   III Add Relational edges - New Rule
+08:51:33 [INFO]   Assigned relation R_27 the artiy 5
+08:51:33 [INFO]   Added new rule of name r_EXP_32
+08:51:33 [INFO]   R_27(?X_1, ?X_5, ?X_2, "str_15", ?X_1) :- R_17(?X_5, ?X_5, ?X_2), R_6("str_15", ?X_1, ?X_1), ~R_2(?X_5), ~R_8("str_15", "str_15", 290695971604925496), ~R_20(?X_1), ~R_OUT(?X_5) .
+08:51:33 [INFO] 55 / 59
+08:51:33 [INFO]   VIII Modify Rule - Remove Equality
+08:51:33 [INFO]   Replaced a random number of var X_5 with var X_5_new_1 in the rule r_EXP_30
+08:51:33 [INFO] 56 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Assigned relation R_26 the artiy 4
+08:51:33 [INFO]   Generated literal ~R_26(?X_5, ?X_1, ?X_1, ?X_5) for rule r_EXP_32
+08:51:33 [INFO] 57 / 59
+08:51:33 [INFO]   IV Add Relational Edge - New Literal
+08:51:33 [INFO]   Generated literal R_2(?X_2) for rule r_EXP_32
+08:51:33 [INFO] 58 / 59
+08:51:33 [INFO]   I Add Relational Node
+08:51:33 [INFO]   Added new relation R_28
+08:51:33 [INFO] 59 / 59
+08:51:33 [INFO]   XI Add Contradictory Rule
+08:51:33 [INFO]   Added new contradictory rule of name r_EXP_33
+08:51:33 [INFO]   R_26(?X_1, ?X_2, ?X_3, ?X_4) :- R_6(?X_1, ?X_2, ?X_3), R_6(?X_2, ?X_4, ?X_4), ~R_6(?X_1, ?X_2, ?X_3) .
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] ------------ Transformations Done ------------
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO]  Ressources required: 
+                
+08:51:33 [INFO] ---------- Transformed ADG Summary: ----------
+08:51:33 [INFO] ADG Fact Nodes:                  23
+08:51:33 [INFO] ADG Relational Nodes:            34
+08:51:33 [INFO] ADG Fact Edges:                  23
+08:51:33 [INFO] ADG Relational Edges:            107
+08:51:33 [INFO] Number of inv. Strata:           5
+08:51:33 [INFO] 
+08:51:33 [INFO] Nodes with None Ancestry:        2
+08:51:33 [INFO] Nodes with Positive Ancestry:    3
+08:51:33 [INFO] Nodes with Negative Ancestry:    1
+08:51:33 [INFO] Nodes with Unknown Ancestry:     27
+08:51:33 [INFO] 
+08:51:33 [INFO] Next rule name would be:         r_EXP_34
+08:51:33 [INFO] Next predicate name would be:    R_29
+08:51:33 [INFO] Next constant name would be:     c_34
+08:51:33 [INFO] Next string would be:            "str_18"
+08:51:33 [INFO] 
+08:51:33 [INFO] Output predicate:                R_OUT
+08:51:33 [INFO] Rule count:                      40
+08:51:33 [INFO] Average rel. arity:              3.1818181818181817
+08:51:33 [INFO] Arity calc. may be inaccurate if arity > f64
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] --------- Performed Transformations: ---------
+08:51:33 [INFO]  #      Type
+08:51:33 [INFO]  13      Failed Transformation Attempts
+08:51:33 [INFO]  6      I     Add Relational Node
+08:51:33 [INFO]  9      II    Add Fact Node and Edge
+08:51:33 [INFO]  5      III   Add Relational edges - New Rule
+08:51:33 [INFO]  9      IV    Add Relational Edge - New Literal
+08:51:33 [INFO]  7      IX    Remove Fact Node and Edge
+08:51:33 [INFO]  0      V     Remove Relational Edges - Whole Rule
+08:51:33 [INFO]  0      VI    Remove Relational Edge - Single Literal
+08:51:33 [INFO]  9      VII   Modify Rule - Add Equality
+08:51:33 [INFO]  7      VIII  Modify Rule - Remove Equality
+08:51:33 [INFO]  5      XI   Add Contradictory Rule
+08:51:33 [INFO]  2      Xa     Remove Relational Node Rule Variant - None anc only
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] Writing output ADG and file.
+08:51:33 [INFO] 
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] -- Beginning Nemo Execution - Input Program --
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] Stratified program: [[0, 1, 2, 3], [4, 11, 13, 16], [5, 24], [6, 7, 8, 10, 12, 14, 15, 17, 19, 20, 21, 23, 26, 30], [9, 18, 27], [28], [22, 25, 29]]
+08:51:33 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(PlainString(StringDataValue("str_2"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15480147422050766993)))] }
+08:51:33 [INFO] Execution step: Combining Tables
+08:51:33 [INFO] Saved permanent table R_OUT (0-1) Permutation { idx_to_val: [], val_to_idx: [] } with 2 entries (3456)
+08:51:33 [INFO] <<< STEP 1: APPLYING RULE 0 inversePropEntities(?s, ?o) :- wikidata(?s, ?_BODY_1, ?o), Equal(StringCompare(LexicalValue(?s), LexicalValue(?o)), -1), Equal(?_BODY_1, <http://www.wikidata.org/prop/direct/P1696>) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("entityA"))), AnyDataValue(Iri(IriDataValue("http://www.wikidata.org/prop/direct/P1696"))), AnyDataValue(PlainString(StringDataValue("entityB"))), AnyDataValue(PlainString(StringDataValue("entityA"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(PlainString(StringDataValue("entityB"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(PlainString(StringDataValue("z"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("z"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("x")))] }
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (6856)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table inversePropEntities (1) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (6904)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 2: APPLYING RULE 0 inversePropEntities(?s, ?o) :- wikidata(?s, ?_BODY_1, ?o), Equal(StringCompare(LexicalValue(?s), LexicalValue(?o)), -1), Equal(?_BODY_1, <http://www.wikidata.org/prop/direct/P1696>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 3: APPLYING RULE 1 inv(?p1, ?p2) :- inversePropEntities(?e1, ?e2), wikidata(?e1, ?_BODY_1, ?p1), wikidata(?e2, ?_BODY_2, ?p2), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_2, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (6856)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table inv (3) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (6904)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 4: APPLYING RULE 1 inv(?p1, ?p2) :- inversePropEntities(?e1, ?e2), wikidata(?e1, ?_BODY_1, ?p1), wikidata(?e2, ?_BODY_2, ?p2), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_2, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 5: APPLYING RULE 2 pred(?s) :- inv(?s, ?_BODY_1) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (3404)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table pred (5) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 6: APPLYING RULE 2 pred(?s) :- inv(?s, ?_BODY_1) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 7: APPLYING RULE 3 pred(?o) :- inv(?_BODY_1, ?o) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (3404)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table pred (7) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 8: APPLYING RULE 3 pred(?o) :- inv(?_BODY_1, ?o) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 9: APPLYING RULE 4 objCountPerPredAndSource(?p, ?s, ?_AGGREGATION_OUT) :- pred(?p), wikidata(?s, ?p, ?o), ?_AGGREGATION_OUT = #count(?o) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 4 entries (10476)
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 3 entries (10532)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table objCountPerPredAndSource (9) Permutation { idx_to_val: [], val_to_idx: [] } with 3 entries (10532)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 10: APPLYING RULE 4 objCountPerPredAndSource(?p, ?s, ?_AGGREGATION_OUT) :- pred(?p), wikidata(?s, ?p, ?o), ?_AGGREGATION_OUT = #count(?o) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 11: APPLYING RULE 16 R_9("a", ?X_2) :- R_9(?_BODY_1, ?X_2), objCountPerPredAndSource(?X_2, ?_BODY_2, ?_BODY_3), Equal(?_BODY_1, "a"), Equal(?_BODY_2, "z"), Equal(?_BODY_3, ?X_2) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 12: APPLYING RULE 13 R_13(?X_6, ?X_2, ?X_1, ?X_5, ?X_2, ?X_3) :- R_9(?X_6, ?X_2), R_9(?X_1, ?X_5), R_9(?X_2, ?X_3) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 13: APPLYING RULE 11 R_7(?X_3, <http://wikiba.se/ontology#directClaim>, ?X_1) :- R_13(?X_3, ?Y_1, ?X_1, ?_BODY_1, ?_BODY_2, ?_BODY_3), Equal(?_BODY_1, ?Y_1), Equal(?_BODY_2, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_3, "entityB") >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 14: APPLYING RULE 5 totalSubjCountPerPred(?p, ?_AGGREGATION_OUT) :- objCountPerPredAndSource(?p, ?s, ?_BODY_1), ?_AGGREGATION_OUT = #count(?s) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 3 entries (6916)
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 2 entries (6968)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table totalSubjCountPerPred (14) Permutation { idx_to_val: [], val_to_idx: [] } with 2 entries (6968)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 15: APPLYING RULE 5 totalSubjCountPerPred(?p, ?_AGGREGATION_OUT) :- objCountPerPredAndSource(?p, ?s, ?_BODY_1), ?_AGGREGATION_OUT = #count(?s) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 16: APPLYING RULE 24 R_16(?X_4, <http://wikiba.se/ontology#directClaim>, ?X_3, ?X_1, ?X_5, ?X_1) :- totalSubjCountPerPred(?X_4, ?_BODY_1), totalSubjCountPerPred(?X_3, ?X_1), totalSubjCountPerPred(?X_5, ?X_1), R_7(?X_5, ?Z_4, ?X_3), R_13(?X_5, ?_BODY_2, ?Z_2, ?X_4, ?Z_6, ?_BODY_3), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_2, ?X_5), Equal(?_BODY_3, ?X_5) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 17: APPLYING RULE 6 avgObjCountPerPredicate(?p, ?_HEAD_1) :- objCountPerPredAndSource(?p, ?s, ?count), totalSubjCountPerPred(?p, ?totalSubj), Equal(?_HEAD_1, NumericDivision(CastToDouble(?_AGGREGATION_OUT), ?totalSubj)), ?_AGGREGATION_OUT = #sum(?count, ?s) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 3 entries (13940)
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Saved temporary table: 2 entries (10480)
+08:51:33 [INFO] Execution step: Aggregation
+08:51:33 [INFO] Saved temporary table: 2 entries (6920)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table avgObjCountPerPredicate (17) Permutation { idx_to_val: [], val_to_idx: [] } with 2 entries (6968)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 18: APPLYING RULE 6 avgObjCountPerPredicate(?p, ?_HEAD_1) :- objCountPerPredAndSource(?p, ?s, ?count), totalSubjCountPerPred(?p, ?totalSubj), Equal(?_HEAD_1, NumericDivision(CastToDouble(?_AGGREGATION_OUT), ?totalSubj)), ?_AGGREGATION_OUT = #sum(?count, ?s) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Aggregation
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 19: APPLYING RULE 7 rightSmaller(?right) :- inv(?left, ?right), avgObjCountPerPredicate(?left, ?countLeft), avgObjCountPerPredicate(?right, ?countRight), NumericLessthan(?countRight, ?countLeft) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (3404)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table rightSmaller (19) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 20: APPLYING RULE 7 rightSmaller(?right) :- inv(?left, ?right), avgObjCountPerPredicate(?left, ?countLeft), avgObjCountPerPredicate(?right, ?countRight), NumericLessthan(?countRight, ?countLeft) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 21: APPLYING RULE 8 predToKeep(?right) :- rightSmaller(?right) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (3404)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table predToKeep (21) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 22: APPLYING RULE 8 predToKeep(?right) :- rightSmaller(?right) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 23: APPLYING RULE 17 R_20(?X_1) :- avgObjCountPerPredicate(?_BODY_1, ?X_1), rightSmaller(?X_1), Equal(?_BODY_1, "a") >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 24: APPLYING RULE 10 R_5("y", ?X_1, ?X_2, ?X_3) :- R_12(?_BODY_1, ?X_1, ?X_2, ?_BODY_2, ?X_3, ?_BODY_3), Equal(?_BODY_1, "y"), Equal(?_BODY_2, "y"), Equal(?_BODY_3, ?X_3) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 25: APPLYING RULE 12 R_12(?X_3, ?X_4, ?X_1, ?X_5, <http://wikiba.se/ontology#directClaim>, ?X_3) :- R_4(?X_3, ?X_4, ?X_1), R_4(?X_5, ?_BODY_1, ?X_3), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 26: APPLYING RULE 14 R_15(?X_5, ?X_4, ?X_3, <http://wikiba.se/ontology#directClaim>, ?X_2) :- R_3(?X_5, ?X_4, ?X_3, ?_BODY_1, ?X_2), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 27: APPLYING RULE 15 R_4(?X_2, ?X_1, ?X_1) :- R_2(?X_2), R_2(?X_1), R_2(?X_1), inv(?Z_1, ?X_1) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 28: APPLYING RULE 19 R_8("x", ?X_3, ?X_3) :- R_8(?_BODY_1, ?X_3, ?_BODY_2), R_3(?X_3, ?_BODY_3, ?_BODY_4, ?_BODY_5, ?Z_1), Equal(?_BODY_1, "x"), Equal(?_BODY_2, ?X_3), Equal(?_BODY_3, "entityB"), Equal(?_BODY_4, ?X_3), Equal(?_BODY_5, ?X_3) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 29: APPLYING RULE 21 R_6(?X_3, ?X_2, "x") :- avgObjCountPerPredicate(?X_3, ?X_2), avgObjCountPerPredicate(?_BODY_1, ?_BODY_2), R_5(?_BODY_3, ?X_2, ?X_3, ?_BODY_4), Equal(?_BODY_1, "a"), Equal(?_BODY_2, "x"), Equal(?_BODY_3, "x"), Equal(?_BODY_4, ?X_2) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 30: APPLYING RULE 23 R_3(?X_5, ?X_4, ?X_2, ?X_1, "x") :- R_13(?X_5, ?X_4, ?X_2, ?X_1, ?_BODY_1, ?_BODY_2), R_8(?Z_3, ?X_2, ?_BODY_3), R_12(?Z_5, ?X_1, ?X_2, ?_BODY_4, ?X_5, ?_BODY_5), pred(?X_5), Equal(?_BODY_1, "x"), Equal(?_BODY_2, ?X_1), Equal(?_BODY_3, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_4, "b"), Equal(?_BODY_5, ?X_5) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 2 entries (3456)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 31: APPLYING RULE 26 R_1(?X_2, ?X_3, "x", ?X_2, ?X_1) :- R_3(?X_2, ?X_3, ?_BODY_1, ?_BODY_2, ?X_1), R_6(?X_1, ?X_2, ?Z_2), R_16(?X_3, ?_BODY_3, ?Z_4, ?Z_1, ?X_1, ?X_2), Equal(?_BODY_1, "x"), Equal(?_BODY_2, ?X_2), Equal(?_BODY_3, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 32: APPLYING RULE 30 R_2(?X_1) :- R_1(?Y_1, ?_BODY_1, ?X_1, ?_BODY_2, ?_BODY_3), R_2(?Y_1), R_15(?X_1, ?Z_1, ?_BODY_4, ?_BODY_5, ?Y_1), R_20(?Y_1), R_9(?Y_1, ?_BODY_6), Equal(?_BODY_1, "x"), Equal(?_BODY_2, ?X_1), Equal(?_BODY_3, ?Y_1), Equal(?_BODY_4, "a"), Equal(?_BODY_5, ?X_1), Equal(?_BODY_6, "x") >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 33: APPLYING RULE 20 R_17(<http://wikiba.se/ontology#directClaim>, ?X_1, ?X_2) :- R_17(?_BODY_1, ?X_1, ?X_2), inversePropEntities(?X_2, ?Z_1), R_4(?X_2, ?X_1, ?_BODY_2), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_2, ?X_2) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("entityA"))), AnyDataValue(Iri(IriDataValue("c_14"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(3948985956184308585)))] }
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 34: APPLYING RULE 9 predToKeep(?left) :- inv(?left, ?right), rightSmaller(?right) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 1 entries (3452)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 35: APPLYING RULE 18 R_19("x", ?X_1, ?X_2) :- totalSubjCountPerPred(?_BODY_1, ?X_1), totalSubjCountPerPred(?X_2, ?_BODY_2), avgObjCountPerPredicate(?_BODY_3, ?X_2), totalSubjCountPerPred(?X_2, ?_BODY_4), Equal(?_BODY_1, "b"), Equal(?_BODY_2, "x"), Equal(?_BODY_3, "z"), Equal(?_BODY_4, ?X_2) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 2 entries (6920)
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 2 entries (6968)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 36: APPLYING RULE 27 R_18(?X_6, ?X_3, ?X_2, ?X_3, ?X_5, "z") :- inversePropEntities(?X_6, ?X_3), inversePropEntities(?X_2, ?X_3), inversePropEntities(?X_5, ?_BODY_1), predToKeep(?X_3), R_17(?X_2, ?_BODY_2, ?X_6), Equal(?_BODY_1, "z"), Equal(?_BODY_2, ?X_2) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 6, data: [AnyDataValue(Iri(IriDataValue("c_20"))), AnyDataValue(PlainString(StringDataValue("str_8"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("str_9"))), AnyDataValue(Iri(IriDataValue("c_15"))), AnyDataValue(Iri(IriDataValue("c_21")))] }
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 37: APPLYING RULE 28 R_10(?X_3, ?X_3, "a") :- R_1(?X_3, ?_BODY_1, ?_BODY_2, ?_BODY_3, ?_BODY_4), wikidata(?X_3, ?Z_2, ?_BODY_5), R_1(?Z_4, ?X_3, ?_BODY_6, ?Z_2, ?_BODY_7), R_18(?Z_2, ?X_3, ?_BODY_8, ?_BODY_9, ?_BODY_10, ?Z_4), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, "a"), Equal(?_BODY_3, ?X_3), Equal(?_BODY_4, ?X_3), Equal(?_BODY_5, "a"), Equal(?_BODY_6, ?X_3), Equal(?_BODY_7, ?X_3), Equal(?_BODY_8, ?X_3), Equal(?_BODY_9, ?X_3), Equal(?_BODY_10, ?X_3) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("str_1"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(Iri(IriDataValue("c_2"))), AnyDataValue(Iri(IriDataValue("c_3"))), AnyDataValue(Iri(IriDataValue("c_4"))), AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(Iri(IriDataValue("c_5"))), AnyDataValue(Iri(IriDataValue("c_6"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(14635272335933535057))), AnyDataValue(Iri(IriDataValue("c_7"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15293303269288636319))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(1398424989949641586))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(Iri(IriDataValue("c_8"))), AnyDataValue(PlainString(StringDataValue("str_3"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(PlainString(StringDataValue("str_2"))), AnyDataValue(Iri(IriDataValue("c_9"))), AnyDataValue(Iri(IriDataValue("c_10"))), AnyDataValue(Iri(IriDataValue("c_11"))), AnyDataValue(Iri(IriDataValue("c_12"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(Iri(IriDataValue("c_13"))), AnyDataValue(PlainString(StringDataValue("str_2"))), AnyDataValue(Iri(IriDataValue("c_14"))), AnyDataValue(Iri(IriDataValue("c_7"))), AnyDataValue(PlainString(StringDataValue("str_4"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("str_5"))), AnyDataValue(PlainString(StringDataValue("str_7"))), AnyDataValue(PlainString(StringDataValue("x")))] }
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 1 entries (20664)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 38: APPLYING RULE 22 R_14(?X_1, ?X_3, ?X_2) :- R_2(?X_1), R_2(?X_3), R_2(?X_2), R_10(?X_3, ?_BODY_1, ?X_1), Equal(?_BODY_1, "b") >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("entityB"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15444104110688489752))), AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(Iri(IriDataValue("c_2"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(PlainString(StringDataValue("str_6"))), AnyDataValue(Iri(IriDataValue("c_18"))), AnyDataValue(Iri(IriDataValue("c_19")))] }
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 12 entries (11500)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 39: APPLYING RULE 25 R_11(?X_3, ?X_1, ?X_6, ?X_5, ?X_2, ?X_4) :- R_13(?X_3, ?X_1, ?X_6, ?X_5, ?X_2, ?X_4), R_14(?Z_1, ?X_4, ?_BODY_1), Equal(?_BODY_1, ?X_4) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 6, data: [AnyDataValue(Iri(IriDataValue("http://www.wikidata.org/prop/direct/P1696"))), AnyDataValue(Iri(IriDataValue("c_12"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(Iri(IriDataValue("c_4"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(3948985956184308585))), AnyDataValue(PlainString(StringDataValue("str_5"))), AnyDataValue(Iri(IriDataValue("c_15"))), AnyDataValue(Iri(IriDataValue("c_15"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15480147422050766993))), AnyDataValue(Iri(IriDataValue("c_16"))), AnyDataValue(Iri(IriDataValue("c_17")))] }
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 40: APPLYING RULE 29 R_OUT(?X_1) :- R_OUT(?X_1), R_11(?X_1, ?_BODY_1, ?_BODY_2, ?Z_1, ?_BODY_3, ?_BODY_4), R_19(?Z_2, ?X_1, ?_BODY_5), Equal(?_BODY_1, ?X_1), Equal(?_BODY_2, "a"), Equal(?_BODY_3, "entityA"), Equal(?_BODY_4, ?X_1), Equal(?_BODY_5, ?X_1) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] Execution step: Combining Tables
+08:51:33 [INFO] Saved permanent table R_OUT (0-1) Permutation { idx_to_val: [], val_to_idx: [] } with 2 entries (3456)
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] --- Finished Nemo Execution - Input Program --
+08:51:33 [INFO] Output size: 2
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] Beginning Nemo Execution - Transformed Program
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] Stratified program: [[0, 1, 2, 3], [4, 11, 13, 16], [5, 23, 32], [6, 7, 8, 10, 12, 14, 15, 17, 19, 20, 22, 25, 26, 30, 31], [9, 18, 28], [27, 33, 34, 35, 37], [36], [21, 24, 29]]
+08:51:33 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(PlainString(StringDataValue("str_2"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15480147422050766993))), AnyDataValue(Iri(IriDataValue("c_27")))] }
+08:51:33 [INFO] Execution step: Combining Tables
+08:51:33 [INFO] Saved permanent table R_OUT (0-1) Permutation { idx_to_val: [], val_to_idx: [] } with 3 entries (3460)
+08:51:33 [INFO] <<< STEP 1: APPLYING RULE 0 inversePropEntities(?s, ?o) :- wikidata(?s, ?_BODY_1, ?o), Equal(StringCompare(LexicalValue(?s), LexicalValue(?o)), -1), Equal(?_BODY_1, <http://www.wikidata.org/prop/direct/P1696>) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("entityA"))), AnyDataValue(Iri(IriDataValue("http://www.wikidata.org/prop/direct/P1696"))), AnyDataValue(PlainString(StringDataValue("entityB"))), AnyDataValue(PlainString(StringDataValue("entityA"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(PlainString(StringDataValue("entityB"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(PlainString(StringDataValue("z"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("z"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("x")))] }
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (6856)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table inversePropEntities (1) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (6904)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 2: APPLYING RULE 0 inversePropEntities(?s, ?o) :- wikidata(?s, ?_BODY_1, ?o), Equal(StringCompare(LexicalValue(?s), LexicalValue(?o)), -1), Equal(?_BODY_1, <http://www.wikidata.org/prop/direct/P1696>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 3: APPLYING RULE 1 inv(?p1, ?p2) :- inversePropEntities(?e1, ?e2), wikidata(?e1, ?_BODY_1, ?p1), wikidata(?e2, ?_BODY_2, ?p2), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_2, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (6856)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table inv (3) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (6904)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 4: APPLYING RULE 1 inv(?p1, ?p2) :- inversePropEntities(?e1, ?e2), wikidata(?e1, ?_BODY_1, ?p1), wikidata(?e2, ?_BODY_2, ?p2), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_2, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 5: APPLYING RULE 2 pred(?s) :- inv(?s, ?_BODY_1) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (3404)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table pred (5) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 6: APPLYING RULE 2 pred(?s) :- inv(?s, ?_BODY_1) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 7: APPLYING RULE 3 pred(?o) :- inv(?_BODY_1, ?o) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (3404)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table pred (7) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 8: APPLYING RULE 3 pred(?o) :- inv(?_BODY_1, ?o) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 9: APPLYING RULE 4 objCountPerPredAndSource(?p, ?s, ?_AGGREGATION_OUT) :- pred(?p), wikidata(?s, ?p, ?o), ?_AGGREGATION_OUT = #count(?o) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 4 entries (10476)
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 3 entries (10532)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table objCountPerPredAndSource (9) Permutation { idx_to_val: [], val_to_idx: [] } with 3 entries (10532)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 10: APPLYING RULE 4 objCountPerPredAndSource(?p, ?s, ?_AGGREGATION_OUT) :- pred(?p), wikidata(?s, ?p, ?o), ?_AGGREGATION_OUT = #count(?o) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 11: APPLYING RULE 16 R_9("a", ?X_2) :- R_9(?_BODY_1, ?X_2), objCountPerPredAndSource(?X_2, ?_BODY_2, ?_BODY_3), Equal(?_BODY_1, "a"), Equal(?_BODY_2, "z"), Equal(?_BODY_3, ?X_2) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 12: APPLYING RULE 13 R_13(?X_6, ?X_2, ?X_1, ?X_5, ?X_2, ?X_3) :- R_9(?X_6, ?X_2), R_9(?X_1, ?X_5), R_9(?X_2, ?X_3) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 13: APPLYING RULE 11 R_7(?X_3, <http://wikiba.se/ontology#directClaim>, ?X_1) :- R_13(?X_3, ?Y_1, ?X_1, ?_BODY_1, ?_BODY_2, ?_BODY_3), Equal(?_BODY_1, ?Y_1), Equal(?_BODY_2, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_3, "entityB") >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 14: APPLYING RULE 5 totalSubjCountPerPred(?p, ?_AGGREGATION_OUT) :- objCountPerPredAndSource(?p, ?s, ?_BODY_1), ?_AGGREGATION_OUT = #count(?s) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 3 entries (6916)
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 2 entries (6968)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table totalSubjCountPerPred (14) Permutation { idx_to_val: [], val_to_idx: [] } with 2 entries (6968)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 15: APPLYING RULE 5 totalSubjCountPerPred(?p, ?_AGGREGATION_OUT) :- objCountPerPredAndSource(?p, ?s, ?_BODY_1), ?_AGGREGATION_OUT = #count(?s) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 16: APPLYING RULE 23 R_16(?X_4, <http://wikiba.se/ontology#directClaim>, ?X_3, ?X_1, ?X_5, ?X_1) :- totalSubjCountPerPred(?X_4, ?_BODY_1), totalSubjCountPerPred(?X_3, ?X_1), totalSubjCountPerPred(?X_5, ?X_1), R_7(?X_5, ?Z_4, ?X_3), R_13(?X_5, ?_BODY_2, ?Z_2, ?X_4, ?Z_6, ?_BODY_3), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_2, ?X_5), Equal(?_BODY_3, ?X_5) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 17: APPLYING RULE 32 R_24(?X_1) :- R_9(?X_1, ?_BODY_1), R_9(?X_1, ?_BODY_2), Equal(?_BODY_1, ?X_1), Equal(?_BODY_2, ?X_1) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 18: APPLYING RULE 6 avgObjCountPerPredicate(?p, ?_HEAD_1) :- objCountPerPredAndSource(?p, ?s, ?count), totalSubjCountPerPred(?p, ?totalSubj), Equal(?_HEAD_1, NumericDivision(CastToDouble(?_AGGREGATION_OUT), ?totalSubj)), ?_AGGREGATION_OUT = #sum(?count, ?s) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 3 entries (13940)
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Saved temporary table: 2 entries (10480)
+08:51:33 [INFO] Execution step: Aggregation
+08:51:33 [INFO] Saved temporary table: 2 entries (6920)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table avgObjCountPerPredicate (18) Permutation { idx_to_val: [], val_to_idx: [] } with 2 entries (6968)
+08:51:33 [INFO] Rule duration: 2 ms
+08:51:33 [INFO] <<< STEP 19: APPLYING RULE 6 avgObjCountPerPredicate(?p, ?_HEAD_1) :- objCountPerPredAndSource(?p, ?s, ?count), totalSubjCountPerPred(?p, ?totalSubj), Equal(?_HEAD_1, NumericDivision(CastToDouble(?_AGGREGATION_OUT), ?totalSubj)), ?_AGGREGATION_OUT = #sum(?count, ?s) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Aggregate output
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Aggregation
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 20: APPLYING RULE 7 rightSmaller(?right) :- inv(?left, ?right), avgObjCountPerPredicate(?left, ?countLeft), avgObjCountPerPredicate(?right, ?countRight), NumericLessthan(?countRight, ?countLeft) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (3404)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table rightSmaller (20) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 21: APPLYING RULE 7 rightSmaller(?right) :- inv(?left, ?right), avgObjCountPerPredicate(?left, ?countLeft), avgObjCountPerPredicate(?right, ?countRight), NumericLessthan(?countRight, ?countLeft) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 22: APPLYING RULE 8 predToKeep(?right) :- rightSmaller(?right) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Saved temporary table: 1 entries (3404)
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Saved permanent table predToKeep (22) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (3452)
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 23: APPLYING RULE 8 predToKeep(?right) :- rightSmaller(?right) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 24: APPLYING RULE 17 R_20(?X_1) :- avgObjCountPerPredicate(?_BODY_1, ?X_1), rightSmaller(?X_1), Equal(?_BODY_1, "a") >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 25: APPLYING RULE 10 R_5("y", ?X_1, ?X_2, ?X_3) :- R_12(?_BODY_1, ?X_1, ?X_2, ?_BODY_2, ?X_3, ?_BODY_3), Equal(?_BODY_1, "y"), Equal(?_BODY_2, "y"), Equal(?_BODY_3, ?X_3) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 26: APPLYING RULE 12 R_12(?X_3, ?X_4, ?X_1, ?X_5, <http://wikiba.se/ontology#directClaim>, ?X_3) :- R_4(?X_3, ?X_4, ?X_1), R_4(?X_5, ?_BODY_1, ?X_3), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 27: APPLYING RULE 14 R_15(?X_5, ?X_4, ?X_3, <http://wikiba.se/ontology#directClaim>, ?X_2) :- R_3(?X_5, ?X_4, ?X_3, ?_BODY_1, ?X_2), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 28: APPLYING RULE 15 R_4(?X_2, ?X_1, ?X_1) :- R_2(?X_2), R_2(?X_1), R_2(?X_1), inv(?Z_1, ?X_1) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 29: APPLYING RULE 19 R_8("x", ?X_3, ?X_3) :- R_8(?_BODY_1, ?X_3, ?_BODY_2), R_3(?X_3, ?_BODY_3, ?_BODY_4, ?_BODY_5, ?Z_1), Equal(?_BODY_1, "x"), Equal(?_BODY_2, ?X_3), Equal(?_BODY_3, "entityB"), Equal(?_BODY_4, ?X_3), Equal(?_BODY_5, ?X_3) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 30: APPLYING RULE 20 R_6(?X_3, ?X_2, "x") :- avgObjCountPerPredicate(?X_3, ?X_2), avgObjCountPerPredicate(?_BODY_1, ?_BODY_2), R_5(?_BODY_3, ?X_2, ?X_3, ?_BODY_4), Equal(?_BODY_1, "a"), Equal(?_BODY_2, "x"), Equal(?_BODY_3, "x"), Equal(?_BODY_4, ?X_2) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 31: APPLYING RULE 22 R_3(?X_5, ?X_4, ?X_2, ?X_1, "x") :- R_13(?X_5, ?X_4, ?X_2, ?X_1, ?_BODY_1, ?_BODY_2), R_8(?Z_3, ?X_2, ?_BODY_3), R_12(?Z_5, ?X_1, ?X_2, ?_BODY_4, ?X_5, ?_BODY_5), pred(?X_5), Equal(?_BODY_1, "x"), Equal(?_BODY_2, ?X_1), Equal(?_BODY_3, <http://wikiba.se/ontology#directClaim>), Equal(?_BODY_4, "b"), Equal(?_BODY_5, ?X_5) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 2 entries (3456)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 32: APPLYING RULE 25 R_1(?X_2, ?X_3, "x", ?X_2, ?X_1) :- R_3(?X_2, ?X_3, ?_BODY_1, ?_BODY_2, ?X_1), R_6(?X_1, ?X_2, ?Z_2), R_16(?X_3, ?_BODY_3, ?Z_4, ?Z_1, ?X_1, ?X_2), Equal(?_BODY_1, "x"), Equal(?_BODY_2, ?X_2), Equal(?_BODY_3, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 33: APPLYING RULE 26 R_2(?X_1) :- R_1(?Y_1, ?_BODY_1, ?X_1, ?_BODY_2, ?_BODY_3), R_2(?Y_1), R_15(?X_1, ?Z_1, ?_BODY_4, ?_BODY_5, ?Y_1), R_20(?Y_1), R_9(?Y_1, ?_BODY_6), Equal(?_BODY_1, "x"), Equal(?_BODY_2, ?X_1), Equal(?_BODY_3, ?Y_1), Equal(?_BODY_4, "a"), Equal(?_BODY_5, ?X_1), Equal(?_BODY_6, "x") >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 34: APPLYING RULE 30 R_18(?X_1, ?X_2, ?X_5, ?X_6, ?X_3, ?X_4) :- R_6(?X_1, ?X_2, ?X_5), R_24(?X_2), inversePropEntities(?X_5, ?X_4), wikidata(?X_3, ?X_2, ?X_1), pred(?X_6), R_20(?X_1) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 6, data: [AnyDataValue(Iri(IriDataValue("c_20"))), AnyDataValue(PlainString(StringDataValue("str_8"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("str_9"))), AnyDataValue(Iri(IriDataValue("c_15"))), AnyDataValue(Iri(IriDataValue("c_21"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(1398424989949641586))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(14635272335933535057))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(PlainString(StringDataValue("str_12"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(1780265276006053827))), AnyDataValue(Iri(IriDataValue("c_19"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(Iri(IriDataValue("c_28"))), AnyDataValue(Iri(IriDataValue("c_19"))), AnyDataValue(Iri(IriDataValue("c_29"))), AnyDataValue(Iri(IriDataValue("c_30"))), AnyDataValue(Iri(IriDataValue("c_31")))] }
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 35: APPLYING RULE 31 R_OUT("y") :- R_16(?_BODY_1, ?Y_1, ?_BODY_2, ?_BODY_3, ?_BODY_4, ?_BODY_5), R_16(?_BODY_6, ?Y_1, ?_BODY_7, ?_BODY_8, ?_BODY_9, ?_BODY_10), Equal(?_BODY_1, "y"), Equal(?_BODY_2, "y"), Equal(?_BODY_3, ?Y_1), Equal(?_BODY_4, <http://www.wikidata.org/prop/direct/P1696>), Equal(?_BODY_5, ?Y_1), Equal(?_BODY_6, "y"), Equal(?_BODY_7, "y"), Equal(?_BODY_8, ?Y_1), Equal(?_BODY_9, <http://www.wikidata.org/prop/direct/P1696>), Equal(?_BODY_10, ?Y_1) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 36: APPLYING RULE 9 predToKeep(?left) :- inv(?left, ?right), rightSmaller(?right) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 1 entries (3452)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 37: APPLYING RULE 18 R_19("x", ?X_1, ?X_2) :- totalSubjCountPerPred(?_BODY_1, ?X_1), totalSubjCountPerPred(?X_2, ?_BODY_2), avgObjCountPerPredicate(?_BODY_3, ?X_2), totalSubjCountPerPred(?X_2, ?_BODY_4), Equal(?_BODY_1, "b"), Equal(?_BODY_2, "x"), Equal(?_BODY_3, "z"), Equal(?_BODY_4, ?X_2) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 2 entries (6920)
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 2 entries (6968)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 38: APPLYING RULE 28 R_11(?X_2, ?X_6, ?X_1, ?X_4, ?X_3, ?X_1) :- R_1(?X_3, ?X_6, ?X_1, ?X_4, ?_BODY_1), R_1(?Y_1, ?_BODY_2, ?X_2, ?X_1, ?X_3), R_1(?X_3, ?X_6, ?X_1, ?X_4, ?_BODY_3), Equal(?_BODY_1, ?X_1), Equal(?_BODY_2, ?Y_1), Equal(?_BODY_3, ?X_1) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 6, data: [AnyDataValue(Iri(IriDataValue("http://www.wikidata.org/prop/direct/P1696"))), AnyDataValue(Iri(IriDataValue("c_12"))), AnyDataValue(PlainString(StringDataValue("y"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(Iri(IriDataValue("c_4"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(3948985956184308585))), AnyDataValue(PlainString(StringDataValue("str_5"))), AnyDataValue(Iri(IriDataValue("c_15"))), AnyDataValue(Iri(IriDataValue("c_15"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15480147422050766993))), AnyDataValue(Iri(IriDataValue("c_16"))), AnyDataValue(Iri(IriDataValue("c_17"))), AnyDataValue(Iri(IriDataValue("c_17"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(290695971604925496))), AnyDataValue(Iri(IriDataValue("c_14"))), AnyDataValue(Iri(IriDataValue("c_23"))), AnyDataValue(Iri(IriDataValue("c_24"))), AnyDataValue(Iri(IriDataValue("c_12")))] }
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 39: APPLYING RULE 34 R_17("str_10", ?X_3, ?X_1) :- R_19(?_BODY_1, ?X_3, ?X_1), R_19(?_BODY_2, ?X_3, ?X_1), Equal(?_BODY_1, "str_10"), Equal(?_BODY_2, "str_10") >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("entityA"))), AnyDataValue(Iri(IriDataValue("c_14"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(3948985956184308585))), AnyDataValue(Iri(IriDataValue("c_25"))), AnyDataValue(Iri(IriDataValue("c_26"))), AnyDataValue(PlainString(StringDataValue("str_13"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("entityA"))), AnyDataValue(PlainString(StringDataValue("z")))] }
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 40: APPLYING RULE 27 R_17(?X_1, "x", ?X_2) :- R_18(?X_1, ?_BODY_1, ?_BODY_2, ?X_2, ?_BODY_3, ?Y_1), R_4(?_BODY_4, ?X_1, ?_BODY_5), R_13(?_BODY_6, ?_BODY_7, ?_BODY_8, ?_BODY_9, ?X_2, ?_BODY_10), objCountPerPredAndSource(?_BODY_11, ?_BODY_12, ?X_1), Equal(?_BODY_1, "x"), Equal(?_BODY_2, <http://www.wikidata.org/prop/direct/P1696>), Equal(?_BODY_3, <http://www.wikidata.org/prop/direct/P1696>), Equal(?_BODY_4, <http://www.wikidata.org/prop/direct/P1696>), Equal(?_BODY_5, "entityB"), Equal(?_BODY_6, <http://www.wikidata.org/prop/direct/P1696>), Equal(?_BODY_7, <http://www.wikidata.org/prop/direct/P1696>), Equal(?_BODY_8, "entityB"), Equal(?_BODY_9, "x"), Equal(?_BODY_10, <http://www.wikidata.org/prop/direct/P1696>), Equal(?_BODY_11, "entityB"), Equal(?_BODY_12, <http://www.wikidata.org/prop/direct/P1696>) >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 3 entries (10428)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 41: APPLYING RULE 33 R_17(<http://wikiba.se/ontology#directClaim>, ?X_1_new_1, ?X_2) :- R_17(?_BODY_1, ?X_1, ?X_2_new_2), inversePropEntities(?X_2_new_1, ?Z_1), R_4(?X_2, ?X_1_new_1, ?X_2_new_2), Equal(?_BODY_1, <http://wikiba.se/ontology#directClaim>) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 42: APPLYING RULE 35 R_18(?X_6_new_1, ?X_3, ?X_2, ?X_3, ?X_5, "z") :- inversePropEntities(?X_6, ?X_3), inversePropEntities(?X_2, ?X_3), inversePropEntities(?X_5, ?_BODY_1), predToKeep(?X_3), R_17(?X_2, ?X_2_new_1, ?X_6_new_1), Equal(?_BODY_1, "z") >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 43: APPLYING RULE 37 R_11(?X_2, ?X_4, ?X_5, ?X_6, ?X_2, ?X_3) :- R_18(?X_2, ?X_5, ?Y_2, ?X_6, ?Y_1, ?_BODY_1), R_8(?X_4, ?X_2, ?X_5_new_1), inv(?X_2, ?_BODY_2), R_7(?_BODY_3, ?X_3, ?_BODY_4), wikidata(?X_5, ?X_3, ?_BODY_5), R_7(?X_6, ?Y_2, ?_BODY_6), R_13(?_BODY_7, ?X_2, ?Y_2, ?X_5, ?X_3, ?X_6), Equal(?_BODY_1, ?X_6), Equal(?_BODY_2, ?X_2), Equal(?_BODY_3, c_10), Equal(?_BODY_4, ?X_3), Equal(?_BODY_5, ?X_3), Equal(?_BODY_6, "str_14"), Equal(?_BODY_7, "str_14") >>>
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 7 entries (10848)
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 44: APPLYING RULE 36 R_10(?Z_8, ?Z_8, "a") :- R_1(?Z_8, ?_BODY_1, ?_BODY_2, ?_BODY_3, ?_BODY_4), wikidata(?Z_8, ?_BODY_5, ?_BODY_6), R_1(?Z_8, ?_BODY_7, ?_BODY_8, ?_BODY_9, ?_BODY_10), R_6(?Z_8, ?_BODY_11, ?_BODY_12), R_18(?Z_8, ?_BODY_13, ?_BODY_14, ?_BODY_15, ?_BODY_16, ?_BODY_17), R_18(?Z_8, ?_BODY_18, ?_BODY_19, ?_BODY_20, ?_BODY_21, ?_BODY_22), wikidata(?Z_8, ?_BODY_23, ?_BODY_24), predToKeep(?Z_8), R_19(?Z_8, ?_BODY_25, ?_BODY_26), wikidata(?Z_8, ?_BODY_27, ?_BODY_28), predToKeep(?Z_8), Equal(?_BODY_1, ?Z_8), Equal(?_BODY_2, "a"), Equal(?_BODY_3, ?Z_8), Equal(?_BODY_4, ?Z_8), Equal(?_BODY_5, ?Z_8), Equal(?_BODY_6, "a"), Equal(?_BODY_7, ?Z_8), Equal(?_BODY_8, ?Z_8), Equal(?_BODY_9, ?Z_8), Equal(?_BODY_10, ?Z_8), Equal(?_BODY_11, ?Z_8), Equal(?_BODY_12, ?Z_8), Equal(?_BODY_13, ?Z_8), Equal(?_BODY_14, ?Z_8), Equal(?_BODY_15, ?Z_8), Equal(?_BODY_16, ?Z_8), Equal(?_BODY_17, ?Z_8), Equal(?_BODY_18, ?Z_8), Equal(?_BODY_19, ?Z_8), Equal(?_BODY_20, ?Z_8), Equal(?_BODY_21, ?Z_8), Equal(?_BODY_22, ?Z_8), Equal(?_BODY_23, ?Z_8), Equal(?_BODY_24, ?Z_8), Equal(?_BODY_25, ?Z_8), Equal(?_BODY_26, 290695971604925496), Equal(?_BODY_27, ?Z_8), Equal(?_BODY_28, ?Z_8) >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(Iri(IriDataValue("c_5"))), AnyDataValue(Iri(IriDataValue("c_6"))), AnyDataValue(PlainString(StringDataValue("str_3"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(PlainString(StringDataValue("str_2"))), AnyDataValue(Iri(IriDataValue("c_9"))), AnyDataValue(Iri(IriDataValue("c_10"))), AnyDataValue(Iri(IriDataValue("c_11"))), AnyDataValue(Iri(IriDataValue("c_12"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(Iri(IriDataValue("c_13"))), AnyDataValue(PlainString(StringDataValue("str_4"))), AnyDataValue(PlainString(StringDataValue("b"))), AnyDataValue(PlainString(StringDataValue("x"))), AnyDataValue(PlainString(StringDataValue("str_5"))), AnyDataValue(PlainString(StringDataValue("str_7"))), AnyDataValue(PlainString(StringDataValue("x")))] }
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 3 entries (21256)
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 7 entries (10848)
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 1 entries (3452)
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 7 entries (10848)
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 1 entries (3452)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 45: APPLYING RULE 21 R_14(?X_1, ?X_3, ?X_2) :- R_2(?X_1), R_2(?X_3), R_2(?X_2), R_10(?X_3, ?_BODY_1, ?X_1), Equal(?_BODY_1, "b") >>>
+08:51:33 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("entityB"))), AnyDataValue(PlainString(StringDataValue("a"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15444104110688489752))), AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(Iri(IriDataValue("c_2"))), AnyDataValue(Iri(IriDataValue("http://wikiba.se/ontology#directClaim"))), AnyDataValue(PlainString(StringDataValue("str_6"))), AnyDataValue(Iri(IriDataValue("c_18"))), AnyDataValue(Iri(IriDataValue("c_19"))), AnyDataValue(Iri(IriDataValue("c_32"))), AnyDataValue(PlainString(StringDataValue("str_14"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(1780265276006053827))), AnyDataValue(Iri(IriDataValue("c_16"))), AnyDataValue(Iri(IriDataValue("c_8"))), AnyDataValue(PlainString(StringDataValue("str_15")))] }
+08:51:33 [INFO] Execution step: Project/Reorder
+08:51:33 [INFO] Saved temporary table: 6 entries (10848)
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 46: APPLYING RULE 24 R_11(?X_3, ?X_1, ?X_6, ?X_5, ?X_2, ?X_4) :- R_13(?X_3, ?X_1, ?X_6, ?X_5, ?X_2, ?X_4), R_14(?Z_1, ?X_4, ?_BODY_1), Equal(?_BODY_1, ?X_4) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] <<< STEP 47: APPLYING RULE 29 R_OUT(?X_1_new_1) :- R_OUT(?X_1), R_11(?X_1_new_1, ?_BODY_1, ?_BODY_2, ?Z_1, ?_BODY_3, ?X_1), R_19(?Z_2, ?X_1_new_1, ?_BODY_4), Equal(?_BODY_1, ?X_1_new_1), Equal(?_BODY_2, "a"), Equal(?_BODY_3, "entityA"), Equal(?_BODY_4, ?X_1_new_1) >>>
+08:51:33 [INFO] Execution step: Body
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Execution step: Duplicate Elimination (Datalog)
+08:51:33 [INFO] Trie does not contain any elements
+08:51:33 [INFO] Rule duration: 0 ms
+08:51:33 [INFO] Execution step: Combining Tables
+08:51:33 [INFO] Saved permanent table R_OUT (0-1) Permutation { idx_to_val: [], val_to_idx: [] } with 3 entries (3460)
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO]  Finished Nemo Execution - Transformed Program
+08:51:33 [INFO] Output size: 3
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] 
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] ------------ Asserting Oracle EXP ------------
+08:51:33 [INFO] ----------------------------------------------
+08:51:33 [INFO] All good, output is expanding
+08:51:33 [INFO] old_dir "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/benchmark_500k_r"

@@ -1,6 +1,6 @@
 use std::{
     env::{current_dir, set_current_dir},
-    fs::{File, OpenOptions, create_dir_all, remove_dir_all, remove_file},
+    fs::{create_dir_all, remove_dir_all, remove_file, File, OpenOptions},
     io::Write,
     path::PathBuf,
     process::exit,
@@ -15,24 +15,24 @@ use simplelog::*;
 use nemo::{
     error::report::ProgramReport,
     execution::execution_parameters::ExecutionParameters,
-    io::{ImportManager, resource_providers::ResourceProviders},
+    io::{resource_providers::ResourceProviders, ImportManager},
     rule_file::RuleFile,
     rule_model::{
-        pipeline::transformations::{ProgramTransformation, default::TransformationDefault},
-        programs::{ProgramRead, handle::ProgramHandle},
+        pipeline::transformations::{default::TransformationDefault, ProgramTransformation},
+        programs::{handle::ProgramHandle, ProgramRead},
     },
 };
 
 mod transformations;
 
 use crate::transformations::{
-    TestingTransformation,
     add_fact_node_and_edge::AddFactNodeAndEdge,
     add_relational_node::AddRelationalNode,
     //ensure_output_is_derived::EnsureOutputIsDerived,
     generate_out_rel_edge_chosen_relation::GenerateOutgoingRelationalEdgeChosenBodyLiteral,
     generate_rule_for_chosen_relation::GenerateNewRuleChosenRelation,
     select_specific_output_predicate::TransformationSelectSpecificOutputPredicate,
+    TestingTransformation,
 };
 use transformations::{
     annotated_dependency_graphs::AnnotatedDependencyGraph, name_rules::TransformationNameRules,
@@ -41,7 +41,7 @@ use transformations::{
 use lazy_static::lazy_static;
 use std::sync::Mutex;
  */
-use rand::{Rng, SeedableRng, seq::IndexedRandom};
+use rand::{seq::IndexedRandom, Rng, SeedableRng};
 
 use std::sync::OnceLock;
 
@@ -52,10 +52,7 @@ use crate::transformations::{
 
 use clap::{arg, command, value_parser};
 
-static NUM_TRANSFORMATIONS: OnceLock<u32> = OnceLock::new();
 static DEBUG_MODE: OnceLock<bool> = OnceLock::new();
-static NAME_OF_TRANSFORMATION_SEQUENCE: OnceLock<String> = OnceLock::new();
-static TRANSFORMATION_TYPE: OnceLock<TransformationTypes> = OnceLock::new();
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -75,7 +72,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -r --random_file "Use a random seed file from our selection. Is superseeded if --file is used. If neither this nor a seed file are set, use an empty seed (not recommended)"
+                    -r --random_file "Use a random seed file from our selection if not custom seed file is provided. If neither this nor a seed file are set, use an empty seed (not recommended)"
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
@@ -137,21 +134,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Read the command line parameters
     // You can check the value provided by positional arguments, or option arguments
-    if let Some(name) = matches.get_one::<String>("name") {
-        NAME_OF_TRANSFORMATION_SEQUENCE
-            .set(String::from(name))
-            .expect("Failed to set transformation sequence name!");
-    } else {
-        NAME_OF_TRANSFORMATION_SEQUENCE
-            .set(String::from("transformation_sequence_1"))
-            .expect("Failed to set transformation sequence name!");
-    }
+    let def_name = String::from("transformation_sequence_1");
+    let transformation_name = matches.get_one::<String>("name").unwrap_or(&def_name);
 
-    if let Some(num) = matches.get_one::<u32>("num") {
-        NUM_TRANSFORMATIONS
-            .set(num.clone())
-            .expect("Failed to set number of transformations");
-    }
+    let num_transformations = matches
+        .get_one::<u32>("num")
+        .expect("Failed to set number of transformations");
+
     let gen_size = match matches.get_one::<u32>("gen") {
         None => 20,
         Some(gen_size) => *gen_size,
@@ -221,17 +210,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             exit(1);
         };
 
-    TRANSFORMATION_TYPE
-        .set(transformation_types)
-        .expect("Failed to set transformation type globally!");
-
     // Done with reading command line parameters
 
     // Create transformation folder after removing any previous contents
-    let transformation_folder = String::from("./")
-        + NAME_OF_TRANSFORMATION_SEQUENCE
-            .get()
-            .expect("Name of Transformation Sequence not set");
+    let transformation_folder = String::from("./") + transformation_name;
 
     match remove_dir_all(transformation_folder.clone()) {
         Ok(_) => (),
@@ -319,15 +301,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             WriteLogger::new(
                 LevelFilter::Debug,
                 Config::default(),
-                File::create(
-                    log_name.clone()
-                        + "/"
-                        + NAME_OF_TRANSFORMATION_SEQUENCE
-                            .get()
-                            .expect("Name of Transformation Sequence not set")
-                        + ".log",
-                )
-                .unwrap(),
+                File::create(log_name.clone() + "/" + transformation_name + ".log").unwrap(),
             ),
         ])
         .unwrap();
@@ -343,15 +317,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             WriteLogger::new(
                 LevelFilter::Info,
                 Config::default(),
-                File::create(
-                    log_name.clone()
-                        + "/"
-                        + NAME_OF_TRANSFORMATION_SEQUENCE
-                            .get()
-                            .expect("Name of Transformation Sequence not set")
-                        + ".log",
-                )
-                .unwrap(),
+                File::create(log_name.clone() + "/" + transformation_name + ".log").unwrap(),
             ),
         ])
         .unwrap();
@@ -359,7 +325,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // We do not have a progress bar
     /* let bar = ProgressBar::new(u64::from(
-        *(NUM_TRANSFORMATIONS
+        *(num_transformations
             .get()
             .expect("Number of transformations not set")),
     )); */
@@ -372,15 +338,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 Number of generating transformations: {}
                 Internal Seed:          {:?}
                 Seed File: Currently not supported!",
-        NAME_OF_TRANSFORMATION_SEQUENCE
-            .get()
-            .expect("Name of Transformation Sequence not set"),
-        TRANSFORMATION_TYPE
-            .get()
-            .expect("Transformation type not set!"),
-        NUM_TRANSFORMATIONS
-            .get()
-            .expect("Number of transformations not set"),
+        transformation_name,
+        transformation_types,
+        num_transformations,
         DEBUG_MODE.get().expect("Debug Mode not set"),
         match seed {
             None => String::from("None provided"),
@@ -395,15 +355,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("-------------- Reading Seed File: ------------");
 
     let vec_path: Vec<&str> = vec![
-        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
-        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
+        //"/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
+        //"/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/constant-folding/constant-folding.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/datalogMtlSensor/datalogMtlSensor.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/datalogMtlWeather/datalogMtlWeather.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/lime-trees/old-lime-trees.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/owl-el/from-owl-rdf/owl-rdf-complete-reasoning.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/owl-el/from-owl-rdf/owl-rdf-preprocessing.rls",
-        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/owl-el/from-owl-preprocessed-csv/el-calc.rls",
+        "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/owl-el/from-preprocessed-csv/el-calc.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wikidata-yago-like-inverse-property-cleanup/yagoExample.rls",
         "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls",
     ];
@@ -457,7 +417,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // bzw nochmal genau ansehen ob default transformation welche elemente davon möchte ich machen
 
     // Name all of the rules!
-    program = transform_and_err(&program, TransformationNameRules::new());
+    program = transform_and_err(
+        &program,
+        TransformationNameRules::new(),
+        transformation_name,
+    );
 
     info!("--------- Finished Reading Seed file ---------");
     info!("----------------------------------------------");
@@ -468,7 +432,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("");
     // Construct the seed ADG
     let mut adg: AnnotatedDependencyGraph =
-        match AnnotatedDependencyGraph::from_program_lite(&program) {
+        match AnnotatedDependencyGraph::from_program_lite(&program, transformation_name) {
             Some(adg) => adg,
             None => {
                 error!("Failed to build adg");
@@ -483,6 +447,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             adg.get_output_tag()
                 .expect("Gen. program ADG has no output predicate?"),
         ),
+        transformation_name,
     );
 
     // No longer random output predicate: Always R_OUT
@@ -546,7 +511,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .or_insert(1);
 
         // calculate ith transformation
-        program = transform_and_err(&program, transformation);
+        program = transform_and_err(&program, transformation, transformation_name);
         //bar_gen.inc(1);
     }
 
@@ -581,7 +546,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .or_insert(1);
 
         // calculate ith transformation
-        program = transform_and_err(&program, transformation);
+        program = transform_and_err(&program, transformation, transformation_name);
         // bar_gen.inc(1);
     }
 
@@ -627,7 +592,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .or_insert(1);
 
         // calculate ith transformation
-        program = transform_and_err(&program, transformation);
+        program = transform_and_err(&program, transformation, transformation_name);
         //bar_gen.inc(1);
     }
 
@@ -668,7 +633,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .or_insert(1);
 
         // calculate ith transformation
-        program = transform_and_err(&program, transformation);
+        program = transform_and_err(&program, transformation, transformation_name);
         //bar_gen.inc(1);
     }
 
@@ -728,7 +693,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("");
         info!(
             "Next rule name would be:         {}",
-            adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
+            adg.next_rule_name(transformation_types)
         );
         info!(
             "Next predicate name would be:    {}",
@@ -772,15 +737,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         });
         {
             // Store this logging information in the statsitics string!
-            statistics_string.push_str(
-                (NAME_OF_TRANSFORMATION_SEQUENCE.get().expect("").to_owned() + ", ").as_str(),
-            );
+            statistics_string.push_str((transformation_name.to_owned() + ", ").as_str());
             statistics_string.push_str(format!("{}, ", transformation_types).as_str());
             statistics_string.push_str(format!("{:?}, ", seed).as_str());
+            statistics_string.push_str(format!("{:?}, ", path).as_str());
             statistics_string.push_str(format!("{}, ", gen_size).as_str());
-            statistics_string.push_str(
-                (String::from(NUM_TRANSFORMATIONS.get().expect("").to_string()) + ", ").as_str(),
-            );
+            statistics_string.push_str((num_transformations.to_string() + ", ").as_str());
             statistics_string
                 .push_str((String::from(DEBUG_MODE.get().expect("").to_string()) + ", ").as_str());
             statistics_string.push_str(format!("{}, ", adg.get_fact_nodes_iter().count()).as_str());
@@ -799,13 +761,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             statistics_string.push_str(
                 format!("{}, ", adg.get_unknown_ancestry_relational_nodes().len()).as_str(),
             );
-            statistics_string.push_str(
-                format!(
-                    "{}, ",
-                    adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
-                )
-                .as_str(),
-            );
+            statistics_string
+                .push_str(format!("{}, ", adg.next_rule_name(transformation_types)).as_str());
             statistics_string
                 .push_str(format!("{}, ", adg.get_new_relation_name().name()).as_str());
             statistics_string.push_str(
@@ -876,6 +833,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let input_program = transform_and_err(
         &input_program,
         TransformationDefault::new(&ExecutionParameters::default()),
+        transformation_name,
     )
     .materialize();
 
@@ -883,12 +841,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("--------- Beginning Transformations ----------");
     info!(
         "--------  Oracle: {}    Number: {}",
-        TRANSFORMATION_TYPE
-            .get()
-            .expect("Transformation type not set!"),
-        NUM_TRANSFORMATIONS
-            .get()
-            .expect("Num transformations not initialised")
+        transformation_types, num_transformations
     );
     info!("----------------------------------------------");
 
@@ -920,12 +873,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let mut count_failed_transformations: usize = 0;
 
-    // Perform NUM_TRANSFORMATIONS transformations
-    for repetition in 1..=NUM_TRANSFORMATIONS
-        .get()
-        .expect("Num transformations not initialised")
-        .clone()
-    {
+    // Perform num_transformations transformations
+    for repetition in 1..=*num_transformations {
         adg.verify_relational_edges();
         if DEBUG_MODE
             .get()
@@ -935,16 +884,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             debug!("ADG edge verification succeeded");
             debug!("RNG position: {}", rng.get_word_pos());
         }
-        info!(
-            "{repetition} / {}",
-            NUM_TRANSFORMATIONS
-                .get()
-                .expect("Num transformations not initialised")
-        );
-        let trans_types: TransformationTypes = TRANSFORMATION_TYPE
-            .get()
-            .expect("Transformation type not set!")
-            .clone();
+        info!("{repetition} / {}", num_transformations);
+        let trans_types: TransformationTypes = transformation_types.clone();
         let transformation;
 
         loop {
@@ -973,7 +914,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .or_insert(1);
 
         // calculate ith transformation
-        program = transform_and_err(&program, transformation);
+        program = transform_and_err(&program, transformation, transformation_name);
 
         // transformations should instead work on a reference
         // to the adg and then transform that
@@ -1107,7 +1048,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         info!("");
         info!(
             "Next rule name would be:         {}",
-            adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
+            adg.next_rule_name(transformation_types)
         );
         info!(
             "Next predicate name would be:    {}",
@@ -1176,10 +1117,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     println!(
         "Finished transformation. Input, output and log can be found in the folder {}",
-        String::from("./")
-            + NAME_OF_TRANSFORMATION_SEQUENCE
-                .get()
-                .expect("Name of Transformation Sequence not set")
+        String::from("./") + transformation_name
     );
 
     // We need to switch to the transformation directory in order to correctly
@@ -1265,6 +1203,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     program = transform_and_err(
         &program,
         TransformationDefault::new(&ExecutionParameters::default()),
+        transformation_name,
     );
     let nemo_engine_input_2 = nemo::api::Engine::initialize(
         program.materialize(),
@@ -1319,17 +1258,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("----------------------------------------------");
     info!(
         "------------ Asserting Oracle {} ------------",
-        TRANSFORMATION_TYPE
-            .get()
-            .expect("Transformation type not set")
+        transformation_types
     );
     info!("----------------------------------------------");
 
     let mut found_bug = false;
-    match TRANSFORMATION_TYPE
-        .get()
-        .expect("Transformation type not set")
-    {
+    match transformation_types {
         TransformationTypes::EQU => match out == out_2 {
             true => {
                 info!("All good, output is equivalent");
@@ -1377,12 +1311,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // If I found a bug move the log file to upper directory
     if found_bug {
-        let log_file_name = log_name
-            + "/"
-            + NAME_OF_TRANSFORMATION_SEQUENCE
-                .get()
-                .expect("Name of Transformation Sequence not set")
-            + ".log";
+        let log_file_name = log_name + "/" + transformation_name + ".log";
         match create_dir_all(old_dir.join(PathBuf::from("bugs"))) {
             Ok(_) => (),
             Err(e) => {
@@ -1395,12 +1324,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         match std::fs::copy(
             log_file_name.clone(),
             old_dir.join(PathBuf::from(
-                String::from("bugs")
-                    + "/"
-                    + NAME_OF_TRANSFORMATION_SEQUENCE
-                        .get()
-                        .expect("Name of Transformation Sequence not set")
-                    + ".log",
+                String::from("bugs") + "/" + transformation_name + ".log",
             )),
         ) {
             Err(e) => {
@@ -1428,7 +1352,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     let mut data_folder_name = to_dir.clone();
                     data_folder_name.pop();
                     let _ = remove_dir_all(data_folder_name); // we don't care if it succeeds
-                    // cause itll succeed at least once
+                                                              // cause itll succeed at least once
                 }
             }
         }
@@ -1451,7 +1375,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 info!(
                     "Create a transformation_statistics.csv file in the folder you are calling this from to begin to collect transformation statistics for all your transformations.
                     Header:
-                Name, Oracle, Seed, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug,"
+                Name, Oracle, Seed, Seed_File, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug,"
                 )
             } // If there is a stats folder write a bunch of information to it
             Ok(mut stats_file) => {
@@ -1476,13 +1400,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 statistics_string.push_str(
                     format!("{}, ", adg.get_unknown_ancestry_relational_nodes().len()).as_str(),
                 );
-                statistics_string.push_str(
-                    format!(
-                        "{}, ",
-                        adg.next_rule_name(TRANSFORMATION_TYPE.get().expect("TT not set!").clone())
-                    )
-                    .as_str(),
-                );
+                statistics_string
+                    .push_str(format!("{}, ", adg.next_rule_name(transformation_types)).as_str());
                 statistics_string
                     .push_str(format!("{}, ", adg.get_new_relation_name().name()).as_str());
                 statistics_string.push_str(
@@ -1556,7 +1475,11 @@ fn write_program_handle_to_file(program: &ProgramHandle, new_name: &str) -> std:
 /// Perform a transformation, catching any errors
 ///
 ///
-fn transform_and_err<T>(program: &ProgramHandle, transformation: T) -> ProgramHandle
+fn transform_and_err<T>(
+    program: &ProgramHandle,
+    transformation: T,
+    transformation_name: &String,
+) -> ProgramHandle
 where
     T: ProgramTransformation,
 {
@@ -1564,12 +1487,7 @@ where
         Ok(p) => p,
         Err(e) => {
             error!("Transformation is erronous");
-            cprintln!(
-                "<r>Transformation {} is erronous</>",
-                NAME_OF_TRANSFORMATION_SEQUENCE
-                    .get()
-                    .expect("Transformation sequence not named")
-            );
+            cprintln!("<r>Transformation {} is erronous</>", transformation_name);
             for err in e.errors() {
                 error!("{}", err.note().unwrap_or(""));
             }

@@ -1,4 +1,4 @@
-use crate::{NAME_OF_TRANSFORMATION_SEQUENCE, transformations::util};
+use crate::transformations::util;
 use std::{
     collections::{HashSet, VecDeque},
     fmt::{Debug, Formatter},
@@ -10,20 +10,21 @@ use indexmap::{IndexMap, IndexSet};
 use log::{debug, error, info, trace};
 use nemo::rule_model::{
     components::{
-        IterablePrimitives, statement,
+        statement,
         tag::Tag,
-        term::{Term, primitive::ground::GroundTerm},
+        term::{primitive::ground::GroundTerm, Term},
+        IterablePrimitives,
     },
-    programs::{ProgramRead, handle::ProgramHandle},
+    programs::{handle::ProgramHandle, ProgramRead},
 };
+use petgraph::{dot::Dot, graph::NodeIndex, Direction::Incoming};
 use petgraph::{
-    Directed,
-    Direction::Outgoing,
     prelude::StableGraph,
     stable_graph::{EdgeIndex, Edges},
     visit::EdgeRef,
+    Directed,
+    Direction::Outgoing,
 };
-use petgraph::{Direction::Incoming, dot::Dot, graph::NodeIndex};
 use rand::RngCore;
 use rand_chacha::ChaCha8Rng;
 
@@ -281,13 +282,17 @@ pub struct AnnotatedDependencyGraph {
     last_iri_name: u32,
     last_rel_name: u32,
     last_rule_name: u32,
+    transformation_sequence_name: String,
 }
 
 /// An Annotated Dependency Graph. Provides a multitude of functions
 impl AnnotatedDependencyGraph {
     #[allow(dead_code)]
     /// Generate an ADG that fully represents a program
-    pub fn from_program(program: &ProgramHandle) -> Option<Self> {
+    pub fn from_program(
+        program: &ProgramHandle,
+        transformation_sequence_name: &String,
+    ) -> Option<Self> {
         let predicates: HashSet<Tag> = program.all_predicates();
 
         // Find ground terms, which might be the same as constant symbols
@@ -334,6 +339,7 @@ impl AnnotatedDependencyGraph {
             last_str_name: 0,
             last_rel_name: 0,
             last_rule_name: 0,
+            transformation_sequence_name: transformation_sequence_name.clone(),
         };
         //debug!("{:#?}", adg.predicates);
         // Relational nodes
@@ -417,7 +423,10 @@ impl AnnotatedDependencyGraph {
     /// Generate an ADG from a program such that it only stores appearing
     /// relations in the form of relational nodes and appearing ground terms
     /// for later use in transformations
-    pub fn from_program_lite(program: &ProgramHandle) -> Option<Self> {
+    pub fn from_program_lite(
+        program: &ProgramHandle,
+        transformation_sequence_name: &String,
+    ) -> Option<Self> {
         // Find predicates
         let mut predicates: HashSet<Tag> = program.all_predicates();
         // Construct output predicate
@@ -473,6 +482,7 @@ impl AnnotatedDependencyGraph {
             last_str_name: 0,
             last_rel_name: 0,
             last_rule_name: 0,
+            transformation_sequence_name: transformation_sequence_name.clone(),
         };
         //debug!("{:#?}", adg.predicates);
         // Relational nodes
@@ -482,6 +492,11 @@ impl AnnotatedDependencyGraph {
         // No rule representation -> done!
 
         Some(adg)
+    }
+
+    /// Get the name of the transformation sequence
+    pub fn get_transformation_sequence_name(&self) -> &String {
+        &self.transformation_sequence_name
     }
 
     /// Write the ADG to the file name at path
@@ -822,9 +837,7 @@ impl AnnotatedDependencyGraph {
             self.write_reduced_self_to_file(
                 Some(
                     String::from("./")
-                        + NAME_OF_TRANSFORMATION_SEQUENCE
-                            .get()
-                            .expect("Name of Transformation Sequence not set")
+                        + self.get_transformation_sequence_name()
                         //+ "/log"
                         + "/debug",
                 ),
@@ -1135,9 +1148,7 @@ impl AnnotatedDependencyGraph {
         );
         let path = Some(
             String::from("./")
-                + NAME_OF_TRANSFORMATION_SEQUENCE
-                    .get()
-                    .expect("Name of Transformation Sequence not set")
+                + self.get_transformation_sequence_name()
                 //+ "/log"
                         + "/debug",
         );
@@ -1259,7 +1270,7 @@ impl AnnotatedDependencyGraph {
         String::from("r_") + oracle.to_string().as_str() + "_" + &self.last_rule_name.to_string()
     }
 
-     /// Build the next rule name, program generation only
+    /// Build the next rule name, program generation only
     pub fn next_rule_name_gen(&mut self) -> String {
         self.last_rule_name += 1;
         String::from("r_GEN_") + &self.last_rule_name.to_string()
@@ -1889,7 +1900,7 @@ impl AnnotatedDependencyGraph {
     }
 
     /// Get those relational nodes with none ancestry
-    /// You might want to filter out those relations are edb only also as follows: 
+    /// You might want to filter out those relations are edb only also as follows:
     /// ```
     /// let chosen_head_rel: Tag = adg.get_any_ancestry_relational_nodes()
     ///        .iter()
@@ -1910,7 +1921,9 @@ impl AnnotatedDependencyGraph {
     #[allow(dead_code)]
     /// Fetch the seed relations
     pub fn get_seed_rel(&self) -> Vec<Tag> {
-        self.get_predicates_iter().filter(|tag|self.is_edb_only_rel(tag)).collect()
+        self.get_predicates_iter()
+            .filter(|tag| self.is_edb_only_rel(tag))
+            .collect()
     }
 
     /// Get an index map that stores relational edges going/coming (`dir`) from the relational node for `tag` by their rule name.
@@ -2134,9 +2147,7 @@ impl AnnotatedDependencyGraph {
             self.write_self_to_file(
                 Some(
                     String::from("./")
-                        + NAME_OF_TRANSFORMATION_SEQUENCE
-                            .get()
-                            .expect("Name of Transformation Sequence not set")
+                        + self.get_transformation_sequence_name()
                         //+ "/log"
                         + "/debug",
                 ),
@@ -2145,9 +2156,7 @@ impl AnnotatedDependencyGraph {
             self.write_reduced_self_to_file(
                 Some(
                     String::from("./")
-                        + NAME_OF_TRANSFORMATION_SEQUENCE
-                            .get()
-                            .expect("Name of Transformation Sequence not set")
+                        + self.get_transformation_sequence_name()
                         //+ "/log"
                         + "/debug",
                 ),

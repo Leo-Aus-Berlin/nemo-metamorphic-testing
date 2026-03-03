@@ -1,0 +1,61 @@
+false("false"^^<http://www.w3.org/2001/XMLSchema#boolean>).
+@import AssignNumConstant :- tsv{resource= "data/AssignNumConstant.tsv.gz"}.
+@import AssignLocal :- tsv{resource= "data/AssignLocal.tsv.gz"}.
+@import OperatorAt :- tsv{resource= "data/OperatorAt.tsv.gz"}.
+@import AssignUnop :- tsv{resource= "data/AssignUnop.tsv.gz"}.
+@import AssignBinop :- tsv{resource= "data/AssignBinop.tsv.gz"}.
+@import AssignOperFrom :- tsv{resource= "data/AssignOperFrom.tsv.gz"}.
+@import AssignOperFromConstant :- tsv{resource= "data/AssignOperFromConstant.tsv.gz"}.
+IntegerConstant(?var, ?val, ?meth) :- AssignNumConstant(_, _, ?val, ?var, ?meth) .
+IntegerConstant(?var_to, ?val, ?meth), ConstFolding(?ins, ?var_to, ?val, ?meth) :- AssignLocal(?ins, _, ?var_from, ?var_to, ?meth), false(CONTAINS(?ins, "phi-assign")), IntegerConstant(?var_from, ?val, ?meth) .
+IntegerConstant(?var, 0 - ?val1, ?meth), ConstFolding(?ins, ?var, 0 - ?val1, ?meth) :- AssignUnop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "~", AssignOperFrom(?ins, _, ?var1), IntegerConstant(?var1, ?val1, ?meth) .
+IntegerConstant(?var, 0 - ?val1, ?meth), ConstFolding(?ins, ?var, 0 - ?val1, ?meth) :- AssignUnop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "~", AssignOperFromConstant(?ins, _, ?val1) .
+IntegerConstant(?var, ?val1 + ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 + ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "+", AssignOperFromConstant(?ins, _, ?val1), AssignOperFrom(?ins, _, ?var2), IntegerConstant(?var2, ?val2, ?meth) .
+IntegerConstant(?var, ?val1 + ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 + ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "+", AssignOperFromConstant(?ins, ?pos1, ?val1), AssignOperFromConstant(?ins, ?pos2, ?val2), ?pos1 < ?pos2 .
+IntegerConstant(?var, ?val1 + ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 + ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "+", AssignOperFrom(?ins, ?pos1, ?var1), AssignOperFrom(?ins, ?pos2, ?var2), ?pos1 < ?pos2, IntegerConstant(?var1, ?val1, ?meth), IntegerConstant(?var2, ?val2, ?meth) .
+IntegerConstant(?var, ?val1 - ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 - ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "-", AssignOperFromConstant(?ins, ?pos1, ?val1), AssignOperFrom(?ins, ?pos2, ?var2), ?pos1 < ?pos2, IntegerConstant(?var2, ?val2, ?meth) .
+IntegerConstant(?var, ?val1 - ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 - ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "-", AssignOperFrom(?ins, ?pos1, ?var1), IntegerConstant(?var1, ?val1, ?meth), AssignOperFromConstant(?ins, ?pos2, ?val2), ?pos1 < ?pos2 .
+IntegerConstant(?var, ?val1 - ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 - ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "-", AssignOperFromConstant(?ins, ?pos1, ?val1), AssignOperFromConstant(?ins, ?pos2, ?val2), ?pos1 < ?pos2 .
+IntegerConstant(?var, ?val1 - ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 - ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "-", AssignOperFrom(?ins, ?pos1, ?var1), AssignOperFrom(?ins, ?pos2, ?var2), ?pos1 < ?pos2, IntegerConstant(?var1, ?val1, ?meth), IntegerConstant(?var2, ?val2, ?meth) .
+IntegerConstant(?var, ?val1 * ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 * ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "*", AssignOperFromConstant(?ins, _, ?val1), AssignOperFrom(?ins, _, ?var2), IntegerConstant(?var2, ?val2, ?meth) .
+IntegerConstant(?var, ?val1 * ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 * ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "*", AssignOperFromConstant(?ins, ?pos1, ?val1), AssignOperFromConstant(?ins, ?pos2, ?val2), ?pos1 < ?pos2 .
+IntegerConstant(?var, ?val1 * ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 * ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "*", AssignOperFrom(?ins, ?pos1, ?var1), AssignOperFrom(?ins, ?pos2, ?var2), ?pos1 < ?pos2, IntegerConstant(?var1, ?val1, ?meth), IntegerConstant(?var2, ?val2, ?meth) .
+IntegerConstant(?var, ?val1 / ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 / ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "/", AssignOperFromConstant(?ins, ?pos1, ?val1), AssignOperFrom(?ins, ?pos2, ?var2), ?pos1 < ?pos2, IntegerConstant(?var2, ?val2, ?meth) .
+IntegerConstant(?var, ?val1 / ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 / ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "/", AssignOperFrom(?ins, ?pos1, ?var1), IntegerConstant(?var1, ?val1, ?meth), AssignOperFromConstant(?ins, ?pos2, ?val2), ?pos1 < ?pos2 .
+IntegerConstant(?var, ?val1 / ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 / ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "/", AssignOperFromConstant(?ins, ?pos1, ?val1), AssignOperFromConstant(?ins, ?pos2, ?val2), ?pos1 < ?pos2 .
+IntegerConstant(?var, ?val1 / ?val2, ?meth), ConstFolding(?ins, ?var, ?val1 / ?val2, ?meth) :- AssignBinop(?ins, _, ?var, ?meth), OperatorAt(?ins, ?op), ?op = "/", AssignOperFrom(?ins, ?pos1, ?var1), AssignOperFrom(?ins, ?pos2, ?var2), ?pos1 < ?pos2, IntegerConstant(?var1, ?val1, ?meth), IntegerConstant(?var2, ?val2, ?meth) .
+@export R_OUT :- csv{}.
+R_1(?X_1, ?X_2, ?X_3, "phi-assign", ?X_5, ?X_6) :- R_10(?X_1, ?X_2, ?X_3, "phi-assign", ?X_5, ?X_6) .
+R_2(?X_2, ?X_1, ?X_5, ?X_3, ?X_2) :- OperatorAt(?X_2, ?X_1), OperatorAt(?X_5, ?X_3), OperatorAt(?X_2, ?X_2) .
+R_13(?X_2, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>) :- R_15(?X_2, ?X_2, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_2) .
+R_14("false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_2) :- R_7("false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_2, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?Y_1) .
+R_4(?X_2, ?X_1, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_1) :- R_6(?X_2, ?X_1, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_1), AssignBinop(?X_1, ?X_1, ?X_1, "phi-assign") .
+R_5(?X_1) :- R_8("phi-assign", ?X_1, ?X_1, ?X_1), IntegerConstant(?X_1, ?X_1, ?Z_2) .
+R_11(?X_5, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_3, ?X_1, ?X_2, ?X_1) :- AssignUnop("false"^^<http://www.w3.org/2001/XMLSchema#boolean>, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_3, ?X_1), AssignUnop(?X_2, ?X_1, ?X_3, ?X_5), R_2(?X_2, ?X_5, ?Z_1, ?X_3, ?X_1) .
+R_10(?X_2, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_6, ?X_1, ?X_3, ?X_4) :- R_3(?X_2, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_6, ?X_1, ?X_3, ?X_4), R_4(?Z_1, ?X_6, ?X_1, ?X_3) .
+R_3(?X_6, ?X_3, "phi-assign", ?X_2, ?X_5, ?X_4) :- AssignOperFrom(?X_6, ?X_3, "phi-assign"), AssignOperFrom(?X_2, ?X_5, ?X_4), R_1(?X_2, ?Z_3, "phi-assign", ?X_5, ?X_5, ?Z_1), R_5(?X_3) .
+R_16(?X_4, ?X_6, ?X_2, ?X_4, ?X_1, ?X_3) :- R_2(?Y_2, ?X_6, ?X_2, ?X_6, ?X_1), R_2(?X_3, ?X_4, ?X_4, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_4), AssignOperFromConstant(?X_6, ?X_6, ?X_4), R_6(?X_6, ?Z_1, ?Z_6, ?X_3) .
+R_7(?X_2, ?X_4, ?X_3, ?X_1) :- R_6(?X_2, ?X_4, ?X_3, ?X_1), ~AssignOperFrom(?X_3, ?X_3, "phi-assign"), AssignUnop(?Z_2, ?X_2, ?X_4, ?X_3), false(?X_4), R_9(?X_4, ?X_1) .
+R_12("false"^^<http://www.w3.org/2001/XMLSchema#boolean>) :- R_1(?Y_1, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>), AssignNumConstant(?Z_1, ?Y_1, "phi-assign", "phi-assign", ?Y_1), ~R_10(?Y_1, ?Z_1, ?Y_1, ?Y_1, ?Y_1, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>) .
+R_6(?X_2, ?X_1, ?X_1, ?X_4) :- AssignLocal(?X_2, ?X_4, ?X_1, ?X_4, ?X_1), ~AssignLocal(?X_1, ?X_4, "phi-assign", ?X_1, ?X_1), OperatorAt(?X_1, ?X_2), R_3(?X_2, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?Z_3, ?Z_5, ?X_1, ?X_4), R_11(?X_2, ?X_4, ?X_2, ?X_1, ?X_1, ?X_4) .
+R_8(?X_2, ?X_1, ?X_3, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>) :- AssignOperFrom(?X_2, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_3), AssignOperFrom("false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_1, ?X_2), R_14(?Z_3, ?Z_1) .
+R_9(?X_2, ?X_1) :- AssignOperFrom(?X_2, ?X_1, ?X_2), R_7(?X_2, ?Z_1, ?X_2, ?X_2), R_16(?X_1, ?X_2, ?X_2, ?X_2, ?Z_2, ?Z_4) .
+R_12("phi-assign").
+R_13(c_1, c_2).
+R_OUT(c_3, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>).
+R_15(c_4, c_2, c_5, c_6).
+R_OUT("str_1", c_4, c_4).
+R_12(c_7).
+R_15("str_1", "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, c_5, c_7).
+R_13(2264630112112403150, c_5).
+R_OUT("false"^^<http://www.w3.org/2001/XMLSchema#boolean>, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, c_8).
+R_15(2264630112112403150, "str_1", c_9, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>).
+R_OUT(c_7, 9279495288604027523, "str_2").
+R_13(11763158723879529998, c_4).
+R_12(c_10).
+R_13(c_10, "str_2").
+R_13(c_3, c_5).
+R_15(?X_1_new_1, ?X_1_new_1, ?X_4, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>) :- R_15(?X_1, ?X_1, ?X_4, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>), R_12(?X_1), R_15(?X_1, "false"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_1, ?X_1_new_1) .
+R_8(?X_2, ?X_3, ?X_4, ?X_3) :- ConstFolding(?X_2, ?X_3, ?X_4, ?X_3), ~ConstFolding(?X_2, ?X_3, ?X_4, ?X_3) .
+R_8(?X_4, c_7, ?X_1, ?X_3) :- ConstFolding(?X_4, c_7, ?X_1, ?X_3), ~ConstFolding(?X_4, c_7, ?X_1, ?X_3) .
+R_OUT(?X_3, ?X_3, ?X_3) :- AssignOperFromConstant(?X_3, ?X_3, ?X_3), ~ConstFolding(?X_3, ?X_3, ?X_3, ?X_3), ~R_8(?X_3, ?X_3, "phi-assign", ?X_3), ~R_13(?X_3, ?X_3), AssignOperFromConstant(?X_3, ?X_3, ?X_3), ~AssignOperFrom(?X_3, ?X_3, ?X_3), R_5(?X_3) .

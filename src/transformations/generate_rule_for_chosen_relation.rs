@@ -20,7 +20,6 @@ use rand::Rng;
 
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::util;
-use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 
 /// Create a new rule for a selected relation. Is a single literal rule unless the arity of the chosen body relation,
 /// does not suffice, in which that relation appears in the body multiple times.
@@ -291,9 +290,7 @@ impl<'a, 'b> ProgramTransformation for GenerateNewRuleChosenRelation<'a, 'b> {
             self.adg.write_self_to_file(
                 Some(
                     String::from("./")
-                        + NAME_OF_TRANSFORMATION_SEQUENCE
-                            .get()
-                            .expect("Name of Transformation Sequence not set"), //+ "/log",
+                        + self.adg.get_transformation_sequence_name(), //+ "/log",
                 ),
                 Some(String::from("pre_update_adg")),
             );

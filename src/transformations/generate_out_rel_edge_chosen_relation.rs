@@ -21,7 +21,6 @@ use rand::Rng;
 
 use crate::transformations::annotated_dependency_graphs::{AnnotatedDependencyGraph, Sign};
 use crate::transformations::util;
-use crate::NAME_OF_TRANSFORMATION_SEQUENCE;
 
 /// Add a relational edge i.e. a literal outgoing from `chosen_body_rel`. Only used in program generation!
 pub struct GenerateOutgoingRelationalEdgeChosenBodyLiteral<'a, 'b> {
@@ -277,9 +276,7 @@ impl<'a, 'b> ProgramTransformation for GenerateOutgoingRelationalEdgeChosenBodyL
             self.adg.write_self_to_file(
                 Some(
                     String::from("./")
-                        + NAME_OF_TRANSFORMATION_SEQUENCE
-                            .get()
-                            .expect("Name of Transformation Sequence not set"), //+ "/log",
+                        + self.adg.get_transformation_sequence_name(), //+ "/log",
                 ),
                 Some(String::from("pre_update_adg")),
             );

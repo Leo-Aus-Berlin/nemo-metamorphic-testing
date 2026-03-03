@@ -1,0 +1,115 @@
+wikidata("entityA", <http://www.wikidata.org/prop/direct/P1696>, "entityB").
+wikidata("entityA", <http://wikiba.se/ontology#directClaim>, "a").
+wikidata("entityB", <http://wikiba.se/ontology#directClaim>, "b").
+wikidata("x", "a", "y").
+wikidata("x", "a", "z").
+wikidata("y", "b", "x").
+wikidata("z", "b", "x").
+inversePropEntities(?s, ?o) :- wikidata(?s, <http://www.wikidata.org/prop/direct/P1696>, ?o), COMPARE(STR(?s), STR(?o)) = -1 .
+inv(?p1, ?p2) :- inversePropEntities(?e1, ?e2), wikidata(?e1, <http://wikiba.se/ontology#directClaim>, ?p1), wikidata(?e2, <http://wikiba.se/ontology#directClaim>, ?p2) .
+pred(?s) :- inv(?s, _) .
+pred(?o) :- inv(_, ?o) .
+objCountPerPredAndSource(?p, ?s, #count(?o)) :- pred(?p), wikidata(?s, ?p, ?o) .
+totalSubjCountPerPred(?p, #count(?s)) :- objCountPerPredAndSource(?p, ?s, _) .
+avgObjCountPerPredicate(?p, (DOUBLE(#sum(?count,?s))) / ?totalSubj) :- objCountPerPredAndSource(?p, ?s, ?count), totalSubjCountPerPred(?p, ?totalSubj) .
+rightSmaller(?right) :- inv(?left, ?right), avgObjCountPerPredicate(?left, ?countLeft), avgObjCountPerPredicate(?right, ?countRight), ?countRight < ?countLeft .
+predToKeep(?right) :- rightSmaller(?right) .
+predToKeep(?left) :- inv(?left, ?right), ~rightSmaller(?right) .
+@export R_OUT :- csv{}.
+R_4("x", ?X_1, ?X_4, ?X_3, ?X_2, ?X_6) :- R_43("x", ?X_1, ?X_4, ?X_3, ?X_2, ?X_6) .
+R_16(?X_6, ?X_3, ?X_5, ?X_2, ?X_6, ?X_1) :- predToKeep(?X_6), predToKeep(?X_3), predToKeep(?X_5), predToKeep(?X_2), predToKeep(?X_6), predToKeep(?X_1) .
+R_22(?X_5, ?X_1, ?X_3, <http://wikiba.se/ontology#directClaim>, ?X_2, ?X_6) :- predToKeep(?X_5), predToKeep(?X_1), predToKeep(?X_3), predToKeep(<http://wikiba.se/ontology#directClaim>), predToKeep(?X_2), predToKeep(?X_6) .
+R_24(?X_1, ?X_4, ?X_4, ?X_5, "y") :- wikidata(?X_1, ?X_4, ?X_4), wikidata(?X_5, "y", "y") .
+R_27(?X_3, ?X_2, "y") :- R_32(?X_2, ?Y_1, "y", ?Y_1, ?X_3, ?X_2) .
+R_29(?X_1) :- R_29(?X_1) .
+R_31(?X_1) :- R_38(?X_1, ?X_1, "x", "x", ?Y_1, ?Y_1) .
+R_36(?X_2, ?X_2, ?X_3, <http://www.wikidata.org/prop/direct/P1696>) :- R_36(?X_2, ?X_2, ?X_3, <http://www.wikidata.org/prop/direct/P1696>) .
+R_38(?X_4, ?X_3, ?X_6, ?X_5, ?X_4, "a") :- R_37(?X_4, ?X_3, ?X_6), R_37(?X_5, ?X_4, "a") .
+R_39(?X_1, ?X_2, "y", ?X_3, ?X_4, ?X_5) :- R_19(?X_4, ?X_1, "y", ?X_3, ?X_4), R_19(?X_5, ?X_1, ?X_2, ?X_4, "y") .
+R_40(?X_1, ?X_1, ?X_4, ?X_3, ?X_2, "x") :- pred(?X_1), pred(?X_1), pred(?X_4), pred(?X_3), pred(?X_2), pred("x") .
+R_42(?X_1, ?X_5, ?X_5, ?X_4, "a") :- R_38(?X_1, "a", ?X_5, ?X_4, "a", ?X_5) .
+R_43(?X_5, <http://wikiba.se/ontology#directClaim>, ?X_6, ?X_6, ?X_1, ?X_2) :- inversePropEntities(?X_5, <http://wikiba.se/ontology#directClaim>), inversePropEntities(?X_6, ?X_6), inversePropEntities(?X_1, ?X_2) .
+R_44(?X_2, ?X_1) :- R_2(?X_1, ?X_1, ?Y_1, ?X_2) .
+R_6("x") :- R_44("x", "x"), inversePropEntities(?Z_1, <http://wikiba.se/ontology#directClaim>), pred(?Z_1) .
+R_23(<http://wikiba.se/ontology#directClaim>, ?X_5, ?X_1, ?X_2, ?X_4) :- R_38(<http://wikiba.se/ontology#directClaim>, ?X_5, ?X_1, ?X_2, <http://wikiba.se/ontology#directClaim>, ?X_4), predToKeep(?X_5) .
+R_26(?X_1) :- rightSmaller(?X_1), wikidata("x", ?Z_1, ?X_1) .
+R_1(?X_2, ?X_1, ?X_3) :- R_22(?X_2, ?X_2, ?X_3, ?X_1, ?X_2, ?X_1), ~R_2(?X_2, ?X_1, ?X_1, ?X_2), R_11(?X_2, "entityA", ?Z_5, ?X_2) .
+R_17(?X_1, ?X_5, ?X_2, ?X_1, "x", ?X_4) :- R_13(?X_1, "x", ?X_2, ?X_1), R_13("x", ?X_4, ?X_5, ?X_1), R_14(?X_1, ?X_1, ?X_1, ?X_1, "x") .
+R_9("b", ?X_1, ?X_3, ?X_2, ?X_2) :- R_21("b", ?X_1, ?X_3, ?X_2, ?X_2, "a"), R_16(?X_1, ?Z_1, ?X_2, ?X_2, ?Z_2, "entityB"), R_19(?Z_1, ?X_1, ?X_2, ?X_2, ?X_1) .
+R_2(?X_4, ?X_3, ?X_1, ?X_2) :- R_7(?X_4, ?X_3, ?X_1, ?X_2, ?X_4, ?Y_1), R_8(?X_4, ?X_1, ?X_1, ?X_3), R_21(?Z_2, ?X_1, ?Z_5, ?Z_4, ?X_4, ?Y_1) .
+R_33(?X_3, ?X_6, ?X_4, ?X_2, ?X_1, "entityB") :- R_23(?X_2, ?X_6, "entityB", ?X_2, ?X_1), R_23("entityB", ?X_4, ?X_4, ?X_3, ?X_1), R_3(?Z_3, <http://wikiba.se/ontology#directClaim>, ?Z_5, ?X_4, ?Z_1), R_15(?X_1), R_24(?Z_3, ?Z_7, ?Z_6, ?X_4, ?Z_8) .
+R_7(?X_3, ?X_1, ?X_1, ?X_2, ?X_6, ?X_5) :- R_33(?X_3, ?X_1, ?X_1, ?X_2, ?X_6, ?X_5), R_4(?X_6, ?X_3, ?Z_5, ?X_2, ?X_1, ?Z_1), R_26(?X_2) .
+R_15("entityB") :- pred("entityB"), R_29(?Z_1) .
+R_19(?X_2, ?X_1, "a", ?X_3, ?X_4) :- R_13(?X_2, "a", "a", ?X_2), R_13(?X_4, ?X_3, ?X_1, ?X_3), R_30(?X_4, ?X_3, ?Z_1) .
+R_32("entityA", ?X_1, ?X_6, ?X_4, ?X_3, ?X_2) :- R_40("entityA", ?X_1, ?X_6, ?X_4, ?X_3, ?X_2), R_31(?Z_4) .
+R_3(?X_5, ?X_3, ?X_1, ?X_4, ?X_2) :- avgObjCountPerPredicate(?X_5, ?X_3), avgObjCountPerPredicate(?X_1, ?Y_1), avgObjCountPerPredicate(?X_2, ?X_4), R_27(?X_2, "x", ?X_2), R_36(?Z_2, "a", ?Z_4, ?X_2) .
+R_37("a", ?X_2, ?X_1) :- inv("a", ?X_2), inv(?X_1, ?Y_1), R_37("y", ?X_1, ?X_2) .
+R_11("b", ?X_1, ?X_4, ?X_3) :- R_17(?Y_1, <http://wikiba.se/ontology#directClaim>, ?X_4, ?X_3, ?X_1, "b"), R_10(?Z_1, ?Z_2, ?X_3), ~R_20(?Y_1, ?Z_1, ?X_3, ?Z_2), R_38(?Y_1, ?Z_7, ?Z_4, ?X_3, "y", ?X_3) .
+R_8(?X_1, ?X_1, ?X_4, ?X_2) :- rightSmaller(?X_1), rightSmaller(?X_1), rightSmaller(?X_4), rightSmaller(?X_2), ~R_22(?X_1, ?X_1, ?X_2, ?X_1, ?X_2, ?X_1), ~R_42(?X_1, ?X_1, ?X_1, ?X_4, ?X_1) .
+R_OUT(?X_2, "b", ?X_4, ?X_2) :- R_9(?X_2, "b", "b", ?X_2, ?X_4), totalSubjCountPerPred(?Z_1, ?X_4), R_43(?Z_4, ?X_2, ?Z_2, ?X_4, ?X_4, ?Z_3) .
+R_21(?X_1, ?X_3, ?X_2, ?X_4, ?X_3, ?X_6) :- R_7(?X_1, ?X_3, ?X_2, ?X_4, ?X_3, ?X_6), ~R_33(?X_4, ?X_6, <http://wikiba.se/ontology#directClaim>, ?X_3, ?X_2, ?X_2), R_44(?X_3, ?X_2) .
+R_6(8492078002503214193).
+R_25("x", "x", <http://wikiba.se/ontology#directClaim>, 524579213036872991, "entityB").
+R_5("str_1", <http://wikiba.se/ontology#directClaim>).
+R_9(c_1, 2884774869907398357, "str_2", c_1, c_2).
+R_18("a", c_3).
+R_28(c_4, 4416924029413942560, "str_3").
+R_20("str_4", c_5, c_6, c_7).
+R_12(c_8, c_9, 4962166741654329858, c_10, c_3, c_11).
+R_35(c_1, 8492078002503214193, "entityB", 9926953728974798500, 17293628120928821158).
+R_28(15110690427322314812, "x", 14069382533899929209).
+R_5(c_2, 2884774869907398357).
+R_20(4088724280358978848, "b", c_12, "str_3").
+R_20(c_7, "str_5", c_13, 14069382533899929209).
+R_41(16994166137950820512, c_10, "entityB", "str_6").
+R_6(c_14).
+R_5(c_14, c_15).
+R_OUT("str_7", c_16, 4416924029413942560, c_4).
+R_35(c_2, 4416924029413942560, "b", "z", c_17).
+R_35(c_18, "str_8", "str_9", c_19, "str_10").
+R_17("entityB", c_20, c_4, 16711912180549949958, 5188942403982839300, c_13).
+R_28("str_5", "x", c_7).
+R_34(c_10, c_21).
+R_25(5188942403982839300, c_8, c_22, c_11, c_23).
+R_41(4416924029413942560, "str_11", 18041290907506475740, c_24).
+R_12(4088724280358978848, c_25, c_1, c_26, c_27, "b").
+R_30("entityA", 8492078002503214193, c_3).
+R_25(c_28, "b", 1801669215976948758, "str_3", c_7).
+R_39(16854341121033404466, c_2, 4088724280358978848, c_29, "a", c_27).
+R_35(c_11, "str_12", c_14, c_30, c_31).
+R_10(c_12, 5685703191735960796, c_32).
+R_25("str_8", c_33, 17293628120928821158, 6500834667095662056, 16432124241744586536).
+R_28(c_8, c_34, c_35).
+R_41(c_36, c_37, c_13, c_29).
+R_11(c_31, "z", 14135420896362490963, "str_13").
+R_28(c_38, "str_10", <http://wikiba.se/ontology#directClaim>).
+R_OUT(c_39, 4962166741654329858, 14615204884494341760, c_8).
+R_12(c_6, 14936547630264393388, 4088724280358978848, "a", "str_5", c_28).
+R_12(15097612052948509552, "str_14", 4088724280358978848, "str_15", "str_16", 4416924029413942560).
+R_OUT("b", c_3, "str_17", c_12).
+R_11(15097612052948509552, "str_18", c_23, "x").
+R_5("str_4", <http://wikiba.se/ontology#directClaim>).
+R_34(c_40, c_35).
+R_OUT("entityA", c_41, c_19, "str_4").
+R_28(13444713857941341850, 8691915615416329822, 8004164939189850796).
+R_14(?X_3, ?X_2, ?X_2, ?X_4, ?X_1) :- R_36(?Y_1, ?X_2, ?X_2, ?X_4_new_1), R_36(?X_1, ?X_4, ?X_3, <http://wikiba.se/ontology#directClaim>), avgObjCountPerPredicate(?X_2, ?X_1), rightSmaller(?Z_1), R_13(?X_4_new_1, ?X_2, ?Y_1, ?Z_5) .
+R_30(?X_3, ?X_2, <http://www.wikidata.org/prop/direct/P1696>) :- R_39(?X_3, ?X_3, <http://www.wikidata.org/prop/direct/P1696>, <http://www.wikidata.org/prop/direct/P1696>, ?X_2, ?X_2_new_1) .
+R_30(c_44, 11400489815726367133, c_29).
+R_14(?X_3, ?X_4, ?X_1, ?X_2, "entityA") :- R_48(?X_3), R_47(?X_4, ?X_1, ?X_2, "entityA", ?X_1), ~R_32(?X_1, "a", ?X_1, ?X_1, "entityA", "entityA") .
+R_13(?X_4, ?X_2, ?X_1_new_1, "a") :- R_6(?X_4), R_6(?X_2), R_6(?X_1_new_1), R_6("a"), R_1(?X_4, ?X_1, ?X_2), R_32(?Z_3, ?X_4, ?X_2, ?X_2, ?X_4, ?Z_1) .
+R_13(1880800471262516652, "str_19", "str_9", c_45).
+R_41(?X_2, "str_4", ?X_1, ?X_1) :- objCountPerPredAndSource(?X_2, "str_4", ?X_1), objCountPerPredAndSource(?X_1, ?X_1, "str_4"), ~objCountPerPredAndSource(?X_2, "str_4", ?X_1) .
+R_13("str_1", ?X_3, ?X_2, ?X_1) :- R_36("str_1", ?X_3, ?X_2, ?X_1), ~R_8(?X_1, ?X_1, "str_1", c_45) .
+R_41("str_5", "str_21", 4962166741654329858, c_10).
+R_47(?X_5, c_9, ?X_4, ?X_3, ?X_2) :- R_36(?Y_1, c_9, ?X_4, ?X_4), R_13(?X_3, ?X_3, c_9, ?X_3), R_44(?X_4, ?X_3), R_17(?X_5, ?X_5, ?X_4, c_9, ?X_2, ?X_4), R_44(?X_5, ?X_5), ~R_50(?X_3, ?Y_1, ?X_2), ~objCountPerPredAndSource(?X_4, ?X_5, "str_4") .
+R_18("a", ?Z_1) :- R_8("a", ?Z_1, "a", ?Z_1), R_17(?Z_1, ?Z_1, "y", ?Z_1, ?Z_1, ?Z_1), ~R_39(?Z_1, ?Z_1, ?Z_1, ?Z_1, ?Z_1, ?Z_1) .
+R_6(?X_1) :- R_50("str_16", "str_16", ?X_1), ~wikidata("x", "x", "str_16"), ~totalSubjCountPerPred(?X_1, "x"), ~R_16("str_16", "str_16", "str_16", "str_16", ?X_1, "str_16") .
+R_10(?X_3, ?X_1, "a") :- R_36(?Y_1, ?X_1, "a", ?X_3) .
+R_6("entityA") :- R_10("entityA", "entityA", "y"), ~R_10("entityA", "entityA", "y") .
+R_52(?X_1, ?X_2) :- R_24(?X_2, ?X_1, ?Y_1, ?Y_1, ?X_2), R_48(?X_2), R_41("x", ?Y_1, ?X_2, ?Y_1), R_37(?X_1, ?X_1, ?X_2), R_50(?Y_1, ?X_2, ?X_2), R_40(?X_2, ?Y_1, ?X_1, ?X_2, ?X_1, "x"), ~R_22(?X_1, ?Y_1, "x", ?X_1, ?X_2, ?X_2), ~R_17(?X_2, ?X_2, ?X_2, ?X_2, ?Y_1, ?X_2), ~inv(?X_1, ?X_2), ~R_11(?X_2, ?X_2, ?X_2, ?X_1), pred(?Z_9) .
+R_20(?X_2, ?X_2, ?X_1, ?X_4) :- R_16(?X_2, ?X_2, "entityB", ?X_4, ?X_1, ?X_2), ~rightSmaller(?X_2) .
+R_25(2884774869907398357, ?X_4, ?X_1, ?X_5, ?X_2) :- R_40(2884774869907398357, ?X_4, ?X_1, ?X_5, ?Y_1, ?X_2), ~R_40(2884774869907398357, ?X_4, ?X_1, ?X_5, ?Y_1, ?X_2), ~R_24(?X_5, ?X_5, ?X_2, ?X_4, ?X_1) .
+R_11(?X_2, ?X_2, ?X_1, ?X_3) :- R_41(?X_2, ?X_2, ?X_1, ?X_3), ~R_41(?X_2, ?X_2, ?X_1, ?X_3) .
+R_12(?X_3_new_1, ?X_5, ?X_6, ?X_3, ?X_4, c_6) :- R_25(?X_3_new_1, ?X_5, ?X_6, ?Y_1, c_6), R_25(c_6, ?X_3, ?X_3_new_1, ?X_4, ?X_3_new_1), ~R_25(?X_3_new_1, ?X_5, ?X_6, ?Y_1, c_6), ~R_17(?Y_1, ?X_3, ?X_5, ?X_4, ?X_5, c_21), R_12(?X_3, ?Z_5, ?X_3, ?Z_7, <http://wikiba.se/ontology#directClaim>, ?X_5), R_44(?X_5, ?Z_6), ~R_11(?X_5, ?X_5, ?X_5, ?Y_1) .
+R_52(c_5, ?X_2) :- R_50(<http://wikiba.se/ontology#directClaim>, ?X_2, c_5) .
+R_1(16854341121033404466, c_3, c_32).

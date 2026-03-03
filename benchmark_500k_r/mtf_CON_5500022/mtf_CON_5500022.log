@@ -1,0 +1,1161 @@
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] Beginning transformation mtf_CON_5500022
+                Oracle:     CON          Number of T: 31
+                Debug Mode: false          u64 Seed:    5500022
+                Number of generating transformations: 33
+                Internal Seed:          [101, 177, 103, 112, 188, 7, 123, 203, 131, 198, 174, 146, 244, 77, 156, 64, 171, 54, 154, 171, 208, 224, 20, 217, 37, 209, 191, 212, 188, 29, 136, 240]
+                Seed File: Currently not supported!
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] -------------- Reading Seed File: ------------
+18:44:55 [INFO] "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/datalogMtlSensor/datalogMtlSensor.rls"
+18:44:55 [INFO] Renaming of rules complete
+18:44:55 [INFO] --------- Finished Reading Seed file ---------
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] 
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] -------- Beginning Program Generation --------
+18:44:55 [INFO] ----------------------------------------------
+18:44:55 [INFO] 
+18:44:55 [INFO] Removing old export statements
+18:44:55 [INFO] Beginning inverse_stratum and ancestry computation starting at node R_OUT
+18:44:55 [INFO] Ancestry and Inverse Stratum computation complete.
+18:44:55 [INFO] Constructed lite ADG
+18:44:55 [INFO] Generating Program...
+18:44:55 [INFO] 
+18:44:55 [INFO] 1 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_1
+18:44:55 [INFO] 2 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_2
+18:44:55 [INFO] 3 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_3
+18:44:55 [INFO] 4 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_4
+18:44:55 [INFO] 5 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_5
+18:44:55 [INFO] 6 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_6
+18:44:55 [INFO] 7 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_7
+18:44:55 [INFO] 8 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_8
+18:44:55 [INFO] 9 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_9
+18:44:55 [INFO] 10 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_10
+18:44:55 [INFO] 11 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_11
+18:44:55 [INFO] 12 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_12
+18:44:55 [INFO] 13 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_13
+18:44:55 [INFO] 14 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_14
+18:44:55 [INFO] 15 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_15
+18:44:55 [INFO] 16 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_16
+18:44:55 [INFO] 17 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_17
+18:44:55 [INFO] 18 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_18
+18:44:55 [INFO] 19 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_19
+18:44:55 [INFO] 20 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_20
+18:44:55 [INFO] 21 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_21
+18:44:55 [INFO] 22 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_22
+18:44:55 [INFO] 23 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_23
+18:44:55 [INFO] 24 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_24
+18:44:55 [INFO] 25 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_25
+18:44:55 [INFO] 26 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_26
+18:44:55 [INFO] 27 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_27
+18:44:55 [INFO] 28 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_28
+18:44:55 [INFO] 29 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_29
+18:44:55 [INFO] 30 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_30
+18:44:55 [INFO] 31 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_31
+18:44:55 [INFO] 32 / 32
+18:44:55 [INFO]   I Add Relational Node
+18:44:55 [INFO]   Added new relation R_32
+18:44:55 [INFO] 
+18:44:55 [INFO] Adding a new rule for each relation other than the seed relations
+18:44:55 [INFO] 
+18:44:55 [INFO] 1 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_OUT
+18:44:55 [INFO]   Assigned relation R_OUT the artiy 6
+18:44:55 [INFO]   Assigned relation R_29 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_1
+18:44:55 [INFO]   R_OUT(?X_4, ?X_5, ?X_6, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_6) :- R_29(?X_4, ?X_5, ?X_6, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_6) .
+18:44:55 [INFO] 2 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_1
+18:44:55 [INFO]   Assigned relation R_1 the artiy 6
+18:44:55 [INFO]   Assigned relation R_6 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_2
+18:44:55 [INFO]   R_1(?X_2, ?X_5, ?X_6, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_3) :- R_6(?X_2, ?X_5, ?X_6, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_3) .
+18:44:55 [INFO] 3 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_2
+18:44:55 [INFO]   Assigned relation R_2 the artiy 5
+18:44:55 [INFO]   Assigned relation R_22 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_3
+18:44:55 [INFO]   R_2(?X_5, ?X_1, ?X_1, ?X_4, "sensor2") :- R_22(?X_5, ?X_1, ?X_1, ?X_4, "sensor2") .
+18:44:55 [INFO] 4 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_3
+18:44:55 [INFO]   Assigned relation R_3 the artiy 3
+18:44:55 [INFO]   Assigned relation R_31 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_4
+18:44:55 [INFO]   R_3(?X_3, "sensor2", ?X_2) :- R_31(?X_3, ?Y_1, "sensor2", ?X_2, ?Y_1, "sensor2") .
+18:44:55 [INFO] 5 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_4
+18:44:55 [INFO]   Assigned relation R_4 the artiy 5
+18:44:55 [INFO]   Assigned relation R_20 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_5
+18:44:55 [INFO]   R_4(?X_5, ?X_1, "sensor2", ?X_3, ?X_4) :- R_20(?X_5, ?X_1, "sensor2", ?X_3, ?X_4) .
+18:44:55 [INFO] 6 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_5
+18:44:55 [INFO]   Assigned relation R_5 the artiy 2
+18:44:55 [INFO]   Assigned relation R_21 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_6
+18:44:55 [INFO]   R_5(?X_2, "sensor2") :- R_21("sensor2", "sensor2", "sensor2", ?X_2) .
+18:44:55 [INFO] 7 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_6
+18:44:55 [INFO]   Added new rule of name r_GEN_7
+18:44:55 [INFO]   R_6("0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5, ?X_3, ?X_2, ?X_6, ?X_5) :- R_OUT("0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5, ?X_3, ?X_2, ?X_6, ?X_5) .
+18:44:55 [INFO] 8 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_7
+18:44:55 [INFO]   Assigned relation R_7 the artiy 2
+18:44:55 [INFO]   Added new rule of name r_GEN_8
+18:44:55 [INFO]   R_7(?X_2, ?X_1) :- Alert(?X_2, ?X_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 9 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_8
+18:44:55 [INFO]   Assigned relation R_8 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_9
+18:44:55 [INFO]   R_8(?X_3, "sensor2", ?X_2, ?X_4, ?X_5) :- R_4(?X_3, "sensor2", ?X_2, ?X_4, ?X_5) .
+18:44:55 [INFO] 10 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_9
+18:44:55 [INFO]   Assigned relation R_9 the artiy 4
+18:44:55 [INFO]   Assigned relation R_25 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_10
+18:44:55 [INFO]   R_9(?X_3, ?X_1, ?X_3, ?X_2) :- R_25(?Y_1, ?X_1, ?X_3, ?X_2, ?X_3) .
+18:44:55 [INFO] 11 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_10
+18:44:55 [INFO]   Assigned relation R_10 the artiy 3
+18:44:55 [INFO]   Added new rule of name r_GEN_11
+18:44:55 [INFO]   R_10(?X_3, ?X_3, "sensor1") :- R_OUT(?X_3, ?X_3, "sensor1", ?Y_1, "sensor1", ?X_3) .
+18:44:55 [INFO] 12 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_11
+18:44:55 [INFO]   Assigned relation R_11 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_12
+18:44:55 [INFO]   R_11(?X_3, ?X_1, ?X_4, "10"^^<http://www.w3.org/2001/XMLSchema#double>) :- HighTemperature(?X_3, ?X_1, "sensor2"), HighTemperature("10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_4) .
+18:44:55 [INFO] 13 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_12
+18:44:55 [INFO]   Assigned relation R_12 the artiy 3
+18:44:55 [INFO]   Assigned relation R_32 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_13
+18:44:55 [INFO]   R_12(?X_2, ?X_3, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_32(?X_2, ?X_3, ?X_3, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 14 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_13
+18:44:55 [INFO]   Assigned relation R_13 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_14
+18:44:55 [INFO]   R_13(?X_2, ?X_5, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_4, ?X_6) :- R_12(?X_2, ?X_5, "10"^^<http://www.w3.org/2001/XMLSchema#double>), R_12(?X_3, ?X_4, ?X_6) .
+18:44:55 [INFO] 15 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_14
+18:44:55 [INFO]   Assigned relation R_14 the artiy 3
+18:44:55 [INFO]   Assigned relation R_23 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_15
+18:44:55 [INFO]   R_14(?X_1, ?X_2, "10"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_23(?X_1, ?X_2, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1) .
+18:44:55 [INFO] 16 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_15
+18:44:55 [INFO]   Assigned relation R_15 the artiy 2
+18:44:55 [INFO]   Added new rule of name r_GEN_16
+18:44:55 [INFO]   R_15(?X_2, ?X_1) :- R_12(?X_2, ?X_1, ?X_1) .
+18:44:55 [INFO] 17 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_16
+18:44:55 [INFO]   Assigned relation R_16 the artiy 5
+18:44:55 [INFO]   Added new rule of name r_GEN_17
+18:44:55 [INFO]   R_16(?X_1, ?X_2, "sensor2", ?X_4, ?X_1) :- R_15(?X_1, ?X_2), R_15("sensor2", ?X_2), R_15(?X_1, ?X_4) .
+18:44:55 [INFO] 18 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_17
+18:44:55 [INFO]   Assigned relation R_17 the artiy 2
+18:44:55 [INFO]   Added new rule of name r_GEN_18
+18:44:55 [INFO]   R_17(?X_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_7(?X_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 19 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_18
+18:44:55 [INFO]   Assigned relation R_18 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_19
+18:44:55 [INFO]   R_18(?X_4, ?X_3, ?X_3, ?X_1) :- R_20(?X_4, ?X_3, ?X_3, ?X_1, ?X_3) .
+18:44:55 [INFO] 20 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_19
+18:44:55 [INFO]   Assigned relation R_19 the artiy 4
+18:44:55 [INFO]   Added new rule of name r_GEN_20
+18:44:55 [INFO]   R_19(?X_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?X_4) :- R_10(?X_1, ?X_1, ?X_4), R_10(?X_4, ?Y_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 21 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_20
+18:44:55 [INFO]   Added new rule of name r_GEN_21
+18:44:55 [INFO]   R_20(?X_2, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_5, ?X_2) :- R_17(?X_2, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>), R_17("27.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5), R_17(?X_2, ?X_1) .
+18:44:55 [INFO] 22 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_21
+18:44:55 [INFO]   Added new rule of name r_GEN_22
+18:44:55 [INFO]   R_21("10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?X_1, ?X_2) :- R_20("10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?X_1, ?X_2, ?X_4) .
+18:44:55 [INFO] 23 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_22
+18:44:55 [INFO]   Assigned relation R_27 the artiy 6
+18:44:55 [INFO]   Added new rule of name r_GEN_23
+18:44:55 [INFO]   R_22(?X_3, ?X_2, ?X_1, ?X_5, ?X_3) :- R_27(?X_3, ?X_2, ?Y_1, ?X_5, ?X_3, ?X_1) .
+18:44:55 [INFO] 24 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_23
+18:44:55 [INFO]   Added new rule of name r_GEN_24
+18:44:55 [INFO]   R_23(?X_3, ?X_4, ?X_4, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_6) :- R_16(?X_4, ?X_4, ?X_4, ?Y_1, ?X_6), R_16(?X_6, ?X_3, ?Y_2, ?X_2, "10"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 25 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_24
+18:44:55 [INFO]   Assigned relation R_24 the artiy 1
+18:44:55 [INFO]   Added new rule of name r_GEN_25
+18:44:55 [INFO]   R_24("20"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_2(?Y_1, ?Y_1, ?Y_1, "20"^^<http://www.w3.org/2001/XMLSchema#double>, "20"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 26 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_25
+18:44:55 [INFO]   Added new rule of name r_GEN_26
+18:44:55 [INFO]   R_25(?X_3, ?X_2, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?X_3) :- R_32(?X_3, ?X_2, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>), R_32(?X_3, ?X_4, ?X_3, ?X_4) .
+18:44:55 [INFO] 27 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_26
+18:44:55 [INFO]   Assigned relation R_26 the artiy 3
+18:44:55 [INFO]   Added new rule of name r_GEN_27
+18:44:55 [INFO]   R_26("sensor1", ?X_2, ?X_2) :- R_7("sensor1", ?X_2), R_7(?X_2, ?X_2) .
+18:44:55 [INFO] 28 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_27
+18:44:55 [INFO]   Added new rule of name r_GEN_28
+18:44:55 [INFO]   R_27(?X_3, ?X_5, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_6, ?X_4, ?X_1) :- R_25(?X_3, ?Y_1, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_6, ?X_4), R_25(?X_4, ?X_1, ?X_1, ?X_5, "sensor2") .
+18:44:55 [INFO] 29 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_28
+18:44:55 [INFO]   Assigned relation R_28 the artiy 1
+18:44:55 [INFO]   Added new rule of name r_GEN_29
+18:44:55 [INFO]   R_28(?X_1) :- Alert(?X_1, "20"^^<http://www.w3.org/2001/XMLSchema#double>, "20"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 30 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_29
+18:44:55 [INFO]   Added new rule of name r_GEN_30
+18:44:55 [INFO]   R_29(?X_6, "sensor1", ?X_2, ?X_5, ?X_4, ?X_1) :- R_5(?X_6, "sensor1"), R_5(?X_2, ?X_5), R_5(?X_4, ?X_1) .
+18:44:55 [INFO] 31 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_30
+18:44:55 [INFO]   Assigned relation R_30 the artiy 1
+18:44:55 [INFO]   Added new rule of name r_GEN_31
+18:44:55 [INFO]   R_30(?X_1) :- R_2("14.7"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_1, ?X_1, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) .
+18:44:55 [INFO] 32 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_31
+18:44:55 [INFO]   Added new rule of name r_GEN_32
+18:44:55 [INFO]   R_31(?X_1, ?X_2, "sensor2", ?X_3, ?X_5, ?X_2) :- R_6(?X_1, ?X_2, "sensor2", ?X_3, ?X_5, ?X_2) .
+18:44:55 [INFO] 33 / 33
+18:44:55 [INFO]   Generating new single body literal rule for R_32
+18:44:55 [INFO]   Added new rule of name r_GEN_33
+18:44:55 [INFO]   R_32(?X_4, ?X_2, ?X_2, "sensor2") :- HighTemperatureSometimes(?X_4, ?X_2, ?Y_1), HighTemperatureSometimes("sensor2", ?X_4, ?X_2) .
+18:44:55 [INFO] 
+18:44:55 [INFO] Adding a outgoing relational edge for each relation other than R_OUT
+18:44:55 [INFO] 
+18:44:55 [INFO] 1 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from Alert for r_GEN_22
+18:44:55 [INFO]   Generated literal Alert(?Z_1, ?Z_2, ?X_1) for rule r_GEN_22
+18:44:55 [INFO] 2 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from HighTemperature for r_GEN_20
+18:44:55 [INFO]   Generated literal HighTemperature(?X_1, ?X_4, ?X_1) for rule r_GEN_20
+18:44:55 [INFO] 3 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from HighTemperatureSometimes for r_GEN_28
+18:44:55 [INFO]   Generated literal ~HighTemperatureSometimes(?X_5, ?X_4, ?X_1) for rule r_GEN_28
+18:44:55 [INFO] 4 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from Overheat for r_GEN_32
+18:44:55 [INFO]   Generated literal Overheat(?Z_4, ?X_1, ?Z_1) for rule r_GEN_32
+18:44:55 [INFO] 5 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from SameLocation for r_GEN_17
+18:44:55 [INFO]   Generated literal SameLocation(?Z_3, ?Z_2) for rule r_GEN_17
+18:44:55 [INFO] 6 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_1 for r_GEN_1
+18:44:55 [INFO]   Generated literal R_1(?X_6, ?X_6, ?X_1, ?Z_4, ?Z_3, ?X_4) for rule r_GEN_1
+18:44:55 [INFO] 7 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_2 for r_GEN_4
+18:44:55 [INFO]   Generated literal ~R_2(?X_3, ?Y_1, ?X_3, ?Y_1, ?X_2) for rule r_GEN_4
+18:44:55 [INFO] 8 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_3 for r_GEN_31
+18:44:55 [INFO]   Generated literal R_3(?X_1, ?Z_1, ?X_1) for rule r_GEN_31
+18:44:55 [INFO] 9 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_4 for r_GEN_11
+18:44:55 [INFO]   Generated literal R_4(?X_3, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_3, ?Z_1) for rule r_GEN_11
+18:44:55 [INFO] 10 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_5 for r_GEN_12
+18:44:55 [INFO]   Generated literal ~R_5(?X_1, ?X_1) for rule r_GEN_12
+18:44:55 [INFO] 11 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_6 for r_GEN_12
+18:44:55 [INFO]   Generated literal R_6(?X_3, ?X_4, ?X_1, ?X_4, ?Z_3, ?X_3) for rule r_GEN_12
+18:44:55 [INFO] 12 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_7 for r_GEN_2
+18:44:55 [INFO]   Generated literal R_7(?X_2, ?Z_4) for rule r_GEN_2
+18:44:55 [INFO] 13 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_8 for r_GEN_26
+18:44:55 [INFO]   Generated literal ~R_8(?X_3, "sensor2", ?X_4, ?X_4, ?X_3) for rule r_GEN_26
+18:44:55 [INFO] 14 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_9 for r_GEN_32
+18:44:55 [INFO]   Generated literal R_9(?Z_4, ?X_1, ?Z_4, ?Z_1) for rule r_GEN_32
+18:44:55 [INFO] 15 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_10 for r_GEN_26
+18:44:55 [INFO]   Generated literal R_10(?X_3, ?X_2, ?X_3) for rule r_GEN_26
+18:44:55 [INFO] 16 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_11 for r_GEN_5
+18:44:55 [INFO]   Generated literal ~R_11(?X_3, ?X_3, "20"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1) for rule r_GEN_5
+18:44:55 [INFO] 17 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_12 for r_GEN_11
+18:44:55 [INFO]   Generated literal ~R_12(?X_3, ?Z_1, ?X_3) for rule r_GEN_11
+18:44:55 [INFO] 18 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_13 for r_GEN_22
+18:44:55 [INFO]   Generated literal R_13(?Z_1, ?X_4, ?X_4, ?Z_3, ?X_4, ?Z_6) for rule r_GEN_22
+18:44:55 [INFO] 19 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_14 for r_GEN_21
+18:44:55 [INFO]   Generated literal R_14(?X_1, ?Z_2, ?Z_3) for rule r_GEN_21
+18:44:55 [INFO] 20 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_15 for r_GEN_3
+18:44:55 [INFO]   Generated literal R_15(?X_5, ?X_1) for rule r_GEN_3
+18:44:55 [INFO] 21 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_16 for r_GEN_14
+18:44:55 [INFO]   Generated literal ~R_16(?X_3, ?X_2, ?X_3, ?X_6, "0"^^<http://www.w3.org/2001/XMLSchema#double>) for rule r_GEN_14
+18:44:55 [INFO] 22 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_17 for r_GEN_30
+18:44:55 [INFO]   Generated literal ~R_17(?X_1, ?X_5) for rule r_GEN_30
+18:44:55 [INFO] 23 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_18 for r_GEN_8
+18:44:55 [INFO]   Generated literal R_18(?Z_1, ?X_2, ?X_1, ?X_2) for rule r_GEN_8
+18:44:55 [INFO] 24 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_19 for r_GEN_26
+18:44:55 [INFO]   Generated literal R_19(?X_3, ?X_4, ?Z_1, ?X_3) for rule r_GEN_26
+18:44:55 [INFO] 25 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_20 for r_GEN_31
+18:44:55 [INFO]   Generated literal ~R_20("sensor2", ?X_1, ?X_1, ?X_1, ?X_1) for rule r_GEN_31
+18:44:55 [INFO] 26 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_21 for r_GEN_21
+18:44:55 [INFO]   Generated literal R_21("14.7"^^<http://www.w3.org/2001/XMLSchema#double>, ?Z_4, ?X_5, ?Z_1) for rule r_GEN_21
+18:44:55 [INFO] 27 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_22 for r_GEN_3
+18:44:55 [INFO]   Generated literal ~R_22(?X_1, ?X_5, ?X_1, "sensor2", ?X_1) for rule r_GEN_3
+18:44:55 [INFO] 28 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_23 for r_GEN_15
+18:44:55 [INFO]   Generated literal R_23(?X_2, ?X_1, ?X_1, ?X_2, ?X_2, ?Z_1) for rule r_GEN_15
+18:44:55 [INFO] 29 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_24 for r_GEN_32
+18:44:55 [INFO]   Generated literal R_24(?X_2) for rule r_GEN_32
+18:44:55 [INFO] 30 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_25 for r_GEN_10
+18:44:55 [INFO]   Generated literal ~R_25(?X_3, ?X_3, ?X_1, ?Y_1, ?X_1) for rule r_GEN_10
+18:44:55 [INFO] 31 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_26 for r_GEN_22
+18:44:55 [INFO]   Generated literal R_26(?X_4, ?X_4, ?Z_10) for rule r_GEN_22
+18:44:55 [INFO] 32 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_27 for r_GEN_11
+18:44:55 [INFO]   Generated literal R_27(?X_3, ?X_3, ?Z_1, ?Z_4, ?Y_1, ?X_3) for rule r_GEN_11
+18:44:55 [INFO] 33 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_28 for r_GEN_19
+18:44:55 [INFO]   Generated literal R_28("sensor1") for rule r_GEN_19
+18:44:55 [INFO] 34 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_29 for r_GEN_20
+18:44:55 [INFO]   Generated literal ~R_29(?Y_1, ?X_1, ?X_1, ?X_1, ?X_4, ?X_1) for rule r_GEN_20
+18:44:55 [INFO] 35 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_30 for r_GEN_10
+18:44:55 [INFO]   Generated literal R_30(?X_2) for rule r_GEN_10
+18:44:55 [INFO] 36 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_31 for r_GEN_25
+18:44:55 [INFO]   Generated literal R_31(?Z_1, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, ?Y_1, ?Y_1, ?Y_1) for rule r_GEN_25
+18:44:55 [INFO] 37 / 37
+18:44:55 [INFO]   Adding outgoing relational edge from R_32 for r_GEN_26
+18:44:55 [INFO]   Generated literal R_32(?X_3, ?Z_9, ?X_2, ?X_4) for rule r_GEN_26
+18:44:55 [INFO] 
+18:44:55 [INFO] Adding gen. size facts
+18:44:55 [INFO] 
+18:44:55 [INFO] 1 / 33
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_19("sensor1", c_1, "sensor2", "20"^^<http://www.w3.org/2001/XMLSchema#double>).
+18:44:55 [INFO] 2 / 33
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_11(c_2, "sensor2", "sensor2", "sensor1").
+18:44:55 [INFO] 3 / 33
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_24("20"^^<http://www.w3.org/2001/XMLSchema#double>).
+18:44:55 [INFO] 4 / 33
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_1("sensor2", "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, c_1, 15638221903672830228, "sensor1", c_3).
+18:44:55 [INFO] 5 / 33
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_11(c_4, 17889149880337544640, c_5, "10"^^<http://www.w3.org/2001/XMLSchema#double>).
+18:44:55 [INFO] 6 / 33
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:55 [INFO]   Added new fact R_10(c_6, 17889149880337544640, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>).
+18:44:55 [INFO] 7 / 33
+18:44:55 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_27("sensor2", "sensor1", 13623029817383941560, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>, "str_1", "str_1").
+18:44:56 [INFO] 8 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_10("str_2", "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, "str_3").
+18:44:56 [INFO] 9 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_4("str_2", "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, "10"^^<http://www.w3.org/2001/XMLSchema#double>, c_6, c_7).
+18:44:56 [INFO] 10 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_19("str_4", c_8, c_9, "str_5").
+18:44:56 [INFO] 11 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_3("str_6", c_10, c_6).
+18:44:56 [INFO] 12 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_31("str_6", 13623029817383941560, 4448745019533307372, c_11, c_12, c_13).
+18:44:56 [INFO] 13 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_31("str_6", 7281165566142936389, "str_3", "sensor2", c_8, c_14).
+18:44:56 [INFO] 14 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_19(17797315758129036742, "sensor2", c_15, c_4).
+18:44:56 [INFO] 15 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_22("3.5"^^<http://www.w3.org/2001/XMLSchema#double>, c_16, c_10, "str_4", c_17).
+18:44:56 [INFO] 16 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_1(c_18, c_19, 3755852008236917190, c_20, c_21, "20"^^<http://www.w3.org/2001/XMLSchema#double>).
+18:44:56 [INFO] 17 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_4("str_7", "str_5", "str_8", 15638221903672830228, 13150018226134627653).
+18:44:56 [INFO] 18 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_5(c_22, c_17).
+18:44:56 [INFO] 19 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_9(c_23, "20"^^<http://www.w3.org/2001/XMLSchema#double>, 4448745019533307372, c_22).
+18:44:56 [INFO] 20 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_27("sensor2", c_24, c_25, 9022255882132163695, 13623029817383941560, "sensor1").
+18:44:56 [INFO] 21 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_1(c_1, c_25, c_26, c_27, "10"^^<http://www.w3.org/2001/XMLSchema#double>, c_28).
+18:44:56 [INFO] 22 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_27("27.5"^^<http://www.w3.org/2001/XMLSchema#double>, c_29, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, "str_5", 2356272927117280838, c_30).
+18:44:56 [INFO] 23 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_4(c_31, 4448745019533307372, c_9, 2873928134831203065, c_7).
+18:44:56 [INFO] 24 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_30(c_6).
+18:44:56 [INFO] 25 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_4(15613888190816066061, "str_9", 15613888190816066061, c_12, 9265021634676736723).
+18:44:56 [INFO] 26 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_4("str_6", "str_4", c_32, c_22, "str_8").
+18:44:56 [INFO] 27 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_27("3.5"^^<http://www.w3.org/2001/XMLSchema#double>, "str_1", "str_5", 14601437123236726385, "str_10", c_1).
+18:44:56 [INFO] 28 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_27(14653836913626925634, c_31, c_33, "str_11", c_22, "str_4").
+18:44:56 [INFO] 29 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_27("str_12", c_3, c_34, c_26, c_35, c_36).
+18:44:56 [INFO] 30 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_4(c_37, "str_13", "sensor2", "str_14", 10408681205782358199).
+18:44:56 [INFO] 31 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_24(c_38).
+18:44:56 [INFO] 32 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_25(c_10, c_39, c_40, 9265021634676736723, 10056521344421146559).
+18:44:56 [INFO] 33 / 33
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_2(c_35, "str_8", "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, c_41, c_42).
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] ----------- Program Generation Done ----------
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------- Generated ADG Summary: -----------
+18:44:56 [INFO] ADG Fact Nodes:                  33
+18:44:56 [INFO] ADG Relational Nodes:            38
+18:44:56 [INFO] ADG Fact Edges:                  33
+18:44:56 [INFO] ADG Relational Edges:            84
+18:44:56 [INFO] Number of inv. Strata:           6
+18:44:56 [INFO] 
+18:44:56 [INFO] Nodes with None Ancestry:        16
+18:44:56 [INFO] Nodes with Positive Ancestry:    5
+18:44:56 [INFO] Nodes with Negative Ancestry:    0
+18:44:56 [INFO] Nodes with Unknown Ancestry:     17
+18:44:56 [INFO] 
+18:44:56 [INFO] Next rule name would be:         r_CON_34
+18:44:56 [INFO] Next predicate name would be:    R_33
+18:44:56 [INFO] Next constant name would be:     c_43
+18:44:56 [INFO] Next string would be:            "str_15"
+18:44:56 [INFO] 
+18:44:56 [INFO] Output predicate:                R_OUT
+18:44:56 [INFO] Generated rule count:            33
+18:44:56 [INFO] Rule count:                      39
+18:44:56 [INFO] Average rel. arity:              3.8684210526315788
+18:44:56 [INFO] Arity calc. may be inaccurate if arity > f64
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] ------ Performed Gen. Transformations: -------
+18:44:56 [INFO]  #      Type
+18:44:56 [INFO]  33      Generate New Rule with Probably Single Lit
+18:44:56 [INFO]  37      Generating an Outgoing Relational Edge
+18:44:56 [INFO]  32      I     Add Relational Node
+18:44:56 [INFO]  33      II    Add Fact Node and Edge
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] Storing input ADG and input program
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] --------- Beginning Transformations ----------
+18:44:56 [INFO] --------  Oracle: CON    Number: 31
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 1 / 31
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_24
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_32
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_25
+18:44:56 [INFO]   Removing at least 6 relational edges.
+18:44:56 [INFO] 2 / 31
+18:44:56 [INFO]   II Add Fact Node and Edge
+18:44:56 [INFO]   Added new fact R_2(c_45, 13742826491396387247, c_46, "str_17", 15613888190816066061).
+18:44:56 [INFO] 3 / 31
+18:44:56 [INFO]   VII Modify Rule - Add Equality
+18:44:56 [INFO]   Replaced var ?X_4 with var ?X_3 in the rule r_GEN_9
+18:44:56 [INFO] 4 / 31
+18:44:56 [INFO]   III Add Relational edges - New Rule
+18:44:56 [INFO]   Added new rule of name r_CON_36
+18:44:56 [INFO]   R_25(?X_2, ?X_1, ?X_4, ?X_5, ?X_3) :- Alert(?X_1, ?Y_1, "str_13"), R_11(?X_5, ?X_3, ?X_1, ?X_4), R_18(?X_1, ?X_5, ?Y_1, ?X_1), R_20(?X_4, ?X_4, ?X_2, ?X_5, ?X_5), R_13(?X_5, ?X_5, ?Y_1, "str_13", ?Y_1, ?X_5), R_15(?Y_1, ?Y_1), ~R_14(?X_3, ?X_5, "str_13"), ~SameLocation(?X_4, ?X_1), ~SameLocation(?X_5, ?X_1) .
+18:44:56 [INFO] 5 / 31
+18:44:56 [INFO]   I Add Relational Node
+18:44:56 [INFO]   Added new relation R_35
+18:44:56 [INFO] 6 / 31
+18:44:56 [INFO]   XI Add Contradictory Rule
+18:44:56 [INFO]   Added new contradictory rule of name r_CON_37
+18:44:56 [INFO]   R_4(?X_3, ?X_4, ?X_5, ?X_2, ?X_1) :- R_29(?X_1, ?X_4, ?X_5, ?X_2, ?X_1, ?X_3), ~R_29(?X_1, ?X_4, ?X_5, ?X_2, ?X_1, ?X_3) .
+18:44:56 [INFO] 7 / 31
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_1(c_18, c_19, 3755852008236917190, c_20, c_21, "20"^^<http://www.w3.org/2001/XMLSchema#double>). from the program
+18:44:56 [INFO]   Removed fact R_1(c_18, c_19, 3755852008236917190, c_20, c_21, "20"^^<http://www.w3.org/2001/XMLSchema#double>). from the ADG.
+18:44:56 [INFO] 8 / 31
+18:44:56 [INFO]   VIII Modify Rule - Remove Equality
+18:44:56 [INFO]   Replaced a random number of var X_3 with var X_3_new_1 in the rule r_GEN_23
+18:44:56 [INFO] 9 / 31
+18:44:56 [INFO]   VII Modify Rule - Add Equality
+18:44:56 [INFO]   Replaced var ?X_4 with var ?X_3 in the rule r_GEN_12
+18:44:56 [INFO] 10 / 31
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_31
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_4
+18:44:56 [INFO]   Removing at least 2 relational edges.
+18:44:56 [INFO] 11 / 31
+18:44:56 [INFO]   VIII Modify Rule - Remove Equality
+18:44:56 [INFO]   Replaced a random number of var X_4 with var X_4_new_1 in the rule r_GEN_28
+18:44:56 [INFO] 12 / 31
+18:44:56 [INFO]   V Remove Relational Edges - Whole Rule
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_26
+18:44:56 [INFO] 13 / 31
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_10("str_2", "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, "str_3"). from the program
+18:44:56 [INFO]   Removed fact R_10("str_2", "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, "str_3"). from the ADG.
+18:44:56 [INFO] 14 / 31
+18:44:56 [INFO]   VIII Modify Rule - Remove Equality
+18:44:56 [INFO]   Replaced a random number of var X_2 with var X_2_new_1 in the rule r_GEN_10
+18:44:56 [INFO] 15 / 31
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_19(17797315758129036742, "sensor2", c_15, c_4). from the program
+18:44:56 [INFO]   Removed fact R_19(17797315758129036742, "sensor2", c_15, c_4). from the ADG.
+18:44:56 [INFO] 16 / 31
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_19("sensor1", c_1, "sensor2", "20"^^<http://www.w3.org/2001/XMLSchema#double>). from the program
+18:44:56 [INFO]   Removed fact R_19("sensor1", c_1, "sensor2", "20"^^<http://www.w3.org/2001/XMLSchema#double>). from the ADG.
+18:44:56 [INFO] 17 / 31
+18:44:56 [INFO]   V Remove Relational Edges - Whole Rule
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_5
+18:44:56 [INFO] 18 / 31
+18:44:56 [INFO]   III Add Relational edges - New Rule
+18:44:56 [INFO]   Added new rule of name r_CON_38
+18:44:56 [INFO]   R_3(?X_1, ?X_3, ?X_1) :- R_29(c_2, ?X_1, ?X_1, ?X_1, ?Y_1, ?X_1), HighTemperature(?X_3, ?X_3, ?X_3), R_30(?Y_1), R_9(?X_1, ?X_3, ?X_1, ?X_1), R_29(?X_1, c_2, ?X_1, ?X_3, ?Y_1, ?X_1), R_OUT(?X_1, ?Y_1, ?Y_1, ?X_1, ?X_3, ?Y_1), ~Alert(?X_1, ?X_3, ?X_1), ~R_4(?X_1, ?Y_1, c_32, ?Y_1, ?Y_1), ~R_16(?Y_1, ?X_3, ?X_3, c_2, ?Y_1), ~R_29(?X_3, ?X_3, ?X_1, ?X_1, ?X_1, ?Y_1) .
+18:44:56 [INFO] 19 / 31
+18:44:56 [INFO]   XI Add Contradictory Rule
+18:44:56 [INFO]   Added new contradictory rule of name r_CON_39
+18:44:56 [INFO]   R_14(?X_1, "str_17", ?X_3) :- Alert(?X_1, "str_17", ?X_3), ~Alert(?X_1, "str_17", ?X_3) .
+18:44:56 [INFO] 20 / 31
+18:44:56 [INFO]   IV Add Relational Edge - New Literal
+18:44:56 [INFO]   Generated literal R_4(c_26, ?Z_3, ?X_1, ?X_4, ?Z_4) for rule r_CON_37
+18:44:56 [INFO] 21 / 31
+18:44:56 [INFO]   I Add Relational Node
+18:44:56 [INFO]   Added new relation R_36
+18:44:56 [INFO] 22 / 31
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_11
+18:44:56 [INFO]   Removing the Rule of the name r_CON_36
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_12
+18:44:56 [INFO]   Removing at least 13 relational edges.
+18:44:56 [INFO] 23 / 31
+18:44:56 [INFO]   I Add Relational Node
+18:44:56 [INFO]   Added new relation R_37
+18:44:56 [INFO] 24 / 31
+18:44:56 [INFO]   VIII Modify Rule - Remove Equality
+18:44:56 [INFO]   Replaced a random number of var X_3 with var X_3_new_1 in the rule r_GEN_9
+18:44:56 [INFO] 25 / 31
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_27
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_11
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_23
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_28
+18:44:56 [INFO]   Removing at least 8 relational edges.
+18:44:56 [INFO] 26 / 31
+18:44:56 [INFO]   III Add Relational edges - New Rule
+18:44:56 [INFO]   Assigned relation R_36 the artiy 2
+18:44:56 [INFO]   Added new rule of name r_CON_40
+18:44:56 [INFO]   R_9(c_43, ?X_1, ?X_4, ?X_2) :- R_32(c_43, ?X_1, ?X_4, c_43), R_23(?X_4, ?X_2, c_43, ?X_1, ?X_4, ?X_1), ~Alert(?X_2, c_43, c_43), ~R_36(c_43, ?X_1), ~R_10(?X_1, ?X_4, ?X_1) .
+18:44:56 [INFO] 27 / 31
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_2(c_35, "str_8", "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, c_41, c_42). from the program
+18:44:56 [INFO]   Removed fact R_2(c_35, "str_8", "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, c_41, c_42). from the ADG.
+18:44:56 [INFO] 28 / 31
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_4(15613888190816066061, "str_9", 15613888190816066061, c_12, 9265021634676736723). from the program
+18:44:56 [INFO]   Removed fact R_4(15613888190816066061, "str_9", 15613888190816066061, c_12, 9265021634676736723). from the ADG.
+18:44:56 [INFO] 29 / 31
+18:44:56 [INFO]   IX Remove Fact Node and Edge
+18:44:56 [INFO]   Removed fact R_4("str_2", "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, "10"^^<http://www.w3.org/2001/XMLSchema#double>, c_6, c_7). from the program
+18:44:56 [INFO]   Removed fact R_4("str_2", "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, "10"^^<http://www.w3.org/2001/XMLSchema#double>, c_6, c_7). from the ADG.
+18:44:56 [INFO] 30 / 31
+18:44:56 [INFO]   Xa Remove Relational Node - Rule Variant
+18:44:56 [INFO]   Removing relational node R_3
+18:44:56 [INFO]   Removing the Rule of the name r_GEN_31
+18:44:56 [INFO]   Removing the Rule of the name r_CON_38
+18:44:56 [INFO]   Removing at least 13 relational edges.
+18:44:56 [INFO] 31 / 31
+18:44:56 [INFO]   VIII Modify Rule - Remove Equality
+18:44:56 [INFO]   Replaced a random number of var X_4 with var X_4_new_1 in the rule r_CON_37
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] ------------ Transformations Done ------------
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO]  Ressources required: 
+                
+18:44:56 [INFO] ---------- Transformed ADG Summary: ----------
+18:44:56 [INFO] ADG Fact Nodes:                  14
+18:44:56 [INFO] ADG Relational Nodes:            36
+18:44:56 [INFO] ADG Fact Edges:                  14
+18:44:56 [INFO] ADG Relational Edges:            63
+18:44:56 [INFO] Number of inv. Strata:           4
+18:44:56 [INFO] 
+18:44:56 [INFO] Nodes with None Ancestry:        12
+18:44:56 [INFO] Nodes with Positive Ancestry:    5
+18:44:56 [INFO] Nodes with Negative Ancestry:    0
+18:44:56 [INFO] Nodes with Unknown Ancestry:     17
+18:44:56 [INFO] 
+18:44:56 [INFO] Next rule name would be:         r_CON_41
+18:44:56 [INFO] Next predicate name would be:    R_38
+18:44:56 [INFO] Next constant name would be:     c_47
+18:44:56 [INFO] Next string would be:            "str_18"
+18:44:56 [INFO] 
+18:44:56 [INFO] Output predicate:                R_OUT
+18:44:56 [INFO] Rule count:                      32
+18:44:56 [INFO] Average rel. arity:              3.8205128205128207
+18:44:56 [INFO] Arity calc. may be inaccurate if arity > f64
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] --------- Performed Transformations: ---------
+18:44:56 [INFO]  #      Type
+18:44:56 [INFO]  7      Failed Transformation Attempts
+18:44:56 [INFO]  3      I     Add Relational Node
+18:44:56 [INFO]  1      II    Add Fact Node and Edge
+18:44:56 [INFO]  3      III   Add Relational edges - New Rule
+18:44:56 [INFO]  1      IV    Add Relational Edge - New Literal
+18:44:56 [INFO]  7      IX    Remove Fact Node and Edge
+18:44:56 [INFO]  2      V     Remove Relational Edges - Whole Rule
+18:44:56 [INFO]  0      VI    Remove Relational Edge - Single Literal
+18:44:56 [INFO]  2      VII   Modify Rule - Add Equality
+18:44:56 [INFO]  5      VIII  Modify Rule - Remove Equality
+18:44:56 [INFO]  2      XI   Add Contradictory Rule
+18:44:56 [INFO]  5      Xa     Remove Relational Node Rule Variant - None anc only
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] Writing output ADG and file.
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] -- Beginning Nemo Execution - Input Program --
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] Stratified program: [[0, 1, 2, 3, 4, 5, 8, 9, 11, 13, 14, 15, 22], [6, 10, 12, 18, 20, 21, 23, 24], [7, 16, 17, 19]]
+18:44:56 [INFO] <<< STEP 1: APPLYING RULE 3 HighTemperatureSometimes(?Sensor, ?Start, ?_HEAD_1) :- HighTemperature(?Sensor, ?Start, ?End), Equal(?_HEAD_1, NumericSum(?End, "5.5"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(Double(DoubleDataValue(0.0))), AnyDataValue(Double(DoubleDataValue(27.5))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(3.5))), AnyDataValue(Double(DoubleDataValue(3.5))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(14.7))), AnyDataValue(Double(DoubleDataValue(14.7))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(20.0))), AnyDataValue(Double(DoubleDataValue(20.0)))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 6 entries (10688)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table HighTemperatureSometimes (1) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (10736)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 2: APPLYING RULE 3 HighTemperatureSometimes(?Sensor, ?Start, ?_HEAD_1) :- HighTemperature(?Sensor, ?Start, ?End), Equal(?_HEAD_1, NumericSum(?End, "5.5"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 3: APPLYING RULE 0 HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 10 entries (10720)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table HighTemperatureSometimes (3) Permutation { idx_to_val: [], val_to_idx: [] } with 4 entries (10556)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 4: APPLYING RULE 0 HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 9 entries (10548)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table HighTemperatureSometimes (4) Permutation { idx_to_val: [], val_to_idx: [] } with 5 entries (10508)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 5: APPLYING RULE 0 HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 6 entries (10468)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table HighTemperatureSometimes (5) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (10364)
+18:44:56 [INFO] Rule duration: 1 ms
+18:44:56 [INFO] <<< STEP 6: APPLYING RULE 0 HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 1 entries (10316)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 7: APPLYING RULE 2 Overheat(?Sensor, ?_HEAD_1, ?End) :- HighTemperature(?Sensor, ?Start, ?End), NumericGreaterthaneq(NumericSubtraction(?End, ?Start), "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_HEAD_1, NumericSum(?Start, "10"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 1 entries (10316)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table Overheat (7) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (10364)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 8: APPLYING RULE 2 Overheat(?Sensor, ?_HEAD_1, ?End) :- HighTemperature(?Sensor, ?Start, ?End), NumericGreaterthaneq(NumericSubtraction(?End, ?Start), "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_HEAD_1, NumericSum(?Start, "10"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 9: APPLYING RULE 4 Overheat(?Sensor, ?_HEAD_1, ?End) :- HighTemperatureSometimes(?Sensor, ?Start, ?End), NumericGreaterthaneq(NumericSubtraction(?End, ?Start), "20"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_HEAD_1, NumericSum(?Start, "20"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 3 entries (10496)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table Overheat (9) Permutation { idx_to_val: [], val_to_idx: [] } with 3 entries (10544)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 10: APPLYING RULE 4 Overheat(?Sensor, ?_HEAD_1, ?End) :- HighTemperatureSometimes(?Sensor, ?Start, ?End), NumericGreaterthaneq(NumericSubtraction(?End, ?Start), "20"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_HEAD_1, NumericSum(?Start, "20"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 11: APPLYING RULE 1 Overheat(?Sensor, ?StartA, ?EndB) :- Overheat(?Sensor, ?StartA, ?EndA), Overheat(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 5 entries (10568)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table Overheat (11) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (10364)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 12: APPLYING RULE 1 Overheat(?Sensor, ?StartA, ?EndB) :- Overheat(?Sensor, ?StartA, ?EndA), Overheat(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 1 entries (10316)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 13: APPLYING RULE 5 Alert(?SensorA, ?_HEAD_1, ?_HEAD_2), Alert(?SensorB, ?_HEAD_3, ?_HEAD_4) :- Overheat(?SensorA, ?StartA, ?EndA), Overheat(?SensorB, ?StartB, ?EndB), SameLocation(?SensorA, ?SensorB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), Equal(?_HEAD_1, NumericMaximum(?StartA, ?StartB)), Equal(?_HEAD_2, NumericMinimum(?EndA, ?EndB)), Equal(?_HEAD_3, NumericMaximum(?StartA, ?StartB)), Equal(?_HEAD_4, NumericMinimum(?EndA, ?EndB)) >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(PlainString(StringDataValue("sensor2")))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 2 entries (10380)
+18:44:56 [INFO] Saved temporary table: 2 entries (10380)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table Alert (13) Permutation { idx_to_val: [], val_to_idx: [] } with 4 entries (10608)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 14: APPLYING RULE 5 Alert(?SensorA, ?_HEAD_1, ?_HEAD_2), Alert(?SensorB, ?_HEAD_3, ?_HEAD_4) :- Overheat(?SensorA, ?StartA, ?EndA), Overheat(?SensorB, ?StartB, ?EndB), SameLocation(?SensorA, ?SensorB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), Equal(?_HEAD_1, NumericMaximum(?StartA, ?StartB)), Equal(?_HEAD_2, NumericMinimum(?EndA, ?EndB)), Equal(?_HEAD_3, NumericMaximum(?StartA, ?StartB)), Equal(?_HEAD_4, NumericMinimum(?EndA, ?EndB)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 15: APPLYING RULE 14 R_32(?X_4, ?X_2, ?X_2, "sensor2") :- HighTemperatureSometimes(?X_4, ?X_2, ?Y_1), HighTemperatureSometimes(?_BODY_1, ?X_4, ?X_2), Equal(?_BODY_1, "sensor2") >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 16: APPLYING RULE 8 R_12(?X_2, ?X_3, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_32(?X_2, ?X_3, ?_BODY_1, ?_BODY_2), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 17: APPLYING RULE 9 R_15(?X_2, ?X_1) :- R_12(?X_2, ?X_1, ?_BODY_1), Equal(?_BODY_1, ?X_1) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 18: APPLYING RULE 15 R_16(?X_1, ?X_2, "sensor2", ?X_4, ?X_1) :- R_15(?X_1, ?X_2), R_15(?_BODY_1, ?X_2), R_15(?X_1, ?X_4), SameLocation(?Z_3, ?Z_2), Equal(?_BODY_1, "sensor2") >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 19: APPLYING RULE 11 R_23(?X_3, ?X_4, ?X_4, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_6) :- R_16(?X_4, ?_BODY_1, ?_BODY_2, ?Y_1, ?X_6), R_16(?X_6, ?X_3, ?Y_2, ?X_2, ?_BODY_3), Equal(?_BODY_1, ?X_4), Equal(?_BODY_2, ?X_4), Equal(?_BODY_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 20: APPLYING RULE 13 R_28(?X_1) :- Alert(?X_1, ?_BODY_1, ?_BODY_2), Equal(?_BODY_1, "20"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, "20"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 21: APPLYING RULE 22 R_14(?X_1, ?X_2, "10"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_23(?X_1, ?X_2, ?_BODY_1, ?_BODY_2, ?_BODY_3, ?_BODY_4), R_23(?X_2, ?X_1, ?_BODY_5, ?_BODY_6, ?_BODY_7, ?Z_1), Equal(?_BODY_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_2), Equal(?_BODY_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_4, ?X_1), Equal(?_BODY_5, ?X_1), Equal(?_BODY_6, ?X_2), Equal(?_BODY_7, ?X_2) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 22: APPLYING RULE 18 R_13(?X_2, ?X_5, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_4, ?X_6) :- R_12(?X_2, ?X_5, ?_BODY_1), R_12(?X_3, ?X_4, ?X_6), R_16(?X_3, ?X_2, ?_BODY_2, ?X_6, ?_BODY_3), Equal(?_BODY_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_3), Equal(?_BODY_3, "0"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Project/Reorder
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 23: APPLYING RULE 10 R_17(?X_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_7(?X_1, ?_BODY_1), Equal(?_BODY_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 24: APPLYING RULE 12 R_26("sensor1", ?X_2, ?X_2) :- R_7(?_BODY_1, ?X_2), R_7(?X_2, ?_BODY_2), Equal(?_BODY_1, "sensor1"), Equal(?_BODY_2, ?X_2) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 25: APPLYING RULE 20 R_7(?X_2, ?X_1) :- Alert(?X_2, ?X_1, ?_BODY_1), R_18(?Z_1, ?X_2, ?X_1, ?_BODY_2), Equal(?_BODY_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_2) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 26: APPLYING RULE 21 R_20(?X_2, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_5, ?X_2) :- R_17(?X_2, ?_BODY_1), R_17(?_BODY_2, ?X_5), R_17(?X_2, ?X_1), R_14(?X_1, ?Z_2, ?Z_3), R_21(?_BODY_3, ?Z_4, ?X_5, ?Z_1), Equal(?_BODY_1, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_3, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 27: APPLYING RULE 23 R_21("10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?X_1, ?X_2) :- R_20(?_BODY_1, ?X_4, ?X_1, ?X_2, ?_BODY_2), Alert(?Z_1, ?Z_2, ?X_1), R_13(?Z_1, ?X_4, ?_BODY_3, ?Z_3, ?_BODY_4, ?Z_6), R_26(?X_4, ?_BODY_5, ?Z_10), Equal(?_BODY_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_4), Equal(?_BODY_3, ?X_4), Equal(?_BODY_4, ?X_4), Equal(?_BODY_5, ?X_4) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 28: APPLYING RULE 24 R_18(?X_4, ?X_3, ?X_3, ?X_1) :- R_20(?X_4, ?X_3, ?_BODY_1, ?X_1, ?_BODY_2), R_28(?_BODY_3), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, ?X_3), Equal(?_BODY_3, "sensor1") >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 29: APPLYING RULE 6 R_5(?X_2, "sensor2") :- R_21(?_BODY_1, ?_BODY_2, ?_BODY_3, ?X_2), Equal(?_BODY_1, "sensor2"), Equal(?_BODY_2, "sensor2"), Equal(?_BODY_3, "sensor2") >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(Iri(IriDataValue("c_22"))), AnyDataValue(Iri(IriDataValue("c_17")))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 30: APPLYING RULE 19 R_29(?X_6, "sensor1", ?X_2, ?X_5, ?X_4, ?X_1) :- R_5(?X_6, ?_BODY_1), R_5(?X_2, ?X_5), R_5(?X_4, ?X_1), R_17(?X_1, ?X_5), Equal(?_BODY_1, "sensor1") >>>
+18:44:56 [INFO] Execution step: Project/Reorder
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 31: APPLYING RULE 7 R_6("0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5, ?X_3, ?X_2, ?X_6, ?X_5) :- R_OUT(?_BODY_1, ?X_5, ?X_3, ?X_2, ?X_6, ?_BODY_2), Equal(?_BODY_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_5) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 32: APPLYING RULE 16 R_OUT(?X_4, ?X_5, ?X_6, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_6) :- R_29(?X_4, ?X_5, ?X_6, ?_BODY_1, ?X_1, ?_BODY_2), R_1(?X_6, ?_BODY_3, ?X_1, ?Z_4, ?Z_3, ?X_4), Equal(?_BODY_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_6), Equal(?_BODY_3, ?X_6) >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 6, data: [AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15638221903672830228))), AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(Iri(IriDataValue("c_3"))), AnyDataValue(Iri(IriDataValue("c_18"))), AnyDataValue(Iri(IriDataValue("c_19"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(3755852008236917190))), AnyDataValue(Iri(IriDataValue("c_20"))), AnyDataValue(Iri(IriDataValue("c_21"))), AnyDataValue(Double(DoubleDataValue(20.0))), AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(Iri(IriDataValue("c_25"))), AnyDataValue(Iri(IriDataValue("c_26"))), AnyDataValue(Iri(IriDataValue("c_27"))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(Iri(IriDataValue("c_28")))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 33: APPLYING RULE 17 R_1(?X_2, ?X_5, ?X_6, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_3) :- R_6(?X_2, ?X_5, ?X_6, ?_BODY_1, ?X_1, ?X_3), R_7(?X_2, ?Z_4), Equal(?_BODY_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] --- Finished Nemo Execution - Input Program --
+18:44:56 [INFO] Output size: 0
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] Beginning Nemo Execution - Transformed Program
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] Stratified program: [[0, 1, 2, 3, 4, 5, 8, 9, 11, 13, 14, 15, 22], [6, 10, 12, 18, 20, 21, 23, 24, 25], [7, 16, 17, 19]]
+18:44:56 [INFO] <<< STEP 1: APPLYING RULE 3 HighTemperatureSometimes(?Sensor, ?Start, ?_HEAD_1) :- HighTemperature(?Sensor, ?Start, ?End), Equal(?_HEAD_1, NumericSum(?End, "5.5"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(Double(DoubleDataValue(0.0))), AnyDataValue(Double(DoubleDataValue(27.5))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(3.5))), AnyDataValue(Double(DoubleDataValue(3.5))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(14.7))), AnyDataValue(Double(DoubleDataValue(14.7))), AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(20.0))), AnyDataValue(Double(DoubleDataValue(20.0)))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 6 entries (10688)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table HighTemperatureSometimes (1) Permutation { idx_to_val: [], val_to_idx: [] } with 6 entries (10736)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 2: APPLYING RULE 3 HighTemperatureSometimes(?Sensor, ?Start, ?_HEAD_1) :- HighTemperature(?Sensor, ?Start, ?End), Equal(?_HEAD_1, NumericSum(?End, "5.5"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 3: APPLYING RULE 0 HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 10 entries (10720)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table HighTemperatureSometimes (3) Permutation { idx_to_val: [], val_to_idx: [] } with 4 entries (10556)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 4: APPLYING RULE 0 HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 9 entries (10548)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table HighTemperatureSometimes (4) Permutation { idx_to_val: [], val_to_idx: [] } with 5 entries (10508)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 5: APPLYING RULE 0 HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 6 entries (10468)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table HighTemperatureSometimes (5) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (10364)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 6: APPLYING RULE 0 HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 1 entries (10316)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 7: APPLYING RULE 2 Overheat(?Sensor, ?_HEAD_1, ?End) :- HighTemperature(?Sensor, ?Start, ?End), NumericGreaterthaneq(NumericSubtraction(?End, ?Start), "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_HEAD_1, NumericSum(?Start, "10"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 1 entries (10316)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table Overheat (7) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (10364)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 8: APPLYING RULE 2 Overheat(?Sensor, ?_HEAD_1, ?End) :- HighTemperature(?Sensor, ?Start, ?End), NumericGreaterthaneq(NumericSubtraction(?End, ?Start), "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_HEAD_1, NumericSum(?Start, "10"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 9: APPLYING RULE 4 Overheat(?Sensor, ?_HEAD_1, ?End) :- HighTemperatureSometimes(?Sensor, ?Start, ?End), NumericGreaterthaneq(NumericSubtraction(?End, ?Start), "20"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_HEAD_1, NumericSum(?Start, "20"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 3 entries (10496)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table Overheat (9) Permutation { idx_to_val: [], val_to_idx: [] } with 3 entries (10544)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 10: APPLYING RULE 4 Overheat(?Sensor, ?_HEAD_1, ?End) :- HighTemperatureSometimes(?Sensor, ?Start, ?End), NumericGreaterthaneq(NumericSubtraction(?End, ?Start), "20"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_HEAD_1, NumericSum(?Start, "20"^^<http://www.w3.org/2001/XMLSchema#double>)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 11: APPLYING RULE 1 Overheat(?Sensor, ?StartA, ?EndB) :- Overheat(?Sensor, ?StartA, ?EndA), Overheat(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 5 entries (10568)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table Overheat (11) Permutation { idx_to_val: [], val_to_idx: [] } with 1 entries (10364)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 12: APPLYING RULE 1 Overheat(?Sensor, ?StartA, ?EndB) :- Overheat(?Sensor, ?StartA, ?EndA), Overheat(?Sensor, ?StartB, ?EndB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), NumericLessthaneq(?StartA, ?StartB), NumericLessthaneq(?EndA, ?EndB) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 1 entries (10316)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 13: APPLYING RULE 5 Alert(?SensorA, ?_HEAD_1, ?_HEAD_2), Alert(?SensorB, ?_HEAD_3, ?_HEAD_4) :- Overheat(?SensorA, ?StartA, ?EndA), Overheat(?SensorB, ?StartB, ?EndB), SameLocation(?SensorA, ?SensorB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), Equal(?_HEAD_1, NumericMaximum(?StartA, ?StartB)), Equal(?_HEAD_2, NumericMinimum(?EndA, ?EndB)), Equal(?_HEAD_3, NumericMaximum(?StartA, ?StartB)), Equal(?_HEAD_4, NumericMinimum(?EndA, ?EndB)) >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(PlainString(StringDataValue("sensor2")))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Saved temporary table: 2 entries (10380)
+18:44:56 [INFO] Saved temporary table: 2 entries (10380)
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Saved permanent table Alert (13) Permutation { idx_to_val: [], val_to_idx: [] } with 4 entries (10608)
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 14: APPLYING RULE 5 Alert(?SensorA, ?_HEAD_1, ?_HEAD_2), Alert(?SensorB, ?_HEAD_3, ?_HEAD_4) :- Overheat(?SensorA, ?StartA, ?EndA), Overheat(?SensorB, ?StartB, ?EndB), SameLocation(?SensorA, ?SensorB), NumericLessthaneq(?StartA, ?EndB), NumericLessthaneq(?StartB, ?EndA), Equal(?_HEAD_1, NumericMaximum(?StartA, ?StartB)), Equal(?_HEAD_2, NumericMinimum(?EndA, ?EndB)), Equal(?_HEAD_3, NumericMaximum(?StartA, ?StartB)), Equal(?_HEAD_4, NumericMinimum(?EndA, ?EndB)) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 15: APPLYING RULE 14 R_32(?X_4, ?X_2, ?X_2, "sensor2") :- HighTemperatureSometimes(?X_4, ?X_2, ?Y_1), HighTemperatureSometimes(?_BODY_1, ?X_4, ?X_2), Equal(?_BODY_1, "sensor2") >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 16: APPLYING RULE 8 R_12(?X_2, ?X_3, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_32(?X_2, ?X_3, ?_BODY_1, ?_BODY_2), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 17: APPLYING RULE 9 R_15(?X_2, ?X_1) :- R_12(?X_2, ?X_1, ?_BODY_1), Equal(?_BODY_1, ?X_1) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 18: APPLYING RULE 15 R_16(?X_1, ?X_2, "sensor2", ?X_4, ?X_1) :- R_15(?X_1, ?X_2), R_15(?_BODY_1, ?X_2), R_15(?X_1, ?X_4), SameLocation(?Z_3, ?Z_2), Equal(?_BODY_1, "sensor2") >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 19: APPLYING RULE 11 R_23(?X_3, ?X_4, ?X_4, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_6) :- R_16(?X_4, ?_BODY_1, ?_BODY_2, ?Y_1, ?X_6), R_16(?X_6, ?X_3, ?Y_2, ?X_2, ?_BODY_3), Equal(?_BODY_1, ?X_4), Equal(?_BODY_2, ?X_4), Equal(?_BODY_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 20: APPLYING RULE 13 R_28(?X_1) :- Alert(?X_1, ?_BODY_1, ?_BODY_2), Equal(?_BODY_1, "20"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, "20"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 21: APPLYING RULE 22 R_14(?X_1, ?X_2, "10"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_23(?X_1, ?X_2, ?_BODY_1, ?_BODY_2, ?_BODY_3, ?_BODY_4), R_23(?X_2, ?X_1, ?_BODY_5, ?_BODY_6, ?_BODY_7, ?Z_1), Equal(?_BODY_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_2), Equal(?_BODY_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_4, ?X_1), Equal(?_BODY_5, ?X_1), Equal(?_BODY_6, ?X_2), Equal(?_BODY_7, ?X_2) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 22: APPLYING RULE 18 R_13(?X_2, ?X_5, "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_4, ?X_6) :- R_12(?X_2, ?X_5, ?_BODY_1), R_12(?X_3, ?X_4, ?X_6), R_16(?X_3, ?X_2, ?_BODY_2, ?X_6, ?_BODY_3), Equal(?_BODY_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_3), Equal(?_BODY_3, "0"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Project/Reorder
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 23: APPLYING RULE 25 R_14(?X_1, "str_17", ?X_3) :- Alert(?X_1, ?_BODY_1, ?X_3), Alert(?X_1, ?_BODY_2, ?X_3), Equal(?_BODY_1, "str_17"), Equal(?_BODY_2, "str_17") >>>
+18:44:56 [INFO] Execution step: Project/Reorder
+18:44:56 [INFO] Saved temporary table: 4 entries (10448)
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 24: APPLYING RULE 10 R_17(?X_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_7(?X_1, ?_BODY_1), Equal(?_BODY_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 25: APPLYING RULE 12 R_26("sensor1", ?X_2, ?X_2) :- R_7(?_BODY_1, ?X_2), R_7(?X_2, ?_BODY_2), Equal(?_BODY_1, "sensor1"), Equal(?_BODY_2, ?X_2) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 26: APPLYING RULE 20 R_7(?X_2, ?X_1) :- Alert(?X_2, ?X_1, ?_BODY_1), R_18(?Z_1, ?X_2, ?X_1, ?_BODY_2), Equal(?_BODY_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_2) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 27: APPLYING RULE 21 R_20(?X_2, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_5, ?X_2) :- R_17(?X_2, ?_BODY_1), R_17(?_BODY_2, ?X_5), R_17(?X_2, ?X_1), R_14(?X_1, ?Z_2, ?Z_3), R_21(?_BODY_3, ?Z_4, ?X_5, ?Z_1), Equal(?_BODY_1, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_3, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 28: APPLYING RULE 23 R_21("10"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4, ?X_1, ?X_2) :- R_20(?_BODY_1, ?X_4, ?X_1, ?X_2, ?_BODY_2), Alert(?Z_1, ?Z_2, ?X_1), R_13(?Z_1, ?X_4, ?_BODY_3, ?Z_3, ?_BODY_4, ?Z_6), R_26(?X_4, ?_BODY_5, ?Z_10), Equal(?_BODY_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_4), Equal(?_BODY_3, ?X_4), Equal(?_BODY_4, ?X_4), Equal(?_BODY_5, ?X_4) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 29: APPLYING RULE 24 R_18(?X_4, ?X_3, ?X_3, ?X_1) :- R_20(?X_4, ?X_3, ?_BODY_1, ?X_1, ?_BODY_2), R_28(?_BODY_3), Equal(?_BODY_1, ?X_3), Equal(?_BODY_2, ?X_3), Equal(?_BODY_3, "sensor1") >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 30: APPLYING RULE 6 R_5(?X_2, "sensor2") :- R_21(?_BODY_1, ?_BODY_2, ?_BODY_3, ?X_2), Equal(?_BODY_1, "sensor2"), Equal(?_BODY_2, "sensor2"), Equal(?_BODY_3, "sensor2") >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(Iri(IriDataValue("c_22"))), AnyDataValue(Iri(IriDataValue("c_17")))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 31: APPLYING RULE 19 R_29(?X_6, "sensor1", ?X_2, ?X_5, ?X_4, ?X_1) :- R_5(?X_6, ?_BODY_1), R_5(?X_2, ?X_5), R_5(?X_4, ?X_1), R_17(?X_1, ?X_5), Equal(?_BODY_1, "sensor1") >>>
+18:44:56 [INFO] Execution step: Project/Reorder
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 32: APPLYING RULE 7 R_6("0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5, ?X_3, ?X_2, ?X_6, ?X_5) :- R_OUT(?_BODY_1, ?X_5, ?X_3, ?X_2, ?X_6, ?_BODY_2), Equal(?_BODY_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_5) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 33: APPLYING RULE 16 R_OUT(?X_4, ?X_5, ?X_6, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_6) :- R_29(?X_4, ?X_5, ?X_6, ?_BODY_1, ?X_1, ?_BODY_2), R_1(?X_6, ?_BODY_3, ?X_1, ?Z_4, ?Z_3, ?X_4), Equal(?_BODY_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>), Equal(?_BODY_2, ?X_6), Equal(?_BODY_3, ?X_6) >>>
+18:44:56 [INFO] Loading source SimpleTable { arity: 6, data: [AnyDataValue(PlainString(StringDataValue("sensor2"))), AnyDataValue(Double(DoubleDataValue(5.1))), AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(UnsignedLong(UnsignedLongDataValue(15638221903672830228))), AnyDataValue(PlainString(StringDataValue("sensor1"))), AnyDataValue(Iri(IriDataValue("c_3"))), AnyDataValue(Iri(IriDataValue("c_1"))), AnyDataValue(Iri(IriDataValue("c_25"))), AnyDataValue(Iri(IriDataValue("c_26"))), AnyDataValue(Iri(IriDataValue("c_27"))), AnyDataValue(Double(DoubleDataValue(10.0))), AnyDataValue(Iri(IriDataValue("c_28")))] }
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] <<< STEP 34: APPLYING RULE 17 R_1(?X_2, ?X_5, ?X_6, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_3) :- R_6(?X_2, ?X_5, ?X_6, ?_BODY_1, ?X_1, ?X_3), R_7(?X_2, ?Z_4), Equal(?_BODY_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>) >>>
+18:44:56 [INFO] Execution step: Body
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Execution step: Duplicate Elimination (Datalog)
+18:44:56 [INFO] Trie does not contain any elements
+18:44:56 [INFO] Rule duration: 0 ms
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO]  Finished Nemo Execution - Transformed Program
+18:44:56 [INFO] Output size: 0
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] 
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] ------------ Asserting Oracle CON ------------
+18:44:56 [INFO] ----------------------------------------------
+18:44:56 [INFO] All good, output has contracted
+18:44:56 [INFO] old_dir "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/benchmark_500k_r"

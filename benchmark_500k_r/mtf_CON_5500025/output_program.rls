@@ -1,0 +1,76 @@
+HighTemperature("sensor1", "0"^^<http://www.w3.org/2001/XMLSchema#double>, "27.5"^^<http://www.w3.org/2001/XMLSchema#double>).
+HighTemperature("sensor2", "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>).
+HighTemperature("sensor2", "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>).
+HighTemperature("sensor2", "10"^^<http://www.w3.org/2001/XMLSchema#double>, "10"^^<http://www.w3.org/2001/XMLSchema#double>).
+HighTemperature("sensor2", "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>).
+HighTemperature("sensor2", "20"^^<http://www.w3.org/2001/XMLSchema#double>, "20"^^<http://www.w3.org/2001/XMLSchema#double>).
+SameLocation("sensor1", "sensor2").
+HighTemperatureSometimes(?Sensor, ?StartA, ?EndB) :- HighTemperatureSometimes(?Sensor, ?StartA, ?EndA), HighTemperatureSometimes(?Sensor, ?StartB, ?EndB), ?StartA <= ?EndB, ?StartB <= ?EndA, ?StartA <= ?StartB, ?EndA <= ?EndB .
+Overheat(?Sensor, ?StartA, ?EndB) :- Overheat(?Sensor, ?StartA, ?EndA), Overheat(?Sensor, ?StartB, ?EndB), ?StartA <= ?EndB, ?StartB <= ?EndA, ?StartA <= ?StartB, ?EndA <= ?EndB .
+Overheat(?Sensor, ?Start + "10"^^<http://www.w3.org/2001/XMLSchema#double>, ?End) :- HighTemperature(?Sensor, ?Start, ?End), ?End - ?Start >= "10"^^<http://www.w3.org/2001/XMLSchema#double> .
+HighTemperatureSometimes(?Sensor, ?Start, ?End + "5.5"^^<http://www.w3.org/2001/XMLSchema#double>) :- HighTemperature(?Sensor, ?Start, ?End) .
+Overheat(?Sensor, ?Start + "20"^^<http://www.w3.org/2001/XMLSchema#double>, ?End) :- HighTemperatureSometimes(?Sensor, ?Start, ?End), ?End - ?Start >= "20"^^<http://www.w3.org/2001/XMLSchema#double> .
+Alert(?SensorA, MAX(?StartA, ?StartB), MIN(?EndA, ?EndB)), Alert(?SensorB, MAX(?StartA, ?StartB), MIN(?EndA, ?EndB)) :- Overheat(?SensorA, ?StartA, ?EndA), Overheat(?SensorB, ?StartB, ?EndB), SameLocation(?SensorA, ?SensorB), ?StartA <= ?EndB, ?StartB <= ?EndA .
+@export R_OUT :- csv{}.
+R_9(?X_3, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_4) :- R_25(?X_3, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, ?X_4) .
+R_10(?X_1, ?X_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) :- Alert(?X_1, ?X_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) .
+R_11(?X_1) :- R_1(?Y_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, ?X_1, ?X_1, ?X_1) .
+R_15(?X_4, ?X_2, ?X_1, ?X_5, ?X_3, ?X_6) :- R_17(?X_4, ?X_2, ?X_1, ?X_5, ?X_3, ?X_6) .
+R_23(?X_3, ?X_3, ?X_1) :- R_28(?X_3, ?X_3, "sensor2", ?X_3, ?X_1) .
+R_25(?X_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5, ?X_4, ?X_3) :- Alert(?X_1, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_5), Alert(?X_4, ?X_3, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>) .
+R_29(?X_4, ?X_6, "sensor2", ?X_6, ?X_3, ?X_5) :- R_29(?X_4, ?X_6, "sensor2", ?X_6, ?X_3, ?X_5) .
+R_2(?X_1) :- R_10(?X_1, "sensor2", ?X_1), Alert(?X_1, ?X_1, "sensor1") .
+R_3(?X_2, ?X_1, ?X_3, ?X_4, ?X_4, ?X_5) :- R_15(?X_2, ?X_1, ?X_3, ?X_4, ?X_4, ?X_5), ~HighTemperature(?X_3, ?X_5, ?X_1) .
+R_33(?X_1) :- R_OUT(?X_1, ?X_1), R_8(?X_1, ?X_1) .
+R_17(?X_6, ?X_1, ?X_4, ?X_2, ?X_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_34(?X_6, ?X_1, ?X_4), R_34(?X_2, ?X_3, "10"^^<http://www.w3.org/2001/XMLSchema#double>), ~Overheat(?X_2, ?X_4, ?X_4), R_9(?X_1, ?X_4, ?Z_5, ?X_2) .
+R_24(?X_1) :- SameLocation(?X_1, "sensor2"), ~R_18(?X_1, ?X_1, "sensor2", ?X_1) .
+R_26(?X_4, ?X_6, "sensor2", ?X_5, ?X_4, ?X_3) :- R_27(?X_4, ?X_6, "sensor2", ?X_5, ?X_4, ?X_3), R_19(?X_5, ?X_4, ?X_6, ?Z_3, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>) .
+R_27(?X_4, ?X_2, ?X_6, ?X_5, ?X_3, ?X_1) :- R_29(?X_4, ?X_2, ?X_6, ?X_5, ?X_3, ?X_1), R_22(?X_5, ?X_2, ?X_2, ?X_6) .
+R_32(?X_3, "sensor1", ?X_4, ?X_1) :- R_27(?X_3, "sensor1", ?Y_1, ?X_1, "sensor1", ?X_4), R_23("sensor1", ?X_4, ?X_3) .
+R_22("sensor2", ?X_3, ?X_2, ?X_1) :- R_3("sensor2", ?X_3, "sensor2", ?X_2, ?X_1, ?X_2), R_26(?X_2, ?X_2, ?X_3, ?X_3, ?X_1, ?Z_1) .
+R_13("sensor1") :- HighTemperature("sensor1", ?Y_1, "10"^^<http://www.w3.org/2001/XMLSchema#double>), R_28(?Y_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, "sensor2", ?Z_1) .
+R_12(?X_5, ?X_6, ?X_1, ?X_2, "sensor2", ?X_3) :- R_34(?X_5, ?X_6, ?X_1), R_34(?X_2, "sensor2", ?X_3), R_34(?X_5, ?X_2, ?X_2) .
+R_27("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, "20"^^<http://www.w3.org/2001/XMLSchema#double>, c_1, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>, c_2, c_3).
+R_29(c_1, c_4, "sensor1", c_5, c_6, "str_1").
+R_11("sensor1").
+R_20(c_7, "20"^^<http://www.w3.org/2001/XMLSchema#double>, c_8, 3733930863991098438).
+R_23("20"^^<http://www.w3.org/2001/XMLSchema#double>, c_9, c_10).
+R_12(c_11, 10942110340047376488, c_12, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, c_13, "sensor2").
+R_4("str_2", c_14, 14727020493423053480).
+R_2(c_1).
+R_30("sensor1", c_18, c_19, c_20).
+R_13("10"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_26(c_23, c_24, 13038458451360149550, "str_3", c_20, "str_2").
+R_14(c_11, c_17, 16548907593374094922, c_11).
+R_13(c_25).
+R_15(13038458451360149550, c_26, "10"^^<http://www.w3.org/2001/XMLSchema#double>, c_20, "3.5"^^<http://www.w3.org/2001/XMLSchema#double>, "str_4").
+R_7("str_5", 15291750065651010290).
+R_24("5.1"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_9(c_27, c_9, 13038458451360149550, "str_6").
+R_33("str_7").
+R_19(c_22, c_28, 3733930863991098438, c_29, c_28).
+R_2("sensor1").
+R_33(13038458451360149550).
+R_29("str_8", "str_9", c_27, "10"^^<http://www.w3.org/2001/XMLSchema#double>, "str_10", 16548907593374094922).
+R_16(c_24).
+R_7(c_25, c_31).
+R_12(c_14, c_19, "str_10", "20"^^<http://www.w3.org/2001/XMLSchema#double>, "str_13", c_32).
+R_24(c_33).
+R_9(3365123479750687259, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, 1587558600432253134, c_34).
+R_14("sensor1", c_35, 15080656766736576341, "14.7"^^<http://www.w3.org/2001/XMLSchema#double>).
+R_4(c_37, c_27, 4520203345222228718).
+R_19(c_29, 6227363429782004240, 10548079028772122653, c_3, c_11).
+R_31(7466578378722693968, 3365123479750687259, c_38, c_5).
+R_8("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1) :- R_21("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, "5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1_new_1, ?Y_1), R_31(?X_1_new_1, "sensor2", ?Y_1, ?Z_1), R_33("sensor2") .
+R_22(c_30, c_41, c_42, 13883949782574366923).
+R_16(?X_1) :- Overheat(13883949782574366923, ?X_1, 13883949782574366923), ~Overheat(13883949782574366923, ?X_1, 13883949782574366923), R_12("str_11", ?X_1, ?Z_1, ?X_1, ?X_1, ?X_1) .
+R_17(8187947412774353490, c_43, "str_17", "str_13", c_44, "str_18").
+R_34("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_1) :- R_10("5.1"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_1), ~R_11(?X_3), R_15(?X_3, ?Z_1, ?X_3, ?X_1, ?X_3, ?Z_2), ~R_OUT(?X_3, 4520203345222228718) .
+R_24("str_12").
+R_12(?X_4, ?X_6, ?X_5, ?X_6, ?X_1, ?X_3) :- R_22(?X_4, ?X_6, ?Y_1, ?X_6), R_22(c_28, ?X_3, ?X_5, ?X_1), ~R_22(?X_4, ?X_6, ?Y_1, ?X_6), ~R_7(?Y_1, ?Y_1) .
+R_31(?X_3, ?X_4, ?X_2, ?X_1) :- R_26("sensor2", "sensor2", ?X_2, ?X_1, ?X_3, ?X_4), ~R_25(?X_2, ?X_1, "20"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_2), R_29(?X_2, ?X_3, ?X_4, "sensor1", ?X_2, ?Z_5), ~R_38(?X_1) .
+R_1(?X_6, ?X_2, ?X_2, ?X_4, "20"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3) :- Overheat(?X_6, ?X_2, ?X_2), Overheat(?X_4, "20"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3) .
+R_1(?X_6, ?X_5, ?X_5, ?X_4, ?X_1, ?X_2) :- Overheat(?X_6, ?X_5, ?X_5), Overheat(?X_4, ?X_1, ?X_2), ~Overheat(?X_6, ?X_5, ?X_5) .
+R_18(?X_2, ?Z_2, ?X_4, "sensor2") :- R_9(?X_2, ?Z_2, ?X_4, "sensor2"), R_3(?X_2, ?X_2, ?Z_2, ?Z_2, ?Z_2, ?Z_1), ~R_27(?Z_2, ?Z_2, "str_8", ?Z_2, ?Z_2, ?Z_2) .
+R_28(?X_2, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_4) :- R_21(?X_2, ?X_1, "0"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_4), ~R_6(?X_4, ?X_3, ?X_1, "sensor1"), R_5(?Z_3, ?X_2, ?X_4, ?X_1, ?X_1, ?X_3) .
+R_OUT(?X_1, ?X_2) :- HighTemperature(?X_1, ?X_2, ?Y_1), ~SameLocation(?X_2, ?X_1) .

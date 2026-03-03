@@ -1,0 +1,90 @@
+@import http://rulewerk.semantic-web.org/normalForm/isMainClass :- csv{resource= "data/isMainClass.csv.gz"}.
+@import http://rulewerk.semantic-web.org/normalForm/isSubClass :- csv{resource= "data/isSubClass.csv.gz"}.
+@import http://rulewerk.semantic-web.org/normalForm/conj :- csv{resource= "data/conj.csv.gz"}.
+@import http://rulewerk.semantic-web.org/normalForm/exists :- csv{resource= "data/exists.csv.gz"}.
+@import http://rulewerk.semantic-web.org/normalForm/subClassOf :- csv{resource= "data/subClassOf.csv.gz"}.
+@import http://rulewerk.semantic-web.org/normalForm/subPropChain :- csv{resource= "data/subPropChain.csv.gz"}.
+@import http://rulewerk.semantic-web.org/normalForm/subProp :- csv{resource= "data/subProp.csv.gz"}.
+http://rulewerk.semantic-web.org/inferred/init(?C) :- http://rulewerk.semantic-web.org/normalForm/isMainClass(?C) .
+http://rulewerk.semantic-web.org/inferred/init(?C) :- http://rulewerk.semantic-web.org/inferred/ex(?E, ?R, ?C) .
+http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?C) :- http://rulewerk.semantic-web.org/inferred/init(?C) .
+http://rulewerk.semantic-web.org/inferred/subClassOf(?C, "<http://www.w3.org/2002/07/owl#Thing>") :- http://rulewerk.semantic-web.org/normalForm/isMainClass(?C) .
+http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?D1), http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?D2) :- http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?Y), http://rulewerk.semantic-web.org/normalForm/conj(?Y, ?D1, ?D2) .
+http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?I) :- http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?D1), http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?D2), http://rulewerk.semantic-web.org/normalForm/conj(?I, ?D1, ?D2), http://rulewerk.semantic-web.org/normalForm/isSubClass(?I) .
+http://rulewerk.semantic-web.org/inferred/ex(?E, ?R, ?C) :- http://rulewerk.semantic-web.org/inferred/subClassOf(?E, ?Y), http://rulewerk.semantic-web.org/normalForm/exists(?Y, ?R, ?C) .
+http://rulewerk.semantic-web.org/inferred/subClassOf(?E, ?Y) :- http://rulewerk.semantic-web.org/inferred/ex(?E, ?R, ?C), http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?D), http://rulewerk.semantic-web.org/normalForm/subProp(?R, ?S), http://rulewerk.semantic-web.org/normalForm/exists(?Y, ?S, ?D), http://rulewerk.semantic-web.org/normalForm/isSubClass(?Y) .
+http://rulewerk.semantic-web.org/inferred/ex(?E, ?S, ?D) :- http://rulewerk.semantic-web.org/inferred/ex(?E, ?R1, ?C), http://rulewerk.semantic-web.org/inferred/ex(?C, ?R2, ?D), http://rulewerk.semantic-web.org/normalForm/subProp(?R1, ?S1), http://rulewerk.semantic-web.org/normalForm/subProp(?R2, ?S2), http://rulewerk.semantic-web.org/normalForm/subPropChain(?S1, ?S2, ?S) .
+http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?E) :- http://rulewerk.semantic-web.org/inferred/subClassOf(?C, ?D), http://rulewerk.semantic-web.org/normalForm/subClassOf(?D, ?E) .
+http://rulewerk.semantic-web.org/inferred/subClassOf(?E, "<http://www.w3.org/2002/07/owl#Nothing>") :- http://rulewerk.semantic-web.org/inferred/ex(?E, ?R, ?C), http://rulewerk.semantic-web.org/inferred/subClassOf(?C, "<http://www.w3.org/2002/07/owl#Nothing>") .
+mainSubClassOf(?A, ?B) :- http://rulewerk.semantic-web.org/inferred/subClassOf(?A, ?B), http://rulewerk.semantic-web.org/normalForm/isMainClass(?A), http://rulewerk.semantic-web.org/normalForm/isMainClass(?B) .
+@export R_OUT :- csv{}.
+R_OUT(?X_1) :- R_19("<http://www.w3.org/2002/07/owl#Nothing>", ?X_1) .
+R_1(?X_3, ?X_4, ?X_2, ?X_4) :- R_24(?X_3, ?X_4, ?X_2, ?Y_1, ?X_4, ?X_4) .
+R_6("<http://www.w3.org/2002/07/owl#Nothing>", ?X_4, ?X_2, ?X_3) :- R_10("<http://www.w3.org/2002/07/owl#Nothing>", ?X_4, ?X_2, ?X_3) .
+R_10(?X_1, ?X_4, ?X_3, "<http://www.w3.org/2002/07/owl#Nothing>") :- R_5(?X_1, ?X_4, ?X_3, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_1) .
+R_16("<http://www.w3.org/2002/07/owl#Nothing>", ?X_2) :- R_31(?Y_1, ?X_2, "<http://www.w3.org/2002/07/owl#Nothing>") .
+R_20(?X_1, ?X_2, ?X_3, "<http://www.w3.org/2002/07/owl#Nothing>") :- R_12(?X_1, ?X_2), R_12(?X_3, "<http://www.w3.org/2002/07/owl#Nothing>") .
+R_23(?X_5, ?X_5, ?X_1, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_2) :- R_25(?X_5, ?X_5, ?X_1, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_2, ?X_2) .
+R_24(?X_1, ?X_4, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_5, ?X_6, ?X_3) :- http://rulewerk.semantic-web.org/normalForm/subPropChain(?X_1, ?X_4, "<http://www.w3.org/2002/07/owl#Nothing>"), http://rulewerk.semantic-web.org/normalForm/subPropChain(?X_5, ?X_6, ?X_3) .
+R_25(?X_3, ?X_6, ?X_2, ?X_6, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_1) :- http://rulewerk.semantic-web.org/inferred/subClassOf(?X_3, ?X_6), http://rulewerk.semantic-web.org/inferred/subClassOf(?X_2, ?X_6), http://rulewerk.semantic-web.org/inferred/subClassOf("<http://www.w3.org/2002/07/owl#Nothing>", ?X_1) .
+R_28(?X_1) :- http://rulewerk.semantic-web.org/normalForm/subClassOf(?X_1, ?X_1) .
+R_30("<http://www.w3.org/2002/07/owl#Nothing>") :- R_6("<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>") .
+R_21(?X_1, ?X_4, ?X_3, "<http://www.w3.org/2002/07/owl#Nothing>") :- R_23(?X_3, ?X_4, ?X_3, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_1), http://rulewerk.semantic-web.org/inferred/init(?X_3) .
+R_29(?X_3, ?X_6, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_4, ?X_2, ?X_5) :- R_22(?X_3, ?X_6, ?X_5, ?X_4, ?Y_2), R_22(?Y_1, ?X_4, ?X_5, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_2), ~http://rulewerk.semantic-web.org/normalForm/isMainClass(?Y_2) .
+R_14(?X_1, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_5, ?X_3, ?X_4) :- R_26(?X_1, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_5, ?Y_1, ?X_4, ?X_3), mainSubClassOf(?X_4, ?X_5) .
+R_26(?X_3, ?X_1, ?X_6, ?X_4, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_2) :- R_16(?X_3, ?X_1), R_16(?X_6, ?X_4), R_16("<http://www.w3.org/2002/07/owl#Nothing>", ?X_2), R_1(?X_4, ?X_2, ?X_1, ?X_2), R_4(?X_4, ?X_6, ?Z_4, ?X_1, ?X_6, ?X_1) .
+R_31(?X_1, ?X_2, "<http://www.w3.org/2002/07/owl#Nothing>") :- R_6(?X_1, ?X_2, "<http://www.w3.org/2002/07/owl#Nothing>", ?Y_1), http://rulewerk.semantic-web.org/normalForm/subProp(?Y_1, "<http://www.w3.org/2002/07/owl#Nothing>"), R_5(?X_1, ?X_2, ?Z_1, ?Y_1, ?X_1) .
+R_19(?X_2, ?X_2) :- R_29(?X_2, ?X_2, ?X_2, ?X_2, ?X_2, ?X_2), R_6(?Z_3, ?X_2, ?X_2, ?X_2) .
+R_9(?X_3, ?X_2, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_1) :- R_19(?X_3, ?X_2), R_19("<http://www.w3.org/2002/07/owl#Nothing>", ?X_1), R_7(?X_1, ?X_3, ?Z_2, ?Z_1) .
+R_8(?X_1, ?X_2, ?X_4, ?X_4) :- R_3(?X_1), R_3(?X_2), R_3(?X_4), R_3(?X_4), R_3(?X_1), R_9(?X_2, ?Z_3, ?Z_2, ?X_4) .
+R_11(?X_1, ?X_3, ?X_2, ?X_4, ?X_1) :- http://rulewerk.semantic-web.org/normalForm/subClassOf(?X_1, ?X_3), http://rulewerk.semantic-web.org/normalForm/subClassOf(?X_2, ?X_4), http://rulewerk.semantic-web.org/normalForm/subClassOf(?X_1, ?X_2), http://rulewerk.semantic-web.org/normalForm/isSubClass(?X_4), R_10(?X_1, ?X_4, ?Z_4, ?X_2) .
+R_12(?X_2, ?X_2) :- R_14(?X_2, "<http://www.w3.org/2002/07/owl#Nothing>", ?Y_1, ?Y_1, ?X_2), ~R_15("<http://www.w3.org/2002/07/owl#Nothing>", ?X_2, ?Y_1, ?X_2) .
+R_18("<http://www.w3.org/2002/07/owl#Nothing>", ?X_3, ?X_3) :- http://rulewerk.semantic-web.org/normalForm/subProp("<http://www.w3.org/2002/07/owl#Nothing>", ?X_3), http://rulewerk.semantic-web.org/normalForm/subProp(?X_3, "<http://www.w3.org/2002/07/owl#Nothing>"), ~R_14("<http://www.w3.org/2002/07/owl#Nothing>", ?X_3, ?X_3, ?X_3, ?X_3), ~R_16(?X_3, ?X_3) .
+R_3("<http://www.w3.org/2002/07/owl#Nothing>") :- R_11("<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>", ?Y_1, "<http://www.w3.org/2002/07/owl#Nothing>"), R_2("<http://www.w3.org/2002/07/owl#Nothing>", ?Y_1), R_19(?Y_1, "<http://www.w3.org/2002/07/owl#Nothing>") .
+R_33("<http://www.w3.org/2002/07/owl#Nothing>", ?X_3, ?X_5, ?X_1, ?X_4, ?X_3) :- R_OUT("<http://www.w3.org/2002/07/owl#Nothing>"), R_OUT(?X_3), R_OUT(?X_5), R_OUT(?X_1), R_OUT(?X_4), R_OUT(?X_3), R_20(?Z_4, ?Z_2, ?X_5, ?X_1) .
+R_34(?X_2, ?X_4, ?X_5, ?X_6, ?X_3, ?X_6) :- R_22(?X_2, ?X_4, ?X_5, ?X_6, ?X_3), R_22(?X_3, ?X_5, ?X_6, ?X_5, ?X_5), R_21(?X_3, ?X_5, ?X_6, ?X_3) .
+R_27(?X_3, ?X_1, ?X_2) :- R_34(?X_3, ?X_1, ?X_2, ?X_2, ?X_1, "<http://www.w3.org/2002/07/owl#Nothing>"), http://rulewerk.semantic-web.org/inferred/subClassOf(?X_1, ?X_2), R_22(?X_2, ?X_2, ?X_3, ?X_1, ?X_1), R_23(?Z_4, ?X_2, ?X_3, ?X_1, ?X_2) .
+R_5(?X_4, ?X_5, ?X_5, ?X_1, "<http://www.w3.org/2002/07/owl#Nothing>") :- R_1(?X_4, ?X_5, "<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>"), R_1("<http://www.w3.org/2002/07/owl#Nothing>", ?X_5, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_1), ~http://rulewerk.semantic-web.org/inferred/ex(?X_1, ?X_4, "<http://www.w3.org/2002/07/owl#Nothing>"), R_25(?X_5, ?X_5, ?X_4, ?X_5, ?Z_4, "<http://www.w3.org/2002/07/owl#Nothing>") .
+R_32(?X_1, ?X_6, ?X_2, ?X_3, ?X_1, "<http://www.w3.org/2002/07/owl#Nothing>") :- http://rulewerk.semantic-web.org/inferred/init(?X_1), http://rulewerk.semantic-web.org/inferred/init(?X_6), http://rulewerk.semantic-web.org/inferred/init(?X_2), http://rulewerk.semantic-web.org/inferred/init(?X_3), http://rulewerk.semantic-web.org/inferred/init(?X_1), http://rulewerk.semantic-web.org/inferred/init("<http://www.w3.org/2002/07/owl#Nothing>"), ~http://rulewerk.semantic-web.org/normalForm/subPropChain(?X_1, ?X_2, ?X_3), R_27(?Z_5, ?X_3, ?Z_2) .
+R_7(?X_4, ?X_3, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_2) :- R_19(?X_4, ?X_3), R_19("<http://www.w3.org/2002/07/owl#Nothing>", ?X_2), http://rulewerk.semantic-web.org/normalForm/conj(?X_4, ?X_3, ?Z_1), ~R_12(?X_3, ?X_2), R_28(?X_3) .
+R_15(?X_4, ?X_1, ?X_3, ?X_2) :- R_26(?X_4, ?X_2, ?Y_1, ?X_2, ?X_1, ?X_3), http://rulewerk.semantic-web.org/normalForm/exists(?Z_2, ?X_2, ?X_3), R_26(?X_4, ?X_3, ?Z_3, ?X_1, ?X_2, ?X_4), ~R_29(?X_2, ?X_2, ?Y_1, ?X_2, ?X_3, ?X_2) .
+R_22("<http://www.w3.org/2002/07/owl#Nothing>", ?X_4, ?X_2, ?X_1, ?X_5) :- R_16(?X_2, ?X_4), R_16(?X_2, ?X_1), R_16(?X_5, "<http://www.w3.org/2002/07/owl#Nothing>"), R_13(?Z_1, ?Z_3, ?X_5, ?X_4, ?X_4, ?X_1), R_30(?Z_6) .
+R_13(?X_3, ?X_3, ?X_4, ?X_6, ?X_5, ?X_1) :- R_14(?X_4, ?X_3, ?X_6, ?X_4, ?X_5), R_14(?X_1, ?X_4, ?X_3, ?Y_1, ?X_6), R_31(?X_4, ?X_5, ?X_3) .
+R_4(?X_5, ?X_6, ?X_6, ?X_1, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_3) :- R_13(?X_5, ?X_6, ?X_6, ?X_1, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_3), http://rulewerk.semantic-web.org/normalForm/subClassOf(?X_6, ?Z_2), R_32(?X_5, ?X_6, ?X_6, ?X_5, ?X_6, "<http://www.w3.org/2002/07/owl#Nothing>") .
+R_17(?X_5, ?X_4, ?X_6, ?X_3, ?X_2, ?X_1) :- R_33(?X_5, ?X_4, ?X_6, ?X_3, ?X_2, ?X_1), R_11(?X_2, ?X_3, ?X_3, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_6), ~R_18(?X_3, ?X_3, ?X_4), R_24(?X_4, ?Z_7, ?Z_4, ?X_3, ?X_3, ?Z_2), ~R_33(?X_3, ?X_4, ?X_3, ?X_2, ?X_6, ?X_5) .
+R_2(?X_2, ?X_2) :- R_17("<http://www.w3.org/2002/07/owl#Nothing>", ?X_2, "<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>", ?X_2, ?X_2), R_8(?X_2, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_2, ?X_2), ~R_17("<http://www.w3.org/2002/07/owl#Nothing>", ?X_2, ?X_2, ?X_2, ?X_2, ?X_2), ~R_34(?X_2, ?X_2, ?X_2, ?X_2, "<http://www.w3.org/2002/07/owl#Nothing>", ?X_2) .
+R_8("<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>", "<http://www.w3.org/2002/07/owl#Nothing>").
+R_20(c_1, 1879484958931074345, "str_1", "str_2").
+R_14(c_2, c_2, "str_1", 1879484958931074345, c_3).
+R_20(1879484958931074345, c_4, c_5, c_6).
+R_5(1879484958931074345, 7557378666570083559, "<http://www.w3.org/2002/07/owl#Nothing>", c_3, c_5).
+R_15(c_4, "str_2", c_5, "str_2").
+R_18("str_3", c_1, "str_3").
+R_18("str_4", 7557378666570083559, "str_5").
+R_28(c_7).
+R_23("str_6", 1879484958931074345, 11055787266998303698, c_8, c_9).
+R_8(c_6, c_10, c_11, c_5).
+R_33(4877539230907205526, "str_7", c_2, c_4, "str_3", 4877539230907205526).
+R_8(16555214606496168250, c_12, "str_8", c_1).
+R_31("str_1", "str_8", 7557378666570083559).
+R_34("str_9", "str_10", 4112159119217124602, c_13, c_14, c_14).
+R_18(c_4, c_15, c_16).
+R_3(c_17).
+R_3(c_18).
+R_11(c_19, c_1, c_20, "str_3", c_17).
+R_33(c_21, c_8, c_22, 16555214606496168250, c_5, c_23).
+R_3(c_24).
+R_17(c_4, c_6, 16555214606496168250, "str_9", 5650895290591041842, c_14).
+R_2("str_11", "str_6").
+R_7(8832877263352904281, "str_6", 1089040206403281227, 15647033947106791851).
+R_30(c_25).
+R_1("str_10", c_26, "str_12", c_27).
+R_1(c_19, "str_8", "str_13", "str_14").
+R_13("str_15", c_28, "str_8", c_29, c_15, c_30).
+R_33(4841330249342997017, 11229292444418590171, 15583227237475467263, c_31, c_23, "str_7").
+R_8(11229292444418590171, "str_16", c_32, "str_17").
+R_18(c_33, 6729397015559803637, c_19).
+R_17(c_21, 15647033947106791851, 5650895290591041842, 15583227237475467263, c_34, 4112159119217124602).
+R_7(4877539230907205526, c_35, 6729397015559803637, c_36).
+R_9(c_37, 4841330249342997017, "str_15", "str_2").
+R_6("str_12", c_3, c_38, 8832877263352904281).

@@ -5,7 +5,7 @@ use nemo::rule_model::{
 use rand::seq::IteratorRandom;
 use rand_chacha::ChaCha8Rng;
 
-use crate::{DEBUG_MODE, NAME_OF_TRANSFORMATION_SEQUENCE};
+use crate::{DEBUG_MODE};
 
  #[allow(dead_code,unused_variables)]
 pub fn fetch_rule_by_name(rule_name: String, program: &ProgramHandle) -> Option<&Rule> {
@@ -37,12 +37,4 @@ pub fn in_debug_mode() -> bool {
         .get()
         .expect("Debug mode not initialised")
         .clone()
-}
-
- #[allow(dead_code,unused_variables)]
-pub fn fetch_transformation_name() -> String {
-    NAME_OF_TRANSFORMATION_SEQUENCE
-        .get()
-        .expect("Name of Transformation Sequence not set")
-        .to_string()
 }

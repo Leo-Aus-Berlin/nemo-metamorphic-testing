@@ -1,0 +1,1074 @@
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] Beginning transformation mtf_CON_5500030
+                Oracle:     CON          Number of T: 39
+                Debug Mode: false          u64 Seed:    5500030
+                Number of generating transformations: 41
+                Internal Seed:          [76, 61, 113, 177, 147, 63, 186, 175, 248, 249, 68, 217, 46, 47, 150, 174, 57, 45, 168, 156, 30, 173, 203, 132, 248, 89, 220, 11, 126, 199, 178, 129]
+                Seed File: Currently not supported!
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] -------------- Reading Seed File: ------------
+21:07:59 [INFO] "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/wind-turbines/permissions.rls"
+21:07:59 [INFO] Renaming of rules complete
+21:07:59 [INFO] --------- Finished Reading Seed file ---------
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] -------- Beginning Program Generation --------
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] Removing old export statements
+21:07:59 [INFO] Beginning inverse_stratum and ancestry computation starting at node R_OUT
+21:07:59 [INFO] Ancestry and Inverse Stratum computation complete.
+21:07:59 [INFO] Constructed lite ADG
+21:07:59 [INFO] Generating Program...
+21:07:59 [INFO] 
+21:07:59 [INFO] 1 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_1
+21:07:59 [INFO] 2 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_2
+21:07:59 [INFO] 3 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_3
+21:07:59 [INFO] 4 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_4
+21:07:59 [INFO] 5 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_5
+21:07:59 [INFO] 6 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_6
+21:07:59 [INFO] 7 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_7
+21:07:59 [INFO] 8 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_8
+21:07:59 [INFO] 9 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_9
+21:07:59 [INFO] 10 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_10
+21:07:59 [INFO] 11 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_11
+21:07:59 [INFO] 12 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_12
+21:07:59 [INFO] 13 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_13
+21:07:59 [INFO] 14 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_14
+21:07:59 [INFO] 15 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_15
+21:07:59 [INFO] 16 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_16
+21:07:59 [INFO] 17 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_17
+21:07:59 [INFO] 18 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_18
+21:07:59 [INFO] 19 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_19
+21:07:59 [INFO] 20 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_20
+21:07:59 [INFO] 21 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_21
+21:07:59 [INFO] 22 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_22
+21:07:59 [INFO] 23 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_23
+21:07:59 [INFO] 24 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_24
+21:07:59 [INFO] 25 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_25
+21:07:59 [INFO] 26 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_26
+21:07:59 [INFO] 27 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_27
+21:07:59 [INFO] 28 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_28
+21:07:59 [INFO] 29 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_29
+21:07:59 [INFO] 30 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_30
+21:07:59 [INFO] 31 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_31
+21:07:59 [INFO] 32 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_32
+21:07:59 [INFO] 33 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_33
+21:07:59 [INFO] 34 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_34
+21:07:59 [INFO] 35 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_35
+21:07:59 [INFO] 36 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_36
+21:07:59 [INFO] 37 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_37
+21:07:59 [INFO] 38 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_38
+21:07:59 [INFO] 39 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_39
+21:07:59 [INFO] 40 / 40
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_40
+21:07:59 [INFO] 
+21:07:59 [INFO] Adding a new rule for each relation other than the seed relations
+21:07:59 [INFO] 
+21:07:59 [INFO] 1 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_OUT
+21:07:59 [INFO]   Assigned relation R_OUT the artiy 6
+21:07:59 [INFO]   Added new rule of name r_GEN_1
+21:07:59 [INFO]   R_OUT(?X_1, ?X_3, ?X_6, ?X_5, ?X_6, ?X_4) :- environmental_impact(?X_1), environmental_impact(?X_3), environmental_impact(?X_6), environmental_impact(?X_5), environmental_impact(?X_6), environmental_impact(?X_4) .
+21:07:59 [INFO] 2 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_1
+21:07:59 [INFO]   Assigned relation R_1 the artiy 6
+21:07:59 [INFO]   Added new rule of name r_GEN_2
+21:07:59 [INFO]   R_1(?X_5, ?X_6, ?X_3, ?X_1, ?X_2, ?X_6) :- coordinates_m(?X_5, ?X_6), coordinates_m(?X_3, ?X_1), coordinates_m(?X_2, ?X_6) .
+21:07:59 [INFO] 3 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_2
+21:07:59 [INFO]   Assigned relation R_2 the artiy 2
+21:07:59 [INFO]   Added new rule of name r_GEN_3
+21:07:59 [INFO]   R_2(?X_2, 60) :- distance(?X_2, 60) .
+21:07:59 [INFO] 4 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_3
+21:07:59 [INFO]   Assigned relation R_3 the artiy 2
+21:07:59 [INFO]   Assigned relation R_31 the artiy 2
+21:07:59 [INFO]   Added new rule of name r_GEN_4
+21:07:59 [INFO]   R_3(?X_2, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_31(?X_2, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>) .
+21:07:59 [INFO] 5 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_4
+21:07:59 [INFO]   Assigned relation R_4 the artiy 3
+21:07:59 [INFO]   Added new rule of name r_GEN_5
+21:07:59 [INFO]   R_4(?X_2, ?X_3, ?X_1) :- project_location(?X_2, ?X_3, ?X_1) .
+21:07:59 [INFO] 6 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_5
+21:07:59 [INFO]   Assigned relation R_5 the artiy 5
+21:07:59 [INFO]   Assigned relation R_18 the artiy 6
+21:07:59 [INFO]   Added new rule of name r_GEN_6
+21:07:59 [INFO]   R_5(?X_1, ?X_2, ?X_4, ?X_5, "50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_18(?X_1, 40, ?X_4, ?X_5, "50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2) .
+21:07:59 [INFO] 7 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_6
+21:07:59 [INFO]   Assigned relation R_6 the artiy 2
+21:07:59 [INFO]   Assigned relation R_27 the artiy 3
+21:07:59 [INFO]   Added new rule of name r_GEN_7
+21:07:59 [INFO]   R_6(?X_1, ?X_2) :- R_27(?X_2, ?X_2, ?X_1) .
+21:07:59 [INFO] 8 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_7
+21:07:59 [INFO]   Assigned relation R_7 the artiy 2
+21:07:59 [INFO]   Added new rule of name r_GEN_8
+21:07:59 [INFO]   R_7("Wind Turbine A", ?X_2) :- project_location_m("Wind Turbine A", ?X_2, "Wind Turbine A") .
+21:07:59 [INFO] 9 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_8
+21:07:59 [INFO]   Assigned relation R_8 the artiy 5
+21:07:59 [INFO]   Assigned relation R_35 the artiy 6
+21:07:59 [INFO]   Added new rule of name r_GEN_9
+21:07:59 [INFO]   R_8(?X_2, ?X_3, "Wind Turbine B", ?X_4, ?X_1) :- R_35(?X_2, ?X_3, ?X_2, ?X_4, ?X_1, "Wind Turbine B") .
+21:07:59 [INFO] 10 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_9
+21:07:59 [INFO]   Assigned relation R_9 the artiy 2
+21:07:59 [INFO]   Added new rule of name r_GEN_10
+21:07:59 [INFO]   R_9(?X_2, ?X_1) :- project_location_m(?X_2, "Wind Turbine C", ?X_1) .
+21:07:59 [INFO] 11 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_10
+21:07:59 [INFO]   Assigned relation R_10 the artiy 4
+21:07:59 [INFO]   Added new rule of name r_GEN_11
+21:07:59 [INFO]   R_10(?X_3, ?X_2, ?X_2, "Feldsperling") :- coordinates(?X_3, ?X_2), coordinates(?X_2, "Feldsperling") .
+21:07:59 [INFO] 12 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_11
+21:07:59 [INFO]   Assigned relation R_11 the artiy 3
+21:07:59 [INFO]   Added new rule of name r_GEN_12
+21:07:59 [INFO]   R_11("Wind Turbine B", ?X_3, ?X_1) :- R_10("Wind Turbine B", ?X_3, ?X_1, ?X_1) .
+21:07:59 [INFO] 13 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_12
+21:07:59 [INFO]   Assigned relation R_12 the artiy 4
+21:07:59 [INFO]   Assigned relation R_15 the artiy 6
+21:07:59 [INFO]   Added new rule of name r_GEN_13
+21:07:59 [INFO]   R_12(?X_2, ?X_1, ?X_3, ?X_2) :- R_15(?X_3, ?X_2, ?X_3, ?X_2, ?X_2, ?X_1) .
+21:07:59 [INFO] 14 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_13
+21:07:59 [INFO]   Assigned relation R_13 the artiy 1
+21:07:59 [INFO]   Assigned relation R_16 the artiy 3
+21:07:59 [INFO]   Added new rule of name r_GEN_14
+21:07:59 [INFO]   R_13(?X_1) :- R_16("Wind Turbine A", ?X_1, ?Y_1) .
+21:07:59 [INFO] 15 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_14
+21:07:59 [INFO]   Assigned relation R_14 the artiy 4
+21:07:59 [INFO]   Added new rule of name r_GEN_15
+21:07:59 [INFO]   R_14(?X_2, ?X_3, ?X_4, ?X_1) :- R_12(?X_2, ?X_3, ?X_4, ?X_1) .
+21:07:59 [INFO] 16 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_15
+21:07:59 [INFO]   Added new rule of name r_GEN_16
+21:07:59 [INFO]   R_15(?X_3, ?X_3, ?X_6, "Gartenschläfer", ?X_1, ?X_2) :- R_8(?X_3, "Rotmilan", ?Y_1, "Gartenschläfer", ?X_1), R_8(?X_2, ?X_3, ?X_6, ?X_2, ?Y_2) .
+21:07:59 [INFO] 17 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_16
+21:07:59 [INFO]   Added new rule of name r_GEN_17
+21:07:59 [INFO]   R_16("Rotmilan", ?X_3, ?X_2) :- endangered("Rotmilan"), endangered(?X_3), endangered(?X_2) .
+21:07:59 [INFO] 18 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_17
+21:07:59 [INFO]   Assigned relation R_17 the artiy 2
+21:07:59 [INFO]   Added new rule of name r_GEN_18
+21:07:59 [INFO]   R_17("Wind Turbine A", ?X_2) :- R_9("Wind Turbine A", ?X_2) .
+21:07:59 [INFO] 19 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_18
+21:07:59 [INFO]   Added new rule of name r_GEN_19
+21:07:59 [INFO]   R_18(?X_3, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_4, ?X_6, ?X_1, ?X_5) :- project_location_m(?X_3, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>, ?X_4), project_location_m(?X_6, ?X_1, ?X_5) .
+21:07:59 [INFO] 20 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_19
+21:07:59 [INFO]   Assigned relation R_19 the artiy 1
+21:07:59 [INFO]   Added new rule of name r_GEN_20
+21:07:59 [INFO]   R_19(?X_1) :- environmental_impact(?X_1) .
+21:07:59 [INFO] 21 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_20
+21:07:59 [INFO]   Assigned relation R_20 the artiy 3
+21:07:59 [INFO]   Added new rule of name r_GEN_21
+21:07:59 [INFO]   R_20(?X_3, ?X_1, "Wind Turbine C") :- R_14(?X_3, ?X_1, "Wind Turbine C", "Wind Turbine C") .
+21:07:59 [INFO] 22 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_21
+21:07:59 [INFO]   Assigned relation R_21 the artiy 3
+21:07:59 [INFO]   Assigned relation R_33 the artiy 4
+21:07:59 [INFO]   Added new rule of name r_GEN_22
+21:07:59 [INFO]   R_21("Wind Turbine C", ?X_3, ?X_1) :- R_33("Wind Turbine A", ?X_3, ?X_1, "Wind Turbine C") .
+21:07:59 [INFO] 23 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_22
+21:07:59 [INFO]   Assigned relation R_22 the artiy 1
+21:07:59 [INFO]   Added new rule of name r_GEN_23
+21:07:59 [INFO]   R_22("Wind Turbine C") :- R_16(?Y_1, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>, "Wind Turbine C") .
+21:07:59 [INFO] 24 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_23
+21:07:59 [INFO]   Assigned relation R_23 the artiy 2
+21:07:59 [INFO]   Added new rule of name r_GEN_24
+21:07:59 [INFO]   R_23(?X_2, ?X_1) :- R_16(?Y_1, ?X_1, ?X_2) .
+21:07:59 [INFO] 25 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_24
+21:07:59 [INFO]   Assigned relation R_24 the artiy 6
+21:07:59 [INFO]   Added new rule of name r_GEN_25
+21:07:59 [INFO]   R_24(?X_4, ?X_1, ?X_6, ?X_6, ?X_2, ?X_5) :- R_24(?X_4, ?X_1, ?X_6, ?X_6, ?X_2, ?X_5) .
+21:07:59 [INFO] 26 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_25
+21:07:59 [INFO]   Assigned relation R_25 the artiy 5
+21:07:59 [INFO]   Added new rule of name r_GEN_26
+21:07:59 [INFO]   R_25(?X_4, ?X_2, 60, ?X_5, ?X_1) :- coordinates(?X_4, ?X_2), coordinates(?X_2, ?X_5), coordinates(?X_1, 60) .
+21:07:59 [INFO] 27 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_26
+21:07:59 [INFO]   Assigned relation R_26 the artiy 2
+21:07:59 [INFO]   Added new rule of name r_GEN_27
+21:07:59 [INFO]   R_26("Wind Turbine B", ?X_1) :- endangered("Wind Turbine B"), endangered(?X_1) .
+21:07:59 [INFO] 28 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_27
+21:07:59 [INFO]   Added new rule of name r_GEN_28
+21:07:59 [INFO]   R_27(?X_1, ?X_2, ?X_2) :- R_24(?X_1, ?X_2, ?Y_1, ?X_2, ?X_2, ?X_1) .
+21:07:59 [INFO] 29 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_28
+21:07:59 [INFO]   Assigned relation R_28 the artiy 1
+21:07:59 [INFO]   Added new rule of name r_GEN_29
+21:07:59 [INFO]   R_28(?X_1) :- R_22(?X_1) .
+21:07:59 [INFO] 30 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_29
+21:07:59 [INFO]   Assigned relation R_29 the artiy 3
+21:07:59 [INFO]   Added new rule of name r_GEN_30
+21:07:59 [INFO]   R_29(?X_3, ?X_2, ?X_1) :- R_OUT(?X_1, ?X_2, ?X_3, ?Y_1, ?X_1, ?X_3) .
+21:07:59 [INFO] 31 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_30
+21:07:59 [INFO]   Assigned relation R_30 the artiy 6
+21:07:59 [INFO]   Added new rule of name r_GEN_31
+21:07:59 [INFO]   R_30(?X_4, ?X_5, ?X_1, ?X_2, ?X_5, ?X_3) :- R_27(?X_4, ?X_5, ?X_1), R_27(?X_2, ?X_5, ?X_3) .
+21:07:59 [INFO] 32 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_31
+21:07:59 [INFO]   Added new rule of name r_GEN_32
+21:07:59 [INFO]   R_31("Wind Turbine C", ?X_1) :- R_6("Wind Turbine C", ?X_1) .
+21:07:59 [INFO] 33 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_32
+21:07:59 [INFO]   Assigned relation R_32 the artiy 3
+21:07:59 [INFO]   Added new rule of name r_GEN_33
+21:07:59 [INFO]   R_32(?X_2, ?X_1, "Wind Turbine A") :- CIRC_EARTH(?X_2), CIRC_EARTH(?X_1), CIRC_EARTH("Wind Turbine A") .
+21:07:59 [INFO] 34 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_33
+21:07:59 [INFO]   Added new rule of name r_GEN_34
+21:07:59 [INFO]   R_33(?X_4, ?X_3, ?X_1, ?X_2) :- R_20(?X_4, ?X_3, ?X_3), R_20(?X_2, ?X_3, ?X_1) .
+21:07:59 [INFO] 35 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_34
+21:07:59 [INFO]   Assigned relation R_34 the artiy 1
+21:07:59 [INFO]   Added new rule of name r_GEN_35
+21:07:59 [INFO]   R_34(?X_1) :- R_21(?X_1, ?X_1, ?Y_1) .
+21:07:59 [INFO] 36 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_35
+21:07:59 [INFO]   Added new rule of name r_GEN_36
+21:07:59 [INFO]   R_35(?X_4, ?X_6, ?X_6, ?X_3, "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1) :- R_29(?X_4, ?X_6, ?X_6), R_29(?X_3, "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1) .
+21:07:59 [INFO] 37 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_36
+21:07:59 [INFO]   Assigned relation R_36 the artiy 4
+21:07:59 [INFO]   Added new rule of name r_GEN_37
+21:07:59 [INFO]   R_36("50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_4, ?X_2) :- R_14("50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_1, ?X_4, ?X_2) .
+21:07:59 [INFO] 38 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_37
+21:07:59 [INFO]   Assigned relation R_37 the artiy 1
+21:07:59 [INFO]   Added new rule of name r_GEN_38
+21:07:59 [INFO]   R_37("Wind Turbine C") :- project_reject("Wind Turbine C") .
+21:07:59 [INFO] 39 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_38
+21:07:59 [INFO]   Assigned relation R_38 the artiy 2
+21:07:59 [INFO]   Added new rule of name r_GEN_39
+21:07:59 [INFO]   R_38(?X_1, ?X_1) :- locations(?X_1, ?X_1, "Mauersegler") .
+21:07:59 [INFO] 40 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_39
+21:07:59 [INFO]   Assigned relation R_39 the artiy 6
+21:07:59 [INFO]   Added new rule of name r_GEN_40
+21:07:59 [INFO]   R_39(?X_1, "50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_3, ?X_5, ?X_6, ?X_4) :- endangered(?X_1), endangered("50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>), endangered(?X_3), endangered(?X_5), endangered(?X_6), endangered(?X_4) .
+21:07:59 [INFO] 41 / 41
+21:07:59 [INFO]   Generating new single body literal rule for R_40
+21:07:59 [INFO]   Assigned relation R_40 the artiy 5
+21:07:59 [INFO]   Added new rule of name r_GEN_41
+21:07:59 [INFO]   R_40(?X_4, ?X_1, ?X_2, ?X_3, "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>) :- R_34(?X_4), R_34(?X_1), R_34(?X_2), R_34(?X_3), R_34("13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>) .
+21:07:59 [INFO] 
+21:07:59 [INFO] Adding a outgoing relational edge for each relation other than R_OUT
+21:07:59 [INFO] 
+21:07:59 [INFO] 1 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from CIRC_EARTH for r_GEN_20
+21:07:59 [INFO]   Generated literal CIRC_EARTH(?Z_1) for rule r_GEN_20
+21:07:59 [INFO] 2 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from PI for r_GEN_36
+21:07:59 [INFO]   Generated literal PI(?Z_1) for rule r_GEN_36
+21:07:59 [INFO] 3 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from TRUE for r_GEN_23
+21:07:59 [INFO]   Generated literal TRUE("40075000"^^<http://www.w3.org/2001/XMLSchema#double>) for rule r_GEN_23
+21:07:59 [INFO] 4 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from closest_house for r_GEN_18
+21:07:59 [INFO]   Generated literal closest_house(?X_2, ?X_2) for rule r_GEN_18
+21:07:59 [INFO] 5 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from coordinates for r_GEN_8
+21:07:59 [INFO]   Generated literal coordinates(?Z_1, ?X_2) for rule r_GEN_8
+21:07:59 [INFO] 6 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from coordinates_m for r_GEN_4
+21:07:59 [INFO]   Generated literal ~coordinates_m(?X_2, ?X_2) for rule r_GEN_4
+21:07:59 [INFO] 7 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from distance for r_GEN_1
+21:07:59 [INFO]   Generated literal distance(?X_3, ?Z_4) for rule r_GEN_1
+21:07:59 [INFO] 8 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from endangered for r_GEN_25
+21:07:59 [INFO]   Generated literal endangered(?X_6) for rule r_GEN_25
+21:07:59 [INFO] 9 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from environmental_impact for r_GEN_35
+21:07:59 [INFO]   Generated literal environmental_impact(?X_1) for rule r_GEN_35
+21:07:59 [INFO] 10 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from locations for r_GEN_34
+21:07:59 [INFO]   Generated literal locations(?X_1, ?X_4, "Wind Turbine C") for rule r_GEN_34
+21:07:59 [INFO] 11 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from project for r_GEN_13
+21:07:59 [INFO]   Generated literal project(?X_2) for rule r_GEN_13
+21:07:59 [INFO] 12 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from project_approved for r_GEN_41
+21:07:59 [INFO]   Generated literal ~project_approved(?X_4) for rule r_GEN_41
+21:07:59 [INFO] 13 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from project_height_m for r_GEN_10
+21:07:59 [INFO]   Generated literal ~project_height_m("Wind Turbine A", ?X_2) for rule r_GEN_10
+21:07:59 [INFO] 14 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from project_location for r_GEN_41
+21:07:59 [INFO]   Generated literal project_location(?X_3, ?Z_1, ?X_4) for rule r_GEN_41
+21:07:59 [INFO] 15 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from project_location_m for r_GEN_40
+21:07:59 [INFO]   Generated literal project_location_m(?X_3, "Mauersegler", ?X_6) for rule r_GEN_40
+21:07:59 [INFO] 16 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from project_reject for r_GEN_35
+21:07:59 [INFO]   Generated literal project_reject(?X_1) for rule r_GEN_35
+21:07:59 [INFO] 17 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from project_species for r_GEN_30
+21:07:59 [INFO]   Generated literal ~project_species(?Y_1, ?X_2) for rule r_GEN_30
+21:07:59 [INFO] 18 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_1 for r_GEN_4
+21:07:59 [INFO]   Generated literal R_1(?Z_1, ?X_2, ?Z_2, "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?X_2) for rule r_GEN_4
+21:07:59 [INFO] 19 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_2 for r_GEN_30
+21:07:59 [INFO]   Generated literal R_2(?Y_1, ?X_3) for rule r_GEN_30
+21:07:59 [INFO] 20 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_3 for r_GEN_22
+21:07:59 [INFO]   Generated literal R_3(?Z_2, ?X_1) for rule r_GEN_22
+21:07:59 [INFO] 21 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_4 for r_GEN_26
+21:07:59 [INFO]   Generated literal R_4(?X_4, ?X_5, ?X_4) for rule r_GEN_26
+21:07:59 [INFO] 22 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_5 for r_GEN_13
+21:07:59 [INFO]   Generated literal R_5("Mauersegler", ?X_2, ?X_3, ?X_2, ?Z_3) for rule r_GEN_13
+21:07:59 [INFO] 23 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_6 for r_GEN_33
+21:07:59 [INFO]   Generated literal R_6("Wind Turbine C", ?X_2) for rule r_GEN_33
+21:07:59 [INFO] 24 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_7 for r_GEN_4
+21:07:59 [INFO]   Generated literal R_7(?X_2, ?Z_4) for rule r_GEN_4
+21:07:59 [INFO] 25 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_8 for r_GEN_3
+21:07:59 [INFO]   Generated literal R_8(?X_2, ?Z_1, ?X_2, "Rotmilan", ?X_2) for rule r_GEN_3
+21:07:59 [INFO] 26 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_9 for r_GEN_9
+21:07:59 [INFO]   Generated literal ~R_9(?X_4, ?X_2) for rule r_GEN_9
+21:07:59 [INFO] 27 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_10 for r_GEN_13
+21:07:59 [INFO]   Generated literal R_10(?X_3, ?X_2, ?X_3, ?X_3) for rule r_GEN_13
+21:07:59 [INFO] 28 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_11 for r_GEN_32
+21:07:59 [INFO]   Generated literal R_11(?X_1, ?X_1, "Wind Turbine A") for rule r_GEN_32
+21:07:59 [INFO] 29 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_12 for r_GEN_25
+21:07:59 [INFO]   Generated literal R_12(?Z_2, ?X_6, ?X_5, ?X_1) for rule r_GEN_25
+21:07:59 [INFO] 30 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_13 for r_GEN_34
+21:07:59 [INFO]   Generated literal R_13(?X_4) for rule r_GEN_34
+21:07:59 [INFO] 31 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_14 for r_GEN_36
+21:07:59 [INFO]   Generated literal R_14("Wind Turbine B", ?X_3, ?X_6, ?Z_3) for rule r_GEN_36
+21:07:59 [INFO] 32 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_15 for r_GEN_9
+21:07:59 [INFO]   Generated literal R_15(?X_1, ?Z_2, ?X_2, ?X_4, "Feldsperling", ?X_3) for rule r_GEN_9
+21:07:59 [INFO] 33 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_16 for r_GEN_30
+21:07:59 [INFO]   Generated literal ~R_16(?X_2, ?Y_1, ?X_3) for rule r_GEN_30
+21:07:59 [INFO] 34 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_17 for r_GEN_4
+21:07:59 [INFO]   Generated literal R_17(?X_2, ?X_2) for rule r_GEN_4
+21:07:59 [INFO] 35 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_18 for r_GEN_15
+21:07:59 [INFO]   Generated literal ~R_18(?X_2, "Wind Turbine A", ?X_3, ?X_4, ?X_3, ?X_2) for rule r_GEN_15
+21:07:59 [INFO] 36 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_19 for r_GEN_35
+21:07:59 [INFO]   Generated literal R_19(?Z_1) for rule r_GEN_35
+21:07:59 [INFO] 37 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_20 for r_GEN_2
+21:07:59 [INFO]   Generated literal R_20(?X_3, ?X_3, ?X_6) for rule r_GEN_2
+21:07:59 [INFO] 38 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_21 for r_GEN_24
+21:07:59 [INFO]   Generated literal R_21(?Z_1, ?X_2, ?X_1) for rule r_GEN_24
+21:07:59 [INFO] 39 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_22 for r_GEN_41
+21:07:59 [INFO]   Generated literal R_22(?X_3) for rule r_GEN_41
+21:07:59 [INFO] 40 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_23 for r_GEN_14
+21:07:59 [INFO]   Generated literal R_23(?X_1, "Wind Turbine A") for rule r_GEN_14
+21:07:59 [INFO] 41 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_24 for r_GEN_7
+21:07:59 [INFO]   Generated literal R_24("Mauersegler", ?X_1, ?X_2, ?X_1, ?X_2, ?Z_1) for rule r_GEN_7
+21:07:59 [INFO] 42 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_25 for r_GEN_39
+21:07:59 [INFO]   Generated literal R_25(?X_1, "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>, ?Z_2, ?X_1, ?X_1) for rule r_GEN_39
+21:07:59 [INFO] 43 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_26 for r_GEN_3
+21:07:59 [INFO]   Generated literal R_26(?X_2, ?X_2) for rule r_GEN_3
+21:07:59 [INFO] 44 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_27 for r_GEN_26
+21:07:59 [INFO]   Generated literal R_27(?X_5, ?X_1, ?X_1) for rule r_GEN_26
+21:07:59 [INFO] 45 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_28 for r_GEN_21
+21:07:59 [INFO]   Generated literal ~R_28(?X_1) for rule r_GEN_21
+21:07:59 [INFO] 46 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_29 for r_GEN_37
+21:07:59 [INFO]   Generated literal ~R_29(?X_2, "Wind Turbine A", ?X_1) for rule r_GEN_37
+21:07:59 [INFO] 47 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_30 for r_GEN_20
+21:07:59 [INFO]   Generated literal ~R_30("3.14159"^^<http://www.w3.org/2001/XMLSchema#double>, "Wind Turbine C", ?Z_1, ?Z_1, ?X_1, ?X_1) for rule r_GEN_20
+21:07:59 [INFO] 48 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_31 for r_GEN_5
+21:07:59 [INFO]   Generated literal ~R_31(?X_2, ?X_3) for rule r_GEN_5
+21:07:59 [INFO] 49 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_32 for r_GEN_13
+21:07:59 [INFO]   Generated literal R_32(?X_3, ?Z_3, ?X_3) for rule r_GEN_13
+21:07:59 [INFO] 50 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_33 for r_GEN_30
+21:07:59 [INFO]   Generated literal R_33(?X_3, ?X_2, ?Y_1, ?X_2) for rule r_GEN_30
+21:07:59 [INFO] 51 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_34 for r_GEN_35
+21:07:59 [INFO]   Generated literal R_34(?Z_4) for rule r_GEN_35
+21:07:59 [INFO] 52 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_35 for r_GEN_41
+21:07:59 [INFO]   Generated literal ~R_35(?X_4, ?X_2, ?X_3, ?X_4, ?X_3, ?X_4) for rule r_GEN_41
+21:07:59 [INFO] 53 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_36 for r_GEN_40
+21:07:59 [INFO]   Generated literal R_36(?X_3, ?X_6, ?X_4, ?X_4) for rule r_GEN_40
+21:07:59 [INFO] 54 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_37 for r_GEN_2
+21:07:59 [INFO]   Generated literal R_37(?X_6) for rule r_GEN_2
+21:07:59 [INFO] 55 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_38 for r_GEN_41
+21:07:59 [INFO]   Generated literal R_38(?X_1, ?X_4) for rule r_GEN_41
+21:07:59 [INFO] 56 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_39 for r_GEN_37
+21:07:59 [INFO]   Generated literal R_39(?X_4, ?Z_2, ?X_2, ?X_2, ?Z_3, ?X_4) for rule r_GEN_37
+21:07:59 [INFO] 57 / 57
+21:07:59 [INFO]   Adding outgoing relational edge from R_40 for r_GEN_41
+21:07:59 [INFO]   Generated literal R_40("Wind Turbine A", ?X_1, ?X_4, ?X_3, ?Z_9) for rule r_GEN_41
+21:07:59 [INFO] 
+21:07:59 [INFO] Adding gen. size facts
+21:07:59 [INFO] 
+21:07:59 [INFO] 1 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_7("Wind Turbine C", "addr").
+21:07:59 [INFO] 2 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_10("Wind Turbine A", "str_1", "true"^^<http://www.w3.org/2001/XMLSchema#boolean>, 60).
+21:07:59 [INFO] 3 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_23("str_1", "50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>).
+21:07:59 [INFO] 4 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_9("str_1", "Wind Turbine A").
+21:07:59 [INFO] 5 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_9(c_1, c_2).
+21:07:59 [INFO] 6 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_28("50.89816338631804"^^<http://www.w3.org/2001/XMLSchema#double>).
+21:07:59 [INFO] 7 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_5(c_2, "Wind Turbine B", "Wind Turbine A", "Wind Turbine B", c_3).
+21:07:59 [INFO] 8 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_18(c_4, c_5, 17438878420584430686, "Wind Turbine A", "50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>, "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>).
+21:07:59 [INFO] 9 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_28("str_2").
+21:07:59 [INFO] 10 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_32(c_6, "str_3", "Feldsperling").
+21:07:59 [INFO] 11 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_3(40, c_7).
+21:07:59 [INFO] 12 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_32(c_6, c_8, "3.14159"^^<http://www.w3.org/2001/XMLSchema#double>).
+21:07:59 [INFO] 13 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_32(17287643489897991313, "40075000"^^<http://www.w3.org/2001/XMLSchema#double>, "Wind Turbine A").
+21:07:59 [INFO] 14 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_2("str_4", "str_5").
+21:07:59 [INFO] 15 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_30("Wind Turbine C", 57697355465857640, 221557443309609746, "str_6", c_9, "Wind Turbine A").
+21:07:59 [INFO] 16 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_31(15773193700870243937, c_10).
+21:07:59 [INFO] 17 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_33(c_11, "addr", c_12, "str_1").
+21:07:59 [INFO] 18 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_18("Wind Turbine A", c_13, c_14, "str_7", c_7, "Rotmilan").
+21:07:59 [INFO] 19 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_22(60).
+21:07:59 [INFO] 20 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_31(c_7, "str_8").
+21:07:59 [INFO] 21 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_35(c_12, c_15, 15773193700870243937, 6810144325301898005, c_16, "str_5").
+21:07:59 [INFO] 22 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_8("str_9", c_8, c_17, c_18, c_11).
+21:07:59 [INFO] 23 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_19("50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>).
+21:07:59 [INFO] 24 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_36("str_10", "str_11", c_19, c_12).
+21:07:59 [INFO] 25 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_37(15857881724446917840).
+21:07:59 [INFO] 26 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_16(15857881724446917840, c_20, c_2).
+21:07:59 [INFO] 27 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_17(6160237132795370876, "13.69510396381167"^^<http://www.w3.org/2001/XMLSchema#double>).
+21:07:59 [INFO] 28 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_19(9495485500941037584).
+21:07:59 [INFO] 29 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_15("Feldsperling", "str_12", "Rotmilan", "Wind Turbine A", 1474778143056409346, c_21).
+21:07:59 [INFO] 30 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_14("str_13", c_22, "50.89312291453255"^^<http://www.w3.org/2001/XMLSchema#double>, c_23).
+21:07:59 [INFO] 31 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_27(c_8, 3728803925693602979, c_24).
+21:07:59 [INFO] 32 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_17(13500169243382825986, c_25).
+21:07:59 [INFO] 33 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_16(6160237132795370876, c_26, c_27).
+21:07:59 [INFO] 34 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_40(4072763517957579056, c_28, c_29, "Rotmilan", c_1).
+21:07:59 [INFO] 35 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_33(c_20, 4072763517957579056, c_30, c_22).
+21:07:59 [INFO] 36 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_12(c_31, "str_10", "Wind Turbine A", "str_3").
+21:07:59 [INFO] 37 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_1(c_32, 12211518930465037347, 6773096168513123965, c_33, c_25, 5697709733149754044).
+21:07:59 [INFO] 38 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_14(12211518930465037347, 57697355465857640, "Wind Turbine C", c_34).
+21:07:59 [INFO] 39 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_5("Gartenschläfer", "str_14", 60, c_35, 3153955968922870820).
+21:07:59 [INFO] 40 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_21(c_36, 6810144325301898005, 3153955968922870820).
+21:07:59 [INFO] 41 / 41
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_22("str_15").
+21:07:59 [INFO] 
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] ----------- Program Generation Done ----------
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] ----------- Generated ADG Summary: -----------
+21:07:59 [INFO] ADG Fact Nodes:                  41
+21:07:59 [INFO] ADG Relational Nodes:            58
+21:07:59 [INFO] ADG Fact Edges:                  41
+21:07:59 [INFO] ADG Relational Edges:            127
+21:07:59 [INFO] Number of inv. Strata:           3
+21:07:59 [INFO] 
+21:07:59 [INFO] Nodes with None Ancestry:        55
+21:07:59 [INFO] Nodes with Positive Ancestry:    3
+21:07:59 [INFO] Nodes with Negative Ancestry:    0
+21:07:59 [INFO] Nodes with Unknown Ancestry:     0
+21:07:59 [INFO] 
+21:07:59 [INFO] Next rule name would be:         r_CON_42
+21:07:59 [INFO] Next predicate name would be:    R_41
+21:07:59 [INFO] Next constant name would be:     c_37
+21:07:59 [INFO] Next string would be:            "str_16"
+21:07:59 [INFO] 
+21:07:59 [INFO] Output predicate:                R_OUT
+21:07:59 [INFO] Generated rule count:            41
+21:07:59 [INFO] Rule count:                      50
+21:07:59 [INFO] Average rel. arity:              2.8793103448275863
+21:07:59 [INFO] Arity calc. may be inaccurate if arity > f64
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] ------ Performed Gen. Transformations: -------
+21:07:59 [INFO]  #      Type
+21:07:59 [INFO]  41      Generate New Rule with Probably Single Lit
+21:07:59 [INFO]  57      Generating an Outgoing Relational Edge
+21:07:59 [INFO]  40      I     Add Relational Node
+21:07:59 [INFO]  41      II    Add Fact Node and Edge
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] Storing input ADG and input program
+21:07:59 [INFO] 
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] --------- Beginning Transformations ----------
+21:07:59 [INFO] --------  Oracle: CON    Number: 39
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 1 / 39
+21:07:59 [INFO]   III Add Relational edges - New Rule
+21:07:59 [INFO]   Added new rule of name r_CON_44
+21:07:59 [INFO]   R_39(?X_5, ?X_1, ?X_2, ?X_4, ?X_3, ?X_5) :- R_22(?X_5), R_22(?X_1), R_22(?X_2), R_22(?X_4), R_22(?X_3), R_22(?X_5) .
+21:07:59 [INFO] 2 / 39
+21:07:59 [INFO]   III Add Relational edges - New Rule
+21:07:59 [INFO]   Added new rule of name r_CON_45
+21:07:59 [INFO]   R_31(?X_1, ?X_2) :- project(?X_1), locations("13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2, ?Y_1), project(?X_1), R_8("13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, ?Y_1, ?X_2, "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, ?X_2), ~closest_house("13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>, "13.688126881341304"^^<http://www.w3.org/2001/XMLSchema#double>) .
+21:07:59 [INFO] 3 / 39
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_43
+21:07:59 [INFO] 4 / 39
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_1("Wind Turbine C", "Feldsperling", 8274156268493232174, c_25, 12442368810130683131, c_39).
+21:07:59 [INFO] 5 / 39
+21:07:59 [INFO]   IX Remove Fact Node and Edge
+21:07:59 [INFO]   Removed fact R_5(c_2, "Wind Turbine B", "Wind Turbine A", "Wind Turbine B", c_3). from the program
+21:07:59 [INFO]   Removed fact R_5(c_2, "Wind Turbine B", "Wind Turbine A", "Wind Turbine B", c_3). from the ADG.
+21:07:59 [INFO] 6 / 39
+21:07:59 [INFO]   IV Add Relational Edge - New Literal
+21:07:59 [INFO]   Assigned relation R_43 the artiy 6
+21:07:59 [INFO]   Generated literal R_43(c_28, ?X_1, ?Z_1, ?X_1, ?X_1, c_6) for rule r_GEN_29
+21:07:59 [INFO] 7 / 39
+21:07:59 [INFO]   VII Modify Rule - Add Equality
+21:07:59 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+21:07:59 [INFO] 8 / 39
+21:07:59 [INFO]   Xa Remove Relational Node - Rule Variant
+21:07:59 [INFO]   Removing relational node R_30
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_31
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_20
+21:07:59 [INFO]   Removing at least 5 relational edges.
+21:07:59 [INFO] 9 / 39
+21:07:59 [INFO]   V Remove Relational Edges - Whole Rule
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_40
+21:07:59 [INFO] 10 / 39
+21:07:59 [INFO]   XI Add Contradictory Rule
+21:07:59 [INFO]   Added new contradictory rule of name r_CON_46
+21:07:59 [INFO]   R_9(?X_2, "str_5") :- R_7(?X_2, "str_5"), ~R_7(?X_2, "str_5") .
+21:07:59 [INFO] 11 / 39
+21:07:59 [INFO]   IV Add Relational Edge - New Literal
+21:07:59 [INFO]   Generated literal ~coordinates(?Y_1, ?Y_1) for rule r_GEN_23
+21:07:59 [INFO] 12 / 39
+21:07:59 [INFO]   III Add Relational edges - New Rule
+21:07:59 [INFO]   Added new rule of name r_CON_47
+21:07:59 [INFO]   R_35(?X_4, ?X_6, ?X_5, ?X_2, ?X_3, "Wind Turbine A") :- R_15(?Y_1, ?X_6, ?X_5, ?X_2, ?X_3, "Wind Turbine A"), R_2(?X_4, ?X_4), ~R_7(?X_4, ?X_3), ~PI(?X_5), ~R_16(?X_3, ?Y_1, ?X_2) .
+21:07:59 [INFO] 13 / 39
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_11(c_40, 60, 938952070539380018).
+21:07:59 [INFO] 14 / 39
+21:07:59 [INFO]   XI Add Contradictory Rule
+21:07:59 [INFO]   Added new contradictory rule of name r_CON_48
+21:07:59 [INFO]   R_19(?X_1) :- R_32(?X_1, "str_11", "str_11"), ~R_32(?X_1, "str_11", "str_11") .
+21:07:59 [INFO] 15 / 39
+21:07:59 [INFO]   III Add Relational edges - New Rule
+21:07:59 [INFO]   Added new rule of name r_CON_49
+21:07:59 [INFO]   R_7(?X_1, ?X_1) :- project_location_m(?X_1, 13500169243382825986, ?X_1), PI(?X_1), R_16(?X_1, ?X_1, ?X_1), R_37(13500169243382825986), endangered(?X_1), project_reject(?X_1), ~closest_house(?X_1, ?X_1), ~PI(13500169243382825986), ~environmental_impact(?X_1) .
+21:07:59 [INFO] 16 / 39
+21:07:59 [INFO]   VIII Modify Rule - Remove Equality
+21:07:59 [INFO]   Replaced a random number of var X_4 with var X_4_new_1 in the rule r_CON_47
+21:07:59 [INFO] 17 / 39
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_23(17438873366109670026, "str_18").
+21:07:59 [INFO] 18 / 39
+21:07:59 [INFO]   IX Remove Fact Node and Edge
+21:07:59 [INFO]   Removed fact R_27(c_8, 3728803925693602979, c_24). from the program
+21:07:59 [INFO]   Removed fact R_27(c_8, 3728803925693602979, c_24). from the ADG.
+21:07:59 [INFO] 19 / 39
+21:07:59 [INFO]   VIII Modify Rule - Remove Equality
+21:07:59 [INFO]   Replaced a random number of var X_2 with var X_2_new_1 in the rule r_GEN_26
+21:07:59 [INFO] 20 / 39
+21:07:59 [INFO]   IX Remove Fact Node and Edge
+21:07:59 [INFO]   Removed fact R_33(c_11, "addr", c_12, "str_1"). from the program
+21:07:59 [INFO]   Removed fact R_33(c_11, "addr", c_12, "str_1"). from the ADG.
+21:07:59 [INFO] 21 / 39
+21:07:59 [INFO]   VII Modify Rule - Add Equality
+21:07:59 [INFO]   Aborting the introduction of an equality - rule has too few variables!
+21:07:59 [INFO] 22 / 39
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_44
+21:07:59 [INFO] 23 / 39
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_45
+21:07:59 [INFO] 24 / 39
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_31(c_41, "Wind Turbine B").
+21:07:59 [INFO] 25 / 39
+21:07:59 [INFO]   IX Remove Fact Node and Edge
+21:07:59 [INFO]   Removed fact R_31(c_7, "str_8"). from the program
+21:07:59 [INFO]   Removed fact R_31(c_7, "str_8"). from the ADG.
+21:07:59 [INFO] 26 / 39
+21:07:59 [INFO]   XI Add Contradictory Rule
+21:07:59 [INFO]   Added new contradictory rule of name r_CON_50
+21:07:59 [INFO]   R_9(c_17, ?X_1) :- R_10(c_17, "str_7", ?Y_1, ?X_1), ~R_10(c_17, "str_7", ?Y_1, ?X_1) .
+21:07:59 [INFO] 27 / 39
+21:07:59 [INFO]   IV Add Relational Edge - New Literal
+21:07:59 [INFO]   Generated literal endangered(?X_4) for rule r_GEN_34
+21:07:59 [INFO] 28 / 39
+21:07:59 [INFO]   II Add Fact Node and Edge
+21:07:59 [INFO]   Added new fact R_23(c_42, "str_19").
+21:07:59 [INFO] 29 / 39
+21:07:59 [INFO]   IV Add Relational Edge - New Literal
+21:07:59 [INFO]   Generated literal ~PI(?X_2) for rule r_GEN_10
+21:07:59 [INFO] 30 / 39
+21:07:59 [INFO]   IV Add Relational Edge - New Literal
+21:07:59 [INFO]   Generated literal ~R_9(?X_3, ?X_1) for rule r_GEN_21
+21:07:59 [INFO] 31 / 39
+21:07:59 [INFO]   IV Add Relational Edge - New Literal
+21:07:59 [INFO]   Generated literal R_13(?X_1) for rule r_GEN_27
+21:07:59 [INFO] 32 / 39
+21:07:59 [INFO]   I Add Relational Node
+21:07:59 [INFO]   Added new relation R_46
+21:07:59 [INFO] 33 / 39
+21:07:59 [INFO]   IX Remove Fact Node and Edge
+21:07:59 [INFO]   Removed fact R_21(c_36, 6810144325301898005, 3153955968922870820). from the program
+21:07:59 [INFO]   Removed fact R_21(c_36, 6810144325301898005, 3153955968922870820). from the ADG.
+21:07:59 [INFO] 34 / 39
+21:07:59 [INFO]   VII Modify Rule - Add Equality
+21:07:59 [INFO]   Replaced var ?X_1 with var ?X_2 in the rule r_GEN_33
+21:07:59 [INFO] 35 / 39
+21:07:59 [INFO]   Xa Remove Relational Node - Rule Variant
+21:07:59 [INFO]   Removing relational node R_12
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_25
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_15
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_13
+21:07:59 [INFO]   Removing at least 10 relational edges.
+21:07:59 [INFO] 36 / 39
+21:07:59 [INFO]   III Add Relational edges - New Rule
+21:07:59 [INFO]   Added new rule of name r_CON_51
+21:07:59 [INFO]   R_32(?X_3, ?X_2, ?X_1) :- R_9(?X_3, ?X_2), R_9("Mauersegler", ?X_1), ~R_36("Mauersegler", ?X_3, ?X_3, ?X_2), ~R_43(?X_3, ?X_1, ?X_3, ?X_2, ?X_3, "Mauersegler"), ~coordinates_m("Mauersegler", ?X_2), ~R_2("Mauersegler", ?X_3) .
+21:07:59 [INFO] 37 / 39
+21:07:59 [INFO]   V Remove Relational Edges - Whole Rule
+21:07:59 [INFO]   Removing the Rule of the name r_CON_47
+21:07:59 [INFO] 38 / 39
+21:07:59 [INFO]   Xa Remove Relational Node - Rule Variant
+21:07:59 [INFO]   Removing relational node R_6
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_32
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_7
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_33
+21:07:59 [INFO]   Removing at least 8 relational edges.
+21:07:59 [INFO] 39 / 39
+21:07:59 [INFO]   Xa Remove Relational Node - Rule Variant
+21:07:59 [INFO]   Removing relational node R_31
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_4
+21:07:59 [INFO]   Removing the Rule of the name r_GEN_5
+21:07:59 [INFO]   Removing the Rule of the name r_CON_45
+21:07:59 [INFO]   Removing at least 12 relational edges.
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] ------------ Transformations Done ------------
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO]  Ressources required: 
+                data/endangered.csv
+                data/locations.csv
+                
+21:07:59 [INFO] ---------- Transformed ADG Summary: ----------
+21:07:59 [INFO] ADG Fact Nodes:                  37
+21:07:59 [INFO] ADG Relational Nodes:            58
+21:07:59 [INFO] ADG Fact Edges:                  37
+21:07:59 [INFO] ADG Relational Edges:            122
+21:07:59 [INFO] Number of inv. Strata:           6
+21:07:59 [INFO] 
+21:07:59 [INFO] Nodes with None Ancestry:        52
+21:07:59 [INFO] Nodes with Positive Ancestry:    3
+21:07:59 [INFO] Nodes with Negative Ancestry:    0
+21:07:59 [INFO] Nodes with Unknown Ancestry:     0
+21:07:59 [INFO] 
+21:07:59 [INFO] Next rule name would be:         r_CON_52
+21:07:59 [INFO] Next predicate name would be:    R_47
+21:07:59 [INFO] Next constant name would be:     c_43
+21:07:59 [INFO] Next string would be:            "str_20"
+21:07:59 [INFO] 
+21:07:59 [INFO] Output predicate:                R_OUT
+21:07:59 [INFO] Rule count:                      45
+21:07:59 [INFO] Average rel. arity:              2.9482758620689653
+21:07:59 [INFO] Arity calc. may be inaccurate if arity > f64
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] --------- Performed Transformations: ---------
+21:07:59 [INFO]  #      Type
+21:07:59 [INFO]  6      Failed Transformation Attempts
+21:07:59 [INFO]  4      I     Add Relational Node
+21:07:59 [INFO]  5      II    Add Fact Node and Edge
+21:07:59 [INFO]  5      III   Add Relational edges - New Rule
+21:07:59 [INFO]  6      IV    Add Relational Edge - New Literal
+21:07:59 [INFO]  5      IX    Remove Fact Node and Edge
+21:07:59 [INFO]  2      V     Remove Relational Edges - Whole Rule
+21:07:59 [INFO]  0      VI    Remove Relational Edge - Single Literal
+21:07:59 [INFO]  3      VII   Modify Rule - Add Equality
+21:07:59 [INFO]  2      VIII  Modify Rule - Remove Equality
+21:07:59 [INFO]  3      XI   Add Contradictory Rule
+21:07:59 [INFO]  4      Xa     Remove Relational Node Rule Variant - None anc only
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] Writing output ADG and file.
+21:07:59 [INFO] 
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] -- Beginning Nemo Execution - Input Program --
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] <<< STEP 1: APPLYING RULE 0 coordinates(?longitude, ?latitude) :- locations(?longitude, ?latitude, ?tag), TRUE(?_BODY_1), Equal(?_BODY_1, StringContains(?tag, "addr")) >>>
+21:07:59 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Double, Double, Skip, Skip, Skip, Skip, Skip, Skip, Skip, Skip, Skip, Skip, String]) }
+21:07:59 [INFO] Starting data import
+21:07:59 [INFO] Finished import: processed 782 lines (dropped 1)
+21:07:59 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Boolean(BooleanDataValue(true)))] }
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 122 entries (9140)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table coordinates (1) Permutation { idx_to_val: [], val_to_idx: [] } with 122 entries (9188)
+21:07:59 [INFO] Rule duration: 5 ms
+21:07:59 [INFO] <<< STEP 2: APPLYING RULE 0 coordinates(?longitude, ?latitude) :- locations(?longitude, ?latitude, ?tag), TRUE(?_BODY_1), Equal(?_BODY_1, StringContains(?tag, "addr")) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 3: APPLYING RULE 1 coordinates_m(?Xm, ?Ym) :- coordinates(?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), Equal(?Xm, NumericDivision(NumericProduct(NumericProduct(?longitude, ?earth), NumericCosine(NumericProduct(NumericDivision(?latitude, "180"^^<http://www.w3.org/2001/XMLSchema#double>), ?PI))), "360"^^<http://www.w3.org/2001/XMLSchema#double>)), Equal(?Ym, NumericProduct(?latitude, NumericDivision(?earth, "360"^^<http://www.w3.org/2001/XMLSchema#double>))) >>>
+21:07:59 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Double(DoubleDataValue(3.14159)))] }
+21:07:59 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Double(DoubleDataValue(40075000.0)))] }
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 122 entries (9140)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table coordinates_m (3) Permutation { idx_to_val: [], val_to_idx: [] } with 122 entries (9188)
+21:07:59 [INFO] Rule duration: 1 ms
+21:07:59 [INFO] <<< STEP 4: APPLYING RULE 1 coordinates_m(?Xm, ?Ym) :- coordinates(?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), Equal(?Xm, NumericDivision(NumericProduct(NumericProduct(?longitude, ?earth), NumericCosine(NumericProduct(NumericDivision(?latitude, "180"^^<http://www.w3.org/2001/XMLSchema#double>), ?PI))), "360"^^<http://www.w3.org/2001/XMLSchema#double>)), Equal(?Ym, NumericProduct(?latitude, NumericDivision(?earth, "360"^^<http://www.w3.org/2001/XMLSchema#double>))) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 5: APPLYING RULE 2 project_location_m(?project, ?Xm, ?Ym) :- project_location(?project, ?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), Equal(?Xm, NumericDivision(NumericProduct(NumericProduct(?longitude, ?earth), NumericCosine(NumericProduct(NumericDivision(?latitude, "180"^^<http://www.w3.org/2001/XMLSchema#double>), ?PI))), "360"^^<http://www.w3.org/2001/XMLSchema#double>)), Equal(?Ym, NumericProduct(?latitude, NumericDivision(?earth, "360"^^<http://www.w3.org/2001/XMLSchema#double>))) >>>
+21:07:59 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("Wind Turbine A"))), AnyDataValue(Double(DoubleDataValue(13.69510396381167))), AnyDataValue(Double(DoubleDataValue(50.89312291453255))), AnyDataValue(PlainString(StringDataValue("Wind Turbine B"))), AnyDataValue(Double(DoubleDataValue(13.704927907097524))), AnyDataValue(Double(DoubleDataValue(50.89816338631804))), AnyDataValue(PlainString(StringDataValue("Wind Turbine C"))), AnyDataValue(Double(DoubleDataValue(13.688126881341304))), AnyDataValue(Double(DoubleDataValue(50.90297432498729)))] }
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 3 entries (10548)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table project_location_m (5) Permutation { idx_to_val: [], val_to_idx: [] } with 3 entries (10596)
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 6: APPLYING RULE 2 project_location_m(?project, ?Xm, ?Ym) :- project_location(?project, ?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), Equal(?Xm, NumericDivision(NumericProduct(NumericProduct(?longitude, ?earth), NumericCosine(NumericProduct(NumericDivision(?latitude, "180"^^<http://www.w3.org/2001/XMLSchema#double>), ?PI))), "360"^^<http://www.w3.org/2001/XMLSchema#double>)), Equal(?Ym, NumericProduct(?latitude, NumericDivision(?earth, "360"^^<http://www.w3.org/2001/XMLSchema#double>))) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 7: APPLYING RULE 3 environmental_impact(?project) :- project_height_m(?project, ?height), NumericGreaterthaneq(?height, 50) >>>
+21:07:59 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(PlainString(StringDataValue("Wind Turbine A"))), AnyDataValue(Long(LongDataValue(60))), AnyDataValue(PlainString(StringDataValue("Wind Turbine B"))), AnyDataValue(Long(LongDataValue(40))), AnyDataValue(PlainString(StringDataValue("Wind Turbine C"))), AnyDataValue(Long(LongDataValue(60)))] }
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 2 entries (3408)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table environmental_impact (7) Permutation { idx_to_val: [], val_to_idx: [] } with 2 entries (3456)
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 8: APPLYING RULE 3 environmental_impact(?project) :- project_height_m(?project, ?height), NumericGreaterthaneq(?height, 50) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 9: APPLYING RULE 4 distance(?project, ?distance) :- project_location_m(?project, ?Xp, ?Yp), coordinates_m(?Xr, ?Yr), Equal(?distance, NumericSquareroot(NumericSum(NumericPower(NumericSubtraction(?Xp, ?Xr), "2"^^<http://www.w3.org/2001/XMLSchema#double>), NumericPower(NumericSubtraction(?Yp, ?Yr), "2"^^<http://www.w3.org/2001/XMLSchema#double>)))) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 366 entries (9884)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table distance (9) Permutation { idx_to_val: [], val_to_idx: [] } with 366 entries (9932)
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 10: APPLYING RULE 4 distance(?project, ?distance) :- project_location_m(?project, ?Xp, ?Yp), coordinates_m(?Xr, ?Yr), Equal(?distance, NumericSquareroot(NumericSum(NumericPower(NumericSubtraction(?Xp, ?Xr), "2"^^<http://www.w3.org/2001/XMLSchema#double>), NumericPower(NumericSubtraction(?Yp, ?Yr), "2"^^<http://www.w3.org/2001/XMLSchema#double>)))) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 11: APPLYING RULE 5 R_OUT(?X_1, ?X_3, ?X_6, ?X_5, ?X_6, ?X_4) :- environmental_impact(?X_1), environmental_impact(?X_3), environmental_impact(?X_6), environmental_impact(?X_5), environmental_impact(?X_6), environmental_impact(?X_4), distance(?X_3, ?Z_4) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 32 entries (18688)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table R_OUT (11) Permutation { idx_to_val: [], val_to_idx: [] } with 32 entries (22968)
+21:07:59 [INFO] Rule duration: 3 ms
+21:07:59 [INFO] <<< STEP 12: APPLYING RULE 5 R_OUT(?X_1, ?X_3, ?X_6, ?X_5, ?X_6, ?X_4) :- environmental_impact(?X_1), environmental_impact(?X_3), environmental_impact(?X_6), environmental_impact(?X_5), environmental_impact(?X_6), environmental_impact(?X_4), distance(?X_3, ?Z_4) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] Execution step: Combining Tables
+21:07:59 [INFO] Saved permanent table R_OUT (0-12) Permutation { idx_to_val: [], val_to_idx: [] } with 32 entries (22968)
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] --- Finished Nemo Execution - Input Program --
+21:07:59 [INFO] Output size: 32
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] Beginning Nemo Execution - Transformed Program
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] <<< STEP 1: APPLYING RULE 0 coordinates(?longitude, ?latitude) :- locations(?longitude, ?latitude, ?tag), TRUE(?_BODY_1), Equal(?_BODY_1, StringContains(?tag, "addr")) >>>
+21:07:59 [INFO] Loading source DsvReader { read: "<unspecified std::io::Read>", delimiter: 44, escape: None, value formats: DsvValueFormats([Double, Double, Skip, Skip, Skip, Skip, Skip, Skip, Skip, Skip, Skip, Skip, String]) }
+21:07:59 [INFO] Starting data import
+21:07:59 [INFO] Finished import: processed 782 lines (dropped 1)
+21:07:59 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Boolean(BooleanDataValue(true)))] }
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 122 entries (9140)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table coordinates (1) Permutation { idx_to_val: [], val_to_idx: [] } with 122 entries (9188)
+21:07:59 [INFO] Rule duration: 4 ms
+21:07:59 [INFO] <<< STEP 2: APPLYING RULE 0 coordinates(?longitude, ?latitude) :- locations(?longitude, ?latitude, ?tag), TRUE(?_BODY_1), Equal(?_BODY_1, StringContains(?tag, "addr")) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 3: APPLYING RULE 1 coordinates_m(?Xm, ?Ym) :- coordinates(?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), Equal(?Xm, NumericDivision(NumericProduct(NumericProduct(?longitude, ?earth), NumericCosine(NumericProduct(NumericDivision(?latitude, "180"^^<http://www.w3.org/2001/XMLSchema#double>), ?PI))), "360"^^<http://www.w3.org/2001/XMLSchema#double>)), Equal(?Ym, NumericProduct(?latitude, NumericDivision(?earth, "360"^^<http://www.w3.org/2001/XMLSchema#double>))) >>>
+21:07:59 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Double(DoubleDataValue(3.14159)))] }
+21:07:59 [INFO] Loading source SimpleTable { arity: 1, data: [AnyDataValue(Double(DoubleDataValue(40075000.0)))] }
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 122 entries (9140)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table coordinates_m (3) Permutation { idx_to_val: [], val_to_idx: [] } with 122 entries (9188)
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 4: APPLYING RULE 1 coordinates_m(?Xm, ?Ym) :- coordinates(?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), Equal(?Xm, NumericDivision(NumericProduct(NumericProduct(?longitude, ?earth), NumericCosine(NumericProduct(NumericDivision(?latitude, "180"^^<http://www.w3.org/2001/XMLSchema#double>), ?PI))), "360"^^<http://www.w3.org/2001/XMLSchema#double>)), Equal(?Ym, NumericProduct(?latitude, NumericDivision(?earth, "360"^^<http://www.w3.org/2001/XMLSchema#double>))) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 5: APPLYING RULE 2 project_location_m(?project, ?Xm, ?Ym) :- project_location(?project, ?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), Equal(?Xm, NumericDivision(NumericProduct(NumericProduct(?longitude, ?earth), NumericCosine(NumericProduct(NumericDivision(?latitude, "180"^^<http://www.w3.org/2001/XMLSchema#double>), ?PI))), "360"^^<http://www.w3.org/2001/XMLSchema#double>)), Equal(?Ym, NumericProduct(?latitude, NumericDivision(?earth, "360"^^<http://www.w3.org/2001/XMLSchema#double>))) >>>
+21:07:59 [INFO] Loading source SimpleTable { arity: 3, data: [AnyDataValue(PlainString(StringDataValue("Wind Turbine A"))), AnyDataValue(Double(DoubleDataValue(13.69510396381167))), AnyDataValue(Double(DoubleDataValue(50.89312291453255))), AnyDataValue(PlainString(StringDataValue("Wind Turbine B"))), AnyDataValue(Double(DoubleDataValue(13.704927907097524))), AnyDataValue(Double(DoubleDataValue(50.89816338631804))), AnyDataValue(PlainString(StringDataValue("Wind Turbine C"))), AnyDataValue(Double(DoubleDataValue(13.688126881341304))), AnyDataValue(Double(DoubleDataValue(50.90297432498729)))] }
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 3 entries (10548)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table project_location_m (5) Permutation { idx_to_val: [], val_to_idx: [] } with 3 entries (10596)
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 6: APPLYING RULE 2 project_location_m(?project, ?Xm, ?Ym) :- project_location(?project, ?longitude, ?latitude), PI(?PI), CIRC_EARTH(?earth), Equal(?Xm, NumericDivision(NumericProduct(NumericProduct(?longitude, ?earth), NumericCosine(NumericProduct(NumericDivision(?latitude, "180"^^<http://www.w3.org/2001/XMLSchema#double>), ?PI))), "360"^^<http://www.w3.org/2001/XMLSchema#double>)), Equal(?Ym, NumericProduct(?latitude, NumericDivision(?earth, "360"^^<http://www.w3.org/2001/XMLSchema#double>))) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 7: APPLYING RULE 3 environmental_impact(?project) :- project_height_m(?project, ?height), NumericGreaterthaneq(?height, 50) >>>
+21:07:59 [INFO] Loading source SimpleTable { arity: 2, data: [AnyDataValue(PlainString(StringDataValue("Wind Turbine A"))), AnyDataValue(Long(LongDataValue(60))), AnyDataValue(PlainString(StringDataValue("Wind Turbine B"))), AnyDataValue(Long(LongDataValue(40))), AnyDataValue(PlainString(StringDataValue("Wind Turbine C"))), AnyDataValue(Long(LongDataValue(60)))] }
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 2 entries (3408)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table environmental_impact (7) Permutation { idx_to_val: [], val_to_idx: [] } with 2 entries (3456)
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 8: APPLYING RULE 3 environmental_impact(?project) :- project_height_m(?project, ?height), NumericGreaterthaneq(?height, 50) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 9: APPLYING RULE 4 distance(?project, ?distance) :- project_location_m(?project, ?Xp, ?Yp), coordinates_m(?Xr, ?Yr), Equal(?distance, NumericSquareroot(NumericSum(NumericPower(NumericSubtraction(?Xp, ?Xr), "2"^^<http://www.w3.org/2001/XMLSchema#double>), NumericPower(NumericSubtraction(?Yp, ?Yr), "2"^^<http://www.w3.org/2001/XMLSchema#double>)))) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 366 entries (9884)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table distance (9) Permutation { idx_to_val: [], val_to_idx: [] } with 366 entries (9932)
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 10: APPLYING RULE 4 distance(?project, ?distance) :- project_location_m(?project, ?Xp, ?Yp), coordinates_m(?Xr, ?Yr), Equal(?distance, NumericSquareroot(NumericSum(NumericPower(NumericSubtraction(?Xp, ?Xr), "2"^^<http://www.w3.org/2001/XMLSchema#double>), NumericPower(NumericSubtraction(?Yp, ?Yr), "2"^^<http://www.w3.org/2001/XMLSchema#double>)))) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] <<< STEP 11: APPLYING RULE 5 R_OUT(?X_1, ?X_3, ?X_6, ?X_5, ?X_6, ?X_4) :- environmental_impact(?X_1), environmental_impact(?X_3), environmental_impact(?X_6), environmental_impact(?X_5), environmental_impact(?X_6), environmental_impact(?X_4), distance(?X_3, ?Z_4) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Saved temporary table: 32 entries (18688)
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Saved permanent table R_OUT (11) Permutation { idx_to_val: [], val_to_idx: [] } with 32 entries (22968)
+21:07:59 [INFO] Rule duration: 2 ms
+21:07:59 [INFO] <<< STEP 12: APPLYING RULE 5 R_OUT(?X_1, ?X_3, ?X_6, ?X_5, ?X_6, ?X_4) :- environmental_impact(?X_1), environmental_impact(?X_3), environmental_impact(?X_6), environmental_impact(?X_5), environmental_impact(?X_6), environmental_impact(?X_4), distance(?X_3, ?Z_4) >>>
+21:07:59 [INFO] Execution step: Body
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Execution step: Duplicate Elimination (Datalog)
+21:07:59 [INFO] Trie does not contain any elements
+21:07:59 [INFO] Rule duration: 0 ms
+21:07:59 [INFO] Execution step: Combining Tables
+21:07:59 [INFO] Saved permanent table R_OUT (0-12) Permutation { idx_to_val: [], val_to_idx: [] } with 32 entries (22968)
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO]  Finished Nemo Execution - Transformed Program
+21:07:59 [INFO] Output size: 32
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] 
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] ------------ Asserting Oracle CON ------------
+21:07:59 [INFO] ----------------------------------------------
+21:07:59 [INFO] All good, output has contracted
+21:07:59 [INFO] old_dir "/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/benchmark_500k_r"
