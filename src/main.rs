@@ -81,7 +81,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -t --timeout "Timeout our nemo computations after how many minutes. Default 30mins."
+                    -o --timeout "Timeout our nemo computations after how many minutes. Default 30mins."
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
