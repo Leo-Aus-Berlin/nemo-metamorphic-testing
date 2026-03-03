@@ -5,3 +5,6 @@
 /eg_benchmark/**
 !/eg_benchmark/example_script.sh
 !/eg_benchmark/example_script_log.log
+*.log
+*.csv
+/benchmark_500k_r
