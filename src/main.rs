@@ -24,7 +24,7 @@ use nemo::{
 use simplelog::*;
 use tokio::time::timeout;
 
-mod transformations;
+pub mod transformations;
 
 use crate::transformations::{
     add_fact_node_and_edge::AddFactNodeAndEdge,
@@ -81,7 +81,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -o --timeout "Timeout our nemo computations after how many minutes. Default 30mins."
+                    -o --timeout <MINS> "Timeout our nemo computations after how many minutes. Default 30mins."
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
@@ -338,37 +338,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap();
     }
 
-    // We do not have a progress bar
-    /* let bar = ProgressBar::new(u64::from(
-        *(num_transformations
-            .get()
-            .expect("Number of transformations not set")),
-    )); */
-    // Begin transformation info
-    info!("----------------------------------------------");
-    info!(
-        "Beginning transformation {}
-                Oracle:     {}          Number of T: {}
-                Debug Mode: {}          u64 Seed:    {}
-                Number of generating transformations: {}
-                Internal Seed:          {:?}
-                Seed File: Currently not supported!",
-        transformation_name,
-        transformation_types,
-        num_transformations,
-        DEBUG_MODE.get().expect("Debug Mode not set"),
-        match seed {
-            None => String::from("None provided"),
-            Some(s) => s.to_string(),
-        },
-        gen_size.to_string(),
-        rng.get_seed(),
-        /* TODO: Seed file */
-    );
-    info!("----------------------------------------------");
-
-    info!("-------------- Reading Seed File: ------------");
-
     let vec_path: Vec<&str> = vec![
         //"/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/checkC.rls",
         //"/home/leo_repp/masterthesis/nemo/nemo-metamorphic-testing/examples/thesis-learning-examples/ancestry.rls",
@@ -396,6 +365,43 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             None => None,
         },
     };
+
+    // We do not have a progress bar
+    /* let bar = ProgressBar::new(u64::from(
+        *(num_transformations
+            .get()
+            .expect("Number of transformations not set")),
+    )); */
+    // Begin transformation info
+    info!("----------------------------------------------");
+    info!(
+        "Beginning transformation {}
+                Oracle:     {}          Number of T: {}
+                Debug Mode: {}          u64 Seed:    {}
+                Number of generating transformations: {}
+                Internal Seed:          {:?}
+                Seed File: {}",
+        transformation_name,
+        transformation_types,
+        num_transformations,
+        DEBUG_MODE.get().expect("Debug Mode not set"),
+        match seed {
+            None => String::from("None provided"),
+            Some(s) => s.to_string(),
+        },
+        gen_size.to_string(),
+        rng.get_seed(),
+        match path.clone() {
+            None => String::from("No Seed Program"),
+            Some(path) => format!("{:?}",path)
+        },
+        /* TODO: Seed file */
+    );
+    info!("----------------------------------------------");
+
+    info!("-------------- Reading Seed File: ------------");
+
+    
 
     let file: RuleFile = match &path {
         None => {
@@ -1165,6 +1171,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut pre_exec = match timeout(Duration::from_mins(timeout_after_mins), nemo_engine_input).await {
         Err(time) => {
             error!("Timeout after {time}!");
+            // Store statistics and that I timed out
             {
                 info!("old_dir {old_dir:?}");
                 match OpenOptions::new()
