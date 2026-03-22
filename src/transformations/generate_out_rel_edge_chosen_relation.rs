@@ -189,7 +189,9 @@ impl<'a, 'b> ProgramTransformation for GenerateOutgoingRelationalEdgeChosenBodyL
             let mut attempted_index = 1;
             let options_for_vars_as_names: Vec<String> = options_for_vars
                 .iter()
-                .filter_map(|var| match var {
+                .filter_map(
+                    |var
+                    | match var {
                     Term::Primitive(Primitive::Variable(var)) => Some(String::from(var.name()?)),
                     _ => None,
                 })

@@ -21,6 +21,7 @@ use nemo::{
         programs::{handle::ProgramHandle, ProgramRead},
     },
 };
+use nemo_metamorphic_testing::DEBUG_MODE;
 use simplelog::*;
 use tokio::time::timeout;
 
@@ -44,8 +45,6 @@ use std::sync::Mutex;
  */
 use rand::{seq::IndexedRandom, Rng, SeedableRng};
 
-use std::sync::OnceLock;
-
 use crate::transformations::{
     transformation_manager::GenerateTestingTransformation,
     transformation_types::TransformationTypes,
@@ -53,32 +52,31 @@ use crate::transformations::{
 
 use clap::{arg, command, value_parser};
 
-static DEBUG_MODE: OnceLock<bool> = OnceLock::new();
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialisiation
-
     // Command line args
     let matches = {
         command!() // requires `cargo` feature
             .arg(arg!([name] "Optional name for this transformation sequence"))
             .arg(
                 arg!(
-                    -f --file <FILE> "Sets a custom seed file"
+                    -f --file <FILE> "Set a custom seed file"
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
                 .value_parser(value_parser!(PathBuf)),
             )
-            .arg(
+            // only works locally, so not worth supporting
+           /*  .arg(
                 arg!(
                     -r --random_file "Use a random seed file from our selection if not custom seed file is provided. If neither this nor a seed file are set, use an empty seed (not recommended)"
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
                 .value_parser(value_parser!(bool)),
-            )
+            ) */
             .arg(
                 arg!(
                     -o --timeout <MINS> "Timeout our nemo computations after how many minutes. Default 30mins."
@@ -89,7 +87,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -s --seed <NUM> "Optionally set a u64 seed for the rng."
+                    -s --seed <NUM> "Set a u64 seed for the random number generator"
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
@@ -104,7 +102,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -l --lean "Keep only the log file and output program after transformation"
+                    -l --lean "Keep only the log file and output program once done"
                 )
                 .value_parser(value_parser!(bool))
                 .required(false),
@@ -119,7 +117,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .arg(
                 arg!(
-                    -g --gen <NUM> "How many relations to generate for the input program."
+                    -g --gen <NUM> "How many relations to generate for the input program"
                 )
                 // We don't have syntax yet for optional options, so manually calling `required`
                 .required(false)
@@ -1764,7 +1762,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 info!(
                     "Create a transformation_statistics.csv file in the folder you are calling this from to begin to collect transformation statistics for all your transformations.
                     Header:
-                Name, Oracle, Seed, Seed_File, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug,"
+                Name, Oracle, Seed, Seed_File, Gen_Size, Num_Trans, Debug_Mode, Input_Program_Fact_Nodes, Input_Program_Relational_Nodes, Input_Program_Fact_Edges, Input_Program_Relational_Edges, Input_Program_Inverse_Strata_Count, Input_Program_None_Ancestry_Nodes, Input_Program_Positive_Ancestry_Nodes, Input_Program_Negative_Ancestry_Nodes, Input_Program_Unknown_Ancestry_Nodes, Input_Program_Next_Rule_Name, Input_Program_Next_Predicate_Name, Input_Program_Next_Constant_Name, Input_Program_Next_String_Name, Output_Predicate, Input_Program_Generated_Rule_Count, Input_Program_Total_Rule_Count, Input_Program_Average_Arity, Input_Program_Generate_Rule, Input_Program_Generate_Outgoing_Relational_Edge, Input_Program_Add_Relational_Node, Input_Program_Add_Fact_Node_And_Edge, Output_Program_Fact_Nodes, Output_Program_Relational_Nodes, Output_Program_Fact_Edges, Output_Program_Relational_Edges, Output_Program_Inverse_Strata_Count, Output_Program_None_Ancestry_Nodes, Output_Program_Positive_Nodes, Output_Program_Negative_Nodes, Output_Program_Unknown_Nodes, Output_Program_Next_Rule_Name, Output_Program_Next_Predicate_Name, Output_Program_Next_Constant_Name, Output_Program_Next_String_Name, Output_Program_Generated_Rule_Count, Output_Program_Total_Rule_Count, Output_Program_Average_Arity, Failed_Transformation_Attempts, I_Add_Relational_Node, II_Add_Fact_Node_And_Edge, III_Add_Relational_Edges_New_Rule, IV_Add_Relational_Edge_New_Literal, IX_Remove_Fact_Node_And_Edge, V_Remove_Relational_Edges_Whole_Rule, VI_Remove_Relational_Edge_Single_Literal, VII_Modify_Rule_Add_Equality, VIII_Modify_Rule_Remove_Equality, XI_Add_Contradictory_Rule, Xa_Remove_Relational_Node_Rule_Variant_None_Anc_Only, Input_Program_Output_Size, Output_Program_Output_Size, Nemo_Bug"
                 )
             } // If there is a stats folder write a bunch of information to it
             Ok(mut stats_file) => {
@@ -1817,7 +1815,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 });
                 statistics_string.push_str(format!("{}, ", out.len()).as_str());
                 statistics_string.push_str(format!("{}, ", out_2.len()).as_str());
-                statistics_string.push_str(format!("{}, ", found_bug).as_str());
+                statistics_string.push_str(format!("{}", found_bug).as_str());
                 statistics_string.push_str("\n");
                 match stats_file.write(statistics_string.as_bytes()) {
                     Ok(_) => (),

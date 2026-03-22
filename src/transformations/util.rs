@@ -5,7 +5,7 @@ use nemo::rule_model::{
 use rand::seq::IteratorRandom;
 use rand_chacha::ChaCha8Rng;
 
-use crate::{DEBUG_MODE};
+use crate::DEBUG_MODE;
 
  #[allow(dead_code,unused_variables)]
 pub fn fetch_rule_by_name(rule_name: String, program: &ProgramHandle) -> Option<&Rule> {

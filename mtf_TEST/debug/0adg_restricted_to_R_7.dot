@@ -1,5 +1,0 @@
-digraph {
-    7 [ label = "(R_7, None, None)" ]
-    16 [ label = "(R_16, None, None)" ]
-    16 -> 7 [ label = "(r_GEN_8, +, (?X_5, ?X_2, ?X_3, ?X_1, ?X_4, ?X_6, ))" ]
-}
